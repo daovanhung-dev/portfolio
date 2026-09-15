@@ -1,363 +1,65 @@
 <!doctype html>
 <html lang="vi" data-theme="dark">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio của Đào Văn Hùng — Full-stack Developer thiên Backend Python & Flutter, System Analysis, PostgreSQL, Supabase và AI-assisted Engineering." />
-  <meta name="theme-color" content="#07111f" />
-  <meta property="og:title" content="Đào Văn Hùng — Full-stack Developer" />
-  <meta property="og:description" content="Backend Python · Flutter · PostgreSQL · System Analysis · AI-assisted Engineering" />
-  <meta property="og:type" content="website" />
-  <title>Đào Văn Hùng — Full-stack Developer</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Đào Văn Hùng",
-    "jobTitle": "Full-stack Developer",
-    "url": "https://github.com/daovanhung-dev",
-    "sameAs": ["https://github.com/daovanhung-dev"],
-    "knowsAbout": ["Python", "FastAPI", "Flask", "Flutter", "PostgreSQL", "Supabase", "System Analysis", "REST API", "Linux", "AI Integration"]
-  }
-  </script>
-</head>
-<body>
-  <div class="noise" aria-hidden="true"></div>
-  <div class="progress" id="progressBar" aria-hidden="true"></div>
-
-  <header class="site-header" id="top">
-    <a class="brand" href="#top" aria-label="Về đầu trang">
-      <span class="brand-mark">H</span>
-      <span class="brand-text">Đào Văn Hùng</span>
-    </a>
-
-    <nav class="desktop-nav" aria-label="Điều hướng chính">
-      <a href="#about">Giới thiệu</a>
-      <a href="#experience">Kinh nghiệm</a>
-      <a href="#projects">Dự án</a>
-      <a href="#skills">Năng lực</a>
-      <a href="#cases">Case kỹ thuật</a>
-    </nav>
-
-    <div class="header-actions">
-      <button class="icon-btn" id="themeToggle" type="button" aria-label="Đổi giao diện sáng tối">☼</button>
-      <a class="btn btn-small btn-primary" href="#contact">Liên hệ</a>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero section shell">
-      <div class="hero-copy reveal">
-        <div class="eyebrow"><span class="live-dot"></span> Open to strong engineering opportunities</div>
-        <h1>
-          Tôi xây sản phẩm từ
-          <span class="gradient-text">business → system → code → test.</span>
-        </h1>
-        <p class="hero-lead">
-          Full-stack Developer thiên <strong>Backend Python & Flutter</strong>, có kinh nghiệm thực hành với
-          PostgreSQL, Supabase, System Analysis, API Design, Testing/Debugging và AI-assisted Engineering.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#experience">Xem kinh nghiệm</a>
-          <a class="btn btn-ghost" href="https://github.com/daovanhung-dev" target="_blank" rel="noreferrer">GitHub ↗</a>
-        </div>
-        <div class="hero-metrics" role="list" aria-label="Điểm nổi bật">
-          <div class="metric" role="listitem"><strong>06</strong><span>REST API tại FPT</span></div>
-          <div class="metric" role="listitem"><strong>02</strong><span>Màn hình nghiệp vụ tại FPT</span></div>
-          <div class="metric" role="listitem"><strong>06</strong><span>Thành viên Flutter team từng lead</span></div>
-          <div class="metric" role="listitem"><strong>8+</strong><span>Repo/project public & active</span></div>
-        </div>
-      </div>
-
-      <aside class="hero-card reveal delay-1" aria-label="Tóm tắt năng lực">
-        <div class="profile-orb"><span>DVH</span></div>
-        <div class="status-pill">Full-stack Fresher / Junior</div>
-        <h2>Đào Văn Hùng</h2>
-        <p>Backend Python · Flutter · SQL/PostgreSQL · System Analysis</p>
-        <div class="stack-cloud">
-          <span>FastAPI</span><span>Flask</span><span>Flutter</span><span>PostgreSQL</span><span>Supabase</span><span>Angular</span><span>Vue</span><span>Linux</span><span>Docker</span><span>AI</span>
-        </div>
-        <div class="terminal" aria-label="Tư duy kỹ thuật">
-          <div><span class="prompt">$</span> engineering_profile --summary</div>
-          <div class="terminal-output">Evidence-driven. End-to-end. Product-aware.</div>
-        </div>
-      </aside>
-    </section>
-
-    <section class="section shell" id="about">
-      <div class="section-heading reveal">
-        <div>
-          <p class="section-kicker">01 — PROFILE</p>
-          <h2>Không chỉ viết code. Tôi quan tâm hệ thống chạy đúng từ đầu đến cuối.</h2>
-        </div>
-        <p>
-          Điểm mạnh nhất của tôi là kết nối được nhiều lớp của một sản phẩm: yêu cầu nghiệp vụ, thiết kế API/CSDL,
-          implementation, kiểm thử, dữ liệu và điều tra lỗi. Tôi ưu tiên thay đổi có bằng chứng, traceability rõ và không
-          coi source tồn tại đồng nghĩa với feature đã production-ready.
-        </p>
-      </div>
-
-      <div class="principles-grid">
-        <article class="principle card reveal"><span>01</span><h3>End-to-end reasoning</h3><p>Business → Module → Feature → API/UI/Data → Test.</p></article>
-        <article class="principle card reveal delay-1"><span>02</span><h3>Evidence-driven debugging</h3><p>Log → payload → state → API → service → SQL → database.</p></article>
-        <article class="principle card reveal delay-2"><span>03</span><h3>Data consistency</h3><p>PostgreSQL, SQLite, migration, RPC/RLS, ownership và local-cloud sync.</p></article>
-        <article class="principle card reveal delay-3"><span>04</span><h3>AI-assisted engineering</h3><p>Context loading, AGENTS.md, source-of-truth, test gates và agent workflow.</p></article>
-      </div>
-    </section>
-
-    <section class="section shell" id="experience">
-      <div class="section-heading compact reveal">
-        <div><p class="section-kicker">02 — EXPERIENCE</p><h2>Kinh nghiệm làm việc</h2></div>
-        <p>Các mốc dưới đây ưu tiên thông tin có thể bảo vệ khi phỏng vấn.</p>
-      </div>
-
-      <div class="timeline">
-        <article class="timeline-item reveal">
-          <div class="timeline-meta"><span>07/2026 — hiện tại</span><strong>FPT Corporation</strong></div>
-          <div class="timeline-content card">
-            <div class="role-head"><div><p class="role-type">CURRENT ROLE</p><h3>Full-stack Fresher</h3></div><span class="evidence evidence-a">Enterprise</span></div>
-            <p>Tiếp tục phát triển theo hướng full-stack sau giai đoạn internship. Chi tiết nhiệm vụ hiện tại chỉ trình bày khi có evidence phù hợp.</p>
-            <div class="tag-row"><span>Python</span><span>Web</span><span>SQL</span><span>Enterprise workflow</span></div>
-          </div>
-        </article>
-
-        <article class="timeline-item reveal">
-          <div class="timeline-meta"><span>03/2026 — 07/2026</span><strong>FPT Software / FPT Corporation</strong></div>
-          <div class="timeline-content card">
-            <div class="role-head"><div><p class="role-type">FULL-STACK INTERN</p><h3>Python Flask · Vue.js · PostgreSQL</h3></div><span class="evidence evidence-a">Enterprise</span></div>
-            <ul class="clean-list">
-              <li>Phát triển <strong>06 REST API</strong> và <strong>02 màn hình nghiệp vụ</strong>.</li>
-              <li>Tham gia requirement, BD, DD, UTC, UTR, ITR; validation, business logic, response/error handling và data mapping.</li>
-              <li>Viết raw SQL cho CRUD/JOIN/filter, tạo test data và điều tra sai lệch dữ liệu.</li>
-              <li>Debug xuyên UI → API → service → SQL → database; sửa root cause và chạy regression.</li>
-            </ul>
-            <div class="tag-row"><span>Flask</span><span>Vue.js</span><span>PostgreSQL</span><span>Raw SQL</span><span>Docker</span><span>GitLab</span></div>
-          </div>
-        </article>
-
-        <article class="timeline-item reveal">
-          <div class="timeline-meta"><span>05/2026 — hiện tại</span><strong>NanoBio / NamiAI</strong></div>
-          <div class="timeline-content card">
-            <div class="role-head"><div><p class="role-type">TECHNICAL OWNER</p><h3>Full-stack Flutter Developer</h3></div><span class="evidence evidence-a">Product</span></div>
-            <ul class="clean-list">
-              <li>Tổ chức ứng dụng HealthTech theo feature-first/Clean Architecture, Riverpod, GoRouter, repository/datasource/DAO.</li>
-              <li>Xây local-first data layer bằng SQLite; đồng bộ cloud qua Supabase/PostgREST/RPC và xử lý data ownership.</li>
-              <li>Tích hợp AI qua Supabase Edge Function → Gemini; structured output, parser, validation, retry/fallback/quota.</li>
-              <li>Build/debug Android thật: ADB, Gradle/AGP, SDK/NDK, APK/AAB, runtime logs và release compliance.</li>
-            </ul>
-            <div class="tag-row"><span>Flutter</span><span>Riverpod</span><span>SQLite</span><span>Supabase</span><span>Gemini</span><span>Android</span></div>
-          </div>
-        </article>
-
-        <article class="timeline-item reveal">
-          <div class="timeline-meta"><span>11/2025 — hiện tại</span><strong>VNUA Innovation Center</strong></div>
-          <div class="timeline-content card">
-            <div class="role-head"><div><p class="role-type">TEAM LEAD</p><h3>Flutter Team Lead / Full-stack Flutter Developer</h3></div><span class="evidence evidence-a">Team lead</span></div>
-            <ul class="clean-list">
-              <li>Dẫn dắt nhóm Flutter khoảng <strong>06 thành viên</strong>: phân rã feature, giao task, hỗ trợ blocker và review implementation.</li>
-              <li>Phát triển app học vụ VNUA: auth/session, lịch, GPA, học phí, đăng ký tín chỉ, chương trình đào tạo, prerequisite, QR và notification.</li>
-              <li>Tích hợp SQLite, background sync, Supabase Realtime, chat và AI assistant.</li>
-            </ul>
-            <div class="tag-row"><span>Flutter</span><span>SQLite</span><span>Supabase Realtime</span><span>AI Assistant</span><span>Team Lead</span></div>
-          </div>
-        </article>
-
-        <article class="timeline-item reveal">
-          <div class="timeline-meta"><span>05/2026 — hiện tại</span><strong>VentureX · VinUniversity</strong></div>
-          <div class="timeline-content card">
-            <div class="role-head"><div><p class="role-type">SYSTEM DESIGN</p><h3>Tech Lead / System Analyst / API Designer</h3></div><span class="evidence evidence-b">Design scope</span></div>
-            <ul class="clean-list">
-              <li>Phân rã LMS tích hợp AI thành khoảng 16 module; actor, permission, ownership, precondition và business rule.</li>
-              <li>Thiết kế API Detail Design: request/response, processing flow, validation, error specification.</li>
-              <li>Chuẩn hóa business code, error code, traceId/correlation ID, audit, timeout/retry và data model.</li>
-            </ul>
-            <div class="tag-row"><span>System Analysis</span><span>API DD</span><span>Data Modeling</span><span>Traceability</span></div>
-          </div>
-        </article>
-
-        <article class="timeline-item reveal">
-          <div class="timeline-meta"><span>2025 — 07/2026</span><strong>MaiATech / Learn2Earn</strong></div>
-          <div class="timeline-content card">
-            <div class="role-head"><div><p class="role-type">BACKEND</p><h3>Backend Developer / Part-time</h3></div><span class="evidence evidence-b">Project</span></div>
-            <ul class="clean-list">
-              <li>REST API theo MVC với Node.js/TypeScript/Express và Prisma/MySQL.</li>
-              <li>JWT/Passport, password hashing, role-based access và upload hồ sơ/CV.</li>
-              <li>Luồng tuyển dụng: job, search/bookmark, application, candidate status, interview, chat/notification theo version.</li>
-            </ul>
-            <div class="tag-row"><span>Node.js</span><span>TypeScript</span><span>Express</span><span>Prisma</span><span>MySQL</span></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section shell" id="projects">
-      <div class="section-heading compact reveal">
-        <div><p class="section-kicker">03 — PROJECTS</p><h2>Dự án kỹ thuật tiêu biểu</h2></div>
-        <p>Chọn lọc những project thể hiện chiều sâu kiến trúc, dữ liệu và delivery.</p>
-      </div>
-
-      <div class="projects-grid">
-        <article class="project-card featured reveal">
-          <div class="project-top"><span class="project-index">01</span><span class="evidence evidence-a">Core project</span></div>
-          <h3>NanoBioAI</h3>
-          <p class="project-sub">HealthTech · Flutter local-first · Supabase · AI backend</p>
-          <p>Ứng dụng chăm sóc sức khỏe cá nhân với onboarding, health profile, meal/exercise plan, tracking, notifications, auth/cloud sync và AI.</p>
-          <div class="project-points"><span>Local-first architecture</span><span>Supabase RPC/Auth</span><span>AI Edge Function</span><span>Android release</span></div>
-          <a href="https://github.com/daovanhung-dev/NanoBioAI" target="_blank" rel="noreferrer">Xem repository ↗</a>
-        </article>
-
-        <article class="project-card reveal delay-1">
-          <div class="project-top"><span class="project-index">02</span><span class="evidence evidence-a">Architecture</span></div>
-          <h3>Study2Work</h3>
-          <p class="project-sub">EdTech + HRTech · Polyglot monorepo · Contract-first</p>
-          <p>Study dùng FastAPI/Vue; Work dùng NestJS/Fastify/React; canonical BD, OpenAPI, event schema, PostgreSQL/Redis và Docker Compose.</p>
-          <div class="project-points"><span>FastAPI</span><span>NestJS/Fastify</span><span>React/Vue</span><span>OpenAPI/Contracts</span></div>
-          <a href="https://github.com/daovanhung-dev/Study2Work" target="_blank" rel="noreferrer">Xem repository ↗</a>
-        </article>
-
-        <article class="project-card reveal delay-2">
-          <div class="project-top"><span class="project-index">03</span><span class="evidence evidence-a">Production-oriented</span></div>
-          <h3>HVC_EDU</h3>
-          <p class="project-sub">Angular · Supabase · Education operations</p>
-          <p>Số hóa vận hành trung tâm giáo dục: lớp/học sinh/nhân sự/lịch/điểm danh/thu chi với Edge Functions, RPC, RLS, audit và idempotency.</p>
-          <div class="project-points"><span>Angular 22</span><span>Supabase Edge</span><span>RPC/RLS</span><span>Transactional flows</span></div>
-          <a href="https://github.com/daovanhung-dev/HVC_EDU" target="_blank" rel="noreferrer">Xem repository ↗</a>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="project-top"><span class="project-index">04</span><span class="evidence evidence-a">Team lead</span></div>
-          <h3>LabVnua / EduAI</h3>
-          <p class="project-sub">Academic companion · Flutter · Realtime · AI</p>
-          <p>Ứng dụng học vụ sinh viên VNUA với auth, lịch, điểm/GPA, học phí, đăng ký tín chỉ, chat realtime, QR, background sync và AI assistant.</p>
-          <div class="project-points"><span>Flutter</span><span>SQLite</span><span>Realtime</span><span>Agent workflows</span></div>
-          <a href="https://github.com/daovanhung-dev/LabVnua" target="_blank" rel="noreferrer">Xem repository ↗</a>
-        </article>
-
-        <article class="project-card reveal delay-1">
-          <div class="project-top"><span class="project-index">05</span><span class="evidence evidence-b">Backend + Mobile</span></div>
-          <h3>Learn2Earn</h3>
-          <p class="project-sub">Career platform · Node.js · Flutter</p>
-          <p>Monorepo gồm web Express/Prisma/MySQL và Flutter clients cho student/business, tập trung auth, CV, jobs, applications và candidate workflows.</p>
-          <div class="project-points"><span>Node.js</span><span>Express</span><span>Prisma</span><span>Flutter</span></div>
-          <a href="https://github.com/daovanhung-dev/Learn2Earn" target="_blank" rel="noreferrer">Xem repository ↗</a>
-        </article>
-
-        <article class="project-card reveal delay-2">
-          <div class="project-top"><span class="project-index">06</span><span class="evidence evidence-c">Frontend proof</span></div>
-          <h3>Hung & Quynh — Our Story</h3>
-          <p class="project-sub">Angular · Static media pipeline · GitHub Pages</p>
-          <p>Portfolio-style memory timeline với animation, responsive/accessibility, media processing, WebP pipeline, Playwright E2E và static artifact verification.</p>
-          <div class="project-points"><span>Angular 22</span><span>Playwright</span><span>Sharp</span><span>GitHub Pages</span></div>
-          <a href="https://github.com/daovanhung-dev/hung-quynh-our-story" target="_blank" rel="noreferrer">Xem repository ↗</a>
-        </article>
-      </div>
-    </section>
-
-    <section class="section shell" id="skills">
-      <div class="section-heading compact reveal">
-        <div><p class="section-kicker">04 — CAPABILITY MAP</p><h2>Năng lực kỹ thuật</h2></div>
-        <p>Phân theo mức độ sử dụng thay vì liệt kê mọi công nghệ ngang nhau.</p>
-      </div>
-
-      <div class="skill-columns">
-        <article class="skill-panel card reveal">
-          <div class="skill-level">CORE</div><h3>Năng lực chính</h3>
-          <div class="skill-list"><span>Python</span><span>FastAPI</span><span>Flask</span><span>Flutter / Dart</span><span>PostgreSQL</span><span>SQL</span><span>SQLite</span><span>Supabase</span><span>REST API</span><span>System Analysis</span><span>Testing / Debugging</span></div>
-        </article>
-        <article class="skill-panel card reveal delay-1">
-          <div class="skill-level">PROJECT</div><h3>Đã dùng trong dự án</h3>
-          <div class="skill-list"><span>TypeScript</span><span>JavaScript</span><span>Vue.js</span><span>Angular</span><span>Node.js / Express</span><span>React</span><span>NestJS / Fastify</span><span>Prisma</span><span>SQLAlchemy</span><span>Alembic</span><span>Redis</span><span>Docker</span><span>WebSocket</span></div>
-        </article>
-        <article class="skill-panel card reveal delay-2">
-          <div class="skill-level">SYSTEM</div><h3>Tooling & Platform</h3>
-          <div class="skill-list"><span>Linux / Debian</span><span>GitHub / GitLab</span><span>Docker Compose</span><span>Supabase CLI</span><span>Deno Edge Functions</span><span>ADB</span><span>Gradle / AGP</span><span>Android SDK/NDK</span><span>pytest</span><span>Vitest</span><span>Playwright</span><span>Ruff / mypy</span></div>
-        </article>
-        <article class="skill-panel card reveal delay-3">
-          <div class="skill-level">FOUNDATION</div><h3>Nền tảng / bổ sung</h3>
-          <div class="skill-list"><span>Django</span><span>MySQL</span><span>MongoDB</span><span>SQL Server</span><span>C# / WinForms</span><span>C / C++</span><span>Java</span><span>Networking fundamentals</span><span>Application Security fundamentals</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section shell" id="cases">
-      <div class="section-heading compact reveal">
-        <div><p class="section-kicker">05 — ENGINEERING CASES</p><h2>Case kỹ thuật nổi bật</h2></div>
-        <p>Những tình huống thể hiện cách tôi suy nghĩ khi hệ thống không chạy đúng.</p>
-      </div>
-
-      <div class="case-grid">
-        <article class="case-card card reveal">
-          <div class="case-num">CASE 01</div>
-          <h3>Defect investigation xuyên tầng tại FPT</h3>
-          <p class="case-problem">Một kết quả UI/API không khớp test case, nguyên nhân có thể nằm ở UI, validation, business logic, SQL hoặc dữ liệu.</p>
-          <div class="flow-line"><span>DD/UTC</span><b>→</b><span>Reproduce</span><b>→</b><span>Payload/SQL</span><b>→</b><span>Root cause</span><b>→</b><span>Regression</span></div>
-        </article>
-
-        <article class="case-card card reveal delay-1">
-          <div class="case-num">CASE 02</div>
-          <h3>Local ↔ Cloud consistency trong NanoBio</h3>
-          <p class="case-problem">SQLite và Supabase lệch dữ liệu do mapping user, RPC signature, transaction hoặc constraint.</p>
-          <div class="flow-line"><span>Source of truth</span><b>→</b><span>Ownership</span><b>→</b><span>RPC/Data</span><b>→</b><span>Sync</span></div>
-        </article>
-
-        <article class="case-card card reveal delay-2">
-          <div class="case-num">CASE 03</div>
-          <h3>Transactional business logic với Supabase</h3>
-          <p class="case-problem">Các mutation nhạy cảm như tài chính, payroll, period close không được xử lý trực tiếp trên browser.</p>
-          <div class="flow-line"><span>Angular</span><b>→</b><span>Edge Function</span><b>→</b><span>RPC</span><b>→</b><span>Transaction</span><b>→</b><span>Audit</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section shell">
-      <div class="dual-grid">
-        <article class="card reveal">
-          <p class="section-kicker">06 — AI ENGINEERING</p>
-          <h2>AI là công cụ engineering, không phải nút “generate code”.</h2>
-          <p>Tôi sử dụng ChatGPT, Codex và Claude để tăng tốc nhưng vẫn giữ source-of-truth, test gates và review evidence.</p>
-          <div class="mini-process"><span>Load context</span><span>Analyze</span><span>Plan</span><span>Execute</span><span>Validate</span><span>Handoff</span></div>
-        </article>
-        <article class="card reveal delay-1">
-          <p class="section-kicker">07 — SECURITY DIRECTION</p>
-          <h2>Đang chuyển dần sang Cybersecurity / White-hat.</h2>
-          <p>Nền hiện tại: Linux, networking fundamentals, Python, web/API, SQL, auth/RBAC/RLS, debugging và application security. Offensive security vẫn là hướng đang xây evidence.</p>
-          <div class="tag-row"><span>AppSec</span><span>Web Security</span><span>Linux</span><span>Python Tooling</span><span>White-hat</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section shell">
-      <div class="education-card card reveal">
-        <div>
-          <p class="section-kicker">08 — EDUCATION</p>
-          <h2>Học viện Nông nghiệp Việt Nam — Công nghệ Thông tin</h2>
-          <p>K68 CNTT · Dự kiến tốt nghiệp 2027</p>
-        </div>
-        <div class="edu-stats"><div><strong>2.72/4.00</strong><span>GPA gần nhất ghi nhận</span></div><div><strong>94</strong><span>Tín chỉ tích lũy gần nhất</span></div><div><strong>4.5</strong><span>IELTS tự đánh giá gần nhất</span></div></div>
-      </div>
-    </section>
-
-    <section class="section shell" id="contact">
-      <div class="contact-panel reveal">
-        <div>
-          <p class="section-kicker">LET'S BUILD</p>
-          <h2>Tôi thích những bài toán cần vừa hiểu nghiệp vụ, vừa làm hệ thống chạy thật.</h2>
-          <p>Nếu bạn đang tìm một developer có thể đi từ API/DB đến Flutter/web, đồng thời chịu khó truy nguyên lỗi và tài liệu hóa rõ ràng — hãy kết nối với tôi.</p>
-        </div>
-        <div class="contact-actions">
-          <a class="btn btn-primary" href="mailto:daohungmt2005@gmail.com">Email cho tôi</a>
-          <a class="btn btn-ghost" href="https://github.com/daovanhung-dev" target="_blank" rel="noreferrer">GitHub ↗</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer shell">
-    <div><strong>Đào Văn Hùng</strong><span>Full-stack Developer · Backend Python · Flutter · System Analysis</span></div>
-    <div class="footer-right"><span>Built for evidence, not buzzwords.</span><a href="#top">Back to top ↑</a></div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Đào Văn Hùng" />
+    <meta name="description" content="Portfolio engineering của Đào Văn Hùng — Full-stack Developer thiên Backend Python và Flutter, System Analysis, PostgreSQL, Supabase và AI-assisted Engineering." />
+    <meta name="theme-color" content="#07111f" />
+    <meta property="og:title" content="Đào Văn Hùng — Full-stack Developer" />
+    <meta property="og:description" content="Backend Python · Flutter · System Analysis · Evidence-driven engineering" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://daovanhung-dev.github.io/portfolio/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Đào Văn Hùng — Full-stack Developer" />
+    <meta name="twitter:description" content="Backend Python · Flutter · System Analysis · Evidence-driven engineering" />
+    <link rel="canonical" href="https://daovanhung-dev.github.io/portfolio/" />
+    <link rel="sitemap" type="application/xml" href="/portfolio/sitemap.xml" />
+    <title>Đào Văn Hùng — Full-stack Developer</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://daovanhung-dev.github.io/portfolio/#person",
+            "name": "Đào Văn Hùng",
+            "jobTitle": "Full-stack Developer",
+            "url": "https://daovanhung-dev.github.io/portfolio/",
+            "sameAs": [
+              "https://github.com/daovanhung-dev",
+              "https://www.linkedin.com/in/daovanhung-dev"
+            ],
+            "knowsAbout": [
+              "Python",
+              "FastAPI",
+              "Flask",
+              "Flutter",
+              "PostgreSQL",
+              "Supabase",
+              "System Analysis",
+              "REST API",
+              "Linux",
+              "AI Integration"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://daovanhung-dev.github.io/portfolio/#website",
+            "name": "Đào Văn Hùng — Portfolio",
+            "url": "https://daovanhung-dev.github.io/portfolio/",
+            "about": { "@id": "https://daovanhung-dev.github.io/portfolio/#person" }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="progress" id="progressBar" aria-hidden="true"></div>
+    <div id="siteHeader"></div>
+    <main id="app"></main>
+    <div id="siteFooter"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

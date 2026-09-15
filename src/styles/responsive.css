@@ -1,0 +1,48 @@
+@media (max-width: 1080px) {
+  .desktop-nav { gap: 13px; font-size: .78rem; }
+  .hero { gap: 34px; }
+  .projects-grid, .live-products-grid { grid-template-columns: repeat(2, 1fr); }
+  .case-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .site-header { grid-template-columns: 1fr auto; }
+  .desktop-nav { display: none; }
+  .mobile-menu-toggle { display: grid; }
+  .mobile-nav { grid-column: 1 / -1; display: grid; gap: 4px; padding: 12px 4px 4px; border-top: 1px solid var(--line); }
+  .mobile-nav[hidden] { display: none; }
+  .mobile-nav .nav-link { padding: 10px 12px; border-radius: 10px; color: var(--muted); }
+  .mobile-nav .nav-link:hover { background: var(--surface-soft); color: var(--text); }
+  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 82px; }
+  .hero-card { max-width: 680px; }
+  .principles-grid { grid-template-columns: repeat(2, 1fr); }
+  .timeline::before { left: 16px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 8px; padding-left: 42px; }
+  .timeline-item::before { top: 20px; left: 10px; }
+  .timeline-meta { padding-top: 0; text-align: left; }
+  .education-card, .contact-panel { grid-template-columns: 1fr; }
+  .contact-actions { justify-content: flex-start; }
+}
+
+@media (max-width: 680px) {
+  .shell { width: min(100% - 24px, var(--max)); }
+  .section { padding: 72px 0; }
+  .site-header { width: calc(100% - 16px); margin-top: 8px; }
+  .brand-text, .header-contact { display: none; }
+  .hero { padding-top: 64px; gap: 36px; }
+  .hero h1 { font-size: clamp(2.9rem, 14vw, 4.7rem); }
+  .hero-role { font-size: .68rem; }
+  .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+  .section-heading { grid-template-columns: 1fr; gap: 18px; }
+  .principles-grid, .projects-grid, .live-products-grid, .capability-grid, .case-grid, .dual-grid { grid-template-columns: 1fr; }
+  .project-card, .case-card { min-height: 0; }
+  .capability-panel summary { padding: 18px; }
+  .capability-list { padding: 0 18px 14px; }
+  .edu-stats { grid-template-columns: 1fr; }
+  .contact-panel { padding: 28px 22px; }
+  .site-footer { flex-direction: column; }
+  .footer-right { text-align: left; }
+  .footer-links { justify-content: flex-start; }
+  .project-modal { padding: 28px 20px; }
+  .modal-grid, .modal-stack { grid-template-columns: 1fr; }
+}

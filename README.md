@@ -1,48 +1,72 @@
-# Đào Văn Hùng — Professional Portfolio
+# Đào Văn Hùng — Engineering Portfolio
 
-Portfolio tĩnh, responsive, không cần framework/build step. Tối ưu để deploy nhanh lên GitHub Pages.
+Portfolio cá nhân theo hướng evidence-driven engineering: Full-stack Developer thiên Backend Python, Flutter, System Analysis, PostgreSQL/Supabase và AI-assisted Engineering.
+
+## Kiến trúc
+
+Ứng dụng dùng Vite + TypeScript vanilla, không có frontend framework runtime. Nội dung được quản lý trong các module typed dưới `src/data/`; các renderer dưới `src/components/` chỉ chịu trách nhiệm trình bày dữ liệu.
+
+```text
+src/
+├── data/          # profile, experience, projects, capabilities, live products, cases
+├── components/    # typed HTML renderers và accessible project modal
+├── styles/        # tokens, global, components, responsive
+└── main.ts        # mount, theme, navigation, modal và reveal behavior
+```
 
 ## Chạy local
 
-Có thể mở trực tiếp `index.html`, hoặc dùng web server tĩnh:
+Yêu cầu Node.js 22+ và npm:
 
 ```bash
-python3 -m http.server 8080
+npm ci
+npm run dev
 ```
 
-Sau đó mở `http://localhost:8080`.
+Mở `http://localhost:5173/portfolio/`. Build production:
 
-## Deploy GitHub Pages
+```bash
+npm run build
+npm run preview
+```
 
-1. Tạo repo mới, ví dụ `portfolio`.
-2. Copy toàn bộ file trong thư mục này vào root repo.
-3. Commit + push lên `main`.
-4. Vào **Settings → Pages**.
-5. Chọn **Deploy from a branch → main → /(root)**.
+## Data model và content integrity
 
-Nếu repo tên `daovanhung-dev.github.io`, GitHub Pages có thể dùng làm trang cá nhân mặc định.
+Mỗi project dùng một contract thống nhất gồm status, evidence level, role, problem, solution, stack, repository/live URLs và case-study references. Capability items bắt buộc map về project hoặc experience evidence.
 
-## File chính
+Portfolio phân biệt:
 
-- `index.html` — nội dung portfolio + SEO/structured data.
-- `styles.css` — toàn bộ giao diện, responsive và light/dark theme.
-- `script.js` — theme toggle, scroll progress, reveal animation và active nav.
+- enterprise experience;
+- live product/deployment;
+- active development;
+- architecture/design scope;
+- project experience;
+- frontend proof;
+- learning direction.
 
-## Nội dung
+Source repository thắng portfolio wording. Source tồn tại không tự động có nghĩa feature đã production. Không đưa API key, service key, password, token hoặc `.env` thật vào source.
 
-Portfolio hiện bao gồm:
+## Thêm project hoặc live product
 
-- Giới thiệu nghề nghiệp.
-- Kinh nghiệm FPT, NanoBio/NamiAI, VNUA Innovation Center, VentureX/VinUniversity, Learn2Earn.
-- Project NanoBioAI, Study2Work, HVC_EDU, LabVnua, Learn2Earn, hung-quynh-our-story.
-- Capability map theo mức evidence.
-- Engineering case studies.
-- AI-assisted Engineering.
-- Cybersecurity direction.
-- Education.
-- Contact.
+1. Thêm data typed vào `src/data/projects.ts` hoặc `src/data/live-products.ts`.
+2. Gắn evidence mapping trong `src/data/capabilities.ts` nếu project chứng minh capability mới.
+3. Chỉ thêm `liveUrl` sau khi URL được xác minh.
+4. Chạy toàn bộ validation trước khi push.
 
-## Ghi chú nội dung
+## Kiểm thử và validation
 
-Các bullet cố ý dùng cách diễn đạt thận trọng: source/design/project exposure không tự động được gọi là production experience. Số liệu FPT mặc định giữ mốc công khai 06 REST API + 02 màn hình.
-# portfolio
+```bash
+npm run typecheck
+npm test
+npm run validate:project-data
+npm run validate:links
+npm run build
+```
+
+`validate:links` làm fail internal anchors và URL malformed; lỗi mạng của external GitHub/GitHub Pages chỉ là warning. Tests kiểm tra data integrity, evidence mapping, render smoke test, modal và theme behavior.
+
+## GitHub Pages
+
+`.github/workflows/deploy-pages.yml` dùng Node 22, chạy toàn bộ quality gates, build artifact và deploy Pages. Pull request/branch chỉ chạy quality checks; deploy chỉ chạy sau khi thay đổi được merge vào `main`.
+
+Canonical URL: `https://daovanhung-dev.github.io/portfolio/`
