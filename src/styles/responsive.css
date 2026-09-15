@@ -1,48 +1,39 @@
-@media (max-width: 1080px) {
-  .desktop-nav { gap: 13px; font-size: .78rem; }
-  .hero { gap: 34px; }
-  .projects-grid, .live-products-grid { grid-template-columns: repeat(2, 1fr); }
-  .case-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 900px) {
-  .site-header { grid-template-columns: 1fr auto; }
+@media (max-width: 760px) {
+  .shell { width: min(100% - 28px, var(--max)); }
+  .site-header { grid-template-columns: 1fr auto; width: calc(100% - 16px); margin-top: 8px; }
   .desktop-nav { display: none; }
   .mobile-menu-toggle { display: grid; }
-  .mobile-nav { grid-column: 1 / -1; display: grid; gap: 4px; padding: 12px 4px 4px; border-top: 1px solid var(--line); }
+  .mobile-nav { grid-column: 1 / -1; display: grid; gap: 2px; padding: 10px 2px 2px; border-top: 1px solid var(--line); }
   .mobile-nav[hidden] { display: none; }
-  .mobile-nav .nav-link { padding: 10px 12px; border-radius: 10px; color: var(--muted); }
-  .mobile-nav .nav-link:hover { background: var(--surface-soft); color: var(--text); }
-  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 82px; }
-  .hero-card { max-width: 680px; }
-  .principles-grid { grid-template-columns: repeat(2, 1fr); }
-  .timeline::before { left: 16px; }
-  .timeline-item { grid-template-columns: 1fr; gap: 8px; padding-left: 42px; }
-  .timeline-item::before { top: 20px; left: 10px; }
+  .mobile-nav .nav-link { padding: 10px; border-radius: 8px; color: var(--muted); }
+  .mobile-nav .nav-link:hover, .mobile-nav .nav-link.active { color: var(--text); background: var(--surface-soft); }
+  .section { padding: 58px 0; }
+  .section-intro { margin-bottom: 27px; }
+  .section-intro h1, .section-intro h2 { font-size: clamp(1.9rem, 9vw, 2.65rem); }
+  .timeline::before { left: 8px; top: 17px; bottom: 17px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 8px; padding-left: 29px; }
+  .timeline-item::before { top: 18px; left: 1px; width: 13px; height: 13px; }
   .timeline-meta { padding-top: 0; text-align: left; }
-  .education-card, .contact-panel { grid-template-columns: 1fr; }
+  .timeline-meta span { font-size: .75rem; }
+  .timeline-meta strong { margin-top: 2px; font-size: .84rem; }
+  .timeline-content { padding: 18px; }
+  .role-head { gap: 10px; }
+  .role-head h2 { font-size: 1.08rem; }
+  .status-label { max-width: 46%; text-align: center; white-space: normal; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { min-height: 0; padding: 19px; }
+  .contact-panel { grid-template-columns: 1fr; padding: 24px 20px; }
   .contact-actions { justify-content: flex-start; }
-}
-
-@media (max-width: 680px) {
-  .shell { width: min(100% - 24px, var(--max)); }
-  .section { padding: 72px 0; }
-  .site-header { width: calc(100% - 16px); margin-top: 8px; }
-  .brand-text, .header-contact { display: none; }
-  .hero { padding-top: 64px; gap: 36px; }
-  .hero h1 { font-size: clamp(2.9rem, 14vw, 4.7rem); }
-  .hero-role { font-size: .68rem; }
-  .hero-metrics { grid-template-columns: repeat(2, 1fr); }
-  .section-heading { grid-template-columns: 1fr; gap: 18px; }
-  .principles-grid, .projects-grid, .live-products-grid, .capability-grid, .case-grid, .dual-grid { grid-template-columns: 1fr; }
-  .project-card, .case-card { min-height: 0; }
-  .capability-panel summary { padding: 18px; }
-  .capability-list { padding: 0 18px 14px; }
-  .edu-stats { grid-template-columns: 1fr; }
-  .contact-panel { padding: 28px 22px; }
-  .site-footer { flex-direction: column; }
+  .site-footer { flex-direction: column; gap: 16px; }
   .footer-right { text-align: left; }
   .footer-links { justify-content: flex-start; }
-  .project-modal { padding: 28px 20px; }
-  .modal-grid, .modal-stack { grid-template-columns: 1fr; }
+  .project-modal { width: 100%; max-height: calc(100svh - 24px); padding: 23px 18px; border-radius: 14px; }
+  .modal-stack { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 761px) and (max-width: 980px) {
+  .timeline { padding-right: 8px; }
+  .timeline-item { grid-template-columns: 145px 1fr; gap: 40px; }
+  .timeline::before { left: 168px; }
+  .timeline-item::before { left: 161px; }
 }

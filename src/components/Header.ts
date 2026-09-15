@@ -12,7 +12,6 @@ export function renderHeader(profile: Profile, navigationLinks: LinkItem[]): str
     <div class="header-actions">
       <button class="icon-btn mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Mở menu">☰</button>
       <button class="icon-btn" id="themeToggle" type="button" aria-label="Đổi giao diện sáng tối">☼</button>
-      <a class="btn btn-small btn-primary header-contact" href="#contact">Liên hệ</a>
     </div>
     <nav class="mobile-nav" id="mobileNav" aria-label="Điều hướng di động" hidden>${nav}</nav>
   </header>`;

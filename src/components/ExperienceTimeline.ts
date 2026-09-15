@@ -1,19 +1,21 @@
 import type { Experience } from '../data/types';
-import { evidenceBadge } from './EvidenceBadge';
 import { escapeHtml } from './utils';
 import { technologyTags } from './TechnologyTag';
-import { sectionHeading } from './SectionHeading';
 
 export function renderExperienceTimeline(experiences: Experience[]): string {
   return `<section class="section shell" id="experience" aria-labelledby="experience-heading">
-    ${sectionHeading('02 — EXPERIENCE', 'Kinh nghiệm làm việc', 'Các mốc dưới đây ưu tiên thông tin có thể bảo vệ khi phỏng vấn.', 'experience')}
-    <div class="timeline">
-      ${experiences.map((experience, index) => `<article class="timeline-item reveal delay-${Math.min(index % 4, 3)}">
+    <div class="section-intro">
+      <p class="section-kicker">01 · WORK TIMELINE</p>
+      <h1 id="experience-heading">Mình đã làm gì và phát triển như thế nào?</h1>
+      <p>Những mốc dưới đây được sắp theo hành trình làm việc. Bạn có thể xem dự án tương ứng ở phần tiếp theo.</p>
+    </div>
+    <div class="timeline" aria-label="Work timeline">
+      ${experiences.slice().sort((a, b) => a.order - b.order).map((experience, index) => `<article class="timeline-item${index === experiences.length - 1 ? ' timeline-item-last' : ''}">
         <div class="timeline-meta"><span>${escapeHtml(experience.period)}</span><strong>${escapeHtml(experience.organization)}</strong></div>
         <div class="timeline-content card">
-          <div class="role-head"><div><p class="role-type">${escapeHtml(experience.evidenceLevel)}</p><h3>${escapeHtml(experience.role)}</h3></div>${evidenceBadge(experience.evidenceLevel)}</div>
+          <div class="role-head"><div><p class="timeline-number">${String(experience.order).padStart(2, '0')}</p><h2>${escapeHtml(experience.role)}</h2></div><span class="status-label">${escapeHtml(experience.status)}</span></div>
           <p class="experience-summary">${escapeHtml(experience.summary)}</p>
-          <ul class="clean-list">${experience.highlights.map((highlight) => `<li>${escapeHtml(highlight)}</li>`).join('')}</ul>
+          <ul class="clean-list">${experience.highlights.slice(0, 3).map((highlight) => `<li>${escapeHtml(highlight)}</li>`).join('')}</ul>
           <div class="tag-row">${technologyTags(experience.stack)}</div>
         </div>
       </article>`).join('')}

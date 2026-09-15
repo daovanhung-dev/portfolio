@@ -1,32 +1,13 @@
-import { capabilityGroups } from '../src/data/capabilities.ts';
-import { caseStudies } from '../src/data/case-studies.ts';
 import { experiences } from '../src/data/experience.ts';
-import { liveProducts } from '../src/data/live-products.ts';
+import { contactLinks, navigationLinks, sectionIds } from '../src/data/links.ts';
 import { projects } from '../src/data/projects.ts';
 
-const evidenceLevels = new Set([
-  'ENTERPRISE',
-  'PRODUCTION / ACTIVE PRODUCT',
-  'LIVE PRODUCT',
-  'TEAM LEAD',
-  'ARCHITECTURE',
-  'PROJECT',
-  'DESIGN / DEVELOPMENT',
-  'FRONTEND PROOF',
-  'FOUNDATION',
-  'LEARNING DIRECTION',
-]);
-const projectStatuses = new Set([
-  'LIVE',
-  'ACTIVE DEVELOPMENT',
-  'PRODUCTION PRODUCT',
-  'ENTERPRISE EXPERIENCE',
-  'DESIGN / DEVELOPMENT',
-  'HISTORICAL',
-]);
+const errors = [];
+const allowedExperienceStatuses = new Set(['Đã kết thúc', 'Đã hoàn thành', 'Đang hoạt động', 'Đang thiết kế', 'Đang phát triển']);
+const allowedProjectStatuses = new Set(['Đã kết thúc', 'Đang phát triển', 'Dự án nội bộ', 'Đang thiết kế', 'Đã triển khai', 'Thiết kế hệ thống', 'Thiết kế / phát triển']);
+const privateProjects = new Set(['fpt-enterprise', 'linguasphere']);
 const forbiddenClaims = /\b(expert|master|advanced|senior|pentester|enterprise-grade|highly scalable)\b/i;
 const secretPattern = /(sk-[a-z0-9]{16,}|AIza[0-9a-z_-]{20,}|service[_ -]?role|supabase[_ -]?service[_ -]?role[_ -]?key|gemini[_ -]?api[_ -]?key|bearer\s+[a-z0-9._-]{20,})/i;
-const errors = [];
 
 function uniqueIds(items, label) {
   const ids = items.map((item) => item.id);
@@ -50,52 +31,50 @@ function collectStrings(value) {
   return [];
 }
 
-uniqueIds(projects, 'projects');
 uniqueIds(experiences, 'experiences');
-uniqueIds(liveProducts, 'live products');
-uniqueIds(caseStudies, 'case studies');
+uniqueIds(projects, 'projects');
 
 const projectIds = new Set(projects.map((project) => project.id));
 const experienceIds = new Set(experiences.map((experience) => experience.id));
-const caseIds = new Set(caseStudies.map((item) => item.id));
+const sortedExperiences = experiences.slice().sort((a, b) => a.order - b.order);
+const sortedProjects = projects.slice().sort((a, b) => a.order - b.order);
 
-for (const project of projects) {
-  if (!project.repository) errors.push(`Project ${project.id} is missing repository`);
-  if (!evidenceLevels.has(project.evidenceLevel)) errors.push(`Project ${project.id} has invalid evidence level`);
-  if (!projectStatuses.has(project.status)) errors.push(`Project ${project.id} has invalid status`);
-  if (project.status === 'LIVE' && !project.liveUrl) errors.push(`Live project ${project.id} is missing liveUrl`);
-  if (project.liveUrl) checkUrl(project.liveUrl, `Project ${project.id} liveUrl`);
-  if (project.repository) checkUrl(project.repository, `Project ${project.id} repository`);
-  for (const link of project.relatedUrls ?? []) checkUrl(link.url, `Project ${project.id} related link`);
-  for (const caseId of project.caseStudyIds ?? []) if (!caseIds.has(caseId)) errors.push(`Project ${project.id} references missing case ${caseId}`);
-}
+if (experiences.length !== 8) errors.push(`Expected 8 timeline entries, received ${experiences.length}`);
+if (sortedExperiences.some((experience, index) => experience.order !== index + 1)) errors.push('Timeline order must be a continuous sequence from 1 to 8');
+if (sortedProjects.some((project, index) => project.order !== index + 1)) errors.push('Project order must be a continuous sequence');
 
-for (const product of liveProducts) {
-  if (product.status !== 'LIVE') errors.push(`Live product ${product.id} must have LIVE status`);
-  if (!product.liveUrl) errors.push(`Live product ${product.id} is missing liveUrl`);
-  if (!projectIds.has(product.projectId) && product.projectId !== 'portfolio') errors.push(`Live product ${product.id} references missing project ${product.projectId}`);
-  checkUrl(product.liveUrl, `Live product ${product.id} liveUrl`);
-  if (product.repository) checkUrl(product.repository, `Live product ${product.id} repository`);
-}
-
-for (const group of capabilityGroups) {
-  for (const item of group.items) {
-    if (!item.evidenceProjectIds?.length && !item.evidenceExperienceIds?.length) errors.push(`Capability ${item.name} has no evidence mapping`);
-    for (const id of item.evidenceProjectIds ?? []) if (!projectIds.has(id)) errors.push(`Capability ${item.name} references missing project ${id}`);
-    for (const id of item.evidenceExperienceIds ?? []) if (!experienceIds.has(id)) errors.push(`Capability ${item.name} references missing experience ${id}`);
+for (const experience of experiences) {
+  if (!allowedExperienceStatuses.has(experience.status)) errors.push(`Experience ${experience.id} has an invalid status`);
+  if (experience.highlights.length > 3) errors.push(`Experience ${experience.id} has more than 3 highlights`);
+  for (const projectId of experience.projectIds) {
+    if (!projectIds.has(projectId)) errors.push(`Experience ${experience.id} references missing project ${projectId}`);
   }
 }
 
-const content = collectStrings({ projects, experiences, liveProducts, capabilityGroups, caseStudies });
+for (const project of projects) {
+  if (!allowedProjectStatuses.has(project.status)) errors.push(`Project ${project.id} has an invalid status`);
+  if (!privateProjects.has(project.id) && !project.repository) errors.push(`Project ${project.id} is missing repository`);
+  if (project.timelineExperienceId && !experienceIds.has(project.timelineExperienceId)) errors.push(`Project ${project.id} references missing experience ${project.timelineExperienceId}`);
+  if (project.liveUrl) checkUrl(project.liveUrl, `Project ${project.id} liveUrl`);
+  if (project.repository) checkUrl(project.repository, `Project ${project.id} repository`);
+  for (const link of project.relatedUrls ?? []) checkUrl(link.url, `Project ${project.id} related link`);
+}
+
+for (const link of navigationLinks) {
+  if (!link.url.startsWith('#') || !sectionIds.includes(link.url.slice(1))) errors.push(`Navigation link ${link.label} points to a missing section`);
+}
+for (const link of contactLinks) checkUrl(link.url, `Contact link ${link.label}`);
+
+const content = collectStrings({ experiences, projects });
 for (const value of content) {
   if (forbiddenClaims.test(value)) errors.push(`Potential overclaim detected: ${value}`);
   if (secretPattern.test(value)) errors.push(`Potential secret-like value detected: ${value}`);
 }
 
 if (errors.length) {
-  console.error('Project data validation failed:');
+  console.error('Portfolio data validation failed:');
   errors.forEach((error) => console.error(`- ${error}`));
   process.exit(1);
 }
 
-console.log(`Project data valid: ${projects.length} projects, ${liveProducts.length} live products, ${capabilityGroups.length} capability groups, ${caseStudies.length} case studies.`);
+console.log(`Portfolio data valid: ${experiences.length} timeline entries, ${projects.length} projects.`);

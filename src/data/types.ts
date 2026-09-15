@@ -52,26 +52,28 @@ export interface Profile {
 
 export interface Experience {
   id: string;
+  order: number;
   organization: string;
   period: string;
   role: string;
-  evidenceLevel: EvidenceLevel;
+  status: string;
   summary: string;
   highlights: string[];
   stack: string[];
+  projectIds: string[];
 }
 
 export interface Project {
   id: string;
+  order: number;
+  timelineExperienceId?: string;
   name: string;
   category: string;
-  status: ProjectStatus;
-  evidenceLevel: EvidenceLevel;
+  status: string;
   role: string;
   summary: string;
-  problem: string;
-  solution: string;
-  highlights: string[];
+  architecture: string;
+  workDone: string[];
   stack: Record<string, string[]>;
   repository?: string;
   liveUrl?: string;

@@ -1,67 +1,93 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it } from 'vitest';
-import { capabilityGroups } from '../src/data/capabilities';
-import { caseStudies } from '../src/data/case-studies';
 import { experiences } from '../src/data/experience';
-import { liveProducts } from '../src/data/live-products';
 import { navigationLinks } from '../src/data/links';
 import { projects } from '../src/data/projects';
 import { mountPortfolio } from '../src/main';
 
-describe('portfolio data contract', () => {
-  it('has unique project IDs and all flagship repositories', () => {
-    expect(new Set(projects.map((project) => project.id)).size).toBe(projects.length);
-    expect(projects).toHaveLength(7);
-    expect(projects.every((project) => project.repository)).toBe(true);
+describe('timeline and project data', () => {
+  it('contains eight ordered timeline entries', () => {
+    expect(experiences).toHaveLength(8);
+    expect(experiences.map((experience) => experience.order)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+    expect(experiences.every((experience) => experience.projectIds.length > 0)).toBe(true);
   });
 
-  it('maps every capability item to project or experience evidence', () => {
-    expect(capabilityGroups.flatMap((group) => group.items).every((item) => item.evidenceProjectIds?.length || item.evidenceExperienceIds?.length)).toBe(true);
+  it('keeps projects in timeline order and supports private projects without fake links', () => {
+    expect(projects.map((project) => project.id)).toEqual([
+      'learn2earn',
+      'labvnua',
+      'fpt-enterprise',
+      'nanobio',
+      'linguasphere',
+      'hvc-management',
+      'study2work',
+      'nihongo',
+      'hung-quynh',
+      'portfolio',
+    ]);
+    expect(projects.find((project) => project.id === 'fpt-enterprise')?.repository).toBeUndefined();
+    expect(projects.find((project) => project.id === 'linguasphere')?.liveUrl).toBeUndefined();
   });
 
-  it('keeps live products and live projects actionable', () => {
-    expect(liveProducts).toHaveLength(6);
-    expect(liveProducts.every((product) => product.status === 'LIVE' && product.liveUrl.startsWith('https://'))).toBe(true);
-    expect(projects.filter((project) => project.status === 'LIVE').every((project) => project.liveUrl)).toBe(true);
-  });
-
-  it('preserves evidence counts and the planned case-study set', () => {
-    expect(experiences.find((experience) => experience.id === 'fpt-intern')?.highlights.join(' ')).toContain('06 REST API');
-    expect(experiences.find((experience) => experience.id === 'fpt-intern')?.highlights.join(' ')).toContain('02 màn hình');
-    expect(caseStudies).toHaveLength(7);
+  it('preserves the FPT measurable work', () => {
+    const fpt = experiences.find((experience) => experience.id === 'fpt-intern');
+    expect(fpt?.highlights.join(' ')).toContain('06 REST API');
+    expect(fpt?.highlights.join(' ')).toContain('02 màn hình');
   });
 });
 
-describe('portfolio rendering', () => {
+describe('simple portfolio rendering', () => {
   beforeEach(() => {
-    document.body.innerHTML = '<div id="siteHeader"></div><main id="app"></main><div id="siteFooter"></div><div id="progressBar"></div>';
+    document.documentElement.dataset.theme = 'dark';
+    document.body.innerHTML = '<div id="siteHeader"></div><main id="app"></main><div id="siteFooter"></div>';
     mountPortfolio();
   });
 
-  it('renders navigation, sections, projects, live products and capability evidence', () => {
+  it('renders Timeline first, then Projects, then Contact', () => {
+    const sections = [...document.querySelectorAll('main section[id]')].map((section) => section.id);
+    expect(sections).toEqual(['experience', 'projects', 'contact']);
+    expect(document.querySelectorAll('.timeline-item')).toHaveLength(8);
+    expect(document.querySelectorAll('.project-card')).toHaveLength(10);
     expect(document.querySelectorAll('.nav-link')).toHaveLength(navigationLinks.length * 2);
-    expect(document.querySelectorAll('.project-card')).toHaveLength(7);
-    expect(document.querySelectorAll('.live-product-card')).toHaveLength(6);
-    expect(document.querySelectorAll('.capability-item').length).toBeGreaterThan(30);
-    expect(document.querySelector('#cases')).toBeTruthy();
-    expect(document.querySelector('#contact')).toBeTruthy();
+    expect(document.querySelector('#capabilities')).toBeNull();
+    expect(document.querySelector('#cases')).toBeNull();
+    expect(document.querySelector('#live-products')).toBeNull();
   });
 
-  it('opens and closes a project detail modal', () => {
+  it('renders the project detail fields and only real actions', () => {
     const trigger = document.querySelector<HTMLButtonElement>('[data-project-id="nanobio"]');
     const modal = document.querySelector<HTMLElement>('#projectModal');
-    expect(trigger).toBeTruthy();
+    trigger?.focus();
     trigger?.click();
     expect(modal?.classList.contains('open')).toBe(true);
     expect(document.querySelector('#modal-title')?.textContent).toContain('NanoBio');
+    expect(document.querySelector('#modal-summary')?.textContent).toContain('chăm sóc sức khỏe');
+    expect(document.querySelector('.modal-label')?.textContent).toContain('Tổng quan');
+    expect([...document.querySelectorAll('.modal-section')].some((section) => section.textContent?.includes('Kiến trúc'))).toBe(true);
+    expect(document.querySelector('.modal-actions a[href*="github.com"]')).toBeTruthy();
+    expect(document.querySelector('.modal-actions a[href*="NanoBioAI"]')).toBeTruthy();
     document.querySelector<HTMLButtonElement>('.modal-close')?.click();
     expect(modal?.classList.contains('open')).toBe(false);
+    expect(document.activeElement).toBe(trigger);
   });
 
-  it('toggles the theme without losing the page', () => {
-    const toggle = document.querySelector<HTMLButtonElement>('#themeToggle');
-    toggle?.click();
-    expect(['light', 'dark']).toContain(document.documentElement.dataset.theme);
+  it('does not render GitHub or demo CTA for private projects', () => {
+    document.querySelector<HTMLButtonElement>('[data-project-id="fpt-enterprise"]')?.click();
+    const actions = document.querySelector('.modal-actions');
+    expect(actions?.querySelector('a[href*="github.com"]')).toBeNull();
+    expect(actions?.querySelector('a[href*="github.io"]')).toBeNull();
+    expect(actions?.textContent).toContain('Repository nội bộ');
+  });
+
+  it('closes the modal with Escape and toggles theme', () => {
+    document.querySelector<HTMLButtonElement>('[data-project-id="study2work"]')?.click();
+    const modal = document.querySelector<HTMLElement>('#projectModal');
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(modal?.classList.contains('open')).toBe(false);
+
+    const originalTheme = document.documentElement.dataset.theme;
+    document.querySelector<HTMLButtonElement>('#themeToggle')?.click();
+    expect(document.documentElement.dataset.theme).not.toBe(originalTheme);
     expect(document.querySelector('#projects')).toBeTruthy();
   });
 });

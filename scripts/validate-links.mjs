@@ -1,5 +1,4 @@
 import { contactLinks, navigationLinks, sectionIds } from '../src/data/links.ts';
-import { liveProducts } from '../src/data/live-products.ts';
 import { projects } from '../src/data/projects.ts';
 
 const errors = [];
@@ -28,15 +27,9 @@ for (const project of projects) {
   if (project.liveUrl) checkUrl(project.liveUrl, `${project.name} live URL`);
   for (const link of project.relatedUrls ?? []) checkUrl(link.url, `${project.name} ${link.label}`);
 }
-for (const product of liveProducts) {
-  checkUrl(product.liveUrl, `${product.name} live URL`);
-  if (product.repository) checkUrl(product.repository, `${product.name} repository`);
-}
-
 const externalUrls = [...new Set([
   ...contactLinks.map((link) => link.url),
   ...projects.flatMap((project) => [project.repository, project.liveUrl, ...(project.relatedUrls ?? []).map((link) => link.url)]),
-  ...liveProducts.flatMap((product) => [product.liveUrl, product.repository]),
 ].filter((url) => url?.startsWith('https://')))]
   .map((url) => ({ url, parsed: checkUrl(url, 'External URL') }))
   .filter(({ parsed }) => parsed);

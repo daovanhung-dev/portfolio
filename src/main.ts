@@ -3,28 +3,19 @@ import './styles/global.css';
 import './styles/components.css';
 import './styles/responsive.css';
 
-import { renderCaseStudies } from './components/CaseStudies';
-import { renderCapabilityMatrix } from './components/CapabilityMatrix';
 import { renderContact, renderFooter } from './components/Footer';
-import { renderDirectionSections } from './components/DirectionSections';
-import { renderEducation } from './components/Education';
-import { renderExperienceTimeline } from './components/ExperienceTimeline';
 import { renderHeader } from './components/Header';
-import { renderHero } from './components/Hero';
-import { renderLiveProducts } from './components/LiveProductCard';
-import { renderProfileSummary } from './components/ProfileSummary';
+import { renderExperienceTimeline } from './components/ExperienceTimeline';
 import { renderProjectDialog, renderProjects } from './components/ProjectCard';
 import { renderProjectModalContent } from './components/ProjectModal';
-import { caseStudies } from './data/case-studies';
-import { capabilityGroups } from './data/capabilities';
-import { education } from './data/education';
-import { experiences } from './data/experience';
 import { contactLinks, navigationLinks } from './data/links';
-import { liveProducts } from './data/live-products';
+import { experiences } from './data/experience';
 import { profile } from './data/profile';
 import { projects } from './data/projects';
 
-function getSavedTheme(): 'light' | 'dark' | null {
+type Theme = 'light' | 'dark';
+
+function getSavedTheme(): Theme | null {
   try {
     const value = window.localStorage.getItem('portfolio-theme');
     return value === 'light' || value === 'dark' ? value : null;
@@ -33,16 +24,17 @@ function getSavedTheme(): 'light' | 'dark' | null {
   }
 }
 
-function preferredTheme(): 'light' | 'dark' {
+function preferredTheme(): Theme {
   return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
 
-function applyTheme(theme: 'light' | 'dark'): void {
+function applyTheme(theme: Theme): void {
   document.documentElement.dataset.theme = theme;
   const button = document.getElementById('themeToggle');
   if (!button) return;
   button.textContent = theme === 'light' ? '☾' : '☼';
   button.setAttribute('aria-label', theme === 'light' ? 'Chuyển sang giao diện tối' : 'Chuyển sang giao diện sáng');
+  button.setAttribute('title', theme === 'light' ? 'Giao diện tối' : 'Giao diện sáng');
 }
 
 function setupTheme(): void {
@@ -53,7 +45,7 @@ function setupTheme(): void {
     try {
       window.localStorage.setItem('portfolio-theme', next);
     } catch {
-      // Theme persistence is a progressive enhancement.
+      // Theme persistence is optional.
     }
   });
 }
@@ -66,42 +58,16 @@ function setupMobileNavigation(): void {
   const closeMenu = () => {
     menu.hidden = true;
     toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Mở menu');
   };
 
   toggle.addEventListener('click', () => {
     const open = menu.hidden;
     menu.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
   });
   menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
-}
-
-function setupProgress(): void {
-  const progressBar = document.getElementById('progressBar');
-  if (!progressBar) return;
-  const updateProgress = () => {
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    const percentage = height > 0 ? (window.scrollY / height) * 100 : 0;
-    progressBar.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
-  };
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
-}
-
-function setupReveal(): void {
-  const elements = document.querySelectorAll<HTMLElement>('.reveal');
-  if (!('IntersectionObserver' in window)) {
-    elements.forEach((element) => element.classList.add('visible'));
-    return;
-  }
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.12 });
-  elements.forEach((element) => observer.observe(element));
 }
 
 function setupActiveNavigation(): void {
@@ -119,39 +85,41 @@ function setupActiveNavigation(): void {
 function setupProjectModal(): void {
   const modal = document.getElementById('projectModal');
   const content = document.getElementById('modal-content');
-  const modalPanel = modal?.querySelector<HTMLElement>('.project-modal');
-  if (!modal || !content || !modalPanel) return;
-  const closeButton = modal.querySelector<HTMLButtonElement>('.modal-close');
+  const panel = modal?.querySelector<HTMLElement>('.project-modal');
+  const closeButton = modal?.querySelector<HTMLButtonElement>('.modal-close');
+  if (!modal || !content || !panel || !closeButton) return;
+
   let lastFocused: HTMLElement | null = null;
 
   const closeModal = () => {
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
-    if (lastFocused) lastFocused.focus();
+    lastFocused?.focus();
+  };
+
+  const openModal = (projectId: string, trigger: HTMLElement) => {
+    const project = projects.find((item) => item.id === projectId);
+    if (!project) return;
+    lastFocused = trigger;
+    content.innerHTML = renderProjectModalContent(project);
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    closeButton.focus();
   };
 
   document.querySelectorAll<HTMLButtonElement>('[data-project-id]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const project = projects.find((item) => item.id === button.dataset.projectId);
-      if (!project) return;
-      lastFocused = document.activeElement as HTMLElement;
-      content.innerHTML = renderProjectModalContent(project);
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('modal-open');
-      closeButton?.focus();
-    });
+    button.addEventListener('click', () => openModal(button.dataset.projectId ?? '', button));
   });
 
   modal.querySelectorAll<HTMLElement>('[data-modal-close]').forEach((element) => element.addEventListener('click', closeModal));
-  closeButton?.addEventListener('click', closeModal);
+  closeButton.addEventListener('click', closeModal);
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal.classList.contains('open')) closeModal();
-  });
-  modalPanel.addEventListener('keydown', (event) => {
+    if (!modal.classList.contains('open')) return;
+    if (event.key === 'Escape') closeModal();
     if (event.key !== 'Tab') return;
-    const focusable = [...modalPanel.querySelectorAll<HTMLElement>('button, a[href]')];
+    const focusable = [...panel.querySelectorAll<HTMLElement>('button, a[href], [tabindex]:not([tabindex="-1"])')];
     if (focusable.length === 0) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -173,15 +141,8 @@ export function mountPortfolio(documentRef: Document = document): void {
 
   header.innerHTML = renderHeader(profile, navigationLinks);
   app.innerHTML = [
-    renderHero(profile),
-    renderProfileSummary(profile),
     renderExperienceTimeline(experiences),
-    renderProjects(projects),
-    renderLiveProducts(liveProducts),
-    renderCapabilityMatrix(capabilityGroups, projects, experiences),
-    renderCaseStudies(caseStudies),
-    renderDirectionSections(profile),
-    renderEducation(education),
+    renderProjects(projects, experiences),
     renderContact(profile, contactLinks),
     renderProjectDialog(),
   ].join('');
@@ -189,8 +150,6 @@ export function mountPortfolio(documentRef: Document = document): void {
 
   setupTheme();
   setupMobileNavigation();
-  setupProgress();
-  setupReveal();
   setupActiveNavigation();
   setupProjectModal();
 }
