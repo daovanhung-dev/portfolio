@@ -23,14 +23,14 @@ export function renderProjectModalContent(project: Project): string {
     .map(([label, technologies]) => `<div class="modal-stack-group"><strong>${escapeHtml(label)}</strong><div>${technologyTags(technologies)}</div></div>`)
     .join('');
 
-  return `<div class="modal-header">
+  return `<div class="modal-header modal-motion-section">
       <div><span class="status-label">${escapeHtml(project.status)}</span><p class="modal-category">${escapeHtml(project.category)}</p></div>
       <h2 id="modal-title">${escapeHtml(project.name)}</h2>
       <p class="modal-role">${escapeHtml(project.role)}</p>
     </div>
-    <div class="modal-section modal-overview"><p class="modal-label">Tổng quan</p><p id="modal-summary">${escapeHtml(project.summary)}</p></div>
-    <div class="modal-section"><p class="modal-label">Công nghệ</p><div class="modal-stack">${stack}</div></div>
-    <div class="modal-section"><p class="modal-label">Kiến trúc</p><p>${escapeHtml(project.architecture)}</p></div>
-    <div class="modal-section"><p class="modal-label">Công việc mình đã làm</p><ul class="clean-list">${project.workDone.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></div>
-    <div class="modal-actions">${renderLinks(project)}</div>`;
+    <div class="modal-section modal-motion-section modal-overview"><p class="modal-label">Tổng quan</p><p id="modal-summary">${escapeHtml(project.summary)}</p></div>
+    <div class="modal-section modal-motion-section"><p class="modal-label">Công nghệ</p><div class="modal-stack">${stack}</div></div>
+    <div class="modal-section modal-motion-section"><p class="modal-label">Kiến trúc</p><p>${escapeHtml(project.architecture)}</p></div>
+    <div class="modal-section modal-motion-section"><p class="modal-label">Công việc mình đã làm</p><ul class="clean-list">${project.workDone.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></div>
+    <div class="modal-actions modal-motion-section">${renderLinks(project)}</div>`;
 }

@@ -10,7 +10,7 @@ body {
   background: var(--bg);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
-  transition: background .2s ease, color .2s ease;
+  transition: background-color var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard);
 }
 
 body.modal-open { overflow: hidden; }
@@ -41,6 +41,51 @@ button, a, summary { outline-offset: 4px; }
 .section-intro > p:last-child { max-width: 620px; margin: 0; color: var(--muted); font-size: 1.04rem; }
 .section-kicker { margin: 0; color: var(--accent); font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1200;
+  width: 100%;
+  height: 3px;
+  pointer-events: none;
+  background: transparent;
+}
+
+.scroll-progress-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--accent);
+  will-change: transform;
+}
+
+/* Motion is opt-in after mount so a failed script never leaves the page hidden. */
+.motion-reveal { opacity: 1; transform: none; }
+.motion-ready .motion-reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity var(--motion-base) var(--ease-standard), transform var(--motion-slow) var(--ease-emphasized);
+  transition-delay: calc(var(--motion-delay, 0) * 70ms);
+}
+.motion-ready .motion-reveal.is-visible { opacity: 1; transform: none; }
+
+.site-header,
+.card,
+.project-card,
+.contact-panel,
+.project-modal,
+.icon-btn,
+.btn,
+.technology-tag,
+.status-label {
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: var(--motion-fast);
+  transition-timing-function: var(--ease-standard);
+}
+
 .card {
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -64,4 +109,10 @@ button, a, summary { outline-offset: 4px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+  .motion-ready .motion-reveal,
+  .motion-ready .motion-reveal.is-visible { opacity: 1; transform: none; }
+  .timeline-node,
+  .modal-motion-section,
+  .modal-shell.open .project-modal { opacity: 1; transform: none; }
+  .scroll-progress-fill { will-change: auto; }
 }

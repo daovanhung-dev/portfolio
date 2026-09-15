@@ -3,7 +3,7 @@ import { escapeHtml, externalAttrs } from './utils';
 
 export function renderContact(profile: Profile, contactLinks: LinkItem[]): string {
   return `<section class="section shell" id="contact" aria-labelledby="contact-heading">
-    <div class="contact-panel reveal">
+    <div class="contact-panel motion-reveal" data-motion-delay="0">
       <div><p class="section-kicker">LIÊN HỆ</p><h2 id="contact-heading">Bạn muốn trao đổi về một dự án?</h2><p>Mình sẵn sàng nói chuyện về backend, Flutter, frontend hoặc phân tích hệ thống.</p></div>
       <div class="contact-actions">${contactLinks.map((link, index) => `<a class="btn ${index === 0 ? 'btn-primary' : 'btn-ghost'}" href="${escapeHtml(link.url)}"${externalAttrs(link.url)}>${escapeHtml(link.label)}${link.kind === 'external' ? ' ↗' : ''}</a>`).join('')}</div>
     </div>

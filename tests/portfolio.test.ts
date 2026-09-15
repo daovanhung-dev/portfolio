@@ -39,7 +39,8 @@ describe('timeline and project data', () => {
 describe('simple portfolio rendering', () => {
   beforeEach(() => {
     document.documentElement.dataset.theme = 'dark';
-    document.body.innerHTML = '<div id="siteHeader"></div><main id="app"></main><div id="siteFooter"></div>';
+    document.documentElement.classList.remove('motion-ready');
+    document.body.innerHTML = '<div class="scroll-progress"><span id="scrollProgress"></span></div><div id="siteHeader"></div><main id="app"></main><div id="siteFooter"></div>';
     mountPortfolio();
   });
 
@@ -52,6 +53,14 @@ describe('simple portfolio rendering', () => {
     expect(document.querySelector('#capabilities')).toBeNull();
     expect(document.querySelector('#cases')).toBeNull();
     expect(document.querySelector('#live-products')).toBeNull();
+  });
+
+  it('adds motion hooks without hiding content when IntersectionObserver is unavailable', () => {
+    expect(document.documentElement.classList.contains('motion-ready')).toBe(true);
+    const motionElements = [...document.querySelectorAll<HTMLElement>('.motion-reveal')];
+    expect(motionElements.length).toBeGreaterThan(10);
+    expect(motionElements.every((element) => element.classList.contains('is-visible'))).toBe(true);
+    expect(document.querySelector('#scrollProgress')).toBeTruthy();
   });
 
   it('renders the project detail fields and only real actions', () => {
@@ -89,5 +98,29 @@ describe('simple portfolio rendering', () => {
     document.querySelector<HTMLButtonElement>('#themeToggle')?.click();
     expect(document.documentElement.dataset.theme).not.toBe(originalTheme);
     expect(document.querySelector('#projects')).toBeTruthy();
+  });
+
+  it('animates mobile navigation state accessibly', () => {
+    const toggle = document.querySelector<HTMLButtonElement>('#mobileMenuToggle');
+    const menu = document.querySelector<HTMLElement>('#mobileNav');
+    expect(menu?.getAttribute('aria-hidden')).toBe('true');
+    expect(menu?.dataset.open).toBe('false');
+    toggle?.click();
+    expect(toggle?.getAttribute('aria-expanded')).toBe('true');
+    expect(menu?.getAttribute('aria-hidden')).toBe('false');
+    expect(menu?.dataset.open).toBe('true');
+    toggle?.click();
+    expect(toggle?.getAttribute('aria-expanded')).toBe('false');
+    expect(menu?.getAttribute('aria-hidden')).toBe('true');
+    expect(menu?.dataset.open).toBe('false');
+  });
+
+  it('closes the modal when clicking the backdrop', () => {
+    const trigger = document.querySelector<HTMLButtonElement>('[data-project-id="portfolio"]');
+    const modal = document.querySelector<HTMLElement>('#projectModal');
+    trigger?.click();
+    expect(modal?.classList.contains('open')).toBe(true);
+    document.querySelector<HTMLElement>('.modal-backdrop')?.click();
+    expect(modal?.classList.contains('open')).toBe(false);
   });
 });

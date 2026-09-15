@@ -7,7 +7,7 @@ function projectTags(project: Project): string {
 }
 
 function projectAction(project: Project): string {
-  const actions = `<button class="btn btn-small btn-primary" type="button" data-project-id="${escapeHtml(project.id)}" aria-haspopup="dialog">Xem chi tiết</button>`;
+  const actions = `<button class="btn btn-small btn-primary" type="button" data-project-id="${escapeHtml(project.id)}" aria-haspopup="dialog">Xem chi tiết <span class="button-arrow" aria-hidden="true">→</span></button>`;
   const repository = project.repository
     ? `<a class="btn btn-small btn-ghost" href="${escapeHtml(project.repository)}"${externalAttrs(project.repository)}>GitHub ↗</a>`
     : '<span class="link-note">Repository nội bộ</span>';
@@ -17,9 +17,9 @@ function projectAction(project: Project): string {
   return `${actions}${repository}${demo}`;
 }
 
-export function renderProjectCard(project: Project, experience?: Experience): string {
+export function renderProjectCard(project: Project, experience?: Experience, motionIndex = 0): string {
   const timelineLabel = experience ? `${experience.organization} · ${experience.period}` : 'Dự án bổ sung';
-  return `<article class="project-card${project.featured ? ' featured' : ''}">
+  return `<article class="project-card motion-reveal${project.featured ? ' featured' : ''}" data-motion-delay="${Math.min(motionIndex, 7)}">
     <div class="project-top"><span class="project-index">${String(project.order).padStart(2, '0')}</span><span class="status-label">${escapeHtml(project.status)}</span></div>
     <p class="project-timeline">${escapeHtml(timelineLabel)}</p>
     <h3>${escapeHtml(project.name)}</h3>
@@ -42,8 +42,8 @@ export function renderProjects(projects: Project[], experiences: Experience[]): 
       <h2 id="projects-heading">Các dự án mình đã làm</h2>
       <p>Chọn một dự án để xem công nghệ, kiến trúc, phần việc và link liên quan.</p>
     </div>
-    <div class="projects-grid">${timelineProjects.map((project) => renderProjectCard(project, project.timelineExperienceId ? experienceById.get(project.timelineExperienceId) : undefined)).join('')}</div>
-    ${additionalProjects.length ? `<div class="additional-projects"><h3>Dự án bổ sung</h3><div class="projects-grid">${additionalProjects.map((project) => renderProjectCard(project)).join('')}</div></div>` : ''}
+    <div class="projects-grid">${timelineProjects.map((project, index) => renderProjectCard(project, project.timelineExperienceId ? experienceById.get(project.timelineExperienceId) : undefined, index)).join('')}</div>
+    ${additionalProjects.length ? `<div class="additional-projects motion-reveal" data-motion-delay="0"><h3>Dự án bổ sung</h3><div class="projects-grid">${additionalProjects.map((project, index) => renderProjectCard(project, undefined, index)).join('')}</div></div>` : ''}
   </section>`;
 }
 

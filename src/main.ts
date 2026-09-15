@@ -55,19 +55,84 @@ function setupMobileNavigation(): void {
   const menu = document.getElementById('mobileNav');
   if (!toggle || !menu) return;
 
+  menu.hidden = false;
+  menu.dataset.open = 'false';
+  menu.setAttribute('aria-hidden', 'true');
+  menu.inert = true;
+
   const closeMenu = () => {
-    menu.hidden = true;
+    menu.dataset.open = 'false';
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Mở menu');
+    menu.setAttribute('aria-hidden', 'true');
+    menu.inert = true;
   };
 
   toggle.addEventListener('click', () => {
-    const open = menu.hidden;
-    menu.hidden = !open;
+    const open = menu.dataset.open !== 'true';
+    menu.dataset.open = String(open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
+    menu.setAttribute('aria-hidden', String(!open));
+    menu.inert = !open;
   });
   menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+}
+
+function prefersReducedMotion(): boolean {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+}
+
+function setupMotion(): void {
+  const elements = [...document.querySelectorAll<HTMLElement>('.motion-reveal')];
+  elements.forEach((element) => {
+    const delay = Number(element.dataset.motionDelay ?? 0);
+    element.style.setProperty('--motion-delay', String(Number.isFinite(delay) ? Math.min(Math.max(delay, 0), 7) : 0));
+  });
+
+  document.documentElement.classList.add('motion-ready');
+  const showImmediately = () => elements.forEach((element) => element.classList.add('is-visible'));
+  if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
+    showImmediately();
+    return;
+  }
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+  elements.forEach((element) => revealObserver.observe(element));
+
+  const timelineObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.target.classList.toggle('is-current', entry.isIntersecting));
+  }, { rootMargin: '-38% 0px -45% 0px', threshold: 0.1 });
+  document.querySelectorAll<HTMLElement>('.timeline-item').forEach((item) => timelineObserver.observe(item));
+}
+
+function setupScrollProgress(): void {
+  const progress = document.getElementById('scrollProgress');
+  if (!progress) return;
+  const requestFrame = (callback: FrameRequestCallback): number => {
+    if (typeof window.requestAnimationFrame === 'function') return window.requestAnimationFrame(callback);
+    return window.setTimeout(() => callback(performance.now()), 0);
+  };
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const amount = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+    progress.style.transform = `scaleX(${amount})`;
+  };
+  const schedule = () => {
+    if (frame) return;
+    frame = requestFrame(update);
+  };
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  schedule();
 }
 
 function setupActiveNavigation(): void {
@@ -103,6 +168,7 @@ function setupProjectModal(): void {
     if (!project) return;
     lastFocused = trigger;
     content.innerHTML = renderProjectModalContent(project);
+    panel.scrollTop = 0;
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
@@ -148,6 +214,8 @@ export function mountPortfolio(documentRef: Document = document): void {
   ].join('');
   footer.innerHTML = renderFooter(profile, contactLinks);
 
+  setupMotion();
+  setupScrollProgress();
   setupTheme();
   setupMobileNavigation();
   setupActiveNavigation();
