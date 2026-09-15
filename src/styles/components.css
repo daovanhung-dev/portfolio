@@ -100,6 +100,11 @@
 .modal-shell.open .modal-motion-section:nth-child(5) { transition-delay: 160ms; }
 .modal-shell.open .modal-motion-section:nth-child(6) { transition-delay: 200ms; }
 .modal-section p:not(.modal-label) { margin: 0; color: var(--muted); font-size: .9rem; }
+.modal-detail-text { margin-top: 12px !important; }
+.modal-detail-text strong, .modal-detail > strong { color: var(--text); font-weight: 750; }
+.modal-detail { margin-top: 14px; }
+.modal-detail:first-of-type { margin-top: 0; }
+.modal-detail .clean-list { margin-top: 8px; }
 .modal-label { margin: 0 0 8px; color: var(--text); font-size: .76rem; font-weight: 800; }
 .modal-stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .modal-stack-group > strong { display: block; margin-bottom: 7px; color: var(--accent); font-size: .77rem; }

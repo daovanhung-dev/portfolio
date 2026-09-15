@@ -34,6 +34,24 @@ describe('timeline and project data', () => {
     expect(fpt?.highlights.join(' ')).toContain('06 REST API');
     expect(fpt?.highlights.join(' ')).toContain('02 màn hình');
   });
+
+  it('keeps master-context scope notes for the important projects', () => {
+    const nanoBio = projects.find((project) => project.id === 'nanobio');
+    const hvc = projects.find((project) => project.id === 'hvc-management');
+    const study2Work = projects.find((project) => project.id === 'study2work');
+    const nihongo = projects.find((project) => project.id === 'nihongo');
+    const labVnua = projects.find((project) => project.id === 'labvnua');
+
+    expect(nanoBio?.architecture).toContain('SQLite local-first');
+    expect(nanoBio?.limitations?.join(' ')).toMatch(/partial/i);
+    expect(hvc?.businessFlow).toContain('ClassMonth');
+    expect(hvc?.limitations?.join(' ')).toMatch(/scope/i);
+    expect(study2Work?.limitations?.join(' ')).toMatch(/foundation/i);
+    expect(nihongo?.status).toBe('Thiết kế / phát triển');
+    expect(nihongo?.liveUrl).toBeUndefined();
+    expect(labVnua?.quality?.join(' ')).toMatch(/minimal/i);
+    expect(projects.every((project) => (project.evidence?.length ?? 0) > 0)).toBe(true);
+  });
 });
 
 describe('simple portfolio rendering', () => {
@@ -70,11 +88,13 @@ describe('simple portfolio rendering', () => {
     trigger?.click();
     expect(modal?.classList.contains('open')).toBe(true);
     expect(document.querySelector('#modal-title')?.textContent).toContain('NanoBio');
-    expect(document.querySelector('#modal-summary')?.textContent).toContain('chăm sóc sức khỏe');
+    expect(document.querySelector('#modal-summary')?.textContent).toContain('wellness local-first');
     expect(document.querySelector('.modal-label')?.textContent).toContain('Tổng quan');
     expect([...document.querySelectorAll('.modal-section')].some((section) => section.textContent?.includes('Kiến trúc'))).toBe(true);
     expect(document.querySelector('.modal-actions a[href*="github.com"]')).toBeTruthy();
     expect(document.querySelector('.modal-actions a[href*="NanoBioAI"]')).toBeTruthy();
+    expect(document.querySelector('.modal-evidence')?.textContent).toContain('Bằng chứng');
+    expect(document.querySelector('.modal-evidence')?.textContent).toContain('Phạm vi hiện tại');
     document.querySelector<HTMLButtonElement>('.modal-close')?.click();
     expect(modal?.classList.contains('open')).toBe(false);
     expect(document.activeElement).toBe(trigger);
@@ -86,6 +106,14 @@ describe('simple portfolio rendering', () => {
     expect(actions?.querySelector('a[href*="github.com"]')).toBeNull();
     expect(actions?.querySelector('a[href*="github.io"]')).toBeNull();
     expect(actions?.textContent).toContain('Repository nội bộ');
+  });
+
+  it('does not render a demo CTA for projects without a verified live URL', () => {
+    document.querySelector<HTMLButtonElement>('[data-project-id="nihongo"]')?.click();
+    const actions = document.querySelector('.modal-actions');
+    expect(actions?.querySelector('a[href*="github.com"]')).toBeTruthy();
+    expect(actions?.querySelector('a[href*="github.io"]')).toBeNull();
+    expect(actions?.textContent).not.toContain('Demo');
   });
 
   it('closes the modal with Escape and toggles theme', () => {

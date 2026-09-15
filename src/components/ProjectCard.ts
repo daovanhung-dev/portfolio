@@ -13,7 +13,7 @@ function projectAction(project: Project): string {
     : '<span class="link-note">Repository nội bộ</span>';
   const demo = project.liveUrl
     ? `<a class="btn btn-small btn-ghost" href="${escapeHtml(project.liveUrl)}"${externalAttrs(project.liveUrl)}>Demo ↗</a>`
-    : '';
+    : '<span class="link-note">Chưa có demo public</span>';
   return `${actions}${repository}${demo}`;
 }
 

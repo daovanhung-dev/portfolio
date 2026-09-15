@@ -72,8 +72,15 @@ export interface Project {
   status: string;
   role: string;
   summary: string;
+  problem?: string;
+  users?: string[];
+  solution?: string;
   architecture: string;
+  businessFlow?: string;
   workDone: string[];
+  quality?: string[];
+  evidence?: string[];
+  limitations?: string[];
   stack: Record<string, string[]>;
   repository?: string;
   liveUrl?: string;

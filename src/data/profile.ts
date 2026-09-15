@@ -4,12 +4,12 @@ export const profile: Profile = {
   name: 'Đào Văn Hùng',
   shortName: 'DVH',
   role: 'Full-stack Developer',
-  headline: 'Tôi xây sản phẩm từ business → system → code → test → delivery.',
+  headline: 'Tôi xây phần mềm từ bài toán nghiệp vụ đến lúc triển khai.',
   supportingStatement:
-    'Tập trung vào Backend Python, Flutter, PostgreSQL/Supabase, API & System Design, debugging xuyên tầng và AI-assisted Engineering.',
+    'Tập trung vào Backend Python, Flutter, PostgreSQL/Supabase, System Analysis và AI-assisted Engineering có kiểm chứng.',
   availability: 'Open to strong engineering opportunities',
   summary:
-    'Tôi kết nối được nhiều lớp của một sản phẩm: yêu cầu nghiệp vụ, thiết kế API/CSDL, implementation, kiểm thử, dữ liệu và điều tra lỗi. Tôi ưu tiên thay đổi có bằng chứng, traceability rõ và không coi source tồn tại đồng nghĩa với feature đã production-ready.',
+    'Tôi kết nối yêu cầu nghiệp vụ với thiết kế API/CSDL, frontend, mobile, kiểm thử và deployment. Tôi ưu tiên source-of-truth, ranh giới dữ liệu rõ và mô tả đúng mức độ hoàn thiện của từng dự án.',
   metrics: [
     { value: '06', label: 'REST APIs tại FPT' },
     { value: '02', label: 'Màn hình nghiệp vụ tại FPT' },
