@@ -69,6 +69,7 @@ These are single-run local preview measurements and can vary by machine/network.
 ## Migration coverage and limits
 
 - Migrated/reworked all 14 public project records, 7 experience records, 8 cases, 4 labs, 5 capability groups, and the profile, education and contact records. The inventory covers all legacy data groups, components, routes, tests, scripts and Vite config.
+- The Astro application source is pinned as `ev-astro-source` to `309ca6ec0d2e5f2151b927ccd5b637b8a74a42c7` on `feat/case-astro-redesign`; the content explicitly says that this branch is not deployed.
 - One empty repository remains inventory-only. Six old live-product flags remain `hold-unverified`. Sensitive private project material is excluded from current routes and sanitized historical copies.
 - Missing source remains for pre-window NanoBio history, the master-profile PDF and original chat history. Portfolio and other project backend/runtime/deployment behavior was not independently tested by this migration.
 - Run locally with `npm ci`, `npm run dev`, and open `http://localhost:4321/portfolio/`. Preview a production build with `npm run build` then `npm run preview`.

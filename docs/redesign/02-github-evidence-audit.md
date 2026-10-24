@@ -4,6 +4,8 @@
 **Window:** 2026-08-24 00:00 through 2026-10-24 23:59 +07
 **Coverage source:** existing `docs/audit/01_REPOSITORY_INVENTORY.csv`, `03_SOURCE_STATUS_MATRIX.csv`, and SHA-keyed logs. Public branch refs were refreshed with `git ls-remote` on 2026-10-24; no public ref moved since the recorded snapshot.
 
+The new portfolio implementation was recorded separately at commit `309ca6ec0d2e5f2151b927ccd5b637b8a74a42c7` on `feat/case-astro-redesign`. It is source evidence for this migration and does not imply a Pages deployment.
+
 ## Repository and branch coverage
 
 | Repository | Default branch / SHA | Latest relevant branch / SHA | Branches | Window commits | Evidence treatment |

@@ -12,6 +12,18 @@
     "publicSafe": true
   },
   {
+    "id": "ev-astro-source",
+    "kind": "verified-source",
+    "repoId": "portfolio",
+    "path": "astro.config.mjs",
+    "commitSha": "309ca6ec0d2e5f2151b927ccd5b637b8a74a42c7",
+    "branch": "feat/case-astro-redesign",
+    "url": "https://github.com/daovanhung-dev/portfolio/blob/309ca6ec0d2e5f2151b927ccd5b637b8a74a42c7/astro.config.mjs",
+    "observedAt": "2026-10-24",
+    "note": "Astro static build, GitHub Pages base, content model, routes, and review artifacts at the migration checkpoint; this branch is not deployed.",
+    "publicSafe": true
+  },
+  {
     "id": "ev-nano-mobile",
     "kind": "verified-source",
     "repoId": "nanobio",
