@@ -47,6 +47,21 @@ test('navigation, theme switch, and keyboard focus work', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Dự án', level: 1 })).toBeVisible();
 });
 
+test('profile portraits load with base-aware URLs on home and about pages', async ({ page }) => {
+  for (const path of ['', 'about/']) {
+    await page.goto(APP + path);
+    const portraits = page.locator('img[alt="Chân dung Đào Văn Hùng"]');
+    await expect(portraits).toHaveCount(1);
+    await expect(portraits).toBeVisible();
+    await expect(portraits).toHaveAttribute('src', APP + 'AVT.jpg');
+    const imageLoaded = await portraits.evaluate((image) => {
+      const portrait = image as HTMLImageElement;
+      return portrait.complete && portrait.naturalWidth > 0;
+    });
+    expect(imageLoaded, path || 'home').toBe(true);
+  }
+});
+
 test('project filters enhance the static list and retain an all-items state', async ({ page, browser }) => {
   await page.goto(APP + 'projects/');
   const cards = page.locator('[data-project-card]');

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import SiteLayout from '../components/SiteLayout.astro';
+import { siteAsset } from '../utils/paths';
 
 const [profiles, educationRecords] = await Promise.all([
   getCollection('profile'),
@@ -12,10 +13,23 @@ const education = educationRecords[0].data;
 
 <SiteLayout title="Giới thiệu — Đào Văn Hùng" description="Tìm hiểu về Đào Văn Hùng, kỹ sư phần mềm tập trung vào backend, ứng dụng di động và thiết kế hệ thống.">
   <div class="page-shell">
-    <header class="page-intro">
-      <span class="eyebrow">Giới thiệu</span>
-      <h1 class="page-title">{profile.name}</h1>
-      <p class="page-lede">{profile.summary}</p>
+    <header class="page-intro page-intro--profile">
+      <div class="page-intro__content">
+        <span class="eyebrow">Giới thiệu</span>
+        <h1 class="page-title">{profile.name}</h1>
+        <p class="page-lede">{profile.summary}</p>
+      </div>
+      <div class="profile-portrait-frame profile-portrait--about">
+        <img
+          class="profile-portrait"
+          src={siteAsset('AVT.jpg')}
+          alt="Chân dung Đào Văn Hùng"
+          width="960"
+          height="958"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
     </header>
     <section class="section section--compact">
       <div class="section-heading">
