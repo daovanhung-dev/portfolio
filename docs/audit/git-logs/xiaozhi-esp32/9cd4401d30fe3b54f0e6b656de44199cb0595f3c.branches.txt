@@ -1,0 +1,91 @@
+* main                                                            9cd4401 [origin/main] feat(board): add support for OSTB XiaoZhi 3ST with configuration and documentation
+  remotes/origin/HEAD                                             -> origin/main
+  remotes/origin/aec_improve                                      e2935a5 refactor(audio): unify speech processing engines
+  remotes/origin/bed-operator                                     737333e Add bed-operator board
+  remotes/origin/ci/fix-build-options                             78f362a fix(build): honor board-compatible build options
+  remotes/origin/ci/idf6-migration                                0e1aeb2 Update project version to 2.4.0 and adjust component dependencies
+  remotes/origin/codex/esp-s31-function-coreboard-1               9a5d913 ci: build ESP32-S31 with IDF 6.1
+  remotes/origin/codex/esp-sr-p4-lcdwiki-idf6                     d5a17cf fix: build LCDWiki ES3C35P with ESP-IDF 6
+  remotes/origin/codex/expected-error-handling                    00b77f0 Merge main and preserve MCP validation, response routing and OLED power saving
+  remotes/origin/codex/fix-draft-release-lookup                   3621528 fix(ci): verify draft releases through their stable IDs
+  remotes/origin/codex/fix-russian-translations                   c3cb9b8 fix(i18n): separate Russian hotspot and browser hints
+  remotes/origin/codex/fix-slovak-prompts                         afca508 fix(audio): refresh Slovak voice prompts
+  remotes/origin/codex/fix-tab5-st712x-display                    804f713 Fix Tab5 ST7121 and ST7123 display detection
+  remotes/origin/codex/fix-wdmomo-cgc-kconfig                     0705ffa fix: restore WDMomo CGC LCD selection
+  remotes/origin/codex/fix-zectrix-build                          34c7902 Fix Zectrix ESP32-S3 build
+  remotes/origin/codex/idf6-migration-hardening                   28e8b56 Allow Git diff in CI container
+  remotes/origin/codex/language-wake-ci                           dec42c4 fix: select default wake words from build language
+  remotes/origin/codex/manual-release-workflow                    68250dd ci: add manual full-matrix firmware release workflow
+  remotes/origin/codex/notify-playback                            6be6515 Add streamed notify playback
+  remotes/origin/codex/noto-font-glyph-push                       b0e838b refactor: improve wake word invocation handling
+  remotes/origin/codex/refactor-board-structure                   9e0f8ae refactor: centralize board build configuration
+  remotes/origin/codex/refine-issue-forms                         801023c Refine GitHub issue forms
+  remotes/origin/codex/remove-p4-bsp-esp-video-2-3                5e049bb Decouple P4 function board from BSP
+  remotes/origin/codex/remove-unreliable-acoustic-provisioning    e4b59fe refactor: remove unreliable acoustic provisioning
+  remotes/origin/codex/startup-wake-word-hint                     a190167 feat: show startup wake words in a temporary chat message
+  remotes/origin/copilot/feature-configurable-camera-resolution   38c0a89 feat(camera): advertise sensor-supported resolutions in MCP description
+  remotes/origin/copilot/fix-backlight-brightness-control         d90beda Add config.h/cc, Kconfig, CMakeLists wiring for 3.49B board; update release test
+  remotes/origin/copilot/fix-bread-compact-wifi-lcd-crash         10bd3df Remove esp_timer_delete from destructor to match original behavior
+  remotes/origin/copilot/fix-expression-blinking-issue            dd8b40d Fix GIF emoji flickering by merging lock scopes in SetEmotion()
+  remotes/origin/copilot/fix-gc0308-spelling-error                e033a1e Fix GC0308 camera Kconfig typo on atk-dnesp32s3-box3
+  remotes/origin/copilot/fix-gif-switch-crash                     a6357c4 Fix GIF emotion switching crash: hide emoji_image_ before destroying gif_controller_
+  remotes/origin/copilot/fix-horizontally-mirrored-camera-image   34de28f Fix mirrored camera image on AtomS3R-M12 (OV3660)
+  remotes/origin/copilot/fix-lcd-display-chat-message             d9a3c63 Use Application::Schedule() for display updates in callbacks
+  remotes/origin/copilot/fix-readme-content-issue                 1896c56 Restore README.md and update Discord links to https://discord.gg/C759fGMBcZ in all language versions
+  remotes/origin/copilot/fix-softap-crash-issue                   c10757d chore: clarify deferred reconnect fallback log
+  remotes/origin/copilot/fix-volume-control-issue                 969dde0 Fix crash when adjusting volume via button while audio device is disabled
+  remotes/origin/copilot/m5stack-tab5-fix-st7123-display-issue    a0e2567 Fix Tab5 ST7123 black screen via PI4IO LCD reset and IDF6 DMA2D
+  remotes/origin/copilot/set-default-dark-theme                   dcd1fcc Add comprehensive dark theme documentation
+  remotes/origin/copilot/update-project-version-225               65d0d8c bump version to 2.2.5
+  remotes/origin/fix/mqtt-send-audio-lock                         f5b495d fix(mqtt): do not hold channel_mutex_ while sending UDP audio
+  remotes/origin/license_tools                                    8e57229 refactor for windows (#1021)
+  remotes/origin/listening_wakeword                               f39c112 Refactor audio processing to enhance thread safety and state management
+  remotes/origin/main                                             9cd4401 feat(board): add support for OSTB XiaoZhi 3ST with configuration and documentation
+  remotes/origin/release                                          6b44a1b Bump to 2.2.4
+  remotes/origin/revert-2112-ES3C35P                              0d0ea8c Revert "Add support for LCD Wiki ES3C35P board configuration and files (#2112)"
+  remotes/origin/v1                                               3332f79 [BugFix]upgrade image_player component to ^1.1.1 and esp_emote_gfx to ^1.0.2 (#1427)
+  remotes/upstream/aec_improve                                    e2935a5 refactor(audio): unify speech processing engines
+  remotes/upstream/bed-operator                                   737333e Add bed-operator board
+  remotes/upstream/ci/fix-build-options                           78f362a fix(build): honor board-compatible build options
+  remotes/upstream/ci/idf6-migration                              0e1aeb2 Update project version to 2.4.0 and adjust component dependencies
+  remotes/upstream/codex/esp-s31-function-coreboard-1             9a5d913 ci: build ESP32-S31 with IDF 6.1
+  remotes/upstream/codex/esp-sr-p4-lcdwiki-idf6                   d5a17cf fix: build LCDWiki ES3C35P with ESP-IDF 6
+  remotes/upstream/codex/expected-error-handling                  00b77f0 Merge main and preserve MCP validation, response routing and OLED power saving
+  remotes/upstream/codex/fix-draft-release-lookup                 3621528 fix(ci): verify draft releases through their stable IDs
+  remotes/upstream/codex/fix-russian-translations                 c3cb9b8 fix(i18n): separate Russian hotspot and browser hints
+  remotes/upstream/codex/fix-slovak-prompts                       afca508 fix(audio): refresh Slovak voice prompts
+  remotes/upstream/codex/fix-tab5-st712x-display                  804f713 Fix Tab5 ST7121 and ST7123 display detection
+  remotes/upstream/codex/fix-wdmomo-cgc-kconfig                   0705ffa fix: restore WDMomo CGC LCD selection
+  remotes/upstream/codex/fix-zectrix-build                        34c7902 Fix Zectrix ESP32-S3 build
+  remotes/upstream/codex/idf6-migration-hardening                 28e8b56 Allow Git diff in CI container
+  remotes/upstream/codex/language-wake-ci                         dec42c4 fix: select default wake words from build language
+  remotes/upstream/codex/manual-release-workflow                  68250dd ci: add manual full-matrix firmware release workflow
+  remotes/upstream/codex/notify-playback                          6be6515 Add streamed notify playback
+  remotes/upstream/codex/noto-font-glyph-push                     b0e838b refactor: improve wake word invocation handling
+  remotes/upstream/codex/recommend-idf-release-v6.1               9a2ca76 docs: recommend ESP-IDF release/v6.1 branch
+  remotes/upstream/codex/refactor-board-structure                 9e0f8ae refactor: centralize board build configuration
+  remotes/upstream/codex/refine-issue-forms                       801023c Refine GitHub issue forms
+  remotes/upstream/codex/remove-p4-bsp-esp-video-2-3              5e049bb Decouple P4 function board from BSP
+  remotes/upstream/codex/remove-unreliable-acoustic-provisioning  e4b59fe refactor: remove unreliable acoustic provisioning
+  remotes/upstream/codex/startup-wake-word-hint                   a190167 feat: show startup wake words in a temporary chat message
+  remotes/upstream/copilot/feature-configurable-camera-resolution 38c0a89 feat(camera): advertise sensor-supported resolutions in MCP description
+  remotes/upstream/copilot/fix-backlight-brightness-control       d90beda Add config.h/cc, Kconfig, CMakeLists wiring for 3.49B board; update release test
+  remotes/upstream/copilot/fix-bread-compact-wifi-lcd-crash       10bd3df Remove esp_timer_delete from destructor to match original behavior
+  remotes/upstream/copilot/fix-expression-blinking-issue          dd8b40d Fix GIF emoji flickering by merging lock scopes in SetEmotion()
+  remotes/upstream/copilot/fix-gc0308-spelling-error              e033a1e Fix GC0308 camera Kconfig typo on atk-dnesp32s3-box3
+  remotes/upstream/copilot/fix-gif-switch-crash                   a6357c4 Fix GIF emotion switching crash: hide emoji_image_ before destroying gif_controller_
+  remotes/upstream/copilot/fix-horizontally-mirrored-camera-image 34de28f Fix mirrored camera image on AtomS3R-M12 (OV3660)
+  remotes/upstream/copilot/fix-lcd-display-chat-message           d9a3c63 Use Application::Schedule() for display updates in callbacks
+  remotes/upstream/copilot/fix-readme-content-issue               1896c56 Restore README.md and update Discord links to https://discord.gg/C759fGMBcZ in all language versions
+  remotes/upstream/copilot/fix-softap-crash-issue                 c10757d chore: clarify deferred reconnect fallback log
+  remotes/upstream/copilot/fix-volume-control-issue               969dde0 Fix crash when adjusting volume via button while audio device is disabled
+  remotes/upstream/copilot/m5stack-tab5-fix-st7123-display-issue  a0e2567 Fix Tab5 ST7123 black screen via PI4IO LCD reset and IDF6 DMA2D
+  remotes/upstream/copilot/set-default-dark-theme                 dcd1fcc Add comprehensive dark theme documentation
+  remotes/upstream/copilot/update-project-version-225             65d0d8c bump version to 2.2.5
+  remotes/upstream/fix/mqtt-send-audio-lock                       f5b495d fix(mqtt): do not hold channel_mutex_ while sending UDP audio
+  remotes/upstream/license_tools                                  8e57229 refactor for windows (#1021)
+  remotes/upstream/listening_wakeword                             f39c112 Refactor audio processing to enhance thread safety and state management
+  remotes/upstream/main                                           39d23ae Merge pull request #2348 from cyberai8/add-cyber-vocat
+  remotes/upstream/release                                        6b44a1b Bump to 2.2.4
+  remotes/upstream/revert-2112-ES3C35P                            0d0ea8c Revert "Add support for LCD Wiki ES3C35P board configuration and files (#2112)"
+  remotes/upstream/v1                                             3332f79 [BugFix]upgrade image_player component to ^1.1.1 and esp_emote_gfx to ^1.0.2 (#1427)

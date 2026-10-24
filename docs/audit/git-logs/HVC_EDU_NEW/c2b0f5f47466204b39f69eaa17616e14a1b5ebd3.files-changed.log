@@ -1,0 +1,1082 @@
+COMMIT	c2b0f5f47466204b39f69eaa17616e14a1b5ebd3	2026-10-15T21:48:22+07:00	2026-10-15T21:48:22+07:00	Dao Van Hung	test: assert eligibility permission errors
+
+M	supabase/tests/session_staff_timesheet_eligibility.test.sql
+COMMIT	eb197d90441b825acf06ae4860fad9bae9c19bf5	2026-10-15T21:44:43+07:00	2026-10-15T21:44:43+07:00	Dao Van Hung	test: seed eligibility after roster assignment
+
+M	supabase/tests/session_staff_timesheet_eligibility.test.sql
+COMMIT	e91585e727fb21a493521c066119f6706e2ffcc1	2026-10-15T21:37:17+07:00	2026-10-15T21:37:17+07:00	Dao Van Hung	test: align attendance assertions and migration gate
+
+M	.github/workflows/deploy-supabase-migrations.yml
+COMMIT	d291a71d938a31b507cd3a2be82b4c80a25bb292	2026-10-15T21:36:32+07:00	2026-10-15T21:36:32+07:00	Dao Van Hung	test: match attendance guards and privileges
+
+M	supabase/tests/admin_session_attendance_timesheets.test.sql
+COMMIT	d585acf05c8f2a1a010fadb2a829dd2ab1e368c0	2026-10-15T21:31:17+07:00	2026-10-15T21:31:17+07:00	Dao Van Hung	test: inspect eligibility decisions as database owner
+
+M	supabase/tests/admin_session_attendance_timesheets.test.sql
+COMMIT	55dd5a438cf9d749dc13e6c2af925c28c4b6acef	2026-10-15T21:27:01+07:00	2026-10-15T21:27:01+07:00	Dao Van Hung	ci: handle legacy function defaults in migration tests
+
+M	.github/workflows/deploy-supabase-migrations.yml
+COMMIT	56e9548b7a0cfa031d0e6297a6b602c2ee722bbe	2026-10-15T21:16:19+07:00	2026-10-15T21:16:19+07:00	Dao Van Hung	ci: gate production migration deploy behind explicit input
+
+M	.github/workflows/deploy-supabase-migrations.yml
+COMMIT	f1e00a2523b6f4de02ea0fbe3c6a8d4aabbc66a2	2026-10-15T21:14:22+07:00	2026-10-15T21:14:22+07:00	Dao Van Hung	ci: skip production attendance import in local migration tests
+
+M	.github/workflows/deploy-supabase-migrations.yml
+COMMIT	9848933d57effbdfeaab7412e95d74df87edebfb	2026-10-15T21:00:03+07:00	2026-10-15T21:00:03+07:00	Dao Van Hung	ci: run migration tests with database-only stack
+
+M	.github/workflows/deploy-supabase-migrations.yml
+COMMIT	a0fa4fbe73338acf4151302ff598b66db312b915	2026-10-15T20:51:28+07:00	2026-10-15T20:51:28+07:00	Dao Van Hung	feat: update agent guidelines for Chrome usage and production operations
+
+M	AGENTS.md
+M	docs/agent-context/README.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/development-and-release.md
+M	frontend/AGENTS.md
+M	supabase/AGENTS.md
+COMMIT	04b4c8a50399424f9d14648c12dd53174d0ded31	2026-10-15T20:43:59+07:00	2026-10-15T20:43:59+07:00	Codex	fix: load session timesheet eligibility safely
+
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+A	supabase/tests/session_staff_timesheet_eligibility.test.sql
+COMMIT	564263d05741b5874aa261915bd27868d4018bc9	2026-10-15T20:41:40+07:00	2026-10-15T20:41:40+07:00	Đào Văn Hùng	feat: add scoped timesheet eligibility RPC
+
+A	supabase/migrations/0060_session_staff_timesheet_eligibility_read.sql
+COMMIT	2cd2960f0b8d8701597e14ecb7b9e10fb8c16011	2026-10-15T20:41:10+07:00	2026-10-15T20:41:10+07:00	Đào Văn Hùng	ci: validate and deploy reviewed Supabase migrations
+
+A	.github/workflows/deploy-supabase-migrations.yml
+COMMIT	2f234e1ece130f6b9b5f3cf5ab0fe8a9d1842bd0	2026-10-10T21:16:06+07:00	2026-10-10T21:16:06+07:00	DaoVanHung	feat: add admin session attendance and timesheet management
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/product-and-workflows.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/modules/admin/pages/AdminTimesheetsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminTimesheetsPage.vue
+M	frontend/src/modules/staff/pages/StaffTimesheetsPage.test.ts
+M	frontend/src/modules/staff/pages/StaffTimesheetsPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/types/domain.ts
+M	frontend/src/shared/utils/errors.ts
+M	scripts/agent-context-inventory.mjs
+M	supabase/AGENTS.md
+A	supabase/migrations/0059_admin_session_attendance_timesheets.sql
+A	supabase/tests/admin_session_attendance_timesheets.test.sql
+COMMIT	dff834acfc3d798afce1a709d7f850b168ba2536	2026-10-10T16:02:06+07:00	2026-10-10T16:02:06+07:00	DaoVanHung	feat: enhance error handling for month schedule Excel import functionality
+
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+COMMIT	59a159e7b8b0d9494b06b7486153d7a24d6eec09	2026-10-10T15:56:52+07:00	2026-10-10T15:56:52+07:00	DaoVanHung	Add SQL test for month week schedule Excel import functionality
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/product-and-workflows.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+A	frontend/src/modules/admin/utils/month-week-schedule-import.test.ts
+A	frontend/src/modules/admin/utils/month-week-schedule-import.ts
+M	frontend/src/services/commands.test.ts
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.ts
+A	supabase/migrations/0058_month_week_schedule_excel_import.sql
+A	supabase/tests/month_week_schedule_excel_import.test.sql
+COMMIT	f6c5371f715f44add5347458d4b09a95ecc92093	2026-10-10T15:09:12+07:00	2026-10-10T15:09:12+07:00	DaoVanHung	feat: add current class summaries for students and enhance student detail page
+
+M	frontend/src/devtools/ui-review/mock-services.ts
+A	frontend/src/modules/admin/pages/StudentDetailPage.test.ts
+M	frontend/src/modules/admin/pages/StudentDetailPage.vue
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/types/domain.ts
+COMMIT	1cd8200bda4cf7b27ccac8d6d1230942781654db	2026-10-10T14:27:47+07:00	2026-10-10T14:27:47+07:00	DaoVanHung	feat: implement student intake functionality with parsing, validation, and template download
+
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/devtools/ui-review/mock-services.ts
+A	frontend/src/modules/admin/components/StudentQuickEnrollmentModal.vue
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+A	frontend/src/modules/admin/utils/student-intake.test.ts
+A	frontend/src/modules/admin/utils/student-intake.ts
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+M	scripts/agent-context-inventory.mjs
+M	supabase/AGENTS.md
+M	supabase/functions/admin-create-user/index.ts
+A	supabase/functions/admin-create-user/student-intake-handler.test.ts
+A	supabase/functions/admin-create-user/student-intake-handler.ts
+A	supabase/migrations/0057_delete_month_where_guard.sql
+COMMIT	e156b6f97ffafd55888901f6bfb929c577107e55	2026-10-09T15:28:41+07:00	2026-10-09T15:28:41+07:00	DaoVanHung	feat: add guidelines for deploying Edge Functions and smoke testing requirements
+
+M	docs/agent-context/development-and-release.md
+M	supabase/AGENTS.md
+COMMIT	592b50eb9621851ac025fde6fe0cff0b848fe451	2026-10-09T14:38:56+07:00	2026-10-09T14:38:56+07:00	DaoVanHung	feat: add admin functions for historical session edits
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/product-and-workflows.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/services/commands.ts
+M	scripts/agent-context-inventory.mjs
+M	supabase/AGENTS.md
+A	supabase/migrations/0056_historical_session_edits.sql
+A	supabase/tests/historical_session_edits.test.sql
+COMMIT	ffb35135db9c0f4576678c51a408698add3f7b40	2026-10-09T14:00:30+07:00	2026-10-09T14:00:30+07:00	DaoVanHung	feat: update button text for session management and enhance session object structure
+
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+COMMIT	16f9ad7d5afb90ae5aea42fe011ecfd4590a4b5e	2026-10-09T13:53:37+07:00	2026-10-09T13:53:37+07:00	DaoVanHung	feat: enhance session management with student roster updates and deletion capabilities
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/product-and-workflows.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/app/components/ConfirmModal.vue
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/utils/errors.ts
+M	frontend/src/styles.css
+M	scripts/agent-context-inventory.mjs
+A	supabase/migrations/0055_session_management_and_rosters.sql
+COMMIT	c5550ecd672a1a9da70d41f23774f6b71a6ef1be	2026-10-09T13:20:48+07:00	2026-10-09T13:20:48+07:00	DaoVanHung	feat: enhance staff management with additional fields and detail view
+
+M	docs/agent-context/README.md
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/development-and-release.md
+M	docs/agent-context/product-and-workflows.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/StaffPage.test.ts
+M	frontend/src/modules/admin/pages/StaffPage.vue
+M	frontend/src/services/commands.ts
+M	scripts/agent-context-inventory.mjs
+COMMIT	62e229e9204ba856bfdefaa3458b5ad42230f6f5	2026-10-08T20:26:58+07:00	2026-10-08T20:26:58+07:00	DaoVanHung	feat: add test for handling session start failure with unauthenticated error
+
+M	frontend/src/modules/staff/pages/SessionsPage.test.ts
+COMMIT	0b3437030116e67b1a3a881437b6e03d8cd99f8d	2026-10-08T16:14:59+07:00	2026-10-08T16:14:59+07:00	DaoVanHung	feat: update migration numbers and add new SQL files for session synchronization and testing
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/repository-inventory.md
+M	supabase/AGENTS.md
+A	supabase/migrations/0054_sync_manual_session_student_rosters.sql
+A	supabase/tests/student_future_session_roster_sync.test.sql
+COMMIT	11d37900159f812d94e372d5f3752c8f56e879a5	2026-10-08T13:21:38+07:00	2026-10-08T13:21:38+07:00	DaoVanHung	feat: update ChangePasswordPage to improve password change instructions and routing logic
+
+M	frontend/src/modules/auth/pages/ChangePasswordPage.test.ts
+M	frontend/src/modules/auth/pages/ChangePasswordPage.vue
+COMMIT	e3513547b794e15855c1f40c1c7dcc9b7a089ef8	2026-10-08T13:01:48+07:00	2026-10-08T13:01:48+07:00	DaoVanHung	feat: enhance error handling for delete operations and update ConfirmModal to display error messages
+
+M	frontend/src/app/components/ConfirmModal.vue
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/shared/utils/errors.test.ts
+M	frontend/src/shared/utils/errors.ts
+COMMIT	9b99dd864833bd04a7ec6901897ecb767271c17c	2026-10-08T12:49:01+07:00	2026-10-08T12:49:01+07:00	DaoVanHung	Add SQL test for month-week template replacement functionality
+
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/services/commands.test.ts
+M	frontend/src/services/commands.ts
+M	frontend/src/shared/utils/errors.ts
+A	supabase/migrations/0053_month_week_template_replacement.sql
+A	supabase/tests/month_week_template_replacement.test.sql
+COMMIT	d53ced4a26dde5201b55d9156a19bdb1bcae1059	2026-10-08T12:08:18+07:00	2026-10-08T12:08:18+07:00	DaoVanHung	feat: add functions to preview and delete sessions for a specified month
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/product-and-workflows.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/services/commands.test.ts
+M	frontend/src/services/commands.ts
+M	supabase/AGENTS.md
+A	supabase/migrations/0052_delete_all_sessions_in_month.sql
+M	supabase/tests/schedule_reset.test.sql
+COMMIT	ef81e8d8b3d61f26d4ccae50181ac2f3cac80e54	2026-10-08T11:14:40+07:00	2026-10-08T11:14:40+07:00	DaoVanHung	feat(schedule-reset): implement monthly schedule reset functionality
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/services/commands.ts
+A	supabase/migrations/0051_delete_schedules_for_month.sql
+M	supabase/tests/schedule_reset.test.sql
+COMMIT	10b8b82e1ba83353c86970d9a25fb849ff928263	2026-10-08T10:37:34+07:00	2026-10-08T10:37:34+07:00	DaoVanHung	feat: add class roster export functionality and related tests
+
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+A	frontend/src/modules/admin/utils/student-class-roster-export.test.ts
+A	frontend/src/modules/admin/utils/student-class-roster-export.ts
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+COMMIT	8b3a31c7db7923994df247e34de26bb3e23832a9	2026-10-08T09:51:55+07:00	2026-10-08T09:51:55+07:00	DaoVanHung	feat: enhance session creation and loading states in AdminSessionsPage
+
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+COMMIT	195bf9a812db878e48aee1f2868d1b13ac5cca70	2026-10-07T22:55:48+07:00	2026-10-07T22:55:48+07:00	DaoVanHung	feat: implement global schedule reset functionality with preview and confirmation
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/services/commands.ts
+M	supabase/AGENTS.md
+A	supabase/migrations/0050_reset_all_schedules.sql
+A	supabase/tests/schedule_reset.test.sql
+COMMIT	dcdd8360df51bde00e59568da8c922ff905d2082	2026-10-07T21:53:00+07:00	2026-10-07T21:53:00+07:00	DaoVanHung	feat: export student login emails to Excel
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/package.json
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+A	frontend/src/modules/admin/utils/student-account-export.test.ts
+A	frontend/src/modules/admin/utils/student-account-export.ts
+M	frontend/src/services/commands.test.ts
+M	frontend/src/services/commands.ts
+M	package-lock.json
+A	supabase/functions/admin-export-student-logins/config.toml
+A	supabase/functions/admin-export-student-logins/handler.test.ts
+A	supabase/functions/admin-export-student-logins/handler.ts
+A	supabase/functions/admin-export-student-logins/index.ts
+COMMIT	53577dee6db99116c00b2bd28f24f42db8f2d975	2026-10-07T21:26:21+07:00	2026-10-07T21:26:21+07:00	DaoVanHung	feat: implement bulk password reset functionality for admins
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/app/router/index.test.ts
+M	frontend/src/app/router/index.ts
+M	frontend/src/devtools/ui-review/mock-auth.store.ts
+M	frontend/src/devtools/ui-review/mock-services.ts
+A	frontend/src/modules/admin/components/BulkPasswordResetModal.vue
+A	frontend/src/modules/admin/components/bulk-password-reset.types.ts
+M	frontend/src/modules/admin/pages/StaffPage.test.ts
+M	frontend/src/modules/admin/pages/StaffPage.vue
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+M	frontend/src/modules/auth/pages/ChangePasswordPage.test.ts
+M	frontend/src/modules/auth/pages/ChangePasswordPage.vue
+M	frontend/src/services/commands.test.ts
+M	frontend/src/services/commands.ts
+M	frontend/src/stores/auth.store.test.ts
+M	frontend/src/stores/auth.store.ts
+M	supabase/functions/_shared/auth.ts
+A	supabase/functions/_shared/password-reset.ts
+A	supabase/functions/admin-reset-password-bulk/config.toml
+A	supabase/functions/admin-reset-password-bulk/handler.test.ts
+A	supabase/functions/admin-reset-password-bulk/handler.ts
+A	supabase/functions/admin-reset-password-bulk/index.ts
+M	supabase/functions/admin-reset-password/handler.ts
+M	supabase/functions/student-required-password-change/handler.test.ts
+M	supabase/functions/student-required-password-change/handler.ts
+M	supabase/functions/student-required-password-change/index.ts
+A	supabase/migrations/0049_force_teacher_password_change.sql
+M	supabase/tests/continuous_learning_rls.test.sql
+M	supabase/tests/timesheet_workflow.test.sql
+COMMIT	458fc64c5b57a8a8225b76c04db33f1ae44689b8	2026-10-06T18:42:06+07:00	2026-10-06T18:42:06+07:00	DaoVanHung	change pass to 12345678
+
+M	docs/agent-context/repository-inventory.md
+M	frontend/review/main.ts
+M	frontend/src/app/router/index.test.ts
+M	frontend/src/app/router/index.ts
+M	frontend/src/devtools/ui-review/ReviewApp.vue
+M	frontend/src/devtools/ui-review/mock-auth.store.ts
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+A	frontend/src/modules/auth/pages/ChangePasswordPage.test.ts
+M	frontend/src/modules/auth/pages/ChangePasswordPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/stores/auth.store.test.ts
+M	frontend/src/stores/auth.store.ts
+M	supabase/functions/_shared/auth.ts
+M	supabase/functions/_shared/response.ts
+M	supabase/functions/student-ai-tutor/handler.test.ts
+M	supabase/functions/student-ai-tutor/handler.ts
+A	supabase/functions/student-required-password-change/handler.test.ts
+A	supabase/functions/student-required-password-change/handler.ts
+A	supabase/functions/student-required-password-change/index.ts
+A	supabase/migrations/0048_force_student_password_change.sql
+M	supabase/tests/admin_monthly_session_planning.test.sql
+M	supabase/tests/backdated_session_creation.test.sql
+M	supabase/tests/class_teacher_limit.test.sql
+M	supabase/tests/continuous_learning_rls.test.sql
+M	supabase/tests/parallel_session_rooms.test.sql
+M	supabase/tests/session_learning_commands.test.sql
+M	supabase/tests/timesheet_workflow.test.sql
+COMMIT	73e14fc860fd29ab092be6dea1aa776e3b8aefd1	2026-10-06T17:30:23+07:00	2026-10-06T17:30:23+07:00	DaoVanHung	update
+
+M	frontend/review/main.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/modules/admin/pages/AdminTimesheetsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminTimesheetsPage.vue
+M	frontend/src/modules/admin/pages/ClassesPage.vue
+M	frontend/src/modules/admin/pages/StaffPage.vue
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+M	frontend/src/modules/staff/pages/StaffTimesheetsPage.test.ts
+M	frontend/src/modules/staff/pages/StaffTimesheetsPage.vue
+M	frontend/src/modules/student/pages/StudentPage.test.ts
+M	frontend/src/modules/student/pages/StudentPage.vue
+M	frontend/src/styles.css
+COMMIT	dabfe94b7180f49fde5c4d1baa7ad65391b16f0b	2026-10-02T18:09:45+07:00	2026-10-02T18:09:45+07:00	DaoVanHung	fix: avoid secret scan matching its own logs
+
+M	.github/workflows/quality-check.yml
+COMMIT	ea73060cf25c350b4b4a2f6446b29a417db0d24d	2026-10-02T16:13:01+07:00	2026-10-02T16:13:01+07:00	DaoVanHung	feat: add AI tutor and lesson video replay
+
+M	README.md
+M	docs/IMPLEMENTATION.md
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/repository-inventory.md
+M	frontend/review/main.ts
+M	frontend/src/app/components/AppIcon.vue
+A	frontend/src/app/components/YouTubePlayer.vue
+M	frontend/src/app/layouts/AppLayout.vue
+M	frontend/src/app/router/index.test.ts
+M	frontend/src/app/router/index.ts
+M	frontend/src/devtools/ui-review/ReviewApp.vue
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/modules/staff/pages/SessionsPage.test.ts
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+A	frontend/src/modules/student/pages/StudentAiChatPage.test.ts
+A	frontend/src/modules/student/pages/StudentAiChatPage.vue
+A	frontend/src/modules/student/pages/StudentReviewPage.test.ts
+A	frontend/src/modules/student/pages/StudentReviewPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/types/domain.ts
+A	frontend/src/shared/utils/youtube.test.ts
+A	frontend/src/shared/utils/youtube.ts
+M	supabase/AGENTS.md
+M	supabase/functions/session-learning-update/index.ts
+A	supabase/functions/session-learning-update/youtube.test.ts
+A	supabase/functions/session-learning-update/youtube.ts
+A	supabase/functions/student-ai-tutor/handler.test.ts
+A	supabase/functions/student-ai-tutor/handler.ts
+A	supabase/functions/student-ai-tutor/index.ts
+A	supabase/migrations/0047_lesson_videos_and_ai_tutor.sql
+M	supabase/tests/session_learning_commands.test.sql
+COMMIT	c86729d06753d7b17e8cb99fd289e4ea203a2eef	2026-10-02T15:37:36+07:00	2026-10-02T15:37:36+07:00	DaoVanHung	fix: reset managed accounts to default password
+
+M	docs/agent-context/repository-inventory.md
+M	frontend/src/devtools/ui-review/mock-services.ts
+M	frontend/src/modules/admin/pages/StaffPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+A	supabase/functions/admin-reset-password/handler.test.ts
+A	supabase/functions/admin-reset-password/handler.ts
+M	supabase/functions/admin-reset-password/index.ts
+COMMIT	650c5100a7f188229bb50f146d6419dec6a6a8a6	2026-10-02T15:08:05+07:00	2026-10-02T15:08:05+07:00	DaoVanHung	fix: prevent modal backdrop from covering dialogs
+
+M	frontend/src/app/components/BaseModal.test.ts
+M	frontend/src/app/components/BaseModal.vue
+M	frontend/src/app/components/ConfirmModal.vue
+M	frontend/src/app/components/DetailModal.vue
+M	frontend/src/app/components/FormModal.vue
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/modules/admin/pages/AdminTimesheetsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminTimesheetsPage.vue
+M	frontend/src/modules/admin/pages/ClassDetailPage.vue
+M	frontend/src/modules/admin/pages/ClassesPage.vue
+M	frontend/src/modules/admin/pages/StaffPage.test.ts
+M	frontend/src/modules/admin/pages/StaffPage.vue
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+M	frontend/src/modules/staff/components/StaffAttendanceModal.vue
+COMMIT	f4c59a67dbedeb274d482ca6a45ff7c343aea30b	2026-10-02T12:30:58+07:00	2026-10-02T12:30:58+07:00	DaoVanHung	Add secret scan job logs for GitHub Actions workflow
+
+A	docs/bug_deploy/logs_100134867151.zip
+A	docs/bug_deploy/logs_100134867151/0_secret-scan.txt
+A	docs/bug_deploy/logs_100134867151/1_frontend.txt
+A	docs/bug_deploy/logs_100134867151/frontend/13_Post Run actions_setup-node@v4.txt
+A	docs/bug_deploy/logs_100134867151/frontend/14_Post Run actions_checkout@v4.txt
+A	docs/bug_deploy/logs_100134867151/frontend/15_Complete job.txt
+A	docs/bug_deploy/logs_100134867151/frontend/1_Set up job.txt
+A	docs/bug_deploy/logs_100134867151/frontend/2_Run actions_checkout@v4.txt
+A	docs/bug_deploy/logs_100134867151/frontend/3_Run actions_setup-node@v4.txt
+A	docs/bug_deploy/logs_100134867151/frontend/4_Run npm ci.txt
+A	docs/bug_deploy/logs_100134867151/frontend/5_Run npm run typecheck.txt
+A	docs/bug_deploy/logs_100134867151/frontend/6_Run npm run testrun.txt
+A	docs/bug_deploy/logs_100134867151/frontend/7_Run npm run build.txt
+A	docs/bug_deploy/logs_100134867151/frontend/system.txt
+A	docs/bug_deploy/logs_100134867151/runner-diagnostic-logs/110716738996-frontend.zip
+A	docs/bug_deploy/logs_100134867151/runner-diagnostic-logs/110716739187-secret-scan.zip
+A	docs/bug_deploy/logs_100134867151/secret-scan/1_Set up job.txt
+A	docs/bug_deploy/logs_100134867151/secret-scan/2_Run actions_checkout@v4.txt
+A	docs/bug_deploy/logs_100134867151/secret-scan/3_Check for common secret patterns.txt
+A	docs/bug_deploy/logs_100134867151/secret-scan/6_Post Run actions_checkout@v4.txt
+A	docs/bug_deploy/logs_100134867151/secret-scan/7_Complete job.txt
+A	docs/bug_deploy/logs_100134867151/secret-scan/system.txt
+M	frontend/src/app/components/BaseModal.test.ts
+M	frontend/src/app/components/BaseModal.vue
+M	frontend/src/modules/staff/components/StaffAttendanceModal.vue
+M	frontend/src/modules/staff/pages/SessionsPage.test.ts
+COMMIT	e043ebfcdc86dec32d6df1751370e234ad89293a	2026-10-02T12:15:29+07:00	2026-10-02T12:15:29+07:00	DaoVanHung	feat: add teleportToBody prop to BaseModal and update StaffAttendanceModal to utilize it
+
+M	frontend/src/app/components/BaseModal.vue
+M	frontend/src/modules/staff/components/StaffAttendanceModal.vue
+COMMIT	4b5f00ec913f7ede70e9c37b81c1095a85584a07	2026-10-02T11:52:13+07:00	2026-10-02T11:52:13+07:00	DaoVanHung	add api gemini
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	frontend/src/app/components/BaseModal.test.ts
+M	frontend/src/app/components/BaseModal.vue
+M	frontend/src/app/layouts/AppLayout.vue
+M	frontend/src/devtools/ui-review/mock-services.ts
+A	frontend/src/modules/staff/attendance.test.ts
+A	frontend/src/modules/staff/attendance.ts
+A	frontend/src/modules/staff/components/StaffAttendanceModal.vue
+M	frontend/src/modules/staff/pages/SessionsPage.test.ts
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+M	frontend/src/modules/staff/pages/StaffProfilePage.vue
+M	frontend/src/modules/staff/pages/StaffTimesheetsPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/styles.css
+M	supabase/AGENTS.md
+A	supabase/functions/teacher-comment-optimize/handler.test.ts
+A	supabase/functions/teacher-comment-optimize/handler.ts
+A	supabase/functions/teacher-comment-optimize/index.ts
+M	supabase/tests/session_learning_commands.test.sql
+COMMIT	48a49ec63f797777baef4d5003b95dbc8f86f2c2	2026-10-02T10:11:54+07:00	2026-10-02T10:11:54+07:00	DaoVanHung	feat: add session management RPCs and corresponding test cases
+
+M	docs/agent-context/repository-inventory.md
+A	supabase/migrations/0046_allow_secret_key_session_rpcs.sql
+A	supabase/tests/session_learning_commands.test.sql
+COMMIT	af3e76d59b19a28a066740e5ab4835471fbd3d76	2026-10-02T09:56:22+07:00	2026-10-02T09:56:22+07:00	DaoVanHung	feat: enhance student and staff session management with calendar view and detail display
+
+A	frontend/src/app/components/SessionMonthCalendar.test.ts
+A	frontend/src/app/components/SessionMonthCalendar.vue
+A	frontend/src/modules/staff/pages/SessionsPage.test.ts
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+A	frontend/src/modules/student/pages/StudentPage.test.ts
+M	frontend/src/modules/student/pages/StudentPage.vue
+COMMIT	54b42c675bd1f9b7e9726098e669a9248469c70f	2026-10-02T09:31:47+07:00	2026-10-02T09:31:47+07:00	DaoVanHung	feat: enhance UI components with transitions and motion effects
+
+M	frontend/src/app/components/AppIcon.vue
+M	frontend/src/app/components/AppState.vue
+M	frontend/src/app/layouts/AuthLayout.vue
+M	frontend/src/devtools/ui-review/ReviewApp.vue
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+M	frontend/src/modules/staff/pages/StaffTimesheetsPage.vue
+M	frontend/src/styles.css
+COMMIT	5593d052e49d888022702eac187a0c89e38e5d4c	2026-10-02T08:53:58+07:00	2026-10-02T08:53:58+07:00	DaoVanHung	fix: update migration version references to 0045 in documentation
+
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+A	docs/data_seed/t9/diemdang.xlsm
+M	supabase/AGENTS.md
+COMMIT	a361dbf865ea9300a77fa878df6afa1a3498a1f2	2026-10-01T22:24:58+07:00	2026-10-01T22:24:58+07:00	DaoVanHung	docs: update development guidelines to emphasize using Chrome for coding tasks
+
+M	AGENTS.md
+M	docs/agent-context/README.md
+COMMIT	7af23c9eef3163f3ee121f1be1f8c26ee0b1a878	2026-10-01T22:17:11+07:00	2026-10-01T22:17:11+07:00	DaoVanHung	feat: add searchable teacher picker and backdated sessions
+
+M	docs/agent-context/repository-inventory.md
+A	frontend/src/modules/admin/components/TeacherPicker.test.ts
+A	frontend/src/modules/admin/components/TeacherPicker.vue
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/shared/utils/errors.test.ts
+M	frontend/src/shared/utils/errors.ts
+A	supabase/migrations/0045_backdated_attendance_sessions.sql
+A	supabase/tests/backdated_session_creation.test.sql
+COMMIT	9346d16647cfb8834a477ca90b7f22b905c40698	2026-10-01T16:13:35+07:00	2026-10-01T16:13:35+07:00	DaoVanHung	feat: allow initial passwords for new accounts
+
+A	frontend/src/modules/admin/pages/StaffPage.test.ts
+M	frontend/src/modules/admin/pages/StaffPage.vue
+M	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+M	frontend/src/services/commands.ts
+COMMIT	427d13cbd4906166c8c12734ab088aeb1d008f5e	2026-10-01T15:44:06+07:00	2026-10-01T15:44:06+07:00	DaoVanHung	fix(frontend): wrap route views for transitions
+
+M	frontend/src/app/layouts/AppLayout.test.ts
+M	frontend/src/app/layouts/AppLayout.vue
+COMMIT	436bf40e0e3dd56ae50138fb6bf56f77b08774fc	2026-10-01T15:23:58+07:00	2026-10-01T15:23:58+07:00	DaoVanHung	fix(frontend): remount sidebar route views
+
+A	frontend/src/app/layouts/AppLayout.test.ts
+M	frontend/src/app/layouts/AppLayout.vue
+COMMIT	1850f781cadf545bb7e9e2532d47225d13853c2f	2026-10-01T14:51:17+07:00	2026-10-01T14:51:17+07:00	DaoVanHung	feat: enhance session creation validation and error handling
+
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/shared/utils/errors.test.ts
+M	frontend/src/shared/utils/errors.ts
+COMMIT	183bc430a81df2b12ee643c06120fd6d4941daf1	2026-10-01T08:48:03+07:00	2026-10-01T08:48:03+07:00	DaoVanHung	update logo
+
+R100	assets/logo.png	assets/logo.jpg
+COMMIT	7939248e174f405db3fbca75e9c0e44177146db0	2026-10-01T08:40:18+07:00	2026-10-01T08:40:18+07:00	DaoVanHung	update logo
+
+D	assets/logo.jpg
+A	assets/logo.png
+COMMIT	3760e678816080a0e3b2fbde36693ca96af39fff	2026-10-01T08:40:04+07:00	2026-10-01T08:40:04+07:00	DaoVanHung	fix: clarify login credential errors
+
+A	frontend/src/modules/auth/pages/LoginPage.test.ts
+M	frontend/src/modules/auth/pages/LoginPage.vue
+M	frontend/src/shared/utils/errors.test.ts
+M	frontend/src/shared/utils/errors.ts
+COMMIT	ce8431f772fc0c47e4f577f12f1c0060ea30e239	2026-10-01T03:13:57+07:00	2026-10-01T03:13:57+07:00	DaoVanHung	feat: add mock authentication store and services for UI review
+
+M	AGENTS.md
+A	assets/logo.jpg
+A	design.md
+M	docs/agent-context/README.md
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/development-and-release.md
+M	docs/agent-context/product-and-workflows.md
+A	docs/agent-context/repository-inventory.md
+A	frontend/AGENTS.md
+M	frontend/index.html
+M	frontend/package.json
+A	frontend/review/README.md
+A	frontend/review/index.html
+A	frontend/review/main.ts
+M	frontend/src/App.vue
+A	frontend/src/app/components/AppButton.vue
+A	frontend/src/app/components/AppField.vue
+A	frontend/src/app/components/AppIcon.vue
+A	frontend/src/app/components/AppPageHeader.vue
+A	frontend/src/app/components/AppState.vue
+A	frontend/src/app/components/AppToastHost.vue
+A	frontend/src/app/components/BaseModal.test.ts
+A	frontend/src/app/components/BaseModal.vue
+A	frontend/src/app/components/ConfirmModal.vue
+A	frontend/src/app/components/DetailModal.vue
+A	frontend/src/app/components/FormModal.vue
+M	frontend/src/app/layouts/AppLayout.vue
+M	frontend/src/app/layouts/AuthLayout.vue
+A	frontend/src/devtools/ui-review/ReviewApp.vue
+A	frontend/src/devtools/ui-review/mock-auth.store.ts
+A	frontend/src/devtools/ui-review/mock-services.ts
+A	frontend/src/devtools/ui-review/mock-supabase.ts
+A	frontend/src/devtools/ui-review/review-state.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/modules/admin/pages/AdminTimesheetsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminTimesheetsPage.vue
+M	frontend/src/modules/admin/pages/ClassDetailPage.vue
+M	frontend/src/modules/admin/pages/ClassesPage.vue
+M	frontend/src/modules/admin/pages/StaffPage.vue
+M	frontend/src/modules/admin/pages/StudentDetailPage.vue
+A	frontend/src/modules/admin/pages/StudentsPage.test.ts
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+M	frontend/src/modules/staff/pages/StaffProfilePage.vue
+M	frontend/src/modules/staff/pages/StaffTimesheetsPage.test.ts
+M	frontend/src/modules/staff/pages/StaffTimesheetsPage.vue
+M	frontend/src/modules/student/pages/StudentPage.vue
+A	frontend/src/stores/toast.store.ts
+M	frontend/src/styles.css
+A	frontend/vite.review.config.ts
+M	package.json
+A	scripts/agent-context-inventory.mjs
+A	supabase/AGENTS.md
+COMMIT	81a507a6e8f03f932bf6e01d219993ae5d020a24	2026-09-30T22:13:11+07:00	2026-09-30T22:13:11+07:00	DaoVanHung	Add comprehensive tests for session management in parallel classrooms
+
+M	docs/IMPLEMENTATION.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/product-and-workflows.md
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+A	frontend/src/services/commands.test.ts
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/types/domain.ts
+M	frontend/src/shared/utils/errors.test.ts
+M	frontend/src/shared/utils/errors.ts
+A	supabase/migrations/0044_allow_parallel_sessions_by_room.sql
+A	supabase/tests/parallel_session_rooms.test.sql
+COMMIT	739f3df9782ff178e42baeb2c0dc635995209655	2026-09-30T21:33:46+07:00	2026-09-30T21:33:46+07:00	DaoVanHung	feat: limit each class to five teachers
+
+M	docs/IMPLEMENTATION.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/product-and-workflows.md
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+A	frontend/src/shared/utils/class-teacher-limit.test.ts
+A	frontend/src/shared/utils/class-teacher-limit.ts
+M	frontend/src/shared/utils/errors.test.ts
+M	frontend/src/shared/utils/errors.ts
+A	supabase/migrations/0043_limit_class_teachers.sql
+A	supabase/tests/class_teacher_limit.test.sql
+COMMIT	8aa48855fdfbb1d3d25a7da5d0c5d5252b3b6668	2026-09-30T20:50:26+07:00	2026-09-30T20:50:26+07:00	DaoVanHung	fix: restore admin session and class loading
+
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+COMMIT	5f8d763cf763d6e493bc65866c1fd9e7f8b72c6f	2026-09-30T16:55:26+07:00	2026-09-30T16:58:24+07:00	DaoVanHung	feat: restore per-session timesheet workflow
+
+M	.github/workflows/deploy-supabase.yml
+M	docs/IMPLEMENTATION.md
+M	docs/QA_STAGING_TEST_REPORT_2026-09-30.md
+M	docs/agent-context/architecture-and-code-map.md
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/development-and-release.md
+M	docs/agent-context/product-and-workflows.md
+M	frontend/src/app/layouts/AppLayout.vue
+M	frontend/src/app/router/index.test.ts
+M	frontend/src/app/router/index.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+A	frontend/src/modules/admin/pages/AdminTimesheetsPage.test.ts
+A	frontend/src/modules/admin/pages/AdminTimesheetsPage.vue
+A	frontend/src/modules/staff/pages/StaffTimesheetsPage.test.ts
+A	frontend/src/modules/staff/pages/StaffTimesheetsPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/types/domain.ts
+M	frontend/src/shared/utils/errors.ts
+M	supabase/functions/_shared/response.ts
+A	supabase/functions/timesheet-review/index.ts
+A	supabase/functions/timesheet-submit/index.ts
+A	supabase/migrations/0042_restore_session_timesheets.sql
+A	supabase/tests/timesheet_workflow.test.sql
+COMMIT	f65de6a03c03120ef6a9e1adc01838a23dc34538	2026-09-30T10:51:59+07:00	2026-09-30T10:51:59+07:00	DaoVanHung	Add comprehensive tests for admin monthly session planning
+
+M	docs/agent-context/data-security-and-migrations.md
+M	docs/agent-context/product-and-workflows.md
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/modules/admin/pages/ClassDetailPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/types/domain.ts
+A	supabase/migrations/0041_admin_monthly_session_planning.sql
+A	supabase/tests/admin_monthly_session_planning.test.sql
+COMMIT	2b8119b3d0bc2b9f68c7ca5b5028cfe85258aebf	2026-09-30T10:07:02+07:00	2026-09-30T10:07:02+07:00	DaoVanHung	feat: enhance AdminSessionsPage with calendar functionality and improve session data handling
+
+M	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/types/domain.ts
+A	frontend/src/shared/utils/session-calendar.test.ts
+A	frontend/src/shared/utils/session-calendar.ts
+COMMIT	8cde098faadde2b30c6d41f6b89880a44b3498eb	2026-09-30T09:48:02+07:00	2026-09-30T09:48:02+07:00	DaoVanHung	feat: enhance AdminSessionsPage with class scheduling link and update data queries for staff relations
+
+M	docs/QA_STAGING_TEST_REPORT_2026-09-30.md
+A	frontend/src/modules/admin/pages/AdminSessionsPage.test.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+A	frontend/src/services/data-queries.test.ts
+M	frontend/src/services/data-queries.ts
+COMMIT	a3c6c9b98d47b616ef30d272fda2c2ba9a4146ec	2026-09-30T09:29:52+07:00	2026-09-30T09:29:52+07:00	DaoVanHung	feat: implement RLS fixes and add comprehensive QA test reports for continuous learning model
+
+A	docs/QA_STAGING_TEST_REPORT_2026-09-29.md
+A	docs/QA_STAGING_TEST_REPORT_2026-09-30.md
+M	docs/agent-context/README.md
+M	docs/agent-context/data-security-and-migrations.md
+A	supabase/migrations/0040_fix_continuous_learning_rls_recursion.sql
+A	supabase/tests/continuous_learning_rls.test.sql
+COMMIT	cc8487d9de59757f662e1310719c9340c1e5eccd	2026-09-29T11:55:02+07:00	2026-09-29T11:55:02+07:00	DaoVanHung	feat: add comprehensive agent documentation including architecture, workflows, data security, and development guidelines
+
+A	AGENTS.md
+A	docs/agent-context/README.md
+A	docs/agent-context/architecture-and-code-map.md
+A	docs/agent-context/data-security-and-migrations.md
+A	docs/agent-context/development-and-release.md
+A	docs/agent-context/product-and-workflows.md
+COMMIT	e4f99628262ee64cbf3f7ac77f3d14d4c84784d7	2026-09-29T10:51:24+07:00	2026-09-29T10:51:24+07:00	DaoVanHung	Simplify HVC_EDU to continuous learning management
+
+M	.github/workflows/deploy-supabase.yml
+M	README.md
+M	docs/DELIVERY_ROADMAP.md
+M	docs/Hung_Cuong_Business_Design_v1.0.md
+M	docs/Hung_Cuong_Project_Architecture_GitHubPages_Supabase.md
+M	docs/IMPLEMENTATION.md
+A	docs/QA_TEST_REPORT_2026-09-28.md
+M	frontend/src/app/layouts/AppLayout.vue
+M	frontend/src/app/router/index.test.ts
+M	frontend/src/app/router/index.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+D	frontend/src/modules/admin/pages/AuditPage.vue
+M	frontend/src/modules/admin/pages/ClassDetailPage.vue
+D	frontend/src/modules/admin/pages/ClassMonthsPage.vue
+D	frontend/src/modules/admin/pages/ClassStudentDetailPage.vue
+D	frontend/src/modules/admin/pages/PermissionsPage.vue
+D	frontend/src/modules/admin/pages/ReportsPage.vue
+M	frontend/src/modules/admin/pages/StaffPage.vue
+A	frontend/src/modules/admin/pages/StudentDetailPage.vue
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+D	frontend/src/modules/dashboard/pages/DashboardPage.vue
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+A	frontend/src/modules/staff/pages/StaffProfilePage.vue
+D	frontend/src/modules/staff/pages/TimesheetsPage.vue
+M	frontend/src/modules/student/pages/StudentPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/constants/roles.ts
+M	frontend/src/shared/types/domain.ts
+M	frontend/src/stores/auth.store.ts
+D	frontend/src/stores/notification.store.ts
+D	frontend/src/stores/permission.store.test.ts
+D	frontend/src/stores/permission.store.ts
+M	frontend/src/styles.css
+M	package.json
+D	scripts/import-class-schedules.test.ts
+D	scripts/import-class-schedules.ts
+D	scripts/import-staff-schedule.test.ts
+D	scripts/import-staff-schedule.ts
+D	scripts/import-student-roster.test.ts
+D	scripts/import-student-roster.ts
+D	scripts/import_t9_attendance.py
+D	scripts/import_t9_attendance_test.py
+D	scripts/rotate-student-passwords.test.ts
+D	scripts/rotate-student-passwords.ts
+M	supabase/config.toml
+M	supabase/functions/_shared/auth.ts
+D	supabase/functions/_shared/notifications.ts
+M	supabase/functions/_shared/response.ts
+D	supabase/functions/accounting-adjustment/index.ts
+D	supabase/functions/accounting-manual/index.ts
+M	supabase/functions/admin-create-user/index.ts
+D	supabase/functions/admin-permissions/index.ts
+D	supabase/functions/admin-set-password/config.toml
+D	supabase/functions/admin-set-password/index.ts
+D	supabase/functions/class-month-activate/index.ts
+D	supabase/functions/class-month-copy/index.ts
+M	supabase/functions/login-by-identifier/index.ts
+D	supabase/functions/payroll-adjustment/index.ts
+D	supabase/functions/payroll-calculate/index.ts
+D	supabase/functions/payroll-confirm/index.ts
+D	supabase/functions/payroll-pay/index.ts
+D	supabase/functions/payroll-period-create/index.ts
+D	supabase/functions/report-export/index.ts
+M	supabase/functions/session-complete/index.ts
+D	supabase/functions/session-reopen/index.ts
+D	supabase/functions/session-replace-staff/index.ts
+D	supabase/functions/timesheet-approve/index.ts
+D	supabase/functions/timesheet-submit/index.ts
+D	supabase/functions/tuition-confirm-paid/index.ts
+A	supabase/migrations/0038_retire_parent_role.sql
+A	supabase/migrations/0039_continuous_learning.sql
+COMMIT	bb1594a8ce973f88cb0fb2d4f94dae524dd827ae	2026-09-18T15:55:30+07:00	2026-09-18T15:55:30+07:00	DaoVanHung	Refactor payroll functions to disable financial features and add new class month copy and session learning update functionalities
+
+M	frontend/src/app/layouts/AppLayout.vue
+M	frontend/src/app/router/index.test.ts
+M	frontend/src/app/router/index.ts
+M	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+M	frontend/src/modules/admin/pages/ClassDetailPage.vue
+M	frontend/src/modules/admin/pages/ClassMonthsPage.vue
+M	frontend/src/modules/admin/pages/ClassesPage.vue
+D	frontend/src/modules/admin/pages/FinancePage.vue
+M	frontend/src/modules/admin/pages/PermissionsPage.vue
+M	frontend/src/modules/admin/pages/ReportsPage.vue
+M	frontend/src/modules/admin/pages/StaffPage.vue
+M	frontend/src/modules/admin/pages/StudentsPage.vue
+M	frontend/src/modules/dashboard/pages/DashboardPage.vue
+D	frontend/src/modules/staff/pages/PayrollPage.vue
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+M	frontend/src/modules/staff/pages/TimesheetsPage.vue
+M	frontend/src/modules/student/pages/StudentPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/constants/roles.ts
+M	frontend/src/shared/types/domain.ts
+D	frontend/src/shared/utils/business-calculations.test.ts
+D	frontend/src/shared/utils/business-calculations.ts
+M	frontend/src/shared/utils/errors.ts
+M	frontend/src/shared/utils/format.test.ts
+M	frontend/src/shared/utils/format.ts
+M	frontend/src/stores/auth.store.ts
+M	supabase/functions/_shared/auth.ts
+M	supabase/functions/_shared/response.ts
+M	supabase/functions/accounting-adjustment/index.ts
+M	supabase/functions/accounting-manual/index.ts
+M	supabase/functions/admin-create-user/index.ts
+A	supabase/functions/class-month-copy/index.ts
+M	supabase/functions/payroll-adjustment/index.ts
+M	supabase/functions/payroll-calculate/index.ts
+M	supabase/functions/payroll-confirm/index.ts
+M	supabase/functions/payroll-pay/index.ts
+M	supabase/functions/payroll-period-create/index.ts
+M	supabase/functions/report-export/index.ts
+A	supabase/functions/session-learning-update/index.ts
+M	supabase/functions/tuition-confirm-paid/index.ts
+A	supabase/migrations/0036_parent_role.sql
+A	supabase/migrations/0037_learning_scope.sql
+COMMIT	ad33062726aa6331f9ebe75ff22169dc0f789e9c	2026-09-18T15:06:52+07:00	2026-09-18T15:06:52+07:00	DaoVanHung	feat: implement global error handling and reporting system
+
+M	frontend/src/App.vue
+A	frontend/src/app/components/AppErrorBanner.test.ts
+A	frontend/src/app/components/AppErrorBanner.vue
+M	frontend/src/app/layouts/AppLayout.vue
+M	frontend/src/app/router/index.test.ts
+M	frontend/src/app/router/index.ts
+M	frontend/src/modules/auth/pages/ChangePasswordPage.vue
+M	frontend/src/modules/auth/pages/LoginPage.vue
+M	frontend/src/modules/dashboard/pages/DashboardPage.vue
+M	frontend/src/modules/staff/pages/PayrollPage.vue
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+M	frontend/src/modules/staff/pages/TimesheetsPage.vue
+M	frontend/src/services/data-queries.ts
+M	frontend/src/services/edge-functions.ts
+A	frontend/src/shared/utils/errors.test.ts
+A	frontend/src/shared/utils/errors.ts
+A	frontend/src/stores/app-error.store.ts
+M	frontend/src/stores/auth.store.ts
+M	frontend/src/stores/notification.store.ts
+A	frontend/src/stores/permission.store.test.ts
+M	frontend/src/stores/permission.store.ts
+M	frontend/src/styles.css
+COMMIT	dc8005e5c6ffbae452b10b1aee3d5841f6654e25	2026-09-14T17:12:20+07:00	2026-09-14T17:12:20+07:00	DaoVanHung	feat(database): add data class
+
+A	docs/data_seed/t9/Diem_danh_6.xlsm
+A	docs/data_seed/t9/Diem_danh_7.xlsm
+A	docs/data_seed/t9/Diem_danh_8.xlsm
+A	docs/data_seed/t9/Diem_danh_9.xlsm
+M	frontend/src/modules/admin/pages/ClassStudentDetailPage.vue
+M	frontend/src/modules/staff/pages/SessionsPage.vue
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/types/domain.ts
+M	package.json
+A	scripts/import_t9_attendance.py
+A	scripts/import_t9_attendance_test.py
+A	supabase/migrations/0034_attendance_assessment_fields.sql
+A	supabase/migrations/0035_seed_t9_attendance.sql
+COMMIT	e964a4243dde3fbebbb1f24f917e18b12a084e8e	2026-09-14T16:02:42+07:00	2026-09-14T16:02:42+07:00	DaoVanHung	feat: add class and student detail pages with routing and data fetching
+
+M	frontend/src/app/router/index.test.ts
+M	frontend/src/app/router/index.ts
+A	frontend/src/modules/admin/pages/ClassDetailPage.vue
+A	frontend/src/modules/admin/pages/ClassStudentDetailPage.vue
+M	frontend/src/modules/admin/pages/ClassesPage.vue
+M	frontend/src/services/data-queries.ts
+M	frontend/src/services/edge-functions.ts
+M	frontend/src/shared/types/domain.ts
+M	frontend/src/shared/utils/business-calculations.test.ts
+M	frontend/src/shared/utils/business-calculations.ts
+COMMIT	9544b296100cf98d37f8493cf53609f7829e6776	2026-09-11T09:34:23+07:00	2026-09-11T09:34:23+07:00	DaoVanHung	feat: add student password rotation functionality and related tests
+
+M	docs/IMPLEMENTATION.md
+M	frontend/src/modules/admin/pages/ClassMonthsPage.vue
+M	package.json
+A	scripts/rotate-student-passwords.test.ts
+A	scripts/rotate-student-passwords.ts
+M	supabase/functions/_shared/response.ts
+A	supabase/functions/admin-set-password/config.toml
+A	supabase/functions/admin-set-password/index.ts
+COMMIT	d9a9511becdb228262ef8f3d1dc74d616a504768	2026-09-11T09:31:31+07:00	2026-09-11T09:31:31+07:00	DaoVanHung	feat(data); change pass students
+
+D	docs/accounts/student-accounts.md
+COMMIT	9bf6731c75967c8ed04f889b9fadc26d944915ed	2026-09-11T09:13:14+07:00	2026-09-11T09:13:14+07:00	DaoVanHung	feat(database): add employees
+
+M	docs/IMPLEMENTATION.md
+A	docs/plans/HVC_EDU_NEW_LUNA_INSERT_STAFF_SCHEDULE_PLAN.md
+M	frontend/src/modules/admin/pages/ClassMonthsPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.ts
+M	package.json
+A	scripts/import-staff-schedule.test.ts
+A	scripts/import-staff-schedule.ts
+M	supabase/functions/admin-create-user/index.ts
+A	supabase/migrations/0033_class_month_schedule_staff.sql
+COMMIT	7fb2bf0b89d88e42c2a1fdb666b3f10b1b012a0b	2026-09-11T08:37:32+07:00	2026-09-11T08:37:32+07:00	DaoVanHung	feat(database): add class and students
+
+A	deno.lock
+M	docs/Hung_Cuong_Business_Design_v1.0.md
+M	docs/IMPLEMENTATION.md
+A	docs/accounts/student-accounts.md
+M	frontend/src/modules/admin/pages/ClassMonthsPage.vue
+M	frontend/src/modules/admin/pages/ClassesPage.vue
+M	frontend/src/modules/student/pages/StudentPage.vue
+M	frontend/src/services/commands.ts
+M	frontend/src/services/data-queries.ts
+M	frontend/src/shared/utils/business-calculations.test.ts
+M	frontend/src/shared/utils/business-calculations.ts
+M	package.json
+A	scripts/import-class-schedules.test.ts
+A	scripts/import-class-schedules.ts
+A	scripts/import-student-roster.test.ts
+A	scripts/import-student-roster.ts
+A	supabase/migrations/0028_fix_staff_rls_recursion.sql
+A	supabase/migrations/0029_session_fee_snapshots.sql
+A	supabase/migrations/0030_fix_student_rls_recursion.sql
+A	supabase/migrations/0031_schedule_rooms.sql
+A	supabase/migrations/0032_fix_session_rls_recursion.sql
+COMMIT	8c258c5b5104567907adc36eff452c73f8e2b402	2026-09-09T14:50:56+07:00	2026-09-09T14:50:56+07:00	DaoVanHung	feat: enhance error handling and user creation process with detailed validation
+
+M	supabase/functions/_shared/response.ts
+M	supabase/functions/admin-create-user/index.ts
+A	supabase/migrations/0027_expand_subjects_grades.sql
+COMMIT	976af2c4d1dc2ba2c2d3e17ba62a6591005f03b7	2026-09-08T18:17:11+07:00	2026-09-08T18:17:11+07:00	DaoVanHung	change: disable mandatory password change after account creation
+
+M	frontend/src/app/router/index.test.ts
+M	frontend/src/app/router/index.ts
+M	frontend/src/modules/auth/pages/ChangePasswordPage.vue
+M	frontend/src/modules/auth/pages/LoginPage.vue
+M	frontend/src/stores/auth.store.test.ts
+M	supabase/functions/admin-create-user/index.ts
+M	supabase/functions/bootstrap-root/index.ts
+COMMIT	350b88edbaaf4425803cdaf78d89045091b4c91f	2026-09-08T18:12:31+07:00	2026-09-08T18:12:31+07:00	DaoVanHung	fix: prevent repeated password change redirect
+
+A	frontend/src/app/router/index.test.ts
+A	frontend/src/stores/auth.store.test.ts
+M	frontend/src/stores/auth.store.ts
+COMMIT	6f1d1459c7b9cd6011ba4ed0c5dd738508141a63	2026-09-08T18:05:11+07:00	2026-09-08T18:05:11+07:00	DaoVanHung	fix: create admin accounts without staff record
+
+M	supabase/functions/admin-create-user/index.ts
+COMMIT	4e85ee2645b31333dacf94c8c2584a176c184957	2026-09-08T17:57:39+07:00	2026-09-08T17:57:39+07:00	DaoVanHung	fix: support repository secrets for Pages build
+
+M	.github/workflows/deploy-pages.yml
+M	README.md
+COMMIT	6bdcb45521e607b6212ea11176f9b381786d073e	2026-09-08T17:24:02+07:00	2026-09-08T17:24:02+07:00	DaoVanHung	fix: derive Pages base path from repository
+
+M	.github/workflows/deploy-pages.yml
+M	README.md
+COMMIT	b1114f64069473089cd40aa472c27d3d08262bbc	2026-09-08T17:23:23+07:00	2026-09-08T17:23:23+07:00	DaoVanHung	fix: clarify GitHub Pages build configuration
+
+M	.github/workflows/deploy-pages.yml
+M	README.md
+M	docs/IMPLEMENTATION.md
+COMMIT	ffa695e98369ff9b27476f357a80891e5194c5c7	2026-09-08T17:08:44+07:00	2026-09-08T17:08:44+07:00	DaoVanHung	fix: automate root bootstrap secret
+
+M	scripts/bootstrap-root.sh
+COMMIT	c2540e95c47e144de70610d99fb2306392935a06	2026-09-08T16:57:57+07:00	2026-09-08T16:57:57+07:00	DaoVanHung	Add GitHub workflows for frontend deployment, Supabase deployment, and quality checks
+
+A	.github/workflows/deploy-pages.yml
+A	.github/workflows/deploy-supabase.yml
+A	.github/workflows/quality-check.yml
+A	.gitignore
+M	docs/Hung_Cuong_Project_Architecture_GitHubPages_Supabase.md
+COMMIT	5680e15e1119f7c8043344258aa08172325faf21	2026-09-08T16:57:40+07:00	2026-09-08T16:57:40+07:00	DaoVanHung	first commit
+
+A	README.md
+A	docs/DELIVERY_ROADMAP.md
+A	docs/Hung_Cuong_Business_Design_v1.0.md
+A	docs/Hung_Cuong_Project_Architecture_GitHubPages_Supabase.md
+A	docs/IMPLEMENTATION.md
+A	frontend/.env.example
+A	frontend/index.html
+A	frontend/package.json
+A	frontend/public/404.html
+A	frontend/src/App.vue
+A	frontend/src/app/layouts/AppLayout.vue
+A	frontend/src/app/layouts/AuthLayout.vue
+A	frontend/src/app/router/index.ts
+A	frontend/src/env.d.ts
+A	frontend/src/main.ts
+A	frontend/src/modules/admin/pages/AdminSessionsPage.vue
+A	frontend/src/modules/admin/pages/AuditPage.vue
+A	frontend/src/modules/admin/pages/ClassMonthsPage.vue
+A	frontend/src/modules/admin/pages/ClassesPage.vue
+A	frontend/src/modules/admin/pages/FinancePage.vue
+A	frontend/src/modules/admin/pages/PermissionsPage.vue
+A	frontend/src/modules/admin/pages/ReportsPage.vue
+A	frontend/src/modules/admin/pages/StaffPage.vue
+A	frontend/src/modules/admin/pages/StudentsPage.vue
+A	frontend/src/modules/auth/pages/ChangePasswordPage.vue
+A	frontend/src/modules/auth/pages/LoginPage.vue
+A	frontend/src/modules/dashboard/pages/DashboardPage.vue
+A	frontend/src/modules/staff/pages/PayrollPage.vue
+A	frontend/src/modules/staff/pages/SessionsPage.vue
+A	frontend/src/modules/staff/pages/TimesheetsPage.vue
+A	frontend/src/modules/student/pages/StudentPage.vue
+A	frontend/src/services/commands.ts
+A	frontend/src/services/data-queries.ts
+A	frontend/src/services/edge-functions.ts
+A	frontend/src/services/supabase.ts
+A	frontend/src/shared/constants/roles.ts
+A	frontend/src/shared/types/domain.ts
+A	frontend/src/shared/utils/business-calculations.test.ts
+A	frontend/src/shared/utils/business-calculations.ts
+A	frontend/src/shared/utils/format.test.ts
+A	frontend/src/shared/utils/format.ts
+A	frontend/src/stores/auth.store.ts
+A	frontend/src/stores/notification.store.ts
+A	frontend/src/stores/permission.store.ts
+A	frontend/src/styles.css
+A	frontend/tsconfig.app.json
+A	frontend/tsconfig.json
+A	frontend/tsconfig.node.json
+A	frontend/vite.config.ts
+A	package-lock.json
+A	package.json
+A	scripts/bootstrap-root.sh
+A	supabase/config.toml
+A	supabase/functions/_shared/auth.ts
+A	supabase/functions/_shared/cors.ts
+A	supabase/functions/_shared/notifications.ts
+A	supabase/functions/_shared/response.ts
+A	supabase/functions/accounting-adjustment/index.ts
+A	supabase/functions/accounting-manual/index.ts
+A	supabase/functions/admin-account-status/index.ts
+A	supabase/functions/admin-create-user/index.ts
+A	supabase/functions/admin-permissions/index.ts
+A	supabase/functions/admin-reset-password/index.ts
+A	supabase/functions/bootstrap-root/config.toml
+A	supabase/functions/bootstrap-root/index.ts
+A	supabase/functions/class-month-activate/index.ts
+A	supabase/functions/login-by-identifier/config.toml
+A	supabase/functions/login-by-identifier/index.ts
+A	supabase/functions/payroll-adjustment/index.ts
+A	supabase/functions/payroll-calculate/index.ts
+A	supabase/functions/payroll-confirm/index.ts
+A	supabase/functions/payroll-pay/index.ts
+A	supabase/functions/payroll-period-create/index.ts
+A	supabase/functions/report-export/index.ts
+A	supabase/functions/session-complete/index.ts
+A	supabase/functions/session-reopen/index.ts
+A	supabase/functions/session-replace-staff/index.ts
+A	supabase/functions/session-start/index.ts
+A	supabase/functions/timesheet-approve/index.ts
+A	supabase/functions/timesheet-submit/index.ts
+A	supabase/functions/tuition-confirm-paid/index.ts
+A	supabase/migrations/0001_extensions.sql
+A	supabase/migrations/0002_enums.sql
+A	supabase/migrations/0003_auth_profiles.sql
+A	supabase/migrations/0004_rbac.sql
+A	supabase/migrations/0005_students_staff.sql
+A	supabase/migrations/0006_academic_master.sql
+A	supabase/migrations/0007_class_month.sql
+A	supabase/migrations/0008_sessions.sql
+A	supabase/migrations/0009_attendance.sql
+A	supabase/migrations/0010_timesheets.sql
+A	supabase/migrations/0011_tuition.sql
+A	supabase/migrations/0012_payroll.sql
+A	supabase/migrations/0013_accounting.sql
+A	supabase/migrations/0014_notifications.sql
+A	supabase/migrations/0015_audit.sql
+A	supabase/migrations/0016_functions.sql
+A	supabase/migrations/0017_rls.sql
+A	supabase/migrations/0018_indexes.sql
+A	supabase/migrations/0019_seed_master.sql
+A	supabase/migrations/0020_cleanup_function_warnings.sql
+A	supabase/migrations/0021_core_commands.sql
+A	supabase/migrations/0022_attendance_snapshot_fk.sql
+A	supabase/migrations/0023_student_schedule_policy.sql
+A	supabase/migrations/0024_completion_commands.sql
+A	supabase/migrations/0025_business_hardening.sql
+A	supabase/migrations/0026_admin_permissions.sql
+A	supabase/seed.sql

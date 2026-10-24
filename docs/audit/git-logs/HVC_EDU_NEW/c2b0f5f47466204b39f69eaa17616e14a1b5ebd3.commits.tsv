@@ -1,0 +1,86 @@
+c2b0f5f47466204b39f69eaa17616e14a1b5ebd3	2026-10-15T21:48:22+07:00	2026-10-15T21:48:22+07:00	Dao Van Hung	test: assert eligibility permission errors
+eb197d90441b825acf06ae4860fad9bae9c19bf5	2026-10-15T21:44:43+07:00	2026-10-15T21:44:43+07:00	Dao Van Hung	test: seed eligibility after roster assignment
+e91585e727fb21a493521c066119f6706e2ffcc1	2026-10-15T21:37:17+07:00	2026-10-15T21:37:17+07:00	Dao Van Hung	test: align attendance assertions and migration gate
+d291a71d938a31b507cd3a2be82b4c80a25bb292	2026-10-15T21:36:32+07:00	2026-10-15T21:36:32+07:00	Dao Van Hung	test: match attendance guards and privileges
+d585acf05c8f2a1a010fadb2a829dd2ab1e368c0	2026-10-15T21:31:17+07:00	2026-10-15T21:31:17+07:00	Dao Van Hung	test: inspect eligibility decisions as database owner
+55dd5a438cf9d749dc13e6c2af925c28c4b6acef	2026-10-15T21:27:01+07:00	2026-10-15T21:27:01+07:00	Dao Van Hung	ci: handle legacy function defaults in migration tests
+56e9548b7a0cfa031d0e6297a6b602c2ee722bbe	2026-10-15T21:16:19+07:00	2026-10-15T21:16:19+07:00	Dao Van Hung	ci: gate production migration deploy behind explicit input
+f1e00a2523b6f4de02ea0fbe3c6a8d4aabbc66a2	2026-10-15T21:14:22+07:00	2026-10-15T21:14:22+07:00	Dao Van Hung	ci: skip production attendance import in local migration tests
+9848933d57effbdfeaab7412e95d74df87edebfb	2026-10-15T21:00:03+07:00	2026-10-15T21:00:03+07:00	Dao Van Hung	ci: run migration tests with database-only stack
+a0fa4fbe73338acf4151302ff598b66db312b915	2026-10-15T20:51:28+07:00	2026-10-15T20:51:28+07:00	Dao Van Hung	feat: update agent guidelines for Chrome usage and production operations
+04b4c8a50399424f9d14648c12dd53174d0ded31	2026-10-15T20:43:59+07:00	2026-10-15T20:43:59+07:00	Codex	fix: load session timesheet eligibility safely
+564263d05741b5874aa261915bd27868d4018bc9	2026-10-15T20:41:40+07:00	2026-10-15T20:41:40+07:00	Đào Văn Hùng	feat: add scoped timesheet eligibility RPC
+2cd2960f0b8d8701597e14ecb7b9e10fb8c16011	2026-10-15T20:41:10+07:00	2026-10-15T20:41:10+07:00	Đào Văn Hùng	ci: validate and deploy reviewed Supabase migrations
+2f234e1ece130f6b9b5f3cf5ab0fe8a9d1842bd0	2026-10-10T21:16:06+07:00	2026-10-10T21:16:06+07:00	DaoVanHung	feat: add admin session attendance and timesheet management
+dff834acfc3d798afce1a709d7f850b168ba2536	2026-10-10T16:02:06+07:00	2026-10-10T16:02:06+07:00	DaoVanHung	feat: enhance error handling for month schedule Excel import functionality
+59a159e7b8b0d9494b06b7486153d7a24d6eec09	2026-10-10T15:56:52+07:00	2026-10-10T15:56:52+07:00	DaoVanHung	Add SQL test for month week schedule Excel import functionality
+f6c5371f715f44add5347458d4b09a95ecc92093	2026-10-10T15:09:12+07:00	2026-10-10T15:09:12+07:00	DaoVanHung	feat: add current class summaries for students and enhance student detail page
+1cd8200bda4cf7b27ccac8d6d1230942781654db	2026-10-10T14:27:47+07:00	2026-10-10T14:27:47+07:00	DaoVanHung	feat: implement student intake functionality with parsing, validation, and template download
+e156b6f97ffafd55888901f6bfb929c577107e55	2026-10-09T15:28:41+07:00	2026-10-09T15:28:41+07:00	DaoVanHung	feat: add guidelines for deploying Edge Functions and smoke testing requirements
+592b50eb9621851ac025fde6fe0cff0b848fe451	2026-10-09T14:38:56+07:00	2026-10-09T14:38:56+07:00	DaoVanHung	feat: add admin functions for historical session edits
+ffb35135db9c0f4576678c51a408698add3f7b40	2026-10-09T14:00:30+07:00	2026-10-09T14:00:30+07:00	DaoVanHung	feat: update button text for session management and enhance session object structure
+16f9ad7d5afb90ae5aea42fe011ecfd4590a4b5e	2026-10-09T13:53:37+07:00	2026-10-09T13:53:37+07:00	DaoVanHung	feat: enhance session management with student roster updates and deletion capabilities
+c5550ecd672a1a9da70d41f23774f6b71a6ef1be	2026-10-09T13:20:48+07:00	2026-10-09T13:20:48+07:00	DaoVanHung	feat: enhance staff management with additional fields and detail view
+62e229e9204ba856bfdefaa3458b5ad42230f6f5	2026-10-08T20:26:58+07:00	2026-10-08T20:26:58+07:00	DaoVanHung	feat: add test for handling session start failure with unauthenticated error
+0b3437030116e67b1a3a881437b6e03d8cd99f8d	2026-10-08T16:14:59+07:00	2026-10-08T16:14:59+07:00	DaoVanHung	feat: update migration numbers and add new SQL files for session synchronization and testing
+11d37900159f812d94e372d5f3752c8f56e879a5	2026-10-08T13:21:38+07:00	2026-10-08T13:21:38+07:00	DaoVanHung	feat: update ChangePasswordPage to improve password change instructions and routing logic
+e3513547b794e15855c1f40c1c7dcc9b7a089ef8	2026-10-08T13:01:48+07:00	2026-10-08T13:01:48+07:00	DaoVanHung	feat: enhance error handling for delete operations and update ConfirmModal to display error messages
+9b99dd864833bd04a7ec6901897ecb767271c17c	2026-10-08T12:49:01+07:00	2026-10-08T12:49:01+07:00	DaoVanHung	Add SQL test for month-week template replacement functionality
+d53ced4a26dde5201b55d9156a19bdb1bcae1059	2026-10-08T12:08:18+07:00	2026-10-08T12:08:18+07:00	DaoVanHung	feat: add functions to preview and delete sessions for a specified month
+ef81e8d8b3d61f26d4ccae50181ac2f3cac80e54	2026-10-08T11:14:40+07:00	2026-10-08T11:14:40+07:00	DaoVanHung	feat(schedule-reset): implement monthly schedule reset functionality
+10b8b82e1ba83353c86970d9a25fb849ff928263	2026-10-08T10:37:34+07:00	2026-10-08T10:37:34+07:00	DaoVanHung	feat: add class roster export functionality and related tests
+8b3a31c7db7923994df247e34de26bb3e23832a9	2026-10-08T09:51:55+07:00	2026-10-08T09:51:55+07:00	DaoVanHung	feat: enhance session creation and loading states in AdminSessionsPage
+195bf9a812db878e48aee1f2868d1b13ac5cca70	2026-10-07T22:55:48+07:00	2026-10-07T22:55:48+07:00	DaoVanHung	feat: implement global schedule reset functionality with preview and confirmation
+dcdd8360df51bde00e59568da8c922ff905d2082	2026-10-07T21:53:00+07:00	2026-10-07T21:53:00+07:00	DaoVanHung	feat: export student login emails to Excel
+53577dee6db99116c00b2bd28f24f42db8f2d975	2026-10-07T21:26:21+07:00	2026-10-07T21:26:21+07:00	DaoVanHung	feat: implement bulk password reset functionality for admins
+458fc64c5b57a8a8225b76c04db33f1ae44689b8	2026-10-06T18:42:06+07:00	2026-10-06T18:42:06+07:00	DaoVanHung	change pass to 12345678
+73e14fc860fd29ab092be6dea1aa776e3b8aefd1	2026-10-06T17:30:23+07:00	2026-10-06T17:30:23+07:00	DaoVanHung	update
+dabfe94b7180f49fde5c4d1baa7ad65391b16f0b	2026-10-02T18:09:45+07:00	2026-10-02T18:09:45+07:00	DaoVanHung	fix: avoid secret scan matching its own logs
+ea73060cf25c350b4b4a2f6446b29a417db0d24d	2026-10-02T16:13:01+07:00	2026-10-02T16:13:01+07:00	DaoVanHung	feat: add AI tutor and lesson video replay
+c86729d06753d7b17e8cb99fd289e4ea203a2eef	2026-10-02T15:37:36+07:00	2026-10-02T15:37:36+07:00	DaoVanHung	fix: reset managed accounts to default password
+650c5100a7f188229bb50f146d6419dec6a6a8a6	2026-10-02T15:08:05+07:00	2026-10-02T15:08:05+07:00	DaoVanHung	fix: prevent modal backdrop from covering dialogs
+f4c59a67dbedeb274d482ca6a45ff7c343aea30b	2026-10-02T12:30:58+07:00	2026-10-02T12:30:58+07:00	DaoVanHung	Add secret scan job logs for GitHub Actions workflow
+e043ebfcdc86dec32d6df1751370e234ad89293a	2026-10-02T12:15:29+07:00	2026-10-02T12:15:29+07:00	DaoVanHung	feat: add teleportToBody prop to BaseModal and update StaffAttendanceModal to utilize it
+4b5f00ec913f7ede70e9c37b81c1095a85584a07	2026-10-02T11:52:13+07:00	2026-10-02T11:52:13+07:00	DaoVanHung	add api gemini
+48a49ec63f797777baef4d5003b95dbc8f86f2c2	2026-10-02T10:11:54+07:00	2026-10-02T10:11:54+07:00	DaoVanHung	feat: add session management RPCs and corresponding test cases
+af3e76d59b19a28a066740e5ab4835471fbd3d76	2026-10-02T09:56:22+07:00	2026-10-02T09:56:22+07:00	DaoVanHung	feat: enhance student and staff session management with calendar view and detail display
+54b42c675bd1f9b7e9726098e669a9248469c70f	2026-10-02T09:31:47+07:00	2026-10-02T09:31:47+07:00	DaoVanHung	feat: enhance UI components with transitions and motion effects
+5593d052e49d888022702eac187a0c89e38e5d4c	2026-10-02T08:53:58+07:00	2026-10-02T08:53:58+07:00	DaoVanHung	fix: update migration version references to 0045 in documentation
+a361dbf865ea9300a77fa878df6afa1a3498a1f2	2026-10-01T22:24:58+07:00	2026-10-01T22:24:58+07:00	DaoVanHung	docs: update development guidelines to emphasize using Chrome for coding tasks
+7af23c9eef3163f3ee121f1be1f8c26ee0b1a878	2026-10-01T22:17:11+07:00	2026-10-01T22:17:11+07:00	DaoVanHung	feat: add searchable teacher picker and backdated sessions
+9346d16647cfb8834a477ca90b7f22b905c40698	2026-10-01T16:13:35+07:00	2026-10-01T16:13:35+07:00	DaoVanHung	feat: allow initial passwords for new accounts
+427d13cbd4906166c8c12734ab088aeb1d008f5e	2026-10-01T15:44:06+07:00	2026-10-01T15:44:06+07:00	DaoVanHung	fix(frontend): wrap route views for transitions
+436bf40e0e3dd56ae50138fb6bf56f77b08774fc	2026-10-01T15:23:58+07:00	2026-10-01T15:23:58+07:00	DaoVanHung	fix(frontend): remount sidebar route views
+1850f781cadf545bb7e9e2532d47225d13853c2f	2026-10-01T14:51:17+07:00	2026-10-01T14:51:17+07:00	DaoVanHung	feat: enhance session creation validation and error handling
+183bc430a81df2b12ee643c06120fd6d4941daf1	2026-10-01T08:48:03+07:00	2026-10-01T08:48:03+07:00	DaoVanHung	update logo
+7939248e174f405db3fbca75e9c0e44177146db0	2026-10-01T08:40:18+07:00	2026-10-01T08:40:18+07:00	DaoVanHung	update logo
+3760e678816080a0e3b2fbde36693ca96af39fff	2026-10-01T08:40:04+07:00	2026-10-01T08:40:04+07:00	DaoVanHung	fix: clarify login credential errors
+ce8431f772fc0c47e4f577f12f1c0060ea30e239	2026-10-01T03:13:57+07:00	2026-10-01T03:13:57+07:00	DaoVanHung	feat: add mock authentication store and services for UI review
+81a507a6e8f03f932bf6e01d219993ae5d020a24	2026-09-30T22:13:11+07:00	2026-09-30T22:13:11+07:00	DaoVanHung	Add comprehensive tests for session management in parallel classrooms
+739f3df9782ff178e42baeb2c0dc635995209655	2026-09-30T21:33:46+07:00	2026-09-30T21:33:46+07:00	DaoVanHung	feat: limit each class to five teachers
+8aa48855fdfbb1d3d25a7da5d0c5d5252b3b6668	2026-09-30T20:50:26+07:00	2026-09-30T20:50:26+07:00	DaoVanHung	fix: restore admin session and class loading
+5f8d763cf763d6e493bc65866c1fd9e7f8b72c6f	2026-09-30T16:55:26+07:00	2026-09-30T16:58:24+07:00	DaoVanHung	feat: restore per-session timesheet workflow
+f65de6a03c03120ef6a9e1adc01838a23dc34538	2026-09-30T10:51:59+07:00	2026-09-30T10:51:59+07:00	DaoVanHung	Add comprehensive tests for admin monthly session planning
+2b8119b3d0bc2b9f68c7ca5b5028cfe85258aebf	2026-09-30T10:07:02+07:00	2026-09-30T10:07:02+07:00	DaoVanHung	feat: enhance AdminSessionsPage with calendar functionality and improve session data handling
+8cde098faadde2b30c6d41f6b89880a44b3498eb	2026-09-30T09:48:02+07:00	2026-09-30T09:48:02+07:00	DaoVanHung	feat: enhance AdminSessionsPage with class scheduling link and update data queries for staff relations
+a3c6c9b98d47b616ef30d272fda2c2ba9a4146ec	2026-09-30T09:29:52+07:00	2026-09-30T09:29:52+07:00	DaoVanHung	feat: implement RLS fixes and add comprehensive QA test reports for continuous learning model
+cc8487d9de59757f662e1310719c9340c1e5eccd	2026-09-29T11:55:02+07:00	2026-09-29T11:55:02+07:00	DaoVanHung	feat: add comprehensive agent documentation including architecture, workflows, data security, and development guidelines
+e4f99628262ee64cbf3f7ac77f3d14d4c84784d7	2026-09-29T10:51:24+07:00	2026-09-29T10:51:24+07:00	DaoVanHung	Simplify HVC_EDU to continuous learning management
+bb1594a8ce973f88cb0fb2d4f94dae524dd827ae	2026-09-18T15:55:30+07:00	2026-09-18T15:55:30+07:00	DaoVanHung	Refactor payroll functions to disable financial features and add new class month copy and session learning update functionalities
+ad33062726aa6331f9ebe75ff22169dc0f789e9c	2026-09-18T15:06:52+07:00	2026-09-18T15:06:52+07:00	DaoVanHung	feat: implement global error handling and reporting system
+dc8005e5c6ffbae452b10b1aee3d5841f6654e25	2026-09-14T17:12:20+07:00	2026-09-14T17:12:20+07:00	DaoVanHung	feat(database): add data class
+e964a4243dde3fbebbb1f24f917e18b12a084e8e	2026-09-14T16:02:42+07:00	2026-09-14T16:02:42+07:00	DaoVanHung	feat: add class and student detail pages with routing and data fetching
+9544b296100cf98d37f8493cf53609f7829e6776	2026-09-11T09:34:23+07:00	2026-09-11T09:34:23+07:00	DaoVanHung	feat: add student password rotation functionality and related tests
+d9a9511becdb228262ef8f3d1dc74d616a504768	2026-09-11T09:31:31+07:00	2026-09-11T09:31:31+07:00	DaoVanHung	feat(data); change pass students
+9bf6731c75967c8ed04f889b9fadc26d944915ed	2026-09-11T09:13:14+07:00	2026-09-11T09:13:14+07:00	DaoVanHung	feat(database): add employees
+7fb2bf0b89d88e42c2a1fdb666b3f10b1b012a0b	2026-09-11T08:37:32+07:00	2026-09-11T08:37:32+07:00	DaoVanHung	feat(database): add class and students
+8c258c5b5104567907adc36eff452c73f8e2b402	2026-09-09T14:50:56+07:00	2026-09-09T14:50:56+07:00	DaoVanHung	feat: enhance error handling and user creation process with detailed validation
+976af2c4d1dc2ba2c2d3e17ba62a6591005f03b7	2026-09-08T18:17:11+07:00	2026-09-08T18:17:11+07:00	DaoVanHung	change: disable mandatory password change after account creation
+350b88edbaaf4425803cdaf78d89045091b4c91f	2026-09-08T18:12:31+07:00	2026-09-08T18:12:31+07:00	DaoVanHung	fix: prevent repeated password change redirect
+6f1d1459c7b9cd6011ba4ed0c5dd738508141a63	2026-09-08T18:05:11+07:00	2026-09-08T18:05:11+07:00	DaoVanHung	fix: create admin accounts without staff record
+4e85ee2645b31333dacf94c8c2584a176c184957	2026-09-08T17:57:39+07:00	2026-09-08T17:57:39+07:00	DaoVanHung	fix: support repository secrets for Pages build
+6bdcb45521e607b6212ea11176f9b381786d073e	2026-09-08T17:24:02+07:00	2026-09-08T17:24:02+07:00	DaoVanHung	fix: derive Pages base path from repository
+b1114f64069473089cd40aa472c27d3d08262bbc	2026-09-08T17:23:23+07:00	2026-09-08T17:23:23+07:00	DaoVanHung	fix: clarify GitHub Pages build configuration
+ffa695e98369ff9b27476f357a80891e5194c5c7	2026-09-08T17:08:44+07:00	2026-09-08T17:08:44+07:00	DaoVanHung	fix: automate root bootstrap secret
+c2540e95c47e144de70610d99fb2306392935a06	2026-09-08T16:57:57+07:00	2026-09-08T16:57:57+07:00	DaoVanHung	Add GitHub workflows for frontend deployment, Supabase deployment, and quality checks
+5680e15e1119f7c8043344258aa08172325faf21	2026-09-08T16:57:40+07:00	2026-09-08T16:57:40+07:00	DaoVanHung	first commit

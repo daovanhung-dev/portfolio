@@ -1,72 +1,73 @@
 # Đào Văn Hùng — Engineering Portfolio
 
-Portfolio cá nhân theo hướng evidence-driven engineering: Full-stack Developer thiên Backend Python, Flutter, System Analysis, PostgreSQL/Supabase và AI-assisted Engineering.
+Portfolio hai tầng cho recruiter và engineering reviewers. Trang chính tóm tắt năng lực/kết quả; hash routes dẫn tới source, feature state, evidence date và giới hạn của từng project/case/lab.
 
-## Kiến trúc
+## Architecture
 
-Ứng dụng dùng Vite + TypeScript vanilla, không có frontend framework runtime. Nội dung được quản lý trong các module typed dưới `src/data/`; các renderer dưới `src/components/` chỉ chịu trách nhiệm trình bày dữ liệu.
+Vite builds static HTML/CSS and vanilla TypeScript. No frontend framework is required at runtime.
 
 ```text
 src/
-├── data/          # profile, experience, projects, capabilities, live products, cases
-├── components/    # typed HTML renderers và accessible project modal
-├── styles/        # tokens, global, components, responsive
-└── main.ts        # mount, theme, navigation, modal và reveal behavior
+├── data/          # typed evidence, repository inventory, projects, career, cases and labs
+├── routes.ts      # hash route rendering and page metadata
+├── main.ts        # bootstrap, theme, mobile menu, modal and route focus
+└── styles/        # tokens, global, components, responsive and portfolio rules
+scripts/           # typed content and route/link validators
+tests/             # Vitest/jsdom data and interaction checks
+e2e/               # Playwright checks against the built preview
+docs/audit/        # sanitized audit reports, QA evidence and screenshots
 ```
 
-## Chạy local
+Hash routes work under the GitHub Pages base `/portfolio/`:
 
-Yêu cầu Node.js 22+ và npm:
+- `#/projects` and `#/projects/:slug`
+- `#/case-studies` and `#/case-studies/:slug`
+- `#/labs`
+- `#/process`
+
+## Local development
+
+Requires Node.js 22+ and npm:
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Mở `http://localhost:5173/portfolio/`. Build production:
+Open `http://localhost:5173/portfolio/`. Production preview:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Data model và content integrity
+## Evidence and privacy
 
-Mỗi project dùng một contract thống nhất gồm status, evidence level, role, problem, solution, stack, repository/live URLs và case-study references. Capability items bắt buộc map về project hoặc experience evidence.
+Content contracts live in `src/data/types.ts`; evidence, repositories, and portfolio records live in `src/data/evidence.ts`, `src/data/repositories.ts`, and `src/data/portfolio-content.ts`.
 
-Portfolio phân biệt:
+- Source presence, runtime verification, URL availability, feature completeness, and deployment are separate states.
+- Evidence records pin a repository/path/SHA where public and safe, and include an observation date and limitation.
+- Empty `My_Courses` is recorded in the audit and omitted from project cards.
+- Personal compensation was removed from the current historical document without rewriting Git history. Private client and personal media are excluded from public detail pages.
+- Missing PDFs/chat sources, device checks, remote database state, and unrun external tests remain explicit gaps.
 
-- enterprise experience;
-- live product/deployment;
-- active development;
-- architecture/design scope;
-- project experience;
-- frontend proof;
-- learning direction.
-
-Source repository thắng portfolio wording. Source tồn tại không tự động có nghĩa feature đã production. Không đưa API key, service key, password, token hoặc `.env` thật vào source.
-
-## Thêm project hoặc live product
-
-1. Thêm data typed vào `src/data/projects.ts` hoặc `src/data/live-products.ts`.
-2. Gắn evidence mapping trong `src/data/capabilities.ts` nếu project chứng minh capability mới.
-3. Chỉ thêm `liveUrl` sau khi URL được xác minh.
-4. Chạy toàn bộ validation trước khi push.
-
-## Kiểm thử và validation
+## Quality gates
 
 ```bash
+npm run lint
 npm run typecheck
 npm test
 npm run validate:project-data
 npm run validate:links
 npm run build
+npm run test:e2e
+npm run validate
 ```
 
-`validate:links` làm fail internal anchors và URL malformed; lỗi mạng của external GitHub/GitHub Pages chỉ là warning. Tests kiểm tra data integrity, evidence mapping, render smoke test, modal và theme behavior.
+`npm run validate` runs the complete local gate sequence, including Playwright against the built preview. External URL network failures are reported as warnings by the link validator; malformed URLs, invalid evidence references, and unknown route targets fail.
 
 ## GitHub Pages
 
-`.github/workflows/deploy-pages.yml` dùng Node 22, chạy toàn bộ quality gates, build artifact và deploy Pages. Pull request/branch chỉ chạy quality checks; deploy chỉ chạy sau khi thay đổi được merge vào `main`.
+The Vite base remains `/portfolio/`. Pull requests and feature-branch pushes run quality checks; only a push to `main` uploads/deploys a Pages artifact. This branch is not deployed. The existing baseline URL can respond successfully without proving that any feature branch is live.
 
-Canonical URL: `https://daovanhung-dev.github.io/portfolio/`
+Canonical URL: <https://daovanhung-dev.github.io/portfolio/>

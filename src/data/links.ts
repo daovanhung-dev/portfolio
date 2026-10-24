@@ -1,9 +1,10 @@
 import type { LinkItem } from './types';
 
 export const navigationLinks: LinkItem[] = [
-  { label: 'Timeline', url: '#experience', kind: 'internal' },
-  { label: 'Dự án', url: '#projects', kind: 'internal' },
-  { label: 'Liên hệ', url: '#contact', kind: 'internal' },
+  { label: 'Dự án', url: '#/projects', kind: 'internal' },
+  { label: 'Case', url: '#/case-studies', kind: 'internal' },
+  { label: 'Labs', url: '#/labs', kind: 'internal' },
+  { label: 'Quy trình', url: '#/process', kind: 'internal' },
 ];
 
 export const contactLinks: LinkItem[] = [
@@ -12,8 +13,4 @@ export const contactLinks: LinkItem[] = [
   { label: 'LinkedIn', url: 'https://www.linkedin.com/in/daovanhung-dev', kind: 'external' },
 ];
 
-export const sectionIds = [
-  'experience',
-  'projects',
-  'contact',
-] as const;
+export const sectionIds = ['projects', 'case-studies', 'labs', 'process'] as const;

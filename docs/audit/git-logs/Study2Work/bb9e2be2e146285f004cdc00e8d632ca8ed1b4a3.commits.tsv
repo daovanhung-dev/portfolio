@@ -1,0 +1,128 @@
+b5c15bb34c8f650dd802f962e946858c1071f8f0	2026-10-20T12:09:40+07:00	2026-10-20T12:09:40+07:00	Hoàng Xuân Long	feat(study-server): implement APIs 21-25 with unit tests and seed data
+eb784624a4c402e578f395aa4b092e8bf37edb91	2026-10-20T10:17:48+07:00	2026-10-20T10:17:48+07:00	Hoàng Xuân Long	Merge remote-tracking branch 'origin/develop' into hoang_xuan_long_dev
+8f17328529b32158ec46844d4d2bcd9dd7a02932	2026-10-12T22:30:56+07:00	2026-10-12T22:30:56+07:00	DaoVanHung	Merge origin/develop into develop
+06bbcf9a6b839d83a8cffb4b4170409406c6f0a8	2026-10-12T22:27:58+07:00	2026-10-12T22:27:58+07:00	DaoVanHung	Merge branch 'viet-dev' into develop
+b923fe53f4fe75d6d37e0ff166d0f220b793b6f6	2026-10-12T22:27:21+07:00	2026-10-12T22:27:21+07:00	DaoVanHung	feat(docs): dd api
+2bf999e2bcc18f558c55bac5caf1c8fe19aef98c	2026-10-12T22:24:40+07:00	2026-10-12T22:24:40+07:00	2neiuh9-Cirr	feat(study-server): update_2 implement course reviews API#10
+02293a073f9a772d902dd90624e18feecb9f0da0	2026-10-12T22:23:23+07:00	2026-10-12T22:24:23+07:00	DaoVanHung	docs(study): add API 40 DD draft
+bf1e230775ce5e0a199ad6909b69f025fc1fedd4	2026-10-12T22:19:27+07:00	2026-10-12T22:19:27+07:00	Hoàng Xuân Long	refactor(api-15): use validate_current_user_request from app.utils.auth to resolve user_id
+e32292c16d36324c2b61bdc3ba4647e450119e4f	2026-10-12T22:03:50+07:00	2026-10-12T22:03:50+07:00	Hoàng Xuân Long	fix(study-server): update auth helper imports in api 15 after merging develop
+e983eabd3fe8b627bb743e9967b2db89ccfc9b5e	2026-10-12T22:00:06+07:00	2026-10-12T22:00:06+07:00	Hoàng Xuân Long	Merge remote-tracking branch 'origin/develop' into hoang_xuan_long_dev
+f4f9eea55a71995288802ffcebdc8b471fe5e80e	2026-10-12T21:59:06+07:00	2026-10-12T21:59:06+07:00	DaoVanHung	refactor(api): remove future annotations import from query.py
+e60f91967ea83aa32feffd4f928a50921b1b5d02	2026-10-12T21:58:44+07:00	2026-10-12T21:58:44+07:00	DaoVanHung	refactor(api): remove future annotations import from query.py
+4e8581319916e8275c5c5630b8afed692f43dee9	2026-10-12T14:24:19+07:00	2026-10-12T14:24:19+07:00	2neiuh9-Cirr	feat(study-server): update implement course reviews API#10
+f1c0e8eb58abfbcbc7ac2f4db16216e44b25a960	2026-10-12T09:59:04+07:00	2026-10-12T10:00:18+07:00	DaoVanHung	docs(study): add API DD drafts 16-26
+0962071db6067b0d344f03b76d2ba42eca0333e7	2026-10-11T15:08:51+07:00	2026-10-11T15:08:51+07:00	2neiuh9-Cirr	merge: sync develop
+4cdb9ec1c5f7787178241987324d2cf83e672b35	2026-10-11T11:22:55+07:00	2026-10-11T11:22:55+07:00	Chu Văn Việt	refactor(study-server): standardize API #08 and #09 guest endpoints with tests
+d839aec21a7c8a20025ec793af963abbc63d2cb1	2026-10-11T09:35:12+07:00	2026-10-11T09:35:12+07:00	DaoVanHung	feat(api13): implement avatar upload
+4da23bae481bf5cdad6830e2d0e51aa5d89b7e49	2026-10-11T08:49:34+07:00	2026-10-11T08:49:34+07:00	DaoVanHung	Refactor authentication and token handling in Study Server
+73404e1a31725503018f8386a55b7369b883874a	2026-10-10T23:59:30+07:00	2026-10-10T23:59:30+07:00	Hoàng Xuân Long	feat(study-server): add seed data and update API 11 and 15 validators to error_response
+8eb88d7234cb7b0251bb3a376115020ed21ce89a	2026-10-10T22:17:05+07:00	2026-10-10T22:17:05+07:00	Hoàng Xuân Long	refactor(study-server): restructure api 11 and 15 into modular query, validate, and view layers
+e69ab99da32acc00680269f63bed6e4131d541b5	2026-10-10T21:44:46+07:00	2026-10-10T21:44:46+07:00	Anh Đức	feat(api14-12): fix bug
+4121b99aee5c24e36cdd4ad5312dc644f23f57a4	2026-10-10T21:40:29+07:00	2026-10-10T21:40:29+07:00	Chu Văn Việt	Merge origin/develop into viet-dev
+a63a70c9ce552b5013d49c651992bc5c98fa2f3d	2026-10-10T21:34:49+07:00	2026-10-10T21:34:49+07:00	2neiuh9-Cirr	merge: merge develop into tranvanduc_dev
+4469d55702f0cac56de498fb16c21715bea48f19	2026-10-10T21:31:30+07:00	2026-10-10T21:31:30+07:00	Hoàng Xuân Long	feat(study-server): separate validation logic into validate modules for API 11 and 15
+f85735c36059c2d01ecd727dff3b125ae1513c83	2026-10-10T16:22:22+07:00	2026-10-10T16:22:22+07:00	Hoàng Xuân Long	refactor(study-server): adapt API 11 and 15 to direct error_response pattern after merging develop
+3fd4dbd5ece3efb352ba5d5d2a4eb2e745bda333	2026-10-10T16:18:16+07:00	2026-10-10T16:18:16+07:00	Hoàng Xuân Long	Merge remote-tracking branch 'origin/develop' into hoang_xuan_long_dev
+4cc74b96e1adb727ce02a3e77d1301b1200acf5b	2026-10-07T14:15:54+07:00	2026-10-07T14:15:54+07:00	Hoàng Xuân Long	fix(study-server): remove redundant visibility field in API 11 and restore test suites
+159808ac2c3c29729af84bb40f0c80dcef6ef8c2	2026-10-04T22:39:16+07:00	2026-10-04T22:39:16+07:00	Anh Đức	Merge remote-tracking branch 'origin/develop' into ducna-dev
+3ba71852447b71a7734cdeb186d8330b8158a483	2026-10-04T22:36:49+07:00	2026-10-04T22:36:49+07:00	Anh Đức	feat(api12): add GET resource detail endpoint
+78a14857829599a4a28b04ca66aaed43015fd514	2026-10-04T16:13:52+07:00	2026-10-04T16:13:52+07:00	DaoVanHung	feat(database): add schema
+2f606fb615e864295499d11996af532a6ff53300	2026-10-03T19:45:33+07:00	2026-10-03T19:45:33+07:00	Chu Văn Việt	feat(study-server): implement api 08 course detail and api 09 course curriculum
+7fd3f1358997aacc5607418e67c7539d12ea6b17	2026-10-03T17:48:19+07:00	2026-10-03T17:48:19+07:00	Chu Văn Việt	Merge branch 'develop' into viet-dev
+d86d63cd8ba331352cb84f48631e9874bc82f4a9	2026-10-03T16:41:40+07:00	2026-10-03T16:41:40+07:00	2neiuh9-Cirr	feat(study-server): implement course reviews API#10
+312d932d178c8e821b97bfe5d8bd756b4905c0d7	2026-10-03T15:49:22+07:00	2026-10-03T15:49:22+07:00	Anh Đức	feat(study-server): implement profile update API
+4cd784603d2471f26ca15d71a56eb55f87036396	2026-10-02T11:58:52+07:00	2026-10-02T11:58:52+07:00	Anh Đức	Merge develop into ducna-dev
+67f8a59a7852c2fca5c9e3ce0fdfb69f0c0688f5	2026-09-30T21:28:23+07:00	2026-09-30T21:28:23+07:00	2neiuh9-Cirr	Update constants.py
+81fb97fd739ee5064868c01f90e69c5b03c7c8bc	2026-09-29T21:14:56+07:00	2026-09-29T21:14:56+07:00	Hoàng Xuân Long	feat(study-server): implement API #15 courses_enrollment_status
+3391eb590fbbe658e682bc16efa5a2e7cc38ff13	2026-09-29T21:12:56+07:00	2026-09-29T21:12:56+07:00	Hoàng Xuân Long	feat(study-server): implement API #15 courses_enrollment_status
+7a9be609e7f140d232392b9ce766cfff997bd70c	2026-09-29T20:08:12+07:00	2026-09-29T20:08:12+07:00	Hoàng Xuân Long	feat(study-server): implement API #11 courses_resources
+117f21ca6d3ddac10b94395dc63d46bd29aaa471	2026-09-28T21:54:26+07:00	2026-09-28T21:54:26+07:00	Hoàng Xuân Long	Merge remote-tracking branch 'origin/main' into hoang_xuan_long_dev
+9a560ac1a76379ca6e5824b7ba741582b8da5c83	2026-09-28T14:57:53+07:00	2026-09-28T14:57:53+07:00	DaoVanHung	docs(study): clarify module layer guidance
+7532594bb11d937f4f1317ee62ab14b541c548bb	2026-09-28T14:44:43+07:00	2026-09-28T14:44:43+07:00	DaoVanHung	refactor(study): rename ApiError to error_response
+825c9e56840134fbb102e26aebda02306d644ad2	2026-09-28T14:24:22+07:00	2026-09-28T14:24:22+07:00	DaoVanHung	refactor(study): delegate unhandled errors to FastAPI
+6af61bebeadcb0f8e24a64713b0ddc42bb28a35a	2026-09-28T14:04:07+07:00	2026-09-28T14:04:07+07:00	DaoVanHung	refactor(study): return ApiError responses directly
+cfc0429e7f90832eb52ef4489c664da150843d5c	2026-09-28T12:47:25+07:00	2026-09-28T12:47:25+07:00	DaoVanHung	docs(study-server): Vietnamese comments and docstrings
+822d15cde0cd02b2f8091313f79ad13ab7840607	2026-09-28T12:16:59+07:00	2026-09-28T12:16:59+07:00	DaoVanHung	refactor: remove obsolete DB Admin context files and update JWT_PRIVATE_KEY format
+aa83f70a42983a2c19061c357417a3364dcaae0f	2026-09-28T09:41:02+07:00	2026-09-28T09:41:02+07:00	DaoVanHung	refactor: remove Angular application files and styles for db-admin-web
+9ad8fc38b563cc3a645db29c139984f6df797175	2026-09-28T08:55:41+07:00	2026-09-28T08:55:41+07:00	DaoVanHung	refactor(study): keep query modules SQL-only
+cf9605b6cf68f73f3b8cd865436fc95c33ea0aa5	2026-09-28T08:44:50+07:00	2026-09-28T08:44:50+07:00	DaoVanHung	refactor(study): make ApiError a factory
+fbbacc4414ef2944ae00d948e8163232094a0cf2	2026-09-28T08:34:38+07:00	2026-09-28T08:34:38+07:00	DaoVanHung	feat(response): remove class ApiResponse
+bb9e2be2e146285f004cdc00e8d632ca8ed1b4a3	2026-09-27T20:49:32+07:00	2026-09-27T20:49:32+07:00	DaoVanHung	refactor: move exception handlers to middleware and remove exceptions module
+0f9738665f771951920d2172b0c2a15b44601af5	2026-09-27T20:38:16+07:00	2026-09-27T20:38:16+07:00	DaoVanHung	Standardize error handling across Study Server using ApiError
+17b2cc52e69df9a77131cfef37c343aa8d5bb8ec	2026-09-26T23:44:46+07:00	2026-09-26T23:44:46+07:00	DaoVanHung	feat(docs): add tasks
+74b0582c6e22576e65c4b0ff5cd40acd77d43f1d	2026-09-26T22:41:22+07:00	2026-09-26T22:41:22+07:00	Anh Đức	Update schema thanh cua minh
+39bb2838aa33bbb6c36fc9532d6c18302aec88d4	2026-09-26T22:32:36+07:00	2026-09-26T22:32:36+07:00	DaoVanHung	feat(utils): update function
+763c32b514e8c3014f2e385665b6180dec2a7403	2026-09-26T15:17:02+07:00	2026-09-26T15:17:02+07:00	DaoVanHung	review-code(api#03): update model & view
+af32203d0fe3f770b68e5eb5cd85707acf330b91	2026-09-26T14:39:05+07:00	2026-09-26T14:39:05+07:00	DaoVanHung	Add API documentation for enrollment status lookup (API #15)
+468df910ddbd7ed0f190428590667aaffeed065f	2026-09-23T12:34:57+07:00	2026-09-23T12:34:57+07:00	Hoàng Xuân Long	Merge remote-tracking branch 'origin/main' into hoang_xuan_long_dev
+e9d12c7cb54de3a40daf3f984db701d9d754b1ff	2026-09-23T11:13:07+07:00	2026-09-23T11:13:07+07:00	DaoVanHung	refactor(study): split API modules by DD
+79a8218a5a889728bfc6861604a74da4bbb1c470	2026-09-22T15:54:23+07:00	2026-09-22T15:54:23+07:00	DaoVanHung	feat(study-api7): add course search endpoint
+d5517d2b3096c1df0b58676698984b4c4db2ee13	2026-09-22T15:35:00+07:00	2026-09-22T15:35:00+07:00	DaoVanHung	feat(study-api6): implement public courses
+2c639593677df930d9c679d4ab4c2a09629f944c	2026-09-22T15:34:33+07:00	2026-09-22T15:34:33+07:00	DaoVanHung	feat(study-api2): implement verify email dispatch
+1e066c835e0415e75b010159e6a34824ec02aa70	2026-09-22T15:08:30+07:00	2026-09-22T15:08:30+07:00	DaoVanHung	feat(categories): finish api #
+2ccfdd0a07f5a5c9e73f29e4826e9dde0aab7374	2026-09-22T12:49:10+07:00	2026-09-22T12:49:10+07:00	DaoVanHung	feat(auth_me): finish api#04
+b1652f443e3fd9e3a95da5845e26a404b091afc2	2026-09-22T11:51:21+07:00	2026-09-22T11:51:21+07:00	DaoVanHung	feat(worklog): add detailed worklogs for building Work projects and updating root README
+ace6115f73a9f6c9f1186ce93a605fe312c1de74	2026-09-21T20:14:46+07:00	2026-09-21T20:14:46+07:00	DaoVanHung	refactor(mobile-work-2): architecture, merge business app and student app
+cec1b5ae10ed6099401b251a6efaf774f8cb4dec	2026-09-21T20:14:10+07:00	2026-09-21T20:14:10+07:00	DaoVanHung	refactor(mobile-work): architecture, merge business app and student app
+c693bac954e83932de7ad82ab465d23c56d9a54f	2026-09-20T23:03:54+07:00	2026-09-20T23:03:54+07:00	DaoVanHung	feat(auth): implement login and refresh token functionality
+817c797dd5bf5b5b1c03aef19628f1edac7b33a0	2026-09-19T23:44:20+07:00	2026-09-19T23:44:20+07:00	DaoVanHung	feat(docs): add meeting 19-06-2026
+ee1299213cbe060f181b31c6d58392ddbe4b46ca	2026-09-19T17:31:39+07:00	2026-09-19T17:31:39+07:00	DaoVanHung	feat(api register-account): update analyst data before validate password
+2f8521478b375fd743c9b0f44dbd9f11824cab14	2026-09-19T17:09:08+07:00	2026-09-19T17:09:08+07:00	DaoVanHung	feat(context-agents): update context
+1943b7aba73cfce7890eb9e910799d18ace79c02	2026-09-19T17:08:17+07:00	2026-09-19T17:08:17+07:00	DaoVanHung	refactor(register_account): change auth to guest
+8da2a7f4a00427293c69fb8aae96dd085f6808fd	2026-09-19T15:16:19+07:00	2026-09-19T15:16:19+07:00	DaoVanHung	feat: Add documentation for WMS_HOME_DASHBOARD and WMS_JOB_SEARCH_APPLICATION
+212455f627846c0a3dc56107ee162415014d85b5	2026-09-19T14:43:45+07:00	2026-09-19T14:43:45+07:00	DaoVanHung	feat(context): add human-readable context map and update manifest validation
+7222c21225494d4d50d2978bad194f6bd2249419	2026-09-19T14:27:44+07:00	2026-09-19T14:27:44+07:00	DaoVanHung	feat(worklog): add comprehensive worklogs for server API tests, constants, and DD documentation
+5138749aff866965c284ccd730ba179e4ac6b8b3	2026-09-19T13:29:52+07:00	2026-09-19T13:29:52+07:00	Hoàng Xuân Long	Merge branch 'main' of https://github.com/daovanhung-dev/Study2Work into hoang_xuan_long_dev
+3af007d55d8e53bf0b07fdce69a77423e79ac8ce	2026-09-19T11:58:32+07:00	2026-09-19T11:58:32+07:00	DaoVanHung	feat: Add deep context documentation for Flutter Business and Student apps
+bbec1ae413ce480adc1df941e9a3e6c29283ad54	2026-09-19T09:05:28+07:00	2026-09-19T09:05:28+07:00	DaoVanHung	feat(docs): add build instructions for mobile app
+93c387453cc99aaef2fa13b9a953303bfaec75b5	2026-09-18T21:56:10+07:00	2026-09-18T21:56:10+07:00	DaoVanHung	feat(docs): add nguyenviethieu dev
+2733121b1802d9f277969072b64bc3c93fe322e6	2026-09-18T21:27:47+07:00	2026-09-18T21:27:47+07:00	DaoVanHung	feat(docs): add skill create dd mobile
+28cf149d88652fae35334e2b7fa4cec10f225d11	2026-09-18T21:13:35+07:00	2026-09-18T21:13:35+07:00	DaoVanHung	feat(data_demo): adđ skill demo create dd mobile
+e5140fd50023ddb9d6b28018fb71505f104d66c8	2026-09-18T20:41:35+07:00	2026-09-18T20:41:35+07:00	DaoVanHung	feat(ip-service): update ip address
+09ac33408dc2edd71f0b8b9b77c86c03a4eea53e	2026-09-18T20:11:29+07:00	2026-09-18T20:11:29+07:00	DaoVanHung	Refactor code structure for improved readability and maintainability
+153bb8d9e283470c3f0eccc0a6f7d5a5df023fbb	2026-09-18T19:52:40+07:00	2026-09-18T19:52:40+07:00	DaoVanHung	feat(docs): add worklog
+d83ff22925ad632d2c1c69b23c322b69c4f9c6e6	2026-09-18T19:43:41+07:00	2026-09-18T19:43:41+07:00	DaoVanHung	refactor: transition to static runtime configuration in Work server
+08f62324932fca94d2530b72a71d6c04d85e306f	2026-09-18T18:58:03+07:00	2026-09-18T18:58:03+07:00	DaoVanHung	Add detailed documentation for GET /health/ready API
+1ee41a2a3b33db4300170a4e680790b1255e578f	2026-09-18T17:05:55+07:00	2026-09-18T17:05:55+07:00	DaoVanHung	refactor(work-server): clean architechture project
+50c6e78d828318ba0bd9987902ec7809224b4a18	2026-09-18T16:08:15+07:00	2026-09-18T16:08:15+07:00	DaoVanHung	feat(project): update ResAPI
+78a41fefb0cd09b9c694594c400d3071826ab066	2026-09-18T15:40:50+07:00	2026-09-18T15:40:50+07:00	DaoVanHung	feat(docs): add dd documents
+df70edbbe422fbb51a54e0acec982352443f3fc5	2026-09-18T15:14:36+07:00	2026-09-18T15:14:36+07:00	DaoVanHung	feat(agents context): update context projects
+fd8c33249ee2204bc88dc4f67f93b20a21cf9c7a	2026-09-18T14:34:34+07:00	2026-09-18T14:34:34+07:00	DaoVanHung	feat(agents): update context for agents worklog
+9a70eb6764a6587093a92d3bd7e4cc0bea1651c4	2026-09-18T11:13:24+07:00	2026-09-18T11:29:34+07:00	DaoVanHung	feat(gui): add read_dd tuition video
+59a75ecc9596f2b86077ca4081ebbe0460390949	2026-09-18T09:57:19+07:00	2026-09-18T09:57:19+07:00	DaoVanHung	feat(gui): add dev setup tuition
+d616d52e0d9ae45d9199bee476d475dc09e3ad74	2026-09-17T12:38:57+07:00	2026-09-17T12:38:57+07:00	Hoàng Xuân Long	feat: update constans study-server
+8142c6799f300ad8f595442d8d7325069bf2f663	2026-09-16T23:34:53+07:00	2026-09-16T23:34:53+07:00	DaoVanHung	feat(meetings): add meeting 16-09-2026
+c1654c5476f35a139d96fda9e102d996469a704a	2026-09-16T22:06:44+07:00	2026-09-16T22:06:44+07:00	DaoVanHung	Refactor code structure for improved readability and maintainability
+089b597518bdefa75628dbdb9231873feca409f0	2026-09-16T20:37:57+07:00	2026-09-16T20:37:57+07:00	DaoVanHung	Refactor mobile and web architecture, update dependencies, and enhance documentation
+97ca23fc506653db3c67b91480c476dec52f8b63	2026-09-16T20:13:56+07:00	2026-09-16T20:13:56+07:00	DaoVanHung	feat: update application IDs and improve chat message handling
+99f904e7b838be5c1e069043534a74eea0fd20bd	2026-09-16T18:42:19+07:00	2026-09-16T18:42:19+07:00	DaoVanHung	feat: add bannganh lookup table and backfill data from JD/SinhVien
+863ef739249e2d44691b1d28be1183a2862dabef	2026-09-16T18:34:12+07:00	2026-09-16T18:34:12+07:00	DaoVanHung	feat: Add models for CV, JD, and Nganh; implement job search and CV management views
+46f42ed8d1da32b7aea22a3b445a0ef6354306da	2026-09-16T14:21:20+07:00	2026-09-16T14:21:20+07:00	DaoVanHung	Add JWT client script and refactor navigation for various views
+dbf210c9a1183e9dd6268f432f049ee76458b29b	2026-09-16T13:52:11+07:00	2026-09-16T13:52:11+07:00	DaoVanHung	Refactor database connection and migrate to PostgreSQL
+fe79b45be4b0d18a9363c88a4cb209eeed49ffd6	2026-09-16T13:23:50+07:00	2026-09-16T13:23:50+07:00	DaoVanHung	refactor: rename Learn2Earn to Study2Work across the application
+bec1ef80647c1158496dab6a100b79e30d1f04e7	2026-09-16T12:59:46+07:00	2026-09-16T12:59:46+07:00	DaoVanHung	Refactor code structure for improved readability and maintainability
+04330bbe1148399a9c424ade94d916f4e09a08ce	2026-09-16T09:52:14+07:00	2026-09-16T09:52:14+07:00	DaoVanHung	feat(auth): restructure registration module and implement new account creation logic
+2970d72cb5f011e93618697437215d3db66d46a4	2026-09-16T09:34:25+07:00	2026-09-16T09:34:25+07:00	DaoVanHung	feat(auth): refactor registration module and move files to new structure
+631b63f164a703a5063c9da8800386556883a445	2026-09-15T23:38:02+07:00	2026-09-15T23:38:02+07:00	DaoVanHung	feat: add database admin and update study api
+71b763a70b130ec1c9692a20929deebc0c536221	2026-09-15T20:01:14+07:00	2026-09-15T20:01:14+07:00	DaoVanHung	feat(study-server): add api #1
+2b203a68c746836f012b99318dfb23f28a9df368	2026-09-15T18:07:57+07:00	2026-09-15T18:07:57+07:00	DaoVanHung	move(docs): study docs
+12cc58c978add932dc8e4da910b2466d5c53cfd2	2026-09-15T18:04:41+07:00	2026-09-15T18:04:41+07:00	DaoVanHung	feat(security): update JWT validation to require private key for ES256 algorithm
+8c5759e5303a010647ae666876992a3f07a35011	2026-09-15T17:50:42+07:00	2026-09-15T17:50:42+07:00	DaoVanHung	feat(database): update engine configuration to exclude search_path in startup options
+87139cfc6ffa044600d19bced78a75d4f78ccd68	2026-09-15T17:43:29+07:00	2026-09-15T17:43:29+07:00	DaoVanHung	feat(database): finished neon
+df0367562fcb01f0315a3dcf0c0fcfec4420a0f9	2026-09-08T11:48:07+07:00	2026-09-08T11:48:07+07:00	DaoVanHung	Add comprehensive PostgreSQL documentation and SQL schema for educational purposes
+af6562be7f856c297659dae5cfd266807dc5a6c0	2026-09-08T09:29:26+07:00	2026-09-08T09:29:26+07:00	DaoVanHung	feat(auth): add 4 base file
+8e1efee7415ae193636d7ec290d070f4f2365f05	2026-09-08T09:28:57+07:00	2026-09-08T09:28:57+07:00	DaoVanHung	feat(docs): add DB properties
+330d2135053a2bc46ab4926304b8059433b53318	2026-09-08T08:52:08+07:00	2026-09-08T08:52:08+07:00	DaoVanHung	feat(docs): add api #13
+11ec0605b532048de06410eb7841f1ef4c8c174a	2026-09-06T14:51:40+07:00	2026-09-06T14:51:40+07:00	DaoVanHung	Add detailed documentation for API #12 - Resource Metadata and Signed URL
+d0b45a69000bc8c59e65e8dbed13307def7618db	2026-08-29T07:08:06+07:00	2026-08-29T07:08:06+07:00	DaoVanHung	feat(docs): add dd api #3-10
+0606b5782c7bad9780bfeb0b8974e7ffcfa1e75c	2026-08-28T06:06:22+07:00	2026-08-28T06:06:22+07:00	DaoVanHung	docs(#1, #2): add dd api
+c0c73006e32735225dfa71ab8baa91e101ea39a0	2026-08-28T05:25:23+07:00	2026-08-28T05:25:23+07:00	DaoVanHung	Refactor code structure for improved readability and maintainability
+dd1e58aa2f9f878e669d114b4f3c65036074f49e	2026-08-26T15:20:59+07:00	2026-08-26T15:20:59+07:00	DaoVanHung	feat(docs): add Study API List documentation from BD diagram
+7f19b1c33354f8087275a5c18b68642a9b721be4	2026-08-26T15:15:31+07:00	2026-08-26T15:15:31+07:00	DaoVanHung	feat: Add AI and Study server agent documentation and architecture
+5a5c2c826ddcc2931a9398115fdb61448dcb4c57	2026-08-26T14:22:54+07:00	2026-08-26T14:22:54+07:00	DaoVanHung	Refactor code structure for improved readability and maintainability
+10d5779fd398d108db54117bf37cd041461e1cf0	2026-08-26T13:59:46+07:00	2026-08-26T13:59:46+07:00	DaoVanHung	chore: remove unused web assets and HTML files from work-client and student directories
+b03b76f05b3cbcac8209cbd45970e85765422155	2026-08-26T13:13:58+07:00	2026-08-26T13:13:58+07:00	DaoVanHung	del dd
+51e94527913fa69894118b9801256d4f41045493	2026-08-26T20:07:04+07:00	2026-08-26T20:07:04+07:00	DaoVanHung	feat(docs): add DD
+206f53d33e9d579a89afb2bb74fe784a2bec425d	2026-08-26T04:53:20+07:00	2026-08-26T04:53:20+07:00	DaoVanHung	chore: add initial README.md for project documentation
+c3170473795cbe765a813648ae58a32dafacca18	2026-08-26T04:25:45+07:00	2026-08-26T04:25:45+07:00	DaoVanHung	Refactor code structure for improved readability and maintainability

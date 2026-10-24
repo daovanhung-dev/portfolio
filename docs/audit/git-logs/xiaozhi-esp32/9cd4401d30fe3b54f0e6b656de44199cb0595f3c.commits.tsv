@@ -1,0 +1,196 @@
+39d23aee5b8682f77bbdf9cdc66799456b5ad408	2026-10-24T09:21:50+08:00	2026-10-24T09:21:50+08:00	Xiaoxia	Merge pull request #2348 from cyberai8/add-cyber-vocat
+ef991d88173a124741b5ad73a7d0fcf7b561d586	2026-10-24T07:59:24+08:00	2026-10-24T07:59:24+08:00	Xiaoxia	Merge pull request #2359 from Dnsayhey/pr-pa-voltage
+29b3c740ec54a075af10f954c434a3f966a1c567	2026-10-24T07:17:21+08:00	2026-10-24T07:17:21+08:00	Xiaoxia	Merge pull request #2318 from dzmitryNz/feat/belarusian-locale
+ad36dde993822252600d2d5f0d06f5a8f3db1241	2026-10-24T07:09:36+08:00	2026-10-24T07:09:36+08:00	sylarcao-cmd	fix(power_save_timer): request shutdown once, not once a second (#2336)
+a0fb73c429d4deff828fb28f402b7ade452ef250	2026-10-24T04:38:55+08:00	2026-10-24T04:38:55+08:00	dnsayhey	fix(audio): make the PA supply voltage a board parameter in BoxAudioCodec
+838de385e47a3cee80690ff7040089d2dcfdd47f	2026-10-23T11:03:01+03:00	2026-10-23T11:35:28+03:00	dzmitryNz	be-BY: re-encode digits 0 and 5 without cutting the word
+b3ff05c030923ebf44f494ea1cba54752d638803	2026-10-23T13:45:31+08:00	2026-10-23T13:45:31+08:00	Xiaoxia	Merge pull request #2263 from goodtft/main
+559a8e3d2aebde04d86a87d4bce0702e93e18ed0	2026-10-23T10:49:10+08:00	2026-10-23T10:49:10+08:00	goodtft	Update config.json
+54bcabdb3bc3ee1b6616dc4183ca6eaa4254d949	2026-10-23T09:59:22+08:00	2026-10-23T09:59:22+08:00	赛博科技	feat(board): 增加赛博喵伴低电自动关机
+97a106e1755f9c74b5325a2c019090969d57a2c4	2026-10-22T18:15:58+08:00	2026-10-22T18:15:58+08:00	赛博科技	feat(board): 增加 CyberAI Vocat 板型
+774e3c601258dd0d4ff39395ba5a1a4dd72bac24	2026-10-22T13:51:31+08:00	2026-10-22T13:51:31+08:00	goodtft	Merge branch '78:main' into main
+7e69845d818553ac045efbcde746b22bef6eecf6	2026-10-22T12:26:26+08:00	2026-10-22T12:26:26+08:00	Xiaoxia	Merge pull request #2346 from monsterlag/fix/issue-2340-da89
+44d4429a8b568f385f1f9ec52adc5b26316af5bc	2026-10-22T11:29:50+08:00	2026-10-22T11:29:50+08:00	goodtft	Delete main/boards/quandong/esp32-s3-spi-2.8/esp32-s3-spi-2.8.cc
+c796038d10885a6b28bf069be5d54b468c952e58	2026-10-22T11:29:31+08:00	2026-10-22T11:29:31+08:00	goodtft	Delete main/boards/quandong/esp32-s3-spi-2.8/HARDWARE_DIFF.md
+079fd3f3075c8053da73e9e184d35f1de280566d	2026-10-22T09:41:48+08:00	2026-10-22T09:41:48+08:00	goodtft	Add files via upload
+5b817dae21656a7de14897b68fad3e17db5ec39d	2026-10-22T09:36:08+08:00	2026-10-22T09:36:08+08:00	goodtft	Add files via upload
+138111205e81a062d3393e276f48ed295769fb23	2026-10-22T09:34:16+08:00	2026-10-22T09:34:16+08:00	goodtft	Add files via upload
+0065e7c3552b46e53ef20d19826a933cf626f4de	2026-10-22T08:25:23+08:00	2026-10-22T08:25:23+08:00	goodtft	Merge branch '78:main' into main
+42099e2b552ed610fca587c36960bd31a266a82d	2026-10-22T06:02:39+08:00	2026-10-22T06:02:39+08:00	Xiaoxia	Merge pull request #2347 from 78/codex/recommend-idf-release-v6.1
+9a2ca76acab7976a5df7f557b0fdb80c0df479b3	2026-10-22T05:53:40+08:00	2026-10-22T05:53:40+08:00	Terrence	docs: recommend ESP-IDF release/v6.1 branch
+e66de6352edfeadd87f636c5cbca77fcda5da810	2026-10-21T21:21:28Z	2026-10-21T21:21:28Z	monsterlag	docs: document Windows response-file build workaround
+0b984159553ba3b6f82abb46834cd2214a3dd26d	2026-10-22T05:08:12+08:00	2026-10-22T05:08:12+08:00	Shinku	refactor(ai-passport): 空闲阶段改由板内定时器驱动 (#2343)
+028aba25e78ab58f5db681a5deffb9dd11be6fa0	2026-10-21T21:25:16+08:00	2026-10-21T21:25:16+08:00	Xiaoxia	Merge pull request #2342 from javen13/fix/waveshare-3.5b-audio
+44339cfcb79d1d8dd7300d1b77c4f99c03781681	2026-10-21T21:25:11+08:00	2026-10-21T21:25:11+08:00	Xiaoxia	Merge pull request #2341 from javen13/fix/waveshare-3.5-audio
+04213afd21cfa4feb07fad046e575f1769a19151	2026-10-21T17:12:10+08:00	2026-10-21T17:12:10+08:00	Xiaoxia	Merge pull request #2335 from sylarcao-cmd/fix/emote-display-inverted-bools
+e5cac3a1d0d00f415211241cb2057b7f3cb9e5ab	2026-10-21T16:12:23+08:00	2026-10-21T16:12:23+08:00	javen13	fix: enable PA_CTRL on ESP32-S3-Touch-LCD-3.5B
+b26914ce0bacc9f7021da31e4d8ce8f7201bafa3	2026-10-21T15:57:56+08:00	2026-10-21T15:57:56+08:00	jingheng	fix: enable PA_CTRL to restore audio on ESP32-S3-Touch-LCD-3.5
+e054ae117a0917d16ec9bfad01b0243484b02050	2026-10-21T15:45:19+08:00	2026-10-21T15:45:19+08:00	goodtft	Delete Kconfig.projbuild
+59b0fe28409dc8762b5ac1d60404bc0d9269ad88	2026-10-21T15:44:30+08:00	2026-10-21T15:44:30+08:00	goodtft	Update CMakeLists.txt
+629babb8753b67f57be5878e489e3d06502e6038	2026-10-21T15:40:34+08:00	2026-10-21T15:40:34+08:00	goodtft	Merge branch '78:main' into main
+b22a84b3394d970cc093a7d2da871cde9b00c09c	2026-10-21T15:40:16+08:00	2026-10-21T15:40:16+08:00	goodtft	Add files via upload
+6840dd8cd3b25595890bbeba92cbd32150e7d8c8	2026-10-21T14:22:12+08:00	2026-10-21T14:22:12+08:00	goodtft	Add files via upload
+71fb630805ea571d830ff739056003580f1c7cfe	2026-10-21T14:21:16+08:00	2026-10-21T14:21:16+08:00	goodtft	Add files via upload
+cb1fe58a06c0000f9b8f739c82044e8e83819c63	2026-10-21T14:20:25+08:00	2026-10-21T14:20:25+08:00	goodtft	Add files via upload
+a090756846481a87c7d8fc83680b5580828022fa	2026-10-21T14:17:53+08:00	2026-10-21T14:17:53+08:00	goodtft	Add files via upload
+cb448e41ded70994d4e3413a5573db33a199e7f1	2026-10-21T14:16:02+08:00	2026-10-21T14:16:02+08:00	goodtft	Delete Kconfig.projbuild
+39c797ede9f36256dd75a63efa9f6d8d5b6de5fd	2026-10-21T14:15:42+08:00	2026-10-21T14:15:42+08:00	goodtft	Delete CMakeLists.txt
+9f206621453f00d52754bac0c55515bffdc5f644	2026-10-21T14:15:04+08:00	2026-10-21T14:15:04+08:00	goodtft	Add files via upload
+e59381375f535b4769199c3dbfb39ab2ae021c9a	2026-10-21T14:12:58+08:00	2026-10-21T14:12:58+08:00	goodtft	Add files via upload
+b0d1d0058cc642459285b8dabaa165cf57bb0d32	2026-10-21T14:12:14+08:00	2026-10-21T14:12:14+08:00	goodtft	Add files via upload
+ba39ecf3babc38079aa4e0b9f776206c98b77f2a	2026-10-21T14:11:03+08:00	2026-10-21T14:11:03+08:00	goodtft	Add files via upload
+399f2a8b226325dfa6c14927d32ef2bf842c9892	2026-10-21T13:20:01+08:00	2026-10-21T13:20:01+08:00	sylarcao-cmd	fix(emote_display): StopAnimDialog and InsertAnimDialog return inverted bools
+2f128acc25146effcddf715f9095f1cbb04b1562	2026-10-21T12:29:18+08:00	2026-10-21T12:29:18+08:00	Xiaoxia	Merge pull request #2332 from sylarcao-cmd/feat/display-apply-emotion
+8663cec384d1953d56fa76ad373c6eca95be4d23	2026-10-21T12:18:41+08:00	2026-10-21T12:18:41+08:00	Terrence	fix(esp-hi): propagate animation loading failures
+d75be5343cc7dabc2662dc55b7b4c1a119a71e51	2026-10-21T11:51:49+08:00	2026-10-21T11:51:49+08:00	sylarcao-cmd	feat(display): SetEmotion reports whether the emotion was set
+33c586b6815a4089ce01a5033ce30b36882cb8c4	2026-10-21T11:47:18+08:00	2026-10-21T11:47:18+08:00	goodtft	Add files via upload
+6cd80c7631eae59eb5bd76de6b008a378070dc38	2026-10-21T11:46:36+08:00	2026-10-21T11:46:36+08:00	goodtft	Delete main/boards/quandong/esp32-s3-spi-4.0/qd_4_0_lcd_board.cc
+86fe95edd3558cf95ed7cdbf5e96dfa719332bcc	2026-10-21T11:46:23+08:00	2026-10-21T11:46:23+08:00	goodtft	Delete main/boards/quandong/esp32-s3-spi-2.8/quandong_s3_dev_board.cc
+7c9d75e816e94846aa7ba3eaecbcb12e373e3cd9	2026-10-21T11:46:11+08:00	2026-10-21T11:46:11+08:00	goodtft	Delete main/boards/quandong/esp32-s3-spi-2.8/qd_2_8_lcd_board.cc
+543b6173428795ba17c4f5afa6d7415becee66ac	2026-10-21T11:45:39+08:00	2026-10-21T11:45:39+08:00	goodtft	Delete main/boards/quandong/esp32-s3-qspi-3.5/qd_3_5_lcd_board.cc
+a9ae9bc8b97c19f73f49455961fc0398cfa5b03f	2026-10-21T11:44:26+08:00	2026-10-21T11:44:26+08:00	goodtft	Add files via upload
+e72c491d38b1f23c7323596fee7e399b89f9c437	2026-10-21T11:43:46+08:00	2026-10-21T11:43:46+08:00	goodtft	Add files via upload
+0d4809ce5aec2ea3a5ad35815076bff043d5ad42	2026-10-21T11:43:00+08:00	2026-10-21T11:43:00+08:00	goodtft	Add files via upload
+51d5a6335770bd7723a7c8afa5fe06fbe03d79c9	2026-10-21T11:41:27+08:00	2026-10-21T11:41:27+08:00	goodtft	Merge branch '78:main' into main
+4ca2e2a6bee87dda573815c595462cd94af86dd2	2026-10-21T07:36:27+08:00	2026-10-21T07:36:27+08:00	Xiaoxia	Merge pull request #2333 from sylarcao-cmd/fix/nano-printf-64bit-conversions
+754ba8f6e00d59a19c443cd97668432932cb14d7	2026-10-21T07:31:27+08:00	2026-10-21T07:31:27+08:00	Xiaoxia	Merge pull request #2331 from sylarcao-cmd/fix/emote-display-flush-watchdog
+89d1d21bec065a6867bac1afdfecfa9ed23db0d8	2026-10-21T07:12:34+08:00	2026-10-21T07:12:34+08:00	Xiaoxia	Merge pull request #2330 from sylarcao-cmd/fix/axp2101-die-temperature
+5c04638d8750f4a253b57dc83db971fa2b6f85b0	2026-10-21T07:05:33+08:00	2026-10-21T07:05:33+08:00	Xiaoxia	Merge pull request #2329 from PG2047/fix/waveshare-amoled-2.16-device-aec
+775fb9073898bea5637cd4897ef8284f5ede090f	2026-10-21T07:05:03+08:00	2026-10-21T07:05:03+08:00	Terrence	fix(board): keep device AEC off by default on Waveshare AMOLED 2.16
+2597a2ad3f6f71ab950094a378b5713a75e7b33c	2026-10-20T23:32:17+08:00	2026-10-20T23:32:17+08:00	sylarcao-cmd	fix(boards): avoid 64-bit printf conversions under nano formatting
+76f07dda06c85f8c2320dbf13cf6d580d323e86f	2026-10-20T23:32:15+08:00	2026-10-20T23:32:15+08:00	sylarcao-cmd	fix(emote_display): report flush completion on every path
+3e56f5e5769621b6eb39bec9e4fe80e10351a082	2026-10-20T23:32:15+08:00	2026-10-20T23:32:15+08:00	sylarcao-cmd	fix(axp2101): read the die temperature from 0x3C/0x3D
+832b7bfdce8011343d8bb81a585695daf1658267	2026-10-20T13:36:23+08:00	2026-10-20T13:36:23+08:00	Bao	fix(kconfig): allow USE_DEVICE_AEC on Waveshare ESP32-S3-Touch-AMOLED-2.16
+aab98abdb3866f16662d448efc656b67275f57e9	2026-10-20T01:25:04+08:00	2026-10-20T01:25:04+08:00	Gil Zhang	feat(board): add Seeed reSpeaker XVF3800 and Flex support with XIAO ESP32-S3 (#2325)
+a397dc46a62347a172b4caaec7a89cf1215184d5	2026-10-19T20:19:51+08:00	2026-10-19T20:19:51+08:00	goodtft	Merge branch '78:main' into main
+b0e6addfd64707282592fd8bee1657b68d7b759c	2026-10-19T19:33:46+08:00	2026-10-19T19:33:46+08:00	小鹏	feat(otto): update GIF emoji component to v1.4.0 (#2328)
+0b4c519252a3c2ba72b477146b1fe486ad697dfa	2026-10-19T19:08:38+08:00	2026-10-19T19:08:38+08:00	goodtft	Add files via upload
+669d904b4beaa23c7b0908bd8f022f4ea833f77b	2026-10-19T19:07:26+08:00	2026-10-19T19:07:26+08:00	goodtft	Add files via upload
+f7ec1a2f567147efbd8380d3a1484994a1ce2850	2026-10-19T19:05:28+08:00	2026-10-19T19:05:28+08:00	goodtft	Add files via upload
+1c701e8a8a9f00f8ce4d1a2fffe1cf6a876e7a59	2026-10-19T18:50:27+08:00	2026-10-19T18:50:27+08:00	goodtft	Add files via upload
+17188094940a33c1ef5304b6ac276ae581d37a33	2026-10-19T08:40:42+08:00	2026-10-19T08:40:42+08:00	xjh	fix(assets): use UTF-8 in the standalone asset packer (#2326)
+9cd4401d30fe3b54f0e6b656de44199cb0595f3c	2026-10-17T14:51:15+07:00	2026-10-17T14:51:15+07:00	DaoVanHung	feat(board): add support for OSTB XiaoZhi 3ST with configuration and documentation
+d9e3f61c8494ca14b2cb8e79df22f360c815594d	2026-10-17T14:50:28+07:00	2026-10-17T14:50:28+07:00	DaoVanHung	docs: add XiaoZhi ESP32 agent context
+8d3142411117263c7345d626f68b7dc34c6dd64c	2026-10-17T10:54:02+07:00	2026-10-17T10:54:02+07:00	DaoVanHung	Add documentation for MQTT + UDP protocol, asynchronous voice notifications, firmware release process, and WebSocket communication protocol
+e0d2390a1ca415473508bbc0c66eaf1d8dc04e37	2026-10-17T08:55:00+08:00	2026-10-17T08:55:00+08:00	Terrence	chore: require esp-ml307 3.8.1
+7f389c3c46ccd3df18d152c9d2f687cc723ea890	2026-10-17T08:44:54+08:00	2026-10-17T08:44:54+08:00	Terrence	refactor(audio): split wake words without C++ streams
+cdc74a0c1467ea517b37b44a8d56d517c715f6c8	2026-10-16T21:14:17+08:00	2026-10-16T21:14:17+08:00	Xiaoxia	fix(audio): refresh Slovak voice prompts (#2321)
+d3d0f9970e875b897c613f513b7fe9cbc4e47852	2026-10-16T18:38:04+08:00	2026-10-16T18:38:04+08:00	goodtft	Delete main/boards/quandong-s3-dev directory
+a1397db0242ec83879efb426f21024042a668458	2026-10-16T18:37:37+08:00	2026-10-16T18:37:37+08:00	goodtft	Add files via upload
+f9bbe83644779fdd7c07e8ecf5a7aa12f932d816	2026-10-16T18:37:00+08:00	2026-10-16T18:37:00+08:00	goodtft	Create config.json
+9e5f551f69131c901717313590f70f7bd8a51a6a	2026-10-16T18:35:55+08:00	2026-10-16T18:35:55+08:00	goodtft	Add files via upload
+fd5b4cf1f86314b9abdc784753d2d8274a9754b3	2026-10-16T18:35:32+08:00	2026-10-16T18:35:32+08:00	goodtft	Add files via upload
+6135d9500b358e15356909700959dfb49a8d9b2e	2026-10-16T18:34:52+08:00	2026-10-16T18:34:52+08:00	goodtft	Create config.json
+12089d1e1047e02921c4058399eaa634df2c0e91	2026-10-16T18:34:00+08:00	2026-10-16T18:34:00+08:00	goodtft	Delete main/boards/quandong/test
+00ab5d6a0a89dbddd7a54a94a4e2c69dcb900f07	2026-10-16T18:33:25+08:00	2026-10-16T18:33:25+08:00	goodtft	Add files via upload
+c88c8988c702020a52c79b82ad3958651ceb597b	2026-10-16T18:33:01+08:00	2026-10-16T18:33:01+08:00	goodtft	Create config.json
+efb5dd07a05de93bc616ac869d3d64bf505a51d6	2026-10-16T18:32:21+08:00	2026-10-16T18:32:21+08:00	goodtft	Create test
+3d618916537d3e0cba006b03d4d5c1843a66cf16	2026-10-16T18:31:55+08:00	2026-10-16T18:31:55+08:00	goodtft	Delete main/boards/quandong/esp32-s3-qspi-3.5 directory
+35577c0d44290fea7dd2c2ac32d173d36a17b37f	2026-10-16T18:31:10+08:00	2026-10-16T18:31:10+08:00	goodtft	Add files via upload
+1f028611307943860f4168e6ce68ea64d89e01a3	2026-10-16T18:30:50+08:00	2026-10-16T18:30:50+08:00	goodtft	Create config.json
+fa7004717ea0468d6fa75dfeffd09a8ee89c7fed	2026-10-16T18:29:13+08:00	2026-10-16T18:29:13+08:00	goodtft	Delete main/boards/QuanDong/esp32-s3-qspi-3.5 directory
+243fe7bcd98e166ec9fa4b61078367895a03722d	2026-10-16T18:25:31+08:00	2026-10-16T18:25:31+08:00	goodtft	Add files via upload
+fb1a08e0bc28e4d71319b77612dc90eba2752833	2026-10-16T18:25:02+08:00	2026-10-16T18:25:02+08:00	goodtft	Create config.json
+afca5088a1480d6827e3bbc84a45f8121f75d629	2026-10-16T14:38:50+08:00	2026-10-16T14:38:50+08:00	Terrence	fix(audio): refresh Slovak voice prompts
+6cb01531c2ae961eb3fd64c5e97f65d20a597f7e	2026-10-16T13:24:23+08:00	2026-10-16T13:24:23+08:00	Terrence	fix(websocket): send Pong from the main task and update esp-ml307 to 3.8.0
+f76834a779895defefd2ec6b0afa1f2ce3c1673c	2026-10-15T18:45:49+03:00	2026-10-15T18:45:49+03:00	dzmitryNz	Add Belarusian (be-BY) language
+d7a1c05308fb6e116ffb44b9e2c6e67b3366302a	2026-10-15T08:51:46+08:00	2026-10-15T08:51:46+08:00	Xiaoxia	feat: show startup wake words in a temporary chat message (#2315)
+a190167decc37a3811b2412f667a87bd7fce2934	2026-10-15T08:45:55+08:00	2026-10-15T08:45:55+08:00	Terrence	feat: show startup wake words in a temporary chat message
+dec42c4bbdd7670cccaad7717a93067f9fc78f1a	2026-10-15T07:10:28+08:00	2026-10-15T07:10:28+08:00	Terrence	fix: select default wake words from build language
+da4bf4feb2f3c343136bd7d19d893ac60e9245b4	2026-10-15T06:18:34+08:00	2026-10-15T06:18:34+08:00	Terrence	fix: prepare 2.5.3 with English defaults and headless assets
+aa01c4b2fc6ed7cff66001619ef61107d1368951	2026-10-15T06:14:46+08:00	2026-10-15T06:14:46+08:00	Terrence	chore: update esp-ml307 and uart-uhci dependencies
+ad053565f5653ae4b44c6d5d66be93fdb23f9f78	2026-10-15T04:58:33+08:00	2026-10-15T04:58:33+08:00	Terrence	ci: use ESP-IDF release-v6.1 for firmware builds
+e076ac496e2d93dc3a2308a0491d745afe9489ab	2026-10-13T01:03:24+08:00	2026-10-13T01:03:24+08:00	Xiaoxia	Merge pull request #2306 from Rafza7/fix/russian-translations
+c3cb9b829cccf297131aa65c05824b7f48bf487f	2026-10-12T23:48:41+08:00	2026-10-12T23:48:41+08:00	Terrence	fix(i18n): separate Russian hotspot and browser hints
+4671c7c15e66598798831481323f337dded63c0d	2026-10-12T15:35:43+03:00	2026-10-12T15:35:43+03:00	Rafza7	Fix: улучшение русского перевода (ru-RU)
+aef2ab0ce373b74e534c85150eca48c6bdcbb62e	2026-10-12T03:06:57-05:00	2026-10-12T16:06:57+08:00	BaiHeng Peng	fix(mcp): escape JSON-RPC error messages (#2305)
+089dcb887861346a4c18f6ead7042cfea14435bd	2026-10-12T15:24:33+08:00	2026-10-12T15:24:33+08:00	Shinku	feat(ai-passport): 启用多行聊天消息 (#2304)
+bb1c0949261d61b628112bca342fc9c283eb94ce	2026-10-12T04:53:28+08:00	2026-10-12T04:53:28+08:00	Xiaoxia	fix(ci): verify draft releases through their stable IDs (#2303)
+362152891c406cff8ea475e3131ad328ec662fb6	2026-10-12T04:49:34+08:00	2026-10-12T04:49:34+08:00	Terrence	fix(ci): verify draft releases through their stable IDs
+49b4380b3faa0ceadd28a3e78aaf0f311c46c57e	2026-10-12T02:38:23+08:00	2026-10-12T02:38:23+08:00	Xiaoxia	ci: add manual full-matrix firmware release workflow (#2302)
+68250ddbc1caaf7dbfd879b6c2af3fec6540c568	2026-10-12T02:35:25+08:00	2026-10-12T02:35:25+08:00	Terrence	ci: add manual full-matrix firmware release workflow
+f2f7b82b6cdc9de0b2a065889061917490d918d1	2026-10-12T02:00:39+08:00	2026-10-12T02:00:39+08:00	taonsh	feat(board): add CHD ESP32-S3 BOX and EYE (#2270)
+c0fe42adbc0ec98088464b7ad47e6e7b3306e5fd	2026-10-10T15:51:53+08:00	2026-10-10T15:51:53+08:00	Terrence	refactor(audio): standardize I2S clock configuration across audio codecs
+d0abf72afb38400b07665c693d2269a451909cbd	2026-10-10T00:25:30-07:00	2026-10-10T15:25:30+08:00	Wei Li	fix(esp-vocat): tolerate peripheral I2C read failures (#2287)
+8b032f4e99e5c366bb220e68b3a1985a0472d76d	2026-10-10T03:10:28-04:00	2026-10-10T15:10:28+08:00	Aria Stewart	feat(board): add LC-S3-WIFI 1.54-inch TFT (ESP32-S3) (#2293)
+f05adce2f6f65e20841f22c692a7452665b36902	2026-10-10T14:58:55+08:00	2026-10-10T14:58:55+08:00	Terrence	fix(ota): reject unsafe eFuse serial numbers and bump to 2.5.2
+3556a283a3d3869eb36eb6231bede602d3d183ed	2026-10-10T14:00:54+08:00	2026-10-10T14:00:54+08:00	Terrence	fix(camera): disable PSRAM DMA by default on ESP32-S3
+4f7c00fb8432e92b08732f5a3cd6c58f9f7ca0cd	2026-10-08T23:44:22+08:00	2026-10-08T23:44:22+08:00	Terrence	chore(deps): upgrade cellular modem and UART components
+0d576d3d4c049c6f55eaf879725dc23e516511b4	2026-10-02T23:57:57+03:00	2026-10-03T04:57:57+08:00	Tal Ofer	feat(lilygo): add T-Circle-S3 V1.1 board (#2286)
+d395220a83fb7a16ea5dc761c08a4816177cc880	2026-10-02T02:19:38+08:00	2026-10-02T02:20:09+08:00	Terrence	fix(ethernet): migrate IP101 driver and RMII GPIOs to ESP-IDF 6
+af55a78e3f8aa870d466335cc2682621edef5c5a	2026-10-02T02:01:17+08:00	2026-10-02T02:01:17+08:00	Shinku	Add a staged idle power policy to the FoloToy AI Passport board (#2283)
+ed5cd7ba0011dc06fefd0762790857268c41b430	2026-09-30T05:49:15+08:00	2026-09-30T05:49:15+08:00	Terrence	ci: build representative variants and directly changed boards
+abc177c9661570e60b53a1245ad1d5eb65dfbd60	2026-09-30T05:18:02+08:00	2026-09-30T05:18:05+08:00	Terrence	chore(CMake): bump project version to 2.5.1
+1185605e1f8120810c432d2b83a52319761ddddd	2026-09-30T00:06:55+03:00	2026-09-30T05:06:55+08:00	Mehmet Akif	feat(board): add Guition JC4827W543 (4.3" 480x272 ESP32-S3) (#2272)
+a44ce7c0f0d3cdc40a8360c3eac193d73760e9d5	2026-09-30T04:42:29+08:00	2026-09-30T04:42:32+08:00	Terrence	fix(audio): default board capture to a single microphone
+8ce50d27cd7c72c777673f46cbfc3ef7454d1b5c	2026-09-26T16:56:17+08:00	2026-09-26T16:56:17+08:00	Copilot	Fix GC0308 Kconfig typo that disabled the BOX3 camera driver (#2277)
+e033a1e0e2c5fdc071c4e9baa44fca253096a75e	2026-09-26T08:33:52Z	2026-09-26T08:33:52Z	copilot-swe-agent[bot]	Fix GC0308 camera Kconfig typo on atk-dnesp32s3-box3
+7ad51905e8b380ac3d3fcaafe1f3b8f0c15e933f	2026-09-26T08:31:48Z	2026-09-26T08:31:48Z	copilot-swe-agent[bot]	Initial plan
+64b57d0ba5c2f11a30974a0216dc28221c5b9d5b	2026-09-23T11:35:43+01:00	2026-09-23T18:35:43+08:00	lv70	fix(esp-vocat): map the robot_2 emote so activation does not log "Not found" (#2273)
+4632dc51f0a5ad26e08542e131e6e48da41e4ff3	2026-09-20T18:03:52+08:00	2026-09-20T18:03:52+08:00	Y1hsiaochunnn	Merge pull request #2268 from wrgrant/fix/sw-rotate-partial-area
+5c2d1e921470099ba131f550263fdd0863d03713	2026-09-19T19:48:30-05:00	2026-09-19T19:48:30-05:00	William Grant	fix(waveshare 3.5b): index source buffer relative to the flushed area
+eeae329b56bce2ffcafd6c5609df3b4974ffc8df	2026-09-19T21:22:36+05:30	2026-09-19T23:52:36+08:00	Anas Khan	fix(ogg): emit packets ending in a zero-length lace at end of input (#2267)
+f66d7a50cfbca123a53265b3229775d3446b06f1	2026-09-16T18:35:51+08:00	2026-09-16T18:35:51+08:00	goodtft	Delete main/boards/quandong-s3-dev/quandong_s3_dev_board.cc
+b003ce3ee112a374671804aba1e8d32215c30090	2026-09-16T18:35:38+08:00	2026-09-16T18:35:38+08:00	goodtft	Delete main/boards/quandong-s3-dev/config.json
+7d2105e8cbed52696db01fe01aa5d3a260a177d5	2026-09-16T18:35:24+08:00	2026-09-16T18:35:24+08:00	goodtft	Delete main/boards/quandong-s3-dev/config.h
+36cfcd972dc4b24e99dc2784c86fd68739abf36d	2026-09-16T18:35:13+08:00	2026-09-16T18:35:13+08:00	goodtft	Delete main/boards/quandong-s3-dev/HARDWARE_DIFF.md
+c1f0fd36196e6c01d9a773792c70974a1394bb15	2026-09-16T18:34:38+08:00	2026-09-16T18:34:38+08:00	goodtft	Update Kconfig.projbuild for Quandong-s3-dev
+89dd3b84305ae50ff01a3a1f328a0a579f2e0960	2026-09-16T18:33:48+08:00	2026-09-16T18:33:48+08:00	goodtft	Update CMakeLists.txt for support Quandong-s3-dev
+8f8fcb62465d32fcb209e2d0ea8d96db0580aa7f	2026-09-16T18:32:09+08:00	2026-09-16T18:32:09+08:00	goodtft	Add support for Quandong-s3-dev SPI 4.0 Panel
+613a69be126a593204ff311e9a5b39ecef11f357	2026-09-16T18:31:18+08:00	2026-09-16T18:31:18+08:00	goodtft	Create config.h for SPI 4.0
+1cd1c6bde774d5d8f5113ed6ab38aedfc3d283be	2026-09-16T18:30:09+08:00	2026-09-16T18:30:09+08:00	goodtft	Add support for Quandong-s3-dev SPI 2.8
+b0c743d64411fce7e1e346e4b59e0f1c469397e3	2026-09-16T18:27:46+08:00	2026-09-16T18:27:46+08:00	goodtft	Create config.h for spi-2.8
+c17440ab8453b345ddb66cc97dc9464938130880	2026-09-16T18:25:59+08:00	2026-09-16T18:25:59+08:00	goodtft	Add support for Quandong-s3-dev QSPI 3.5
+b1041f4edf5af44e5d322baa24c2c5c25387d9db	2026-09-16T18:24:59+08:00	2026-09-16T18:24:59+08:00	goodtft	Create config.h for QSPI3.5
+5d54beb743ff49c4e8db81bbef9413bdd6e2ba17	2026-09-16T04:02:33+08:00	2026-09-16T04:02:33+08:00	Xiaoxia	Merge pull request #2261 from epaper1/epddisp
+9ba375f2153476b5888ae783bc59005d46f9b611	2026-09-15T18:40:37+08:00	2026-09-15T18:40:37+08:00	Xiaoxia	Merge pull request #2259 from laride/boards/add-esp-mosaico
+40f7c83836377df89a66a502518914a0c8452aea	2026-09-15T12:00:55+08:00	2026-09-15T14:25:06+08:00	Liu Ruichao	feat(ci): update GitHub Actions checkout and upload artifact actions to v7
+1d48a405942bcae8ea3c8ed23c41fabe681c1dae	2026-09-14T19:21:45+08:00	2026-09-15T14:25:06+08:00	Liu Ruichao	feat(http): improve error handling for photo uploads to support GCC 16
+37206a82a2c7176a5389951847b611824275e894	2026-09-14T19:07:21+08:00	2026-09-15T14:25:06+08:00	Liu Ruichao	feat(board): add ESP-Mosaico
+f69742bf85da6aea11e3b01ee0436982a03f4822	2026-09-15T02:19:44+08:00	2026-09-15T02:19:44+08:00	DaXia	Move epaper display as common component
+cf2024ff36b3af1d651a68ee582cbb91986ec4d4	2026-09-14T23:10:31+08:00	2026-09-14T23:10:31+08:00	Terrence	chore: require esp-ml307 3.7.3 and uart-uhci 0.3.3
+df6b31d39f826360bc46a3c65b3bd2062ea0a750	2026-09-14T14:07:05+08:00	2026-09-14T14:07:05+08:00	Xiaoxia	Merge pull request #2257 from Dev-next-gen/fix/custom-message-cjson-leak
+153e19bd6ffeb4c8b71454b3147768dcfe6becb2	2026-09-13T23:45:37+02:00	2026-09-13T23:45:37+02:00	leoca	fix: free cJSON strings printed for custom messages
+af208a32e127e6d10842b3d3866de0c9f90dd7c4	2026-09-14T05:35:40+08:00	2026-09-14T05:35:40+08:00	Xiaoxia	Merge pull request #2256 from Dev-next-gen/fix/theme-parse-color-short-hex
+019678881afe6cbbb35df8314330df32aeed3d58	2026-09-13T23:21:11+02:00	2026-09-13T23:21:11+02:00	leoca	fix(display): do not abort on short theme colors in assets skin
+236deb266a88ade000cc85e20c0ccacc765e0ce3	2026-09-13T21:33:27+08:00	2026-09-13T21:33:27+08:00	Xiaoxia	Merge pull request #2254 from 78/fix/mqtt-send-audio-lock
+f5b495dde79ca8711b520e63251cc9bd646711e6	2026-09-13T20:40:34+08:00	2026-09-13T20:40:34+08:00	Terrence	fix(mqtt): do not hold channel_mutex_ while sending UDP audio
+563a4f0a70d34eea5547977f2a39efa401c2ea35	2026-09-12T04:05:13+08:00	2026-09-12T04:05:13+08:00	Xiaoxia	Merge pull request #2249 from StanleyChanH/fix/esp-vocat-pcb-detection-soft-reset
+2b183ab371c983ee40e05cfc0f9eb8117667762e	2026-09-12T01:29:05+08:00	2026-09-12T01:29:05+08:00	StanleyChanH	fix(esp-vocat): apply V1.2 pins on the cached path too
+213f33ba917a2e6b0a15ced37db71c72519640e9	2026-09-12T00:26:28+08:00	2026-09-12T00:59:45+08:00	StanleyChanH	fix(esp-vocat): stabilize PCB version detection across soft resets
+184a688cd04564c15f035cee09c0f61889fc8e9d	2026-09-11T14:30:09+08:00	2026-09-11T14:30:09+08:00	Xiaoxia	Merge pull request #2248 from WODE25500/fix/ota-nonthrowing-version-parse
+d4360977ec8856700e5052e1ac53b0f5f549a851	2026-09-11T14:11:11+08:00	2026-09-11T14:11:11+08:00	WODE25500	fix(websocket): guard transport field before strcmp in server hello (#2247)
+b2bb950d897ee68b2b0891f1d5e987d6f60dbe6e	2026-09-11T10:01:14+08:00	2026-09-11T10:01:14+08:00	WODE25500	fix(ota): parse versions without throwing
+ac6deed3d8e75348475364bf40ad953c6cd48054	2026-09-10T15:40:56+08:00	2026-09-10T15:40:56+08:00	Xiaoxia	Disable C++ exceptions and keep ESP32-S31 firmware in the 4MB OTA slot (#2246)
+00b77f0a2d1e812b2c67d8e6b1fce232855926bc	2026-09-10T15:32:45+08:00	2026-09-10T15:32:45+08:00	Terrence	Merge main and preserve MCP validation, response routing and OLED power saving
+acb2fc735c0922bb715d4e0b61dcefed245fb4a3	2026-09-10T08:30:12+02:00	2026-09-10T14:30:12+08:00	Nicola Urs Bruce Spieser	feat: add string max_length validation and JSON-RPC error codes to MCP server (#1847)
+732da18a55cc824a0a7b060e5d4c7af31104c918	2026-09-10T09:04:06+03:00	2026-09-10T14:04:06+08:00	Vitalymt	feat(display): turn off OLED panel in power save mode (#2195)
+2a9157dbb4590c2c159cf37d4c5a7d13667eb924	2026-09-10T14:03:06+08:00	2026-09-10T14:03:06+08:00	3em0	Bind Otto MCP responses to request client (#2021)
+3235d781a3df7fe07a036977433ae4d5379d5519	2026-09-10T13:55:38+08:00	2026-09-10T13:55:38+08:00	Terrence	fix(s3): drop the 1MB LVGL pool automatically when PSRAM is off
+ca7221a05b98682ac4638dda9e9f6b24096f922b	2026-09-10T06:47:54+08:00	2026-09-10T06:47:54+08:00	Terrence	fix(ci): pin audio codecs for P4 rev1 and build the full matrix on IDF 6.1
+8f1476063a7b7d6e74b7fde9adac981af5a8d8af	2026-09-10T06:09:16+08:00	2026-09-10T06:09:16+08:00	Terrence	refactor: adjust audio_decode_queue capacity for testing
+1393d6f372daf48afd34eb25f63b45b7505e1c3b	2026-09-10T06:04:19+08:00	2026-09-10T06:04:19+08:00	Terrence	refactor: drop C++ exceptions and return expected errors
+897fe735e6b53a21d083a835eb5b33583664746b	2026-09-10T06:01:45+08:00	2026-09-10T06:01:45+08:00	Terrence	fix(s31): pin esp-sr 2.4.7 and drop the LVGL builtin SRAM pool
+6240b777aaa2bc0cad43a4ce25b30de23f36ad00	2026-09-10T05:31:37+08:00	2026-09-10T05:31:37+08:00	Terrence	chore: update project version to 2.5.0 in CMakeLists.txt
+7aa926669486adf3e7ed8d4f265f69dbe4bdaa2f	2026-09-10T05:03:03+08:00	2026-09-10T05:21:54+08:00	Terrence	fix: keep AFE and LVGL out of the internal SRAM bottleneck
+3cd9385f21ea5f2985199925f65071c1e88e1eee	2026-09-10T05:03:00+08:00	2026-09-10T05:21:54+08:00	Terrence	fix(nt26): handle uart-eth-modem 0.6 events and QueryCellInfo
+679f6fd5e3ec358358df2787b73b80e788c482e9	2026-09-10T05:02:58+08:00	2026-09-10T05:21:54+08:00	Terrence	fix(assets): pack only the WakeNet10 slice for the current target
+4a5d446cc6256d7209476da85424bbfbfe62bee9	2026-09-10T05:02:56+08:00	2026-09-10T05:21:54+08:00	Terrence	chore: require ESP-IDF 6.1 and drop IDF 5.x
+39e822a0457afedf535c78112728a641e09c8936	2026-09-10T05:01:55+08:00	2026-09-10T05:21:54+08:00	Terrence	fix(waveshare): fit esp32-touch-lcd-3.5 default assets in 1MB
+3515437e1bc0f0253f7e1fe3e018859c0d040099	2026-09-10T05:05:31+08:00	2026-09-10T05:05:31+08:00	Xiaoxia	Fix Tab5 ST7121 and ST7123 display detection (#2227)
+46b332711796a62b09442a5af2d851518c2bacd0	2026-09-10T04:55:56+08:00	2026-09-10T04:55:56+08:00	QiuLG	fix(build): reject mismatched board configuration (#2240)
+27fd2dd54161ec62384dc6ba419059097e813fa2	2026-09-10T01:52:38+08:00	2026-09-10T01:52:38+08:00	Terrence	fix(emote): do not advertise glyph_push for Emote UI
+d95bc598a04e7de2e0080d00f2f7c2613589c1ff	2026-09-10T01:51:26+08:00	2026-09-10T01:51:26+08:00	Terrence	Merge branch 'main' of github.com:78/xiaozhi-esp32
+d68505f537314ca8ea720e32f8df870089bc41cd	2026-09-09T14:47:12-03:00	2026-09-10T01:47:12+08:00	Flavio Faria	Add pt-BR (Brazilian Portuguese) locale (#2243)
+9c55f7281143eb32de3dcfef42481eb9f47b0b3a	2026-09-10T01:42:34+08:00	2026-09-10T01:42:34+08:00	Terrence	refactor: improve error handling and logging in HTTP operations
+2420699a1e903a65d2d775d2d2bdf3094bc4aa9c	2026-09-10T01:32:23+08:00	2026-09-10T01:32:23+08:00	EPaper	Add Maza AI boards for xiaozhi (#2185)
+d88d2c89000d672b8fbd1083b2276f3bebe8c9f4	2026-09-09T18:38:24+08:00	2026-09-09T18:38:24+08:00	Copilot	fix(esp-hi): fit 4MB assets and restore ST7735 bring-up (#2238)
+317064ac5f2216d91e3aaa15ce66179280a50f61	2026-09-09T17:46:07+08:00	2026-09-09T17:46:07+08:00	Shinku	feat(board): 新增 FoloToy AI Passport (ESP32-C3) 板卡支持 (#2236)
+c7241272f2d5fd140c77542f3cf12d09e717fc2f	2026-09-04T23:58:08+08:00	2026-09-04T23:58:08+08:00	JackHuang021	xpowers: add generic PMU wrapper over I2cDevice (#2237)
+804f713ea6cae594214af91cfb859b8d7d82dfce	2026-08-31T01:15:11+08:00	2026-08-31T01:15:11+08:00	Xiaoxia	Fix Tab5 ST7121 and ST7123 display detection
+5df5b7fb4da2b4d80e2b7f87285ec1f8a9ca565c	2026-08-31T00:50:58+08:00	2026-08-31T00:50:58+08:00	zfkun	fix: invoke ESP-IDF idf.py correctly on Windows (#2211)
+fe7bb0a2f07c7e7aae336f67893806c94ec71e12	2026-08-30T17:55:57+02:00	2026-08-30T23:55:57+08:00	Max Power	fix(display): redraw idle clock on minute change, not a shared timestamp (#2224)
+2f478c3d7e4b9d76b661a227e6e5a1a08d95e86c	2026-08-30T17:54:53+02:00	2026-08-30T23:54:53+08:00	Max Power	fix(led): scope CircularStrip effect state to the instance (#2221)
+374a5ccf95c2ed513dbad9ca204adbac75062dce	2026-08-30T08:18:19+02:00	2026-08-30T14:18:19+08:00	Max Power	Fix camera format negotiation for big-endian RGB565 sensors (RGB565X) (#2225)
+da1a71940df930b9258f063e40e9067b16c6ca14	2026-08-30T08:12:45+02:00	2026-08-30T14:12:45+08:00	Max Power	fix(df-k10): clamp self.led_strip.scroll length to the actual LED count (#2222)
+527604dbef9a6083dfe09c35993963515acf3bd0	2026-08-28T12:49:38+08:00	2026-08-28T12:49:38+08:00	小鹏	fix(otto): detect camera board from GPIO straps (#2219)

@@ -1,0 +1,68 @@
+f26e89c6e5f644c6bea1992b11debe06833aa2a0	2026-10-23T12:34:35+07:00	2026-10-23T12:34:35+07:00	DaoVanHung	docs(iot): update project file index and add local AI flow documentation
+4f3a3611beadb29e084ec371a3ae39e355d2a238	2026-10-23T11:29:09+07:00	2026-10-23T11:29:09+07:00	DaoVanHung	docs(context): add reusable FastAPI backend agent context and templates
+707b7e601da888aa6d054a623247c214901ffa89	2026-10-22T18:27:33+07:00	2026-10-22T18:27:33+07:00	DaoVanHung	feat(backend): add self-hosted NanoBio API foundation
+2aa651339e34cd5ead5dbeb9f4df95ec814c98c1	2026-10-20T22:25:14+07:00	2026-10-20T22:25:14+07:00	DaoVanHung	fix(food-scan): improve image picker handling and nutrition fallback
+4523207971cca0f17aff7060c9d6c1682820aad4	2026-10-20T18:39:33+07:00	2026-10-20T18:39:33+07:00	DaoVanHung	feat(ai_chat): add thinking phrases for response delays
+5cde445a45553cbbcbfed9c6763faa921781773e	2026-10-20T18:33:42+07:00	2026-10-20T18:33:42+07:00	DaoVanHung	fix(ai): generate local schedule on Xiaomi
+54f5af001536647dec34e965bfac1f9aa98c5f13	2026-10-18T15:42:17+07:00	2026-10-18T15:42:17+07:00	DaoVanHung	feat(iot): import XiaoZhi ESP32 project
+69ef77a04f71f9ad046857ccdfb7f7f9bed59967	2026-10-18T13:28:28+07:00	2026-10-18T13:28:28+07:00	DaoVanHung	docs(worklog): ghi nhận tiến độ tạo ảnh món Việt từ 0046 đến 0105
+5e697f1abb81e45c6a3fc47097e4111779680915	2026-10-16T12:52:51+07:00	2026-10-16T12:52:51+07:00	DaoVanHung	feat(meal-photo): enhance image resolution handling with code-keyed assets
+bb85c1929035f6586c96c091928848fc8c71920c	2026-10-16T12:49:12+07:00	2026-10-16T12:49:12+07:00	DaoVanHung	feat(meals): integrate 3000-item wellness catalog
+9b88486f4b57eeed2f3f77d463a027b5ab36eeae	2026-10-15T22:57:24+07:00	2026-10-15T22:57:24+07:00	DaoVanHung	feat(medication-reminders): implement SQLite repository and notification coordination
+598daf0486ef2c8dba7cd919e48518698aeb980f	2026-10-15T20:22:01+07:00	2026-10-15T20:22:01+07:00	DaoVanHung	feat(onboarding): implement exclusive selection logic for weight goals and conditions
+b34404a9c32d194d2d25470526b74cc2ed0402d8	2026-10-15T19:48:59+07:00	2026-10-15T19:48:59+07:00	DaoVanHung	feat: add wellness rank experience tracking and migration
+436dac21118daa478285d8142bd1e28c26bc5c02	2026-10-14T19:51:35+07:00	2026-10-14T19:51:35+07:00	DaoVanHung	feat(auth): switch member access to phone and reset flow
+00ce4391942120f375aff3e9930143c88e79ab6c	2026-10-14T10:19:20+07:00	2026-10-14T10:19:20+07:00	DaoVanHung	feat(onboarding): implement NanoBio Blue Wellness design system and onboarding UI enhancements
+5bd64f7df9fbd533e4805fa72fe67245471396ca	2026-10-13T22:22:01+07:00	2026-10-13T22:22:01+07:00	DaoVanHung	feat(ai): ground and resume personalized plan generation
+184df67240c4d7a157b02c95f685d54beb3c1eef	2026-10-07T11:30:41+07:00	2026-10-07T11:30:41+07:00	DaoVanHung	feat(event-info): add serial number column and update UI for pagination
+612fb3da75fdaef6ce36247772c3dbcc90547e5d	2026-10-07T10:23:31+07:00	2026-10-07T10:23:31+07:00	DaoVanHung	docs(worklog): record image replacement in NanoBio gallery with user-provided images
+ca9a57076fabed52f4577cab3372459ec23fe257	2026-10-07T10:12:56+07:00	2026-10-07T10:12:56+07:00	DaoVanHung	feat(tests): add unit tests for NanoBio landing page controller
+93a752695c407968e057d9722949cac2807044fb	2026-10-07T08:01:54+07:00	2026-10-07T08:01:54+07:00	DaoVanHung	feat(web-admin): change UI
+464015ce1360d70a27236afe0ddf91a883555a84	2026-10-07T01:46:12+07:00	2026-10-07T01:46:12+07:00	DaoVanHung	docs(worklog): record NanoBio early access deployment
+6e49241dacfcb9b0f9857a0e61ccc7fcbd396580	2026-10-07T01:44:01+07:00	2026-10-07T01:44:01+07:00	DaoVanHung	fix(admin): map early access lead statuses
+73193f51567c47628b2b3f9c319168bd2336057d	2026-10-07T01:29:16+07:00	2026-10-07T01:29:16+07:00	DaoVanHung	feat(early-access): collect customer details and serve apk
+febcc3637418e45a296fc6d62b947b7f075baa46	2026-10-07T00:58:43+07:00	2026-10-07T00:58:43+07:00	DaoVanHung	feat(worklog): document admin sidebar website shortcut implementation
+9dda724c803961239817b2f3e3ac76a8a63da06a	2026-10-07T00:55:50+07:00	2026-10-07T00:55:50+07:00	DaoVanHung	feat(admin-web): keep website shortcut visible
+51820d28997dd3b5cf55c101d8e571d5356042ab	2026-10-07T00:31:37+07:00	2026-10-07T00:31:37+07:00	DaoVanHung	Add tests for sleep safety schedule page and medical responsive layout
+b98b31bf5553139d65d5b13baee4f4710e158e27	2026-10-06T22:42:11+07:00	2026-10-06T22:42:11+07:00	DaoVanHung	chore(docs): update Flutter agent workflows and related documentation
+f33ccd7fc79cbc5f9c68efa6cec276cad28e196f	2026-10-06T22:14:18+07:00	2026-10-06T22:14:18+07:00	DaoVanHung	fix(m31): implement local timeout call for no-response scenario
+d9dd51205b829fbc4efbf2a28f71e19f315be41f	2026-10-06T20:55:38+07:00	2026-10-06T20:55:38+07:00	DaoVanHung	Add tests for sleep safety features and cloud recovery functionality
+433c713a7e3c63ec4d8a6fb6c17693c737a2642e	2026-10-05T21:53:55+07:00	2026-10-05T21:53:55+07:00	DaoVanHung	feat(branding): rebrand app as Nabi with updated icons and versioning
+65ff44e6f1a348c0b7273179a00781dd5eb64e6e	2026-10-05T14:39:52+07:00	2026-10-05T14:39:52+07:00	DaoVanHung	fix(m32): make workout scheduling conflict-safe
+a04363e4b4dab34c66e21f8bc436df3bdd6e37ba	2026-10-05T12:38:13+07:00	2026-10-05T12:38:13+07:00	DaoVanHung	feat(m32): add gym-first fitness training pilot
+20c23c80749d0161da8a5e07063ef7c261fdb7df	2026-09-15T11:30:36+07:00	2026-09-15T11:30:36+07:00	DaoVanHung	feat(release): update Android app version to 1.0.0+3 and build AAB for Google Play
+f71128a25b7183db713cc192f3f9680b56184845	2026-09-15T11:00:24+07:00	2026-09-15T11:00:24+07:00	DaoVanHung	feat(ui): add back button and notification management in settings
+f8a7227b595d45a62ac8fcc3f5697157cef88e8f	2026-09-15T10:11:49+07:00	2026-09-15T10:11:49+07:00	DaoVanHung	fixbug(sleep_safely): ok
+28fb3d1d5386d119aaa97f158dfd3487fd1c198e	2026-09-13T22:23:43+07:00	2026-09-13T22:23:43+07:00	DaoVanHung	feat(supabase): implement automatic membership expiration reconciliation
+b1b12fca6e142359c9fc659c097a1170a5ee7360	2026-09-13T20:28:43+07:00	2026-09-13T20:28:43+07:00	DaoVanHung	fix admin log
+b01ce4482b1548bdb249f8af10fa8273276bd903	2026-09-13T20:28:07+07:00	2026-09-13T20:28:07+07:00	DaoVanHung	fix admin
+7ffc30f22dcf4a40c64074244247bc8c0559ba4b	2026-09-13T20:27:48+07:00	2026-09-13T20:27:48+07:00	DaoVanHung	feat(admin): add plus time
+04ac62de0ffefa8f9d955fdcab1f17ddbd875586	2026-09-13T20:04:05+07:00	2026-09-13T20:04:05+07:00	DaoVanHung	feat(ai): fix bug
+879044541b73e471ca58512cd8faf1e12a22972a	2026-09-13T19:15:54+07:00	2026-09-13T19:15:54+07:00	DaoVanHung	fix(admin): map bulk account names for edge function
+694483c66ec3af310653e4316b021fcde856d156	2026-09-13T19:14:55+07:00	2026-09-13T19:14:55+07:00	DaoVanHung	feat(admin): implement bulk account provisioning and password change flow
+3ee02b32ee614abbf8529625bc9af9ce49ce52b6	2026-09-13T19:11:36+07:00	2026-09-13T19:11:36+07:00	DaoVanHung	fix(admin): add bulk account provisioning function
+4d99c2357cdcf8a15dc1dbad9bb67e6a48472093	2026-09-13T18:59:01+07:00	2026-09-13T18:59:01+07:00	DaoVanHung	feat(admin): add user detail and password management
+3f9a85829af7bdb0f3c2e8949b96b61db77fff72	2026-09-13T18:08:05+07:00	2026-09-13T18:08:05+07:00	DaoVanHung	fix(admin-web): correct current plan display in user list
+3d0b34ebff9c5a83e6b91004daaad55716564455	2026-09-13T16:52:00+07:00	2026-09-13T16:52:00+07:00	DaoVanHung	fix(admin-web): handle CORS preflight for membership grant
+95a9042879867e68d3e81cf58bb17a4aa51290cf	2026-09-13T16:08:53+07:00	2026-09-13T16:08:53+07:00	DaoVanHung	fixbug(admin-web): add secret key
+c5728948be5bef02eadd58fca17f8f7634718eb9	2026-09-13T15:36:47+07:00	2026-09-13T15:36:47+07:00	DaoVanHung	feat(admin-web): init web
+9f69b845a3bf61d29b8454864081591ad70450ab	2026-09-11T14:30:50+07:00	2026-09-11T14:30:50+07:00	DaoVanHung	fix(auth): prevent duplicate registration submissions on real devices
+a1ef0ed11b935d16dcdf801300ded3c6979363bb	2026-08-31T15:43:08+07:00	2026-08-31T15:43:08+07:00	DaoVanHung	fix(meal): update meal catalog handling to use Supabase as the sole source and remove legacy data
+bb271c7ea5e123636abd20b8c669827f5e65497e	2026-08-31T14:57:41+07:00	2026-08-31T14:57:41+07:00	DaoVanHung	fixbug(ai-analist-meat): done
+696172ac95b0dd3f0e5f4685d8b47f8f22277379	2026-08-31T04:57:29+07:00	2026-08-31T04:57:29+07:00	DaoVanHung	feat: add AI recovery plan for GPT Luna 5.6 and worklog for AI generation fix after onboarding
+5f827447dbbf434c6c82ada0704b743e2be74eec	2026-08-30T00:23:16+07:00	2026-08-30T00:23:16+07:00	DaoVanHung	feat: add package.json and package-lock.json for dependency management
+9aa987eeaa9576a7c8f08f5e6356b19b34342301	2026-08-29T19:34:59+07:00	2026-08-29T19:34:59+07:00	DaoVanHung	fix: update regex patterns and use extensions for random bytes and digest functions
+e86e9975c9082de90ce4c1f007bc10857cde26f8	2026-08-29T18:04:23+07:00	2026-08-29T18:04:23+07:00	DaoVanHung	docs(worklog): hoàn thiện Google Play final pass execution plan, ghi nhận chẩn đoán AI backend route, và thêm preflight cho AI runtime SQL
+30f62b04479a85edaab2c3ae5d73ead228f6f16a	2026-08-29T16:23:25+07:00	2026-08-29T16:23:25+07:00	DaoVanHung	feat: add worklog for Google Play full remediation on 2026-08-29
+d5b7e377e973eaac8ae1dab7d99ea971bc921179	2026-08-28T17:29:27+07:00	2026-08-28T17:29:27+07:00	DaoVanHung	feat: Implement Google Play purchase verification function
+29f9b8611aef73e82bdcd3da62512fd8506107c7	2026-08-26T06:33:57+07:00	2026-08-26T06:33:57+07:00	DaoVanHung	feat: Implement health event orchestration for lifestyle and water tracking features
+60145c4b94b5c8920381201924979a2256431ab4	2026-08-26T03:24:57+07:00	2026-08-26T03:24:57+07:00	DaoVanHung	feat(nabi): add health reminder repositories and care panel UI
+ff2dd09a79fa96f83a67e6e9ca5f9fef3c1b03db	2026-08-24T23:06:06+07:00	2026-08-24T23:06:06+07:00	DaoVanHung	feat(docs): update worklog counts and cleanup redundant files
+39e1cdcec9f9605c67c1f94a5016f40abc1fb5eb	2026-08-24T23:05:52+07:00	2026-08-24T23:05:52+07:00	DaoVanHung	Remove obsolete image assets from admin regression tests
+3b7db2f1f7b89141753fce48a8759824df56fe22	2026-08-24T21:16:18+07:00	2026-08-24T21:16:18+07:00	DaoVanHung	feat(logging): Implement structured logging pipeline for observability
+4bd184861ef160d0dbf5a701c5f0298b41ad3dbe	2026-08-24T17:59:45+07:00	2026-08-24T17:59:45+07:00	DaoVanHung	feat: add admin create account and grant membership functions
+22615ed0249602a0781ab106c9074e736d578832	2026-08-24T17:52:28+07:00	2026-08-24T17:52:28+07:00	DaoVanHung	feat(supabase): consolidate SQL scripts for system rebuild and seed data
+d4fc9e8c6e3e8c765995a3d162c6eadd85643fc1	2026-08-24T17:31:29+07:00	2026-08-24T17:31:29+07:00	DaoVanHung	feat: add sleep safety dispatch function and webhook integration
+431257709907841400527e223ec0a4994e2a0c48	2026-08-24T07:33:57+07:00	2026-08-24T07:33:57+07:00	DaoVanHung	feat(schedule): add AI regeneration button and related functionality
+8cdd1e15b10ab299ae58737948f67272a470e44b	2026-08-24T06:47:59+07:00	2026-08-24T06:47:59+07:00	DaoVanHung	Add source truth validation tests and manifest generation script
+25018e82cfd120d4b26b81c010bcda95b1ae9f0e	2026-08-24T05:21:37+07:00	2026-08-24T05:21:37+07:00	DaoVanHung	Add comprehensive tests for AI voice features and Supabase contracts

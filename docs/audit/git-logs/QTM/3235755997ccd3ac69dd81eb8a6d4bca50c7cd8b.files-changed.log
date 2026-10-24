@@ -1,0 +1,62 @@
+COMMIT	3235755997ccd3ac69dd81eb8a6d4bca50c7cd8b	2026-10-04T22:57:59+07:00	2026-10-04T22:57:59+07:00	DaoVanHung	update
+
+M	README.md
+M	app.js
+A	docs/mau-de-trac-nghiem.md
+M	styles.css
+COMMIT	ea08d7cc3bb0fdd355aec4b65103e72451496310	2026-10-04T22:28:39+07:00	2026-10-04T22:28:39+07:00	DaoVanHung	Add quick quiz feature: enable quiz creation from Markdown files and enhance UI
+
+M	README.md
+M	app.js
+M	styles.css
+COMMIT	049b32984252a972cb738f0206233a0c35ec5fbf	2026-10-04T22:06:12+07:00	2026-10-04T22:06:12+07:00	DaoVanHung	update
+
+M	README.md
+M	app.js
+M	styles.css
+COMMIT	68327bb3adda441c91e89696b0b0421c25cb1564	2026-10-04T19:23:06+07:00	2026-10-04T19:23:06+07:00	DaoVanHung	update
+
+M	README.md
+M	app.js
+M	styles.css
+COMMIT	7069263012592be60565bbbd33af2613d7fa8626	2026-10-04T18:34:03+07:00	2026-10-04T18:34:03+07:00	DaoVanHung	Add combined quiz and Markdown result export
+
+M	README.md
+M	app.js
+A	docs/chapters.json
+M	styles.css
+COMMIT	cdcec518b291ec99e6260574272e0122ee9493b6	2026-10-04T13:28:38+07:00	2026-10-04T13:28:38+07:00	DaoVanHung	Refactor code structure for improved readability and maintainability
+
+M	README.md
+M	app.js
+A	docs/chuong_08_trac_nghiem_on_tap.md
+A	docs/chuong_09_trac_nghiem_on_tap.md
+COMMIT	0ab6bb61b27bca223af22181a12dddf5b2d3ad02	2026-10-03T20:25:31+07:00	2026-10-03T20:25:31+07:00	DaoVanHung	Refactor code structure for improved readability and maintainability
+
+M	README.md
+M	app.js
+R100	Trac_nghiem_Chuong_05_Managing_Software_Packages.md	docs/Trac_nghiem_Chuong_05_Managing_Software_Packages.md
+A	docs/Trac_nghiem_Chuong_7_Network_Services.md
+R100	chuong_03_trac_nghiem_on_tap.md	docs/chuong_03_trac_nghiem_on_tap.md
+A	docs/chuong_06_trac_nghiem_on_tap.md
+R100	chuong_4_trac_nghiem_on_tap.md	docs/chuong_4_trac_nghiem_on_tap.md
+R100	trac_nghiem_chuong_02_managing_users.md	docs/trac_nghiem_chuong_02_managing_users.md
+COMMIT	592f232a7b89318fa94bc1dc80515289333ae9ae	2026-10-03T12:30:37+07:00	2026-10-03T12:33:50+07:00	DaoVanHung	Enhance quiz functionality and UI: add chapter modes, improve progress tracking, and update styles
+
+M	app.js
+M	styles.css
+COMMIT	a3532c5a69185fca7295d1ed0117af5156999285	2026-10-03T09:20:42+07:00	2026-10-03T09:20:42+07:00	Đào Văn Hùng	Add GitHub Actions workflow for static site deployment
+
+A	.github/workflows/static.yml
+COMMIT	5b6ae6b1191fc8e44e4168394a382fcbd163c497	2026-10-03T09:19:35+07:00	2026-10-03T09:19:35+07:00	DaoVanHung	init
+
+A	Trac_nghiem_Chuong_05_Managing_Software_Packages.md
+A	app.js
+A	chuong_03_trac_nghiem_on_tap.md
+A	chuong_4_trac_nghiem_on_tap.md
+A	index.html
+A	styles.css
+A	trac_nghiem_chuong_02_managing_users.md
+COMMIT	9f842da23f6694ee6b8449c62a1a790ef5c4ce64	2026-10-03T09:19:27+07:00	2026-10-03T09:19:27+07:00	DaoVanHung	first commit
+
+A	README.md

@@ -281,7 +281,6 @@ Kinh nghiệm này thể hiện khả năng:
 - **Đơn vị:** FPT Software / FPT Corporation
 - **Vai trò:** Full-stack Developer Intern
 - **Thời gian:** **16/03/2026 – 07/2026**
-- **Thu nhập từng được ghi nhận:** khoảng **6.000.000 VNĐ/tháng**
 - **Trạng thái:** Hoàn thành internship và chuyển tiếp sang Fresher
 
 ## 5.2. Môi trường dự án
@@ -417,17 +416,7 @@ Full-stack Fresher
 - **Bắt đầu:** **10/05/2026**
 - **Trạng thái:** Đang hoạt động
 
-## 7.2. Thu nhập theo các mốc đã ghi nhận
-
-### Giai đoạn đầu
-
-- Khoảng **2.000.000 VNĐ/tháng**
-- Hình thức: bảo trì / phát triển sản phẩm.
-
-### Từ 08/2026
-
-- Khoảng **3.000.000 VNĐ / 30 giờ / tháng**
-- Hợp đồng được ghi nhận theo chu kỳ khoảng 3 tháng.
+[Personal compensation details removed from this public copy.]
 
 ## 7.3. Sản phẩm
 
@@ -750,13 +739,7 @@ Một hệ thống phần mềm riêng được xây dựng để phục vụ qu
 - Backend / database sử dụng Supabase.
 - Logic server-side sử dụng Supabase Edge Functions.
 
-## 9.6. Thu nhập
-
-Giai đoạn 07–09/2026 từng ghi nhận hoạt động trung tâm / dạy thêm ở mức khoảng:
-
-- **~5.000.000 VNĐ/tháng**
-
-Mức này cần hiểu là số liệu được ghi nhận tại một thời điểm, không phải mức doanh thu cố định dài hạn.
+[Personal compensation details removed from this public copy.]
 
 ## 9.7. Năng lực thể hiện
 
@@ -1453,18 +1436,7 @@ Security Engineering
 
 ---
 
-# 18. Các nguồn thu từng được ghi nhận theo Work Timeline
-
-> Các con số dưới đây là snapshot tại từng thời điểm, không nên hiểu là thu nhập hiện tại cố định.
-
-| Công việc | Mức từng được ghi nhận |
-|---|---:|
-| FPT Internship | ~6.000.000 VNĐ/tháng |
-| NanoBio — giai đoạn đầu | ~2.000.000 VNĐ/tháng |
-| NanoBio — từ 08/2026 | ~3.000.000 VNĐ / 30 giờ / tháng |
-| Trung tâm / dạy thêm | ~5.000.000 VNĐ/tháng tại một giai đoạn |
-
----
+[Personal compensation summary removed from this public copy.]
 
 # 19. Trạng thái công việc tại 15/09/2026
 

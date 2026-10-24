@@ -1,154 +1,119 @@
 // @vitest-environment jsdom
-import { beforeEach, describe, expect, it } from 'vitest';
-import { experiences } from '../src/data/experience';
-import { navigationLinks } from '../src/data/links';
-import { projects } from '../src/data/projects';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { evidence } from '../src/data/evidence';
+import { capabilityMappings, portfolioCaseStudies, portfolioExperiences, portfolioLabs, portfolioProjects } from '../src/data/portfolio-content';
+import { repositories } from '../src/data/repositories';
 import { mountPortfolio } from '../src/main';
+import { resolveRoute } from '../src/routes';
 
-describe('timeline and project data', () => {
-  it('contains eight ordered timeline entries', () => {
-    expect(experiences).toHaveLength(8);
-    expect(experiences.map((experience) => experience.order)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
-    expect(experiences.every((experience) => experience.projectIds.length > 0)).toBe(true);
+beforeAll(() => {
+  document.head.innerHTML = '<meta name="description" content=""><meta property="og:title" content=""><meta property="og:description" content="">';
+  document.body.innerHTML = '<a class="skip-link" href="#main-heading">Skip</a><div id="siteHeader"></div><main id="app" tabindex="-1"></main><div id="siteFooter"></div>';
+  if (!HTMLDialogElement.prototype.showModal) HTMLDialogElement.prototype.showModal = function showModal() { this.open = true; };
+  if (!HTMLDialogElement.prototype.close) HTMLDialogElement.prototype.close = function close() { this.open = false; };
+  mountPortfolio();
+});
+
+beforeEach(() => {
+  window.history.replaceState(null, '', `${window.location.pathname}#/`);
+  window.dispatchEvent(new HashChangeEvent('hashchange'));
+});
+
+describe('typed evidence model', () => {
+  it('covers the sixteen repository audit records and represents every non-empty source', () => {
+    expect(repositories).toHaveLength(16);
+    const empty = repositories.find((repo) => repo.id === 'my-courses');
+    expect(empty?.state).toBe('empty');
+    expect(portfolioProjects.some((project) => project.repositoryIds.includes('my-courses'))).toBe(false);
+    const represented = new Set(portfolioProjects.flatMap((project) => project.repositoryIds));
+    expect(repositories.filter((repo) => repo.state === 'available').every((repo) => represented.has(repo.id))).toBe(true);
   });
 
-  it('keeps projects in timeline order and supports private projects without fake links', () => {
-    expect(projects.map((project) => project.id)).toEqual([
-      'learn2earn',
-      'labvnua',
-      'fpt-enterprise',
-      'nanobio',
-      'linguasphere',
-      'hvc-management',
-      'study2work',
-      'nihongo',
-      'hung-quynh',
-      'portfolio',
-    ]);
-    expect(projects.find((project) => project.id === 'fpt-enterprise')?.repository).toBeUndefined();
-    expect(projects.find((project) => project.id === 'linguasphere')?.liveUrl).toBeUndefined();
+  it('keeps source state, URL availability, and feature verification separate', () => {
+    const fastApi = portfolioProjects.find((project) => project.id === 'nanobio-backend');
+    const mobile = portfolioProjects.find((project) => project.id === 'nanobio-mobile');
+    expect(fastApi?.status).toBe('source-only');
+    expect(fastApi?.liveAvailability).toBe('unknown');
+    expect(fastApi?.featureVerifiedAt).toBeUndefined();
+    expect(mobile?.featureProofs.some((item) => item.state === 'partial')).toBe(true);
   });
 
-  it('preserves the FPT measurable work', () => {
-    const fpt = experiences.find((experience) => experience.id === 'fpt-intern');
-    expect(fpt?.highlights.join(' ')).toContain('06 REST API');
-    expect(fpt?.highlights.join(' ')).toContain('02 màn hình');
+  it('contains the eight requested case themes with source and limitation references', () => {
+    expect(portfolioCaseStudies).toHaveLength(8);
+    const slugs = portfolioCaseStudies.map((item) => item.slug);
+    expect(slugs).toEqual(expect.arrayContaining([
+      'fpt-debugging', 'nanobio-local-cloud-ai', 'nanobio-fastapi-foundation', 'study2work-contracts-runtime',
+      'hvc-implementation-evolution', 'ai-local-inference', 'xiaozhi-fork-attribution', 'privacy-safe-story-delivery',
+    ]));
+    expect(portfolioCaseStudies.every((item) => item.evidenceRefIds.length > 0 && item.limitations.length > 0)).toBe(true);
   });
 
-  it('keeps master-context scope notes for the important projects', () => {
-    const nanoBio = projects.find((project) => project.id === 'nanobio');
-    const hvc = projects.find((project) => project.id === 'hvc-management');
-    const study2Work = projects.find((project) => project.id === 'study2work');
-    const nihongo = projects.find((project) => project.id === 'nihongo');
-    const labVnua = projects.find((project) => project.id === 'labvnua');
+  it('does not publish direct links or personal content for the private story source', () => {
+    const privateRepo = repositories.find((repo) => repo.id === 'our-story-private');
+    const story = portfolioProjects.find((project) => project.id === 'story-delivery');
+    expect(privateRepo?.url).toBeUndefined();
+    expect(story?.liveUrl).toBeUndefined();
+    expect(story?.repositoryIds).toContain('our-story-private');
+    expect(evidence.find((ref) => ref.id === 'ev-story-delivery')?.url).toBeUndefined();
+  });
 
-    expect(nanoBio?.architecture).toContain('SQLite local-first');
-    expect(nanoBio?.limitations?.join(' ')).toMatch(/partial/i);
-    expect(hvc?.businessFlow).toContain('ClassMonth');
-    expect(hvc?.limitations?.join(' ')).toMatch(/scope/i);
-    expect(study2Work?.limitations?.join(' ')).toMatch(/foundation/i);
-    expect(nihongo?.status).toBe('Thiết kế / phát triển');
-    expect(nihongo?.liveUrl).toBeUndefined();
-    expect(labVnua?.quality?.join(' ')).toMatch(/minimal/i);
-    expect(projects.every((project) => (project.evidence?.length ?? 0) > 0)).toBe(true);
+  it('references only existing IDs across career, capabilities, labs, and evidence', () => {
+    const projectIds = new Set(portfolioProjects.map((item) => item.id));
+    const evidenceIds = new Set(evidence.map((item) => item.id));
+    expect(portfolioExperiences.every((item) => item.projectIds.every((id) => projectIds.has(id)) && item.evidenceRefIds.every((id) => evidenceIds.has(id)))).toBe(true);
+    expect(capabilityMappings.every((item) => item.projectIds.every((id) => projectIds.has(id)) && item.evidenceRefIds.every((id) => evidenceIds.has(id)))).toBe(true);
+    expect(portfolioLabs.every((item) => item.evidenceRefIds.every((id) => evidenceIds.has(id)))).toBe(true);
   });
 });
 
-describe('simple portfolio rendering', () => {
-  beforeEach(() => {
-    document.documentElement.dataset.theme = 'dark';
-    document.documentElement.classList.remove('motion-ready');
-    document.body.innerHTML = '<div class="scroll-progress"><span id="scrollProgress"></span></div><div id="siteHeader"></div><main id="app"></main><div id="siteFooter"></div>';
-    mountPortfolio();
+describe('hash routes and interaction', () => {
+  it('renders a concise recruiter home with project, case, and process routes', () => {
+    expect(document.querySelector('#main-heading')?.textContent).toBe('Đào Văn Hùng');
+    expect(document.querySelectorAll('.work-card').length).toBe(4);
+    expect(document.querySelector('a[href="#/projects"]')).toBeTruthy();
+    expect(document.querySelector('a[href="#/case-studies"]')).toBeTruthy();
+    expect(document.querySelector('a[href="#/process"]')).toBeTruthy();
   });
 
-  it('renders Timeline first, then Projects, then Contact', () => {
-    const sections = [...document.querySelectorAll('main section[id]')].map((section) => section.id);
-    expect(sections).toEqual(['experience', 'projects', 'contact']);
-    expect(document.querySelectorAll('.timeline-item')).toHaveLength(8);
-    expect(document.querySelectorAll('.project-card')).toHaveLength(10);
-    expect(document.querySelectorAll('.nav-link')).toHaveLength(navigationLinks.length * 2);
-    expect(document.querySelector('#capabilities')).toBeNull();
-    expect(document.querySelector('#cases')).toBeNull();
-    expect(document.querySelector('#live-products')).toBeNull();
+  it('resolves case, project, labs, and not-found deep links', () => {
+    expect(resolveRoute('#/projects/nanobio-fastapi-foundation').title).toContain('FastAPI foundation');
+    expect(resolveRoute('#/case-studies/xiaozhi-fork-attribution').html).toContain('attribution');
+    expect(resolveRoute('#/labs').html).toContain('Linux và SSH fundamentals');
+    expect(resolveRoute('#/missing').title).toContain('Không tìm thấy');
   });
 
-  it('adds motion hooks without hiding content when IntersectionObserver is unavailable', () => {
-    expect(document.documentElement.classList.contains('motion-ready')).toBe(true);
-    const motionElements = [...document.querySelectorAll<HTMLElement>('.motion-reveal')];
-    expect(motionElements.length).toBeGreaterThan(10);
-    expect(motionElements.every((element) => element.classList.contains('is-visible'))).toBe(true);
-    expect(document.querySelector('#scrollProgress')).toBeTruthy();
+  it('updates content and metadata after a route change', () => {
+    window.location.hash = '#/projects/nanobio-fastapi-foundation';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(document.querySelector('#main-heading')?.textContent).toContain('FastAPI foundation');
+    expect(document.title).toContain('FastAPI foundation');
+    expect(document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content).toContain('FastAPI');
   });
 
-  it('renders the project detail fields and only real actions', () => {
-    const trigger = document.querySelector<HTMLButtonElement>('[data-project-id="nanobio"]');
-    const modal = document.querySelector<HTMLElement>('#projectModal');
-    trigger?.focus();
-    trigger?.click();
-    expect(modal?.classList.contains('open')).toBe(true);
-    expect(document.querySelector('#modal-title')?.textContent).toContain('NanoBio');
-    expect(document.querySelector('#modal-summary')?.textContent).toContain('wellness local-first');
-    expect(document.querySelector('.modal-label')?.textContent).toContain('Tổng quan');
-    expect([...document.querySelectorAll('.modal-section')].some((section) => section.textContent?.includes('Kiến trúc'))).toBe(true);
-    expect(document.querySelector('.modal-actions a[href*="github.com"]')).toBeTruthy();
-    expect(document.querySelector('.modal-actions a[href*="NanoBioAI"]')).toBeTruthy();
-    expect(document.querySelector('.modal-evidence')?.textContent).toContain('Bằng chứng');
-    expect(document.querySelector('.modal-evidence')?.textContent).toContain('Phạm vi hiện tại');
-    document.querySelector<HTMLButtonElement>('.modal-close')?.click();
-    expect(modal?.classList.contains('open')).toBe(false);
-    expect(document.activeElement).toBe(trigger);
+  it('supports project filtering and mobile navigation state', () => {
+    window.location.hash = '#/projects';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    const search = document.querySelector<HTMLInputElement>('#projectSearch');
+    search!.value = 'Flutter';
+    search!.dispatchEvent(new Event('input', { bubbles: true }));
+    expect(document.querySelectorAll<HTMLElement>('[data-project-card]:not([hidden])').length).toBeGreaterThan(0);
+    const toggle = document.querySelector<HTMLButtonElement>('#mobileMenuToggle')!;
+    const menu = document.querySelector<HTMLElement>('#mobileNav')!;
+    toggle.click();
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    expect(menu.inert).toBe(false);
+    toggle.click();
+    expect(menu.inert).toBe(true);
   });
 
-  it('does not render GitHub or demo CTA for private projects', () => {
-    document.querySelector<HTMLButtonElement>('[data-project-id="fpt-enterprise"]')?.click();
-    const actions = document.querySelector('.modal-actions');
-    expect(actions?.querySelector('a[href*="github.com"]')).toBeNull();
-    expect(actions?.querySelector('a[href*="github.io"]')).toBeNull();
-    expect(actions?.textContent).toContain('Repository nội bộ');
-  });
-
-  it('does not render a demo CTA for projects without a verified live URL', () => {
-    document.querySelector<HTMLButtonElement>('[data-project-id="nihongo"]')?.click();
-    const actions = document.querySelector('.modal-actions');
-    expect(actions?.querySelector('a[href*="github.com"]')).toBeTruthy();
-    expect(actions?.querySelector('a[href*="github.io"]')).toBeNull();
-    expect(actions?.textContent).not.toContain('Demo');
-  });
-
-  it('closes the modal with Escape and toggles theme', () => {
-    document.querySelector<HTMLButtonElement>('[data-project-id="study2work"]')?.click();
-    const modal = document.querySelector<HTMLElement>('#projectModal');
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-    expect(modal?.classList.contains('open')).toBe(false);
-
-    const originalTheme = document.documentElement.dataset.theme;
-    document.querySelector<HTMLButtonElement>('#themeToggle')?.click();
-    expect(document.documentElement.dataset.theme).not.toBe(originalTheme);
-    expect(document.querySelector('#projects')).toBeTruthy();
-  });
-
-  it('animates mobile navigation state accessibly', () => {
-    const toggle = document.querySelector<HTMLButtonElement>('#mobileMenuToggle');
-    const menu = document.querySelector<HTMLElement>('#mobileNav');
-    expect(menu?.getAttribute('aria-hidden')).toBe('true');
-    expect(menu?.dataset.open).toBe('false');
-    toggle?.click();
-    expect(toggle?.getAttribute('aria-expanded')).toBe('true');
-    expect(menu?.getAttribute('aria-hidden')).toBe('false');
-    expect(menu?.dataset.open).toBe('true');
-    toggle?.click();
-    expect(toggle?.getAttribute('aria-expanded')).toBe('false');
-    expect(menu?.getAttribute('aria-hidden')).toBe('true');
-    expect(menu?.dataset.open).toBe('false');
-  });
-
-  it('closes the modal when clicking the backdrop', () => {
-    const trigger = document.querySelector<HTMLButtonElement>('[data-project-id="portfolio"]');
-    const modal = document.querySelector<HTMLElement>('#projectModal');
-    trigger?.click();
-    expect(modal?.classList.contains('open')).toBe(true);
-    document.querySelector<HTMLElement>('.modal-backdrop')?.click();
-    expect(modal?.classList.contains('open')).toBe(false);
+  it('opens a native project dialog with matching quick-view content', () => {
+    window.history.replaceState(null, '', `${window.location.pathname}#/`);
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    document.querySelector<HTMLButtonElement>('[data-quickview="nanobio-local-cloud"]')?.click();
+    const dialog = document.querySelector<HTMLDialogElement>('#quickView');
+    expect(dialog?.open).toBe(true);
+    expect(dialog?.textContent).toContain('NanoBioAI · local-first mobile');
+    dialog?.querySelector<HTMLButtonElement>('.dialog-close')?.click();
+    expect(dialog?.open).toBe(false);
   });
 });

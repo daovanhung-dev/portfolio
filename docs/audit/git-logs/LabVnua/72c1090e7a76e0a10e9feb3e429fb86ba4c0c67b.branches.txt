@@ -1,0 +1,10 @@
+* develop                              72c1090 [origin/develop] feat: Implement portal snapshot repository and sync state store
+  remotes/origin/HEAD                  -> origin/develop
+  remotes/origin/NguyenDuc             1ff6c47 Hoan thanh chuc nang dang ki tin chi feature
+  remotes/origin/api_daotao_log        d2ae80c feat: add AI chatbot service and chat view
+  remotes/origin/develop               72c1090 feat: Implement portal snapshot repository and sync state store
+  remotes/origin/feature-exam-schedule 69d4c62 Fix: exam_schedule
+  remotes/origin/featureTuition        4f7158a add tuition feature
+  remotes/origin/infor_student_feature 6c0ee29 diem_student_featrure
+  remotes/origin/main                  ee520d1 add(feature): qr_code
+  remotes/origin/semester_timetable    78fa961 feat: complete semester timetable integration and UI

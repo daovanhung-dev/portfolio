@@ -1,0 +1,4 @@
+* main                                              a99fac9 [origin/main] Add work timeline documentation for Đào Văn Hùng detailing career progression, roles, technologies, and projects from 2025 to 2026
+  remotes/origin/HEAD                               -> origin/main
+  remotes/origin/main                               a99fac9 Add work timeline documentation for Đào Văn Hùng detailing career progression, roles, technologies, and projects from 2025 to 2026
+  remotes/origin/refactor/evidence-driven-portfolio f956654 refactor: rebuild portfolio as evidence-driven engineering profile

@@ -1,0 +1,23 @@
+b5a8be30bbd270b26fa1a2d859c77fe7da111679	2026-09-06T20:52:01+07:00	2026-09-06T20:52:01+07:00	DaoVanHung	fixbug
+605f7b8597bbd3859796c4e9f905036f38139cfa	2026-09-06T19:09:41+07:00	2026-09-06T19:09:41+07:00	DaoVanHung	feat(system): add admin
+4f2a6edbef81c1a2fddf6bfdbf25abb0a0385afa	2026-09-06T17:36:36+07:00	2026-09-06T17:36:36+07:00	DaoVanHung	refactor project
+02fc3419a0394e78f51cdc444d9a2a9fe95d298d	2026-09-06T12:30:47+07:00	2026-09-06T12:30:47+07:00	DaoVanHung	feat: add roster grouping functionality in MonthSetupComponent
+ed6bd91d8cba17add5734215eae56ae0750cec5f	2026-09-06T18:37:22+07:00	2026-09-06T18:37:22+07:00	DaoVanHung	feat(workflow): add idempotency key handling for createMonthSetup and enhance auth utility
+baa90f6852cc053a02acb4d886a376361246ef74	2026-09-06T18:21:49+07:00	2026-09-06T18:21:49+07:00	DaoVanHung	feat(enrollment): implement admin-only unit price override for enrollments with auditing
+dd36f7f8fa84f801e67754929d9208c24bda9737	2026-09-06T17:46:28+07:00	2026-09-06T17:46:28+07:00	DaoVanHung	feat(teaching): enhance teaching schedule management with fallback handling and UI updates
+6cdf54897c3fed8a935245ac57a49c1c6b191968	2026-09-06T17:18:49+07:00	2026-09-06T17:18:49+07:00	DaoVanHung	feat(teaching): add my classes feature with detailed views and schedule management
+21f3a8a9860b3b5cf14f8d6c23df3f432611978b	2026-09-06T16:57:00+07:00	2026-09-06T16:57:00+07:00	DaoVanHung	feat: Add SUPABASE_PROJECT_REF environment variable to deployment steps
+928a2c6f79da6d5cd6273594f3174ee3c23df624	2026-09-06T16:51:15+07:00	2026-09-06T16:51:15+07:00	DaoVanHung	feat: Implement Admin-only class deletion with audit logging and history preservation
+7fc1c90153e0869a7ff61c5272354993de48fb4b	2026-09-06T08:06:28+07:00	2026-09-06T08:06:28+07:00	DaoVanHung	feat: Add validation for Supabase configuration in deployment workflow
+9a53e1ce0ed5b89034617ac6f9ec007c61823b0e	2026-09-06T07:44:20+07:00	2026-09-06T07:44:20+07:00	DaoVanHung	Refactor code structure for improved readability and maintainability
+98f5cd55e7d2f681577ad27626dc302533e41858	2026-09-05T02:29:27+07:00	2026-09-05T02:29:27+07:00	DaoVanHung	feat: Add comprehensive agent operating rules and current state documentation
+f28d16f8746055815e2f7d4406612df32fa64248	2026-09-04T23:44:08+07:00	2026-09-04T23:44:08+07:00	DaoVanHung	Fix triggers for updated_at columns, clean up artifacts, and enhance staff accounts enrollment
+40f6a6c4b9b07f802420486d961d4a1a304e3335	2026-09-04T20:59:32+07:00	2026-09-04T21:02:54+07:00	DaoVanHung	fix: read Supabase user id from claims
+70b1fb0b1c3435bdce896d8ed7c70bc6d2da6828	2026-09-04T13:03:02+07:00	2026-09-04T13:03:02+07:00	Đào Văn Hùng	Delete CNAME
+bc632603fdb40d1df9ee4ed05679def440309406	2026-09-04T12:59:27+07:00	2026-09-04T12:59:27+07:00	Đào Văn Hùng	Create CNAME
+f83be1adffa8f3b27add1f76012b9d994e7132d4	2026-09-04T19:56:27+07:00	2026-09-04T19:56:27+07:00	DaoVanHung	ci: pass Supabase deployment credentials per step
+8725aff6d5b3210080f83635a4a9999c11266116	2026-09-04T19:55:25+07:00	2026-09-04T19:55:25+07:00	DaoVanHung	fix: cast ledger status enum in production rpc
+3ca15e239bea1fbaa7dd7d03f5144f0e051a1ad3	2026-09-04T19:34:34+07:00	2026-09-04T19:34:34+07:00	DaoVanHung	feat: configure Supabase production deployment
+a3b4f7f9dfbceda2823d5b23c60bd750b32a7e3e	2026-09-04T19:12:06+07:00	2026-09-04T19:12:06+07:00	DaoVanHung	feat(full feature): done!
+c96db8e30981eb8348df28b73ef6d5c16aabf503	2026-09-04T17:26:09+07:00	2026-09-04T17:26:09+07:00	DaoVanHung	init project
+ead54830f5080160330d617e03eaf53313a60a71	2026-09-04T17:25:49+07:00	2026-09-04T17:25:49+07:00	DaoVanHung	first commit

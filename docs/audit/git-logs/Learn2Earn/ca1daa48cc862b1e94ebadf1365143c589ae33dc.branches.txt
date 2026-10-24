@@ -1,0 +1,4 @@
+* main                   ca1daa4 [origin/main] chore: unify Learn2Earn product repository
+  remotes/origin/HEAD    -> origin/main
+  remotes/origin/develop 60ddc61 new2
+  remotes/origin/main    ca1daa4 chore: unify Learn2Earn product repository

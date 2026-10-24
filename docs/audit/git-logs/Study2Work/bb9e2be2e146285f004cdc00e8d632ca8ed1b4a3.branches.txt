@@ -1,0 +1,10 @@
+* main                                 bb9e2be [origin/main] refactor: move exception handlers to middleware and remove exceptions module
+  remotes/origin/HEAD                  -> origin/main
+  remotes/origin/PLAN_1/daovanhung     01b1928 docs(add): Plan 2-10
+  remotes/origin/develop               8f17328 Merge origin/develop into develop
+  remotes/origin/ducna-dev             8f17328 Merge origin/develop into develop
+  remotes/origin/hoang_xuan_long_dev   b5c15bb feat(study-server): implement APIs 21-25 with unit tests and seed data
+  remotes/origin/main                  bb9e2be refactor: move exception handlers to middleware and remove exceptions module
+  remotes/origin/rearchitecture-s2w-v2 a6fd7c1 refactor:  add Learn2Earn
+  remotes/origin/tranvanduc_dev        2bf999e feat(study-server): update_2 implement course reviews API#10
+  remotes/origin/viet-dev              f4f9eea refactor(api): remove future annotations import from query.py
