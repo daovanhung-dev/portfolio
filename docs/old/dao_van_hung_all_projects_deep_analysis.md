@@ -68,7 +68,7 @@ Tài liệu phân biệt rõ:
 | 7 | LabVnua / EduAI | Flutter Team Lead / Full-stack Flutter Developer | Active Development | https://github.com/daovanhung-dev/LabVnua | Chưa có demo public được xác minh |
 | 8 | Learn2Earn | Backend Developer / Part-time | Active/Project | https://github.com/daovanhung-dev/Learn2Earn | Chưa có demo public được xác minh |
 | 9 | Nihongo Learning System | Product / System Designer | Design / Development | https://github.com/daovanhung-dev/Nihongo-Learning-System | Chưa gắn demo public được xác minh |
-| 10 | Hung & Quynh — Our Story | Frontend Developer | Live | https://github.com/daovanhung-dev/hung-quynh-our-story | https://daovanhung-dev.github.io/hung-quynh-our-story/ |
+| 10 | Restricted personal project | Role owner-attested | Private source withheld | No public link | No public link |
 | 11 | Engineering Portfolio | Designer / Developer | Live | https://github.com/daovanhung-dev/portfolio | https://daovanhung-dev.github.io/portfolio/ |
 | 12 | VentureX / LinguaSphere | Tech Lead / System Analyst / API Designer | Architecture / Private | Không có repo public xác minh | Không có demo public xác minh |
 | 13 | FPT Enterprise Project | Full-stack Intern → Fresher | Enterprise / Private | Repository nội bộ | Không public |
@@ -1896,111 +1896,11 @@ vì public source hiện là design/development scaffold, chưa có live demo đ
 
 ---
 
-# 12. Hung & Quynh — Our Story
+# 12. Restricted personal project
 
-## 12.1. Định danh
+Private source, project routes, personal copy, media, deployment URL, and repository metadata are intentionally excluded from this public historical reference.
 
-- **Repository:** https://github.com/daovanhung-dev/hung-quynh-our-story
-- **Live:** https://daovanhung-dev.github.io/hung-quynh-our-story/
-- **Vai trò:** Frontend Developer
-- **Mục tiêu portfolio:** Frontend craftsmanship proof.
-
-## 12.2. Nội dung
-
-Interactive static memory/story experience.
-
-Các view/flow đã được ghi nhận:
-
-- Home.
-- Birthday.
-- Gift Reveal.
-- Envelope.
-- Love Letter.
-- Timeline.
-- Memory Detail.
-- Photo Viewer.
-
-## 12.3. Bài toán kỹ thuật
-
-Một project media-heavy phải giữ được đồng thời:
-
-- storytelling;
-- animation;
-- responsive layout;
-- image/media performance;
-- accessibility;
-- static deployment;
-- E2E reliability.
-
-## 12.4. Công nghệ đã xác minh
-
-- Angular 22.
-- TypeScript.
-- SCSS/CSS.
-- Angular Router.
-- RxJS.
-- Phaser.
-- Three.js.
-- Playwright.
-- Sharp.
-- exifr.
-- HEIC conversion.
-- Node.js scripts.
-- GitHub Pages.
-
-## 12.5. Media pipeline
-
-Package scripts thể hiện pipeline:
-
-```text
-Input media
-   ↓
-Migration / scan
-   ↓
-Generate optimized variants
-   ↓
-Validate memories
-   ↓
-Generate memory index
-   ↓
-Angular build
-   ↓
-Prepare static host
-   ↓
-Verify artifact
-   ↓
-GitHub Pages
-```
-
-## 12.6. Quality
-
-- Unit/script tests.
-- Playwright E2E.
-- Static artifact verification.
-- Responsive handling.
-- Reduced-motion support.
-- Accessibility.
-- Optimized media assets.
-
-## 12.7. Các đầu việc Hùng đã làm
-
-- Angular frontend.
-- Multi-view routing.
-- Storytelling UI.
-- Animation.
-- Responsive design.
-- Photo viewer.
-- Timeline.
-- Media optimization.
-- Image conversion pipeline.
-- Memory index generation.
-- Accessibility.
-- Reduced motion.
-- E2E testing.
-- Static artifact verification.
-- GitHub Pages deployment.
-
----
+No technical implementation claims from the private source are carried forward. Any approved mention is limited to generic owner-attested interactive-delivery context.
 
 # 13. Engineering Portfolio
 
@@ -2436,7 +2336,7 @@ Tại thời điểm rà soát, tài khoản GitHub `daovanhung-dev` có 12 publ
 | `LabVnua` | Flutter academic companion |
 | `Learn2Earn` | Career platform monorepo |
 | `Nihongo-Learning-System` | Japanese learning system design/development |
-| `hung-quynh-our-story` | Interactive Angular static experience |
+| `[private project omitted]` | Interactive Angular static experience |
 | `portfolio` | Engineering portfolio |
 | `My_Courses` | Empty repository |
 
@@ -2459,9 +2359,9 @@ Tại thời điểm rà soát, tài khoản GitHub `daovanhung-dev` có 12 publ
 - Angular: https://daovanhung-dev.github.io/HVC_EDU/
 - Vue: https://daovanhung-dev.github.io/HVC_EDU_NEW/
 
-## Hung & Quynh
+## Private personal interactive experience
 
-- https://daovanhung-dev.github.io/hung-quynh-our-story/
+- [private live URL omitted]
 
 ## Chưa có demo public được xác minh
 
@@ -2491,7 +2391,7 @@ Tại thời điểm rà soát, tài khoản GitHub `daovanhung-dev` có 12 publ
 | LabVnua | Flutter | VNUA API + Supabase | SQLite + Supabase | Gemini | Mobile build |
 | Learn2Earn | EJS + Flutter | Express | MySQL + SQLite/Supabase clients | — | Monorepo |
 | Nihongo | Angular | Supabase Edge Functions | PostgreSQL | Gemini | GitHub Pages |
-| Hung & Quynh | Angular | Static | Static generated data | — | Playwright, Sharp, Pages |
+| Private personal interactive experience | Angular | Static | Static generated data | — | Playwright, Sharp, Pages |
 | Portfolio | Vanilla TypeScript | Static | Typed source data | — | GitHub Actions, Pages |
 | VentureX | Design scope | API design | Data modeling | AI LMS concept | Architecture |
 | FPT | Vue | Flask | PostgreSQL | — | Docker, GitLab |
@@ -2673,7 +2573,7 @@ Dự án thể hiện rõ:
 - Portfolio.
 - HVC.
 - NanoBio admin.
-- Hung & Quynh.
+- Private personal interactive experience.
 
 Typical pipeline:
 
@@ -2825,7 +2725,7 @@ Deploy
 | NestJS/Fastify | Study2Work |
 | Vue | Study2Work, edu_hvc, HVC_EDU_NEW, FPT |
 | React | Study2Work Work, NanoBio Admin |
-| Angular | HVC_EDU, Nihongo, Hung & Quynh |
+| Angular | HVC_EDU, Nihongo, Private personal interactive experience |
 | PostgreSQL | Study2Work, HVC, FPT, NanoBio/Supabase |
 | SQLite | NanoBio, LabVnua, Learn2Earn mobile |
 | Supabase | NanoBio, HVC, Nihongo, LabVnua chat |
@@ -2835,12 +2735,12 @@ Deploy
 | Architecture | Study2Work, NanoBio, VentureX |
 | API design | Study2Work, VentureX, FPT |
 | Security boundary | HVC, NanoBio, Nihongo |
-| CI/CD | Portfolio, HVC, NanoBio Admin, Hung & Quynh |
+| CI/CD | Portfolio, HVC, NanoBio Admin, Private personal interactive experience |
 | Android release | NanoBio |
 | Team Lead | LabVnua |
 | Tech Lead/System Analysis | VentureX |
 | Business operations software | Hùng Cường |
-| Frontend craftsmanship | Hung & Quynh |
+| Frontend craftsmanship | Private personal interactive experience |
 | Enterprise engineering | FPT |
 
 ---
@@ -2908,7 +2808,7 @@ Vì chứng minh:
 - Node/Express/Prisma/MySQL.
 - Career workflows.
 
-### Hung & Quynh
+### Private personal interactive experience
 
 - UI/frontend craftsmanship.
 - Media pipeline.
@@ -2957,7 +2857,7 @@ Vì chứng minh:
 
 > Japanese learning system designed around SRS, learning-event evidence, JLPT-oriented content and Gemini-backed AI practice using Angular and Supabase.
 
-## Hung & Quynh
+## Private personal interactive experience
 
 > Interactive Angular storytelling experience with responsive animation, optimized media pipeline, accessibility, Playwright E2E and GitHub Pages delivery.
 
@@ -3136,10 +3036,10 @@ https://github.com/daovanhung-dev
 
 - Repo: https://github.com/daovanhung-dev/Nihongo-Learning-System
 
-## Hung & Quynh
+## Private personal interactive experience
 
-- Repo: https://github.com/daovanhung-dev/hung-quynh-our-story
-- Live: https://daovanhung-dev.github.io/hung-quynh-our-story/
+- Repo: [private repository omitted]
+- Live: [private live URL omitted]
 
 ## My_Courses
 

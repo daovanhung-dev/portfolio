@@ -1,0 +1,35 @@
+---
+import { sitePath } from '../utils/paths';
+import ThemeToggle from './ThemeToggle.astro';
+
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const navItems = [
+  { label: 'Dự án', href: '/projects' },
+  { label: 'Kinh nghiệm', href: '/experience' },
+  { label: 'Năng lực', href: '/skills' },
+  { label: 'Labs', href: '/labs' },
+  { label: 'Giới thiệu', href: '/about' },
+  { label: 'Liên hệ', href: '/contact' },
+];
+---
+
+<a class="skip-link" href="#main-content">Đi tới nội dung chính</a>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href={sitePath('/')} aria-label="Đào Văn Hùng — trang chủ">
+      <span class="brand__mark" aria-hidden="true">DVH</span>
+      <span class="brand__name">Đào Văn Hùng</span>
+    </a>
+    <nav class="primary-nav" aria-label="Điều hướng chính">
+      {navItems.map((item) => {
+        const active = pathname === item.href || pathname.startsWith(item.href + '/');
+        return (
+          <a class:list={['primary-nav__link', { 'is-active': active }]} href={sitePath(item.href)} aria-current={active ? 'page' : undefined}>
+            {item.label}
+          </a>
+        );
+      })}
+      <ThemeToggle />
+    </nav>
+  </div>
+</header>

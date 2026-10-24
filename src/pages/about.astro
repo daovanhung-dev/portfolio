@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../components/SiteLayout.astro';
+import EvidenceList from '../components/EvidenceList.astro';
+
+const [profiles, educationRecords] = await Promise.all([
+  getCollection('profile'),
+  getCollection('education'),
+]);
+const profile = profiles[0].data;
+const education = educationRecords[0].data;
+---
+
+<SiteLayout title="Giới thiệu — Đào Văn Hùng" description="Thông tin giới thiệu, nguyên tắc làm việc và học vấn của Đào Văn Hùng, kèm nguồn và giới hạn.">
+  <div class="page-shell">
+    <header class="page-intro">
+      <span class="eyebrow">Giới thiệu</span>
+      <h1 class="page-title">{profile.name}</h1>
+      <p class="page-lede">{profile.summary}</p>
+      <EvidenceList ids={profile.evidenceIds} compact />
+    </header>
+    <section class="section section--compact">
+      <div class="section-heading">
+        <div><span class="eyebrow">Nguyên tắc</span><h2>Cách tôi suy nghĩ về kỹ thuật</h2></div>
+      </div>
+      <ol class="principle-list">
+        {profile.principles.map((principle) => (
+          <li class="principle-card">
+            <span class="eyebrow">{principle.number}</span>
+            <h3>{principle.title}</h3>
+            <p>{principle.description}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+    <section class="section section--compact">
+      <div class="section-heading">
+        <div><span class="eyebrow">Học vấn</span><h2>{education.institution}</h2></div>
+      </div>
+      <div class="content-panel">
+        <h3>{education.field} · {education.cohort}</h3>
+        <p>{education.graduation}</p>
+        <p class="muted-copy">Bảng điểm và chứng chỉ chưa được cung cấp trong nguồn audit.</p>
+        <EvidenceList ids={education.evidenceIds} compact />
+      </div>
+    </section>
+    <section class="section section--compact">
+      <div class="section-heading">
+        <div><span class="eyebrow">Quy trình</span><h2>Context → review → handoff</h2></div>
+      </div>
+      <ol class="workflow-list">{profile.workflow.map((step, index) => <li><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>)}</ol>
+    </section>
+  </div>
+</SiteLayout>

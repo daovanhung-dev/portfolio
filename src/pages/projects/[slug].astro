@@ -1,0 +1,90 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../../components/SiteLayout.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import EvidenceList from '../../components/EvidenceList.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import { evidenceFor, evidenceLabel } from '../../utils/evidence';
+import { sitePath } from '../../utils/paths';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const relatedCases = (await getCollection('cases')).filter((item) => project.data.caseSlugs.includes(item.id));
+const sourceRefs = evidenceFor(project.data.evidenceIds);
+const pageDescription = project.data.summary.slice(0, 155);
+---
+
+<SiteLayout title={project.data.title + ' — Đào Văn Hùng'} description={pageDescription} route={'/projects/' + project.id}>
+  <div class="page-shell">
+    <header class="detail-header">
+      <a class="eyebrow-link" href={sitePath('/projects')}>← Tất cả dự án</a>
+      <h1>{project.data.title}</h1>
+      <p class="page-lede">{project.data.summary}</p>
+      <div class="detail-header__meta">
+        <span>{project.data.category}</span>
+        <span>{project.data.role}</span>
+        {project.data.period && <span>{project.data.period}</span>}
+      </div>
+      <div class="detail-header__meta">
+        <StatusBadge status={project.data.status} />
+        <span>Tính sẵn có: {project.data.availability === 'unknown' ? 'chưa xác minh' : project.data.availability}</span>
+      </div>
+    </header>
+    <div class="detail-body">
+      <article class="prose">
+        <Content />
+        <section class="detail-section">
+          <h2>Feature và trạng thái</h2>
+          <ul class="feature-list">
+            {project.data.featureProofs.map((feature) => (
+              <li class="feature-row">
+                <div class="feature-row__top">
+                  <h3>{feature.label}</h3>
+                  <StatusBadge status={feature.state} />
+                </div>
+                {feature.limitation && <p>{feature.limitation}</p>}
+                <EvidenceList ids={feature.evidenceIds} compact />
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section class="detail-section">
+          <h2>Evidence</h2>
+          <p>Evidence cho biết nguồn nào đã được xem và giới hạn của lần đối chiếu. Source presence không xác nhận runtime hay deployment.</p>
+          <EvidenceList ids={project.data.evidenceIds} />
+          {sourceRefs.length === 0 && <p class="missing-source">MISSING_SOURCE — Không có evidence reference cho mục này.</p>}
+        </section>
+        {relatedCases.length > 0 && (
+          <section class="detail-section">
+            <h2>Case study liên quan</h2>
+            <div class="grid case-grid">{relatedCases.map((item) => <CaseCard item={item} />)}</div>
+          </section>
+        )}
+      </article>
+      <aside class="detail-sidebar" aria-label="Thông tin dự án">
+        <section class="content-panel">
+          <h2>Stack ghi nhận</h2>
+          <div class="tag-list">{project.data.stack.map((tag) => <span class="tag">{tag}</span>)}</div>
+        </section>
+        <section class="content-panel">
+          <h2>Repositories</h2>
+          {project.data.repositoryIds.some((id) => id === 'restricted-project')
+            ? <p>Nguồn riêng tư không được liên kết hoặc công bố metadata.</p>
+            : <p>{project.data.repositoryIds.length} repository công khai được liên kết qua evidence.</p>}
+          <div class="tag-list">
+            {sourceRefs.filter((ref) => ref.url).map((ref) => <span class="tag">{evidenceLabel(ref.kind)}</span>)}
+          </div>
+        </section>
+        <section class="content-panel">
+          <h2>Giới hạn</h2>
+          <ul>{project.data.limitations.map((limitation) => <li>{limitation}</li>)}</ul>
+        </section>
+      </aside>
+    </div>
+  </div>
+</SiteLayout>

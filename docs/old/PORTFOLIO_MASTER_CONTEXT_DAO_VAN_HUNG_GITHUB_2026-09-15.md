@@ -176,7 +176,7 @@ Các repository có ý nghĩa portfolio được phát hiện:
 | `LabVnua` | Academic Companion / Flutter | Flutter Team Lead / Full-stack Flutter | Mạnh |
 | `Learn2Earn` | Career Platform | Backend Developer / Part-time | Mạnh |
 | `portfolio` | Engineering Portfolio | Designer / Developer | Live / evidence hub |
-| `hung-quynh-our-story` | Interactive Frontend | Frontend Developer | Live / frontend quality |
+| `[private project omitted]` | Interactive Frontend | Frontend Developer | Live / frontend quality |
 | `nanobioai-privacy` | Trust / Compliance Site | Product Delivery / Compliance Evidence | Live support asset |
 | `My_Courses` | Chưa có source đáng kể | Không nên đưa portfolio chính | Không đủ evidence |
 
@@ -2234,86 +2234,11 @@ Nó cũng là **delivery layer** của toàn bộ hồ sơ nghề nghiệp.
 
 ---
 
-# 10. HUNG & QUYNH — INTERACTIVE FRONTEND / MEDIA PIPELINE
+# 10. RESTRICTED PERSONAL INTERACTIVE PROJECT
 
-## 10.1. Overview
+Private project source, routes, media, personal copy, live URL, and repository metadata are intentionally excluded from this public historical reference.
 
-**Repository:** `https://github.com/daovanhung-dev/hung-quynh-our-story`  
-**Live:** `https://daovanhung-dev.github.io/hung-quynh-our-story/`  
-**Portfolio role:** Frontend Developer
-
-Project là interactive static memory/storytelling experience.
-
-Không cần cố gán “vấn đề xã hội” lớn cho project này. Giá trị portfolio nằm ở:
-- frontend interaction;
-- media delivery;
-- performance;
-- accessibility;
-- testing.
-
----
-
-## 10.2. Tech stack
-
-Theo package manifest:
-- Angular 22
-- TypeScript 6
-- RxJS
-- Phaser 4
-- Three.js
-- Playwright
-- Sharp
-- EXIF tooling
-- HEIC conversion
-
----
-
-## 10.3. Media pipeline
-
-Build scripts cho thấy pipeline:
-
-```text
-Raw media
-  ↓
-Prepare / generate variants
-  ↓
-Validate memories
-  ↓
-Generate memory index
-  ↓
-Angular production build
-  ↓
-Prepare static host
-  ↓
-Verify artifact
-  ↓
-GitHub Pages
-```
-
-Đây là điểm rất tốt để chứng minh:
-- build automation;
-- image/media optimization;
-- static artifact verification;
-- pipeline thinking.
-
----
-
-## 10.4. Quality
-
-Có:
-- Node tests;
-- Playwright E2E;
-- script syntax checks;
-- static artifact verifier.
-
-Portfolio hiện hành còn ghi:
-- responsive UI;
-- animation;
-- reduced motion;
-- accessibility;
-- photo/timeline/story views.
-
----
+Any approved portfolio mention is limited to generic, owner-attested interactive-delivery context. No implementation detail from the private source is reproduced here.
 
 # 11. NANOBIO TRUST CENTER — COMPLIANCE SUPPORT PROJECT
 
@@ -2828,7 +2753,7 @@ Lý do:
 
 ## Tier C — Technical proof / supporting
 
-### Hung & Quynh
+### Private personal interactive experience
 - Angular;
 - media pipeline;
 - E2E;
@@ -2980,7 +2905,7 @@ Expanded:
 | FastAPI | edu_hvc, Study2Work |
 | Python | edu_hvc, Study2Work, enterprise context |
 | Vue | HVC_EDU_NEW, Study2Work |
-| Angular | HVC_EDU, Nihongo, Hung & Quynh |
+| Angular | HVC_EDU, Nihongo, Private personal interactive experience |
 | React | Study2Work Work web, NanoBio Admin portfolio evidence |
 | TypeScript | HVC, Study2Work, Nihongo, Learn2Earn, Portfolio |
 | PostgreSQL | HVC, Study2Work, NanoBio/Supabase |
@@ -3000,11 +2925,11 @@ Expanded:
 | JSON Schema | Study2Work |
 | System Analysis | HVC, Study2Work, Nihongo, LinguaSphere |
 | Business Design | HVC, Nihongo, Study2Work design context |
-| Testing | NanoBio, HVC, Nihongo plan, Portfolio, Hung & Quynh |
-| Playwright | Hung & Quynh |
+| Testing | NanoBio, HVC, Nihongo plan, Portfolio, Private personal interactive experience |
+| Playwright | Private personal interactive experience |
 | CI/CD | Portfolio, HVC, Nihongo, GitHub Pages projects |
 | Docker | edu_hvc, Study2Work |
-| GitHub Pages | Portfolio, HVC, Hung & Quynh, NanoBio support |
+| GitHub Pages | Portfolio, HVC, Private personal interactive experience, NanoBio support |
 | AI coding agents | NanoBio, Study2Work context system |
 
 ---
@@ -3038,7 +2963,7 @@ HOME
 │   ├── LabVnua
 │   ├── Learn2Earn
 │   ├── Portfolio
-│   └── Hung & Quynh
+│   └── Private personal interactive experience
 │
 ├── ENGINEERING CAPABILITIES
 │   ├── Backend
@@ -3183,8 +3108,8 @@ Signals:
 - `/src/data/projects.ts`
 - `/src/data/live-products.ts`
 
-## Hung & Quynh
-- `https://github.com/daovanhung-dev/hung-quynh-our-story`
+## Private personal interactive experience
+- `[private repository omitted]`
 - `/package.json`
 - `/docs/`
 

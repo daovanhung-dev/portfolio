@@ -1,0 +1,49 @@
+---
+{
+  "id": "xiaozhi-fork",
+  "slug": "xiaozhi-fork-attribution",
+  "title": "Giữ attribution rõ ràng khi làm trên XiaoZhi fork",
+  "context": "Repository fork trộn lịch sử upstream và thay đổi từ nhiều tác giả.",
+  "approach": [
+    "So sánh fork với upstream/main và xác định merge base",
+    "Tách commit riêng của fork khỏi commit upstream/third-party",
+    "Giới hạn mô tả ở board support và tài liệu có attribution",
+    "Không suy ra firmware hoặc voice acceptance từ source"
+  ],
+  "result": "Contribution được mô tả ở cấp fork/source; không nhận toàn bộ repository là tác phẩm gốc.",
+  "limitations": [
+    "Không build, flash, hoặc xác nhận giao tiếp loa trong lần audit portfolio này."
+  ],
+  "projectSlugs": [
+    "xiaozhi-fork-attribution"
+  ],
+  "role": "Fork contributor · Git attribution reviewed",
+  "roleAttribution": "source-backed",
+  "constraints": [
+    "Không build, flash, hoặc xác nhận giao tiếp loa trong lần audit portfolio này."
+  ],
+  "verification": "Đã so sánh fork attribution/source; không build, flash, hoặc kiểm tra phản hồi qua loa.",
+  "status": "source-only",
+  "evidenceIds": [
+    "ev-xiaozhi-fork"
+  ],
+  "decisions": [],
+  "relatedCaseSlugs": [],
+  "featured": false
+}
+---
+
+## Bối cảnh
+
+Repository fork trộn lịch sử upstream và thay đổi từ nhiều tác giả.
+
+## Cách tiếp cận được ghi nhận
+
+- So sánh fork với upstream/main và xác định merge base
+- Tách commit riêng của fork khỏi commit upstream/third-party
+- Giới hạn mô tả ở board support và tài liệu có attribution
+- Không suy ra firmware hoặc voice acceptance từ source
+
+## Kết quả
+
+Contribution được mô tả ở cấp fork/source; không nhận toàn bộ repository là tác phẩm gốc.

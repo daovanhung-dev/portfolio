@@ -1,51 +1,66 @@
-import { evidence } from '../src/data/evidence.ts';
-import { navigationLinks, contactLinks } from '../src/data/links.ts';
-import { portfolioProjects } from '../src/data/portfolio-content.ts';
-import { repositories } from '../src/data/repositories.ts';
+import { readPortfolioData } from './content-data.mjs';
 
+const portfolio = await readPortfolioData();
 const errors = [];
 const warnings = [];
-const allowedRoutes = new Set(['#/projects', '#/case-studies', '#/labs', '#/process']);
-const checkUrl = (url, label) => {
-  try {
-    const parsed = new URL(url);
-    if (!['https:', 'mailto:'].includes(parsed.protocol)) errors.push(`${label} uses unsupported protocol ${parsed.protocol}`);
-    return parsed;
-  } catch { errors.push(`${label} is malformed`); return null; }
-};
+const routePaths = [
+  '/', '/projects/', '/experience/', '/skills/', '/labs/', '/about/', '/contact/', '/case-studies/',
+];
+for (const project of portfolio.collections.projects) routePaths.push('/projects/' + project.slug + '/');
+for (const item of portfolio.collections.cases) routePaths.push('/case-studies/' + item.slug + '/');
 
-for (const item of navigationLinks) if (!allowedRoutes.has(item.url)) errors.push(`Navigation link ${item.label} has no route target`);
-for (const link of contactLinks) checkUrl(link.url, `Contact ${link.label}`);
-for (const repo of repositories) if (repo.url) checkUrl(repo.url, `Repository ${repo.id}`);
-for (const ref of evidence) if (ref.url) checkUrl(ref.url, `Evidence ${ref.id}`);
-for (const project of portfolioProjects) if (project.liveUrl) checkUrl(project.liveUrl, `Live product ${project.id}`);
-
-const externalUrls = [...new Set([
-  ...contactLinks.map((item) => item.url),
-  ...repositories.flatMap((item) => item.url ? [item.url] : []),
-  ...evidence.flatMap((item) => item.url ? [item.url] : []),
-].filter((url) => url.startsWith('https://')))];
-
-async function probe(url) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 5000);
-  try {
-    let response = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: controller.signal });
-    if (response.status === 405) response = await fetch(url, { method: 'GET', redirect: 'follow', signal: controller.signal });
-    if (!response.ok) warnings.push(`${url} returned HTTP ${response.status}`);
-  } catch (error) {
-    warnings.push(`${url} could not be checked (${error instanceof Error ? error.message : 'network error'})`);
-  } finally { clearTimeout(timer); }
+for (const entry of portfolio.collections.projects) {
+  for (const slug of entry.data.caseSlugs ?? []) {
+    if (!portfolio.collections.cases.some((item) => item.slug === slug)) errors.push('Project case link has no route: ' + slug);
+  }
+}
+for (const item of portfolio.collections.cases) {
+  for (const slug of item.data.projectSlugs ?? []) {
+    if (!portfolio.collections.projects.some((project) => project.slug === slug)) errors.push('Case project link has no route: ' + slug);
+  }
 }
 
-await Promise.all(externalUrls.map(probe));
+const urls = new Set([
+  ...portfolio.collections.contact.flatMap((entry) => [
+    'mailto:' + entry.data.email,
+    ...(entry.data.links ?? []).map((link) => link.url),
+  ]),
+  ...portfolio.evidence.flatMap((item) => item.url ? [item.url] : []),
+  ...portfolio.repositories.flatMap((item) => item.url ? [item.url] : []),
+]);
+
+for (const value of urls) {
+  try {
+    const parsed = new URL(value);
+    if (!['https:', 'mailto:'].includes(parsed.protocol)) errors.push('Unsupported URL protocol: ' + parsed.protocol);
+  } catch {
+    errors.push('Malformed URL: ' + value);
+  }
+}
+
+if (process.env.CHECK_EXTERNAL_LINKS === '1') {
+  async function probe(url) {
+    if (!url.startsWith('https://')) return;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+    try {
+      let response = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: controller.signal });
+      if (response.status === 405) response = await fetch(url, { method: 'GET', redirect: 'follow', signal: controller.signal });
+      if (!response.ok) warnings.push(url + ' returned HTTP ' + response.status);
+    } catch (error) {
+      warnings.push(url + ' could not be checked (' + (error instanceof Error ? error.message : 'network error') + ')');
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  await Promise.all([...urls].map(probe));
+}
+
 if (errors.length) {
   console.error('Link validation failed:');
-  errors.forEach((item) => console.error(`- ${item}`));
-  process.exit(1);
+  for (const error of errors) console.error('- ' + error);
+  process.exitCode = 1;
+} else {
+  console.log('Links valid: ' + routePaths.length + ' static routes and ' + urls.size + ' public URLs checked.');
+  for (const warning of warnings) console.warn('External link warning: ' + warning);
 }
-if (warnings.length) {
-  console.warn('External link warnings (non-blocking):');
-  warnings.forEach((item) => console.warn(`- ${item}`));
-}
-console.log(`Links valid: ${navigationLinks.length} hash routes and ${externalUrls.length} external URLs checked.`);

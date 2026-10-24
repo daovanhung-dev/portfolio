@@ -1,0 +1,49 @@
+---
+{
+  "id": "nano-fastapi",
+  "slug": "nanobio-fastapi-foundation",
+  "title": "Đưa FastAPI vào phạm vi foundation có thể kiểm tra",
+  "context": "Repository có backend Python mới bên cạnh app Flutter và các phần Supabase đã có từ trước.",
+  "approach": [
+    "Xác định package root và phụ thuộc từ README/pyproject",
+    "Ghi nhận SQLAlchemy, PostgreSQL và Alembic setup source",
+    "Tách source foundation khỏi backend đang chạy",
+    "Để migration/server verification ở trạng thái chưa thực hiện"
+  ],
+  "result": "FastAPI backend được trình bày như nền tảng source; không được gộp với Supabase runtime của app.",
+  "limitations": [
+    "Chưa chạy server, migrations, hay kết nối môi trường deployed trong portfolio audit."
+  ],
+  "projectSlugs": [
+    "nanobio-fastapi-foundation"
+  ],
+  "role": "Source contributor · attribution chưa audit từng dòng",
+  "roleAttribution": "mixed",
+  "constraints": [
+    "Chưa chạy server, migrations, hay kết nối môi trường deployed trong portfolio audit."
+  ],
+  "verification": "Đã đọc README và setup source tại commit audit; chưa khởi chạy server, migration, hoặc database.",
+  "status": "source-only",
+  "evidenceIds": [
+    "ev-nano-backend"
+  ],
+  "decisions": [],
+  "relatedCaseSlugs": [],
+  "featured": false
+}
+---
+
+## Bối cảnh
+
+Repository có backend Python mới bên cạnh app Flutter và các phần Supabase đã có từ trước.
+
+## Cách tiếp cận được ghi nhận
+
+- Xác định package root và phụ thuộc từ README/pyproject
+- Ghi nhận SQLAlchemy, PostgreSQL và Alembic setup source
+- Tách source foundation khỏi backend đang chạy
+- Để migration/server verification ở trạng thái chưa thực hiện
+
+## Kết quả
+
+FastAPI backend được trình bày như nền tảng source; không được gộp với Supabase runtime của app.

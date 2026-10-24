@@ -106,9 +106,8 @@ Each non-empty repository has a SHA-keyed commit list and path-change log, plus 
 
 ## Private personal story project
 
-- Snapshot audited: `0c53ec64941ec27a3dd51125c4a5eb32b6cdbd64` on `main`; all 5 remote branches, 0 tags, and 41 commits in the requested window were reviewed.
-- Per-commit path/change review was performed locally. This public report retains only aggregate directory counts from the inventory; ref names, commit subjects, and filenames are withheld because they can reveal private media/story details.
-- Only generic route/config and delivery structure contributes to the portfolio case. No personal media, story text, direct link, or repository CTA is included.
+- Private repository references, commit metadata, path counts, and media details are omitted from this public changelog.
+- Any portfolio description is limited to generic, owner-attested interactive-delivery context; no private source URL, live link, screenshot, or repository CTA is published.
 
 ## xiaozhi-esp32
 

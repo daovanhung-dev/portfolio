@@ -1,0 +1,49 @@
+---
+{
+  "id": "ai-local",
+  "slug": "ai-local-inference",
+  "title": "Theo dấu vòng đời model local trong ai_local",
+  "context": "Một ứng dụng local inference phải quản lý model files, luồng sinh token và lưu lịch sử trong app.",
+  "approach": [
+    "Đọc service inference và quản lý tải model",
+    "Đối chiếu luồng resume/hash validation với cấu trúc source",
+    "Tách persistence local khỏi suy luận",
+    "Để latency, memory và hành vi phần cứng ở trạng thái unknown"
+  ],
+  "result": "Repository source mô tả local GGUF, streaming, model management và Drift persistence; không có phép đo thiết bị trong audit.",
+  "limitations": [
+    "Không khẳng định tốc độ, thermal safety, OOM behavior, hay tương thích iOS."
+  ],
+  "projectSlugs": [
+    "ai-local-inference"
+  ],
+  "role": "Developer · repository attribution",
+  "roleAttribution": "source-backed",
+  "constraints": [
+    "Không khẳng định tốc độ, thermal safety, OOM behavior, hay tương thích iOS."
+  ],
+  "verification": "Đã đọc service inference và quản lý model ở commit audit; chưa đo trên thiết bị.",
+  "status": "partial",
+  "evidenceIds": [
+    "ev-ai-local-source"
+  ],
+  "decisions": [],
+  "relatedCaseSlugs": [],
+  "featured": false
+}
+---
+
+## Bối cảnh
+
+Một ứng dụng local inference phải quản lý model files, luồng sinh token và lưu lịch sử trong app.
+
+## Cách tiếp cận được ghi nhận
+
+- Đọc service inference và quản lý tải model
+- Đối chiếu luồng resume/hash validation với cấu trúc source
+- Tách persistence local khỏi suy luận
+- Để latency, memory và hành vi phần cứng ở trạng thái unknown
+
+## Kết quả
+
+Repository source mô tả local GGUF, streaming, model management và Drift persistence; không có phép đo thiết bị trong audit.

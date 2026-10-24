@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#087f70"/>
-  <path d="M19 14h13c13 0 21 7 21 18S45 50 32 50H19V14Zm12 27c8 0 12-3 12-9s-4-9-12-9h-3v18h3Z" fill="#fff"/>
+  <rect width="64" height="64" rx="32" fill="#111315"/>
+  <circle cx="32" cy="32" r="27" fill="none" stroke="#b5f36f" stroke-width="2"/>
+  <text x="32" y="36" fill="#b5f36f" font-family="ui-monospace,monospace" font-size="14" text-anchor="middle">DVH</text>
 </svg>

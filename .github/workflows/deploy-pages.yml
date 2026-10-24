@@ -28,6 +28,8 @@ jobs:
         run: npm run lint
       - name: Typecheck
         run: npm run typecheck
+      - name: Astro and content schema check
+        run: npm run check:astro
       - name: Test
         run: npm test
       - name: Validate project data
@@ -39,6 +41,8 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Build
         run: npm run build
+      - name: Validate rendered Pages artifact
+        run: npm run validate:render
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
       - name: Browser checks

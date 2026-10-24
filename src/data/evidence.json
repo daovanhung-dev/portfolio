@@ -1,0 +1,310 @@
+[
+  {
+    "id": "ev-portfolio-source",
+    "kind": "verified-source",
+    "repoId": "portfolio",
+    "path": "src/main.ts",
+    "commitSha": "a99fac9d6dd769e2a4b2b31f4eead9629f00faf0",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/portfolio/blob/a99fac9d6dd769e2a4b2b31f4eead9629f00faf0/src/main.ts",
+    "observedAt": "2026-10-24",
+    "note": "Baseline source inspected; baseline checks recorded separately.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nano-mobile",
+    "kind": "verified-source",
+    "repoId": "nanobio",
+    "path": "README.md",
+    "commitSha": "f26e89c6e5f644c6bea1992b11debe06833aa2a0",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/f26e89c6e5f644c6bea1992b11debe06833aa2a0/README.md",
+    "observedAt": "2026-10-24",
+    "note": "Current README and selected local AI source/tests inspected.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nano-backend",
+    "kind": "verified-source",
+    "repoId": "nanobio",
+    "path": "backend/README.md",
+    "commitSha": "f26e89c6e5f644c6bea1992b11debe06833aa2a0",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/f26e89c6e5f644c6bea1992b11debe06833aa2a0/backend/README.md",
+    "observedAt": "2026-10-24",
+    "note": "FastAPI package/setup source exists; deployment instructions were not run.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nano-test-contract",
+    "kind": "verified-source",
+    "repoId": "nanobio",
+    "path": "test/services/ai/no_remote_ai_transport_contract_test.dart",
+    "commitSha": "f26e89c6e5f644c6bea1992b11debe06833aa2a0",
+    "branch": "main",
+    "observedAt": "2026-10-24",
+    "note": "Test source exists; tests were not run during this portfolio audit.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-study-contracts",
+    "kind": "verified-source",
+    "repoId": "study2work",
+    "path": "docs/",
+    "commitSha": "b5c15bb34c8f650dd802f962e946858c1071f8f0",
+    "branch": "hoang_xuan_long_dev",
+    "url": "https://github.com/daovanhung-dev/Study2Work/tree/b5c15bb34c8f650dd802f962e946858c1071f8f0/docs",
+    "observedAt": "2026-10-24",
+    "note": "Latest relevant branch inspected; contracts and Study API modules are source evidence, not runtime acceptance.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-hvc-vue-source",
+    "kind": "verified-source",
+    "repoId": "hvc-new",
+    "path": "frontend/src/",
+    "commitSha": "c2b0f5f47466204b39f69eaa17616e14a1b5ebd3",
+    "branch": "main",
+    "observedAt": "2026-10-24",
+    "note": "Current Vue app, migrations, functions, and tests inspected; remote state not checked.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-hvc-angular-source",
+    "kind": "verified-source",
+    "repoId": "hvc-angular",
+    "path": "src/app/",
+    "commitSha": "b5a8be30bbd270b26fa1a2d859c77fe7da111679",
+    "branch": "main",
+    "observedAt": "2026-10-24",
+    "note": "Angular/Supabase implementation inspected; distinguish its narrower scope from Vue version.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-hvc-fastapi-source",
+    "kind": "verified-source",
+    "repoId": "edu-hvc",
+    "path": "README.md",
+    "commitSha": "07151a2f21cd17693f08029b3a2ff08197db6258",
+    "branch": "main",
+    "observedAt": "2026-10-24",
+    "note": "Historical FastAPI/PostgreSQL implementation inspected.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-labvnua-source",
+    "kind": "verified-source",
+    "repoId": "labvnua",
+    "path": "README.md",
+    "commitSha": "72c1090e7a76e0a10e9feb3e429fb86ba4c0c67b",
+    "branch": "develop",
+    "url": "https://github.com/daovanhung-dev/LabVnua/blob/72c1090e7a76e0a10e9feb3e429fb86ba4c0c67b/README.md",
+    "observedAt": "2026-10-24",
+    "note": "README and selected application/test structure inspected; runtime not verified.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-story-delivery",
+    "kind": "sanitized-private",
+    "repoId": "restricted-project",
+    "observedAt": "2026-10-24",
+    "note": "Sanitized owner-attested delivery context only; private paths, commit metadata, media, and direct links are withheld.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-xiaozhi-fork",
+    "kind": "verified-source",
+    "repoId": "xiaozhi-fork",
+    "path": "main/boards/",
+    "commitSha": "9cd4401d30fe3b54f0e6b656de44199cb0595f3c",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/xiaozhi-esp32/tree/9cd4401d30fe3b54f0e6b656de44199cb0595f3c/main/boards",
+    "observedAt": "2026-10-24",
+    "note": "Fork contribution compared with upstream; no firmware build or device acceptance in this audit.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-privacy-source",
+    "kind": "verified-source",
+    "repoId": "nano-privacy",
+    "path": "README.md",
+    "commitSha": "f13c52f9e868e04716c42ef32912e340a41a267d",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/nanobioai-privacy/blob/f13c52f9e868e04716c42ef32912e340a41a267d/README.md",
+    "observedAt": "2026-10-24",
+    "note": "Static policy and account-deletion source inspected; not legal review or platform certification.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nihongo-design",
+    "kind": "design-doc",
+    "repoId": "nihongo",
+    "path": "design/",
+    "commitSha": "8e310798a366713cc089dec7879ef7ed897d2ec9",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/Nihongo-Learning-System/tree/8e310798a366713cc089dec7879ef7ed897d2ec9/design",
+    "observedAt": "2026-10-24",
+    "note": "Design reference material is distinct from shipped application behavior.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-learn2earn-source",
+    "kind": "verified-source",
+    "repoId": "learn2earn",
+    "path": "README.md",
+    "commitSha": "ca1daa48cc862b1e94ebadf1365143c589ae33dc",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/Learn2Earn/blob/ca1daa48cc862b1e94ebadf1365143c589ae33dc/README.md",
+    "observedAt": "2026-10-24",
+    "note": "Historical repository snapshot inspected; no commits in the audit window.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-vogia-source",
+    "kind": "verified-source",
+    "repoId": "vogia",
+    "path": "README.md",
+    "commitSha": "21ab19b42d340ba8b191d5f77f87101d573be823",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/vogiaVocabulary/blob/21ab19b42d340ba8b191d5f77f87101d573be823/README.md",
+    "observedAt": "2026-10-24",
+    "note": "Angular/Supabase MVP source inspected; remote function availability not checked.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-ai-local-source",
+    "kind": "verified-source",
+    "repoId": "ai-local",
+    "path": "lib/core/services/local_inference_service.dart",
+    "commitSha": "92b1927777eb15ac609b37073203b72ad6b816f0",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/ai_local/blob/92b1927777eb15ac609b37073203b72ad6b816f0/lib/core/services/local_inference_service.dart",
+    "observedAt": "2026-10-24",
+    "note": "Inference and download/persistence source inspected; performance and device compatibility remain unknown.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-qtm-source",
+    "kind": "verified-source",
+    "repoId": "qtm",
+    "path": "app.js",
+    "commitSha": "3235755997ccd3ac69dd81eb8a6d4bca50c7cd8b",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/QTM/blob/3235755997ccd3ac69dd81eb8a6d4bca50c7cd8b/app.js",
+    "observedAt": "2026-10-24",
+    "note": "Static quiz source inspected; no automated test or runtime check in this audit.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-fpt-role",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Role, dates, and generic work scope are self-reported; client source and confidential details are not included.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-learn2earn-role",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Backend Developer role and 09/2025–03/2026 dates are self-reported; source confirms project technologies, not individual line ownership.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-hvc-role",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Developer role and project participation are self-reported; each implementation retains a separate source scope.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-study-role",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Contributor/system-design role is self-reported; repository is team work and runtime remains unverified.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-vnua-role",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Study scope and team coordination are self-reported; exact dates and team size remain approximate.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-venturex-design",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "System-analysis and design scope is self-reported; production implementation is not claimed.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nanobio-role",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Technical-owner role is self-reported; product deployment and clinical outcomes are not claimed.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-missing-profile-pdf",
+    "kind": "unverified",
+    "observedAt": "2026-10-24",
+    "note": "MISSING_SOURCE: master-profile PDF was not available in the workspace.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-missing-chat-history",
+    "kind": "unverified",
+    "observedAt": "2026-10-24",
+    "note": "MISSING_SOURCE: original ChatGPT source history was not available in the workspace.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-process-self-report",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Engineering workflow is a self-described practice, not an independently audited measurement.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-learning-linux",
+    "kind": "learning-lab",
+    "observedAt": "2026-10-24",
+    "note": "Learning direction and notes only; no completed challenge or certification is claimed.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-learning-network",
+    "kind": "learning-lab",
+    "observedAt": "2026-10-24",
+    "note": "Fundamentals study scope only; no infrastructure operations credential is claimed.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-learning-websec",
+    "kind": "learning-lab",
+    "observedAt": "2026-10-24",
+    "note": "Application security learning direction only; no professional pentest is claimed.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-profile-self-report",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Tên, vai trò, mục tiêu nghề nghiệp và mô tả hồ sơ do chủ sở hữu tự xác nhận.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-education-self-report",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Trường, ngành, khóa học và năm tốt nghiệp dự kiến do chủ sở hữu tự xác nhận; không có bảng điểm trong nguồn audit.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-contact-public",
+    "kind": "user-attested",
+    "observedAt": "2026-10-24",
+    "note": "Email và liên kết liên hệ được lấy từ hồ sơ công khai hiện có; không xác nhận phản hồi hoặc hoạt động tài khoản.",
+    "publicSafe": true
+  }
+]

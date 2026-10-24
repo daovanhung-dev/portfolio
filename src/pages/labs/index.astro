@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../../components/SiteLayout.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import EvidenceList from '../../components/EvidenceList.astro';
+
+const labs = (await getCollection('labs')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'vi'));
+---
+
+<SiteLayout title="Labs — Đào Văn Hùng" description="Hướng học và source study được ghi đúng phạm vi, không suy rộng thành chứng chỉ hay kinh nghiệm production.">
+  <div class="page-shell">
+    <header class="page-intro">
+      <span class="eyebrow">Học tập và thử nghiệm</span>
+      <h1 class="page-title">Labs</h1>
+      <p class="page-lede">Các mục này thể hiện hướng học hoặc source study. Chúng không đại diện cho chứng chỉ, pentest chuyên nghiệp hay acceptance thiết bị.</p>
+    </header>
+    <div class="grid case-grid">
+      {labs.map((lab) => (
+        <article class="lab-card">
+          <div class="case-card__top">
+            <span class="eyebrow">Lab note</span>
+            <StatusBadge status={lab.data.state} />
+          </div>
+          <h2>{lab.data.title}</h2>
+          <p>{lab.data.description}</p>
+          <div class="tag-list">{lab.data.topics.map((topic) => <span class="tag">{topic}</span>)}</div>
+          <EvidenceList ids={lab.data.evidenceIds} compact />
+          <ul class="lab-card__limits">{lab.data.limitations.map((limitation) => <li>{limitation}</li>)}</ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</SiteLayout>

@@ -1,0 +1,52 @@
+---
+{
+  "id": "hvc-evolution",
+  "slug": "hvc-implementation-evolution",
+  "title": "Theo dõi tiến hóa triển khai HVC mà không gộp phiên bản",
+  "context": "Ba repository liên quan một domain nhưng có phạm vi và thời điểm triển khai khác nhau.",
+  "approach": [
+    "Đọc riêng README và đường dẫn source của từng repository",
+    "Đặt FastAPI/PostgreSQL là implementation lịch sử",
+    "Giữ Angular/Supabase ở scope hẹp hơn",
+    "Gắn các flow finance/payroll vào source Vue mới hơn"
+  ],
+  "result": "Portfolio phân biệt ba implementation và tránh khẳng định mọi module tồn tại trong cùng một bản đang chạy.",
+  "limitations": [
+    "Chưa kiểm tra remote Supabase, live app, hoặc quyền truy cập dữ liệu."
+  ],
+  "projectSlugs": [
+    "hvc-implementation-evolution"
+  ],
+  "role": "Full-stack Developer · tự thuật",
+  "roleAttribution": "mixed",
+  "constraints": [
+    "Chưa kiểm tra remote Supabase, live app, hoặc quyền truy cập dữ liệu."
+  ],
+  "verification": "Đã đọc các README/source tại ba commit riêng; chưa kiểm tra remote Supabase, live app, hay quyền dữ liệu.",
+  "status": "partial",
+  "evidenceIds": [
+    "ev-hvc-fastapi-source",
+    "ev-hvc-angular-source",
+    "ev-hvc-vue-source"
+  ],
+  "decisions": [],
+  "relatedCaseSlugs": [],
+  "featured": true,
+  "order": 3
+}
+---
+
+## Bối cảnh
+
+Ba repository liên quan một domain nhưng có phạm vi và thời điểm triển khai khác nhau.
+
+## Cách tiếp cận được ghi nhận
+
+- Đọc riêng README và đường dẫn source của từng repository
+- Đặt FastAPI/PostgreSQL là implementation lịch sử
+- Giữ Angular/Supabase ở scope hẹp hơn
+- Gắn các flow finance/payroll vào source Vue mới hơn
+
+## Kết quả
+
+Portfolio phân biệt ba implementation và tránh khẳng định mọi module tồn tại trong cùng một bản đang chạy.

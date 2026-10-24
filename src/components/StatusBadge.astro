@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'span'> {
+  status: string;
+}
+
+const { status, ...attrs } = Astro.props;
+const labels: Record<string, string> = {
+  implemented: 'Đã triển khai trong source',
+  partial: 'Một phần',
+  placeholder: 'Placeholder',
+  'source-only': 'Chỉ xác nhận source',
+  design: 'Thiết kế / scaffold',
+  'deployed-verified': 'Đã xác minh triển khai',
+  historical: 'Lịch sử',
+  learning: 'Đang học',
+  planned: 'Định hướng',
+};
+---
+
+<span class="status-badge" data-status={status} {...attrs}>
+  <span class="status-badge__dot" aria-hidden="true"></span>
+  {labels[status] ?? status}
+</span>

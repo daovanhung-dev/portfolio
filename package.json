@@ -1,32 +1,41 @@
 {
   "name": "dao-van-hung-portfolio",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint src/main.ts src/routes.ts src/data/evidence.ts src/data/portfolio-content.ts src/data/repositories.ts scripts/validate-project-data.mjs scripts/validate-links.mjs tests/**/*.ts e2e/**/*.ts playwright.config.ts eslint.config.js",
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "check:astro": "astro check",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "validate:project-data": "tsx scripts/validate-project-data.mjs",
-    "validate:links": "tsx scripts/validate-links.mjs",
-    "validate": "npm run lint && npm run typecheck && npm test && npm run validate:project-data && npm run validate:links && npm run build && npm run test:e2e"
+    "validate:project-data": "node scripts/validate-project-data.mjs",
+    "validate:links": "node scripts/validate-links.mjs",
+    "validate:render": "node scripts/validate-render.mjs",
+    "validate": "npm run lint && npm run typecheck && npm run check:astro && npm test && npm run validate:project-data && npm run validate:links && npm run build && npm run validate:render && npm run test:e2e"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "8.0.2",
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.4.2",
+    "gray-matter": "4.0.3",
+    "sharp": "0.35.5",
+    "zod": "4.6.7"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@playwright/test": "^1.64.1",
-    "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.15.0",
-    "eslint": "^10.13.0",
-    "jsdom": "^26.0.0",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.72.0",
-    "vite": "^6.3.5",
-    "vitest": "^5.0.0"
+    "@astrojs/check": "0.9.6",
+    "@axe-core/playwright": "4.10.2",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "@types/node": "22.15.0",
+    "eslint": "10.13.0",
+    "eslint-plugin-astro": "1.3.1",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "5.0.5"
   },
   "engines": {
     "node": ">=22"

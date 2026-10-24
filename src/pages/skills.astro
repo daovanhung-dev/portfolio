@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../components/SiteLayout.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import EvidenceList from '../components/EvidenceList.astro';
+import { sitePath } from '../utils/paths';
+
+const [capabilities, projects] = await Promise.all([
+  getCollection('capabilities'),
+  getCollection('projects'),
+]);
+---
+
+<SiteLayout title="Năng lực — Đào Văn Hùng" description="Nhóm năng lực theo các dự án và source evidence được tham chiếu, không dùng thang điểm kỹ năng.">
+  <div class="page-shell">
+    <header class="page-intro">
+      <span class="eyebrow">Năng lực gắn với công việc</span>
+      <h1 class="page-title">Năng lực</h1>
+      <p class="page-lede">Các nhóm dưới đây dẫn về project và evidence liên quan. Không dùng phần trăm hoặc mức thành thạo nếu không có thước đo đáng tin cậy.</p>
+    </header>
+    <div class="capability-grid">
+      {capabilities.map((item) => {
+        const related = projects.filter((project) => item.data.projectSlugs.includes(project.id));
+        return (
+          <article class="capability-card">
+            <div class="case-card__top">
+              <h2>{item.data.label}</h2>
+              <StatusBadge status={item.data.state} />
+            </div>
+            <div class="capability-card__links">
+              {related.map((project) => <a href={sitePath('/projects/' + project.id)}>{project.data.title}</a>)}
+            </div>
+            <EvidenceList ids={item.data.evidenceIds} compact />
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</SiteLayout>

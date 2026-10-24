@@ -6,11 +6,11 @@ This repository contains Dao Van Hung's public engineering portfolio. It serves 
 
 ## Architecture
 
-- Vite builds a static site from `index.html` and `src/main.ts`.
-- UI is vanilla TypeScript with route rendering in `src/routes.ts` and bootstrap/interaction wiring in `src/main.ts`; typed public content and evidence live in `src/data/`; styles are split into tokens, global, component, responsive, and portfolio files under `src/styles/`.
-- Vitest/jsdom covers data integrity and DOM behavior. GitHub Actions runs npm quality checks and deploys GitHub Pages only from `main`.
-- The public deployment base is `/portfolio/`. Preserve it in Vite config, asset URLs, links, router behavior, canonical metadata, sitemap, and 404 handling.
-- Keep route rendering focused and reuse the evidence records instead of repeating proof text. Keep the current Vite + TypeScript stack unless a documented technical reason justifies a change.
+- Astro 7 builds a static site from TypeScript layouts/components and MDX Content Collections validated with Zod.
+- Projects, experiences, cases, labs, capabilities, profile, education, and contact are separate collections under `src/content/`; shared public-safe evidence and repository records live in `src/data/`.
+- Vitest covers content and path rules; Playwright covers built-page rendering, direct links, refresh, interactions, accessibility, and responsive widths. GitHub Actions runs quality checks and deploys GitHub Pages only from `main`.
+- The public deployment base is `/portfolio/`. Preserve it in Astro config, the `sitePath`/asset helpers, canonical and Open Graph metadata, sitemap, robots, and 404 handling.
+- Keep route rendering focused and reuse evidence records instead of repeating proof text. Keep project and experience relationships data-driven.
 
 ## Source and evidence rules
 
@@ -35,6 +35,7 @@ Use Node.js 22 or newer and npm:
 npm ci
 npm run lint
 npm run typecheck
+npm run check:astro
 npm test
 npm run validate:project-data
 npm run validate:links

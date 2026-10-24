@@ -1,0 +1,76 @@
+---
+{
+  "id": "hvc-evolution",
+  "slug": "hvc-implementation-evolution",
+  "category": "Vận hành giáo dục · nhiều phiên bản",
+  "role": "Full-stack Developer · tự xác nhận",
+  "period": "2025–2026",
+  "summary": "Ba codebase riêng giải quyết các nhu cầu vận hành giáo dục: FastAPI/PostgreSQL lịch sử, Angular/Supabase phạm vi hẹp hơn và Vue/Supabase mới hơn.",
+  "status": "partial",
+  "featureProofs": [
+    {
+      "id": "hvc-fastapi",
+      "label": "Source FastAPI/PostgreSQL",
+      "state": "historical",
+      "evidenceIds": [
+        "ev-hvc-fastapi-source"
+      ]
+    },
+    {
+      "id": "hvc-angular",
+      "label": "Source Angular/Supabase",
+      "state": "partial",
+      "limitation": "Scope source hiện tại hẹp hơn bản Vue.",
+      "evidenceIds": [
+        "ev-hvc-angular-source"
+      ]
+    },
+    {
+      "id": "hvc-vue",
+      "label": "Source Vue/Supabase",
+      "state": "partial",
+      "limitation": "Chưa kiểm tra policy database remote hoặc trạng thái triển khai.",
+      "evidenceIds": [
+        "ev-hvc-vue-source"
+      ]
+    }
+  ],
+  "stack": [
+    "FastAPI",
+    "PostgreSQL",
+    "Angular",
+    "Vue",
+    "TypeScript",
+    "Supabase",
+    "Edge Functions"
+  ],
+  "limitations": [
+    "Không gộp tính năng giữa các phiên bản. Finance và payroll chỉ được thấy trong source của phiên bản Vue mới hơn."
+  ],
+  "caseSlugs": [
+    "hvc-implementation-evolution"
+  ],
+  "featured": true,
+  "availability": "unknown",
+  "evidenceIds": [
+    "ev-hvc-fastapi-source",
+    "ev-hvc-angular-source",
+    "ev-hvc-vue-source"
+  ],
+  "repositoryIds": [
+    "edu-hvc",
+    "hvc-angular",
+    "hvc-new"
+  ],
+  "title": "HVC Education · các phiên bản triển khai",
+  "filterGroup": "Backend & dữ liệu"
+}
+---
+
+## Phạm vi
+
+Ba codebase riêng giải quyết các nhu cầu vận hành giáo dục: FastAPI/PostgreSQL lịch sử, Angular/Supabase phạm vi hẹp hơn và Vue/Supabase mới hơn.
+
+## Giới hạn
+
+- Không gộp tính năng giữa các phiên bản. Finance và payroll chỉ được thấy trong source của phiên bản Vue mới hơn.

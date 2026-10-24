@@ -1,73 +1,70 @@
 # Đào Văn Hùng — Engineering Portfolio
 
-Portfolio hai tầng cho recruiter và engineering reviewers. Trang chính tóm tắt năng lực/kết quả; hash routes dẫn tới source, feature state, evidence date và giới hạn của từng project/case/lab.
+Portfolio kỹ thuật tĩnh dành cho recruiter và engineering reviewers. Trang chủ dẫn tới dự án, case study, kinh nghiệm, năng lực và evidence; mỗi nội dung phân biệt source, trạng thái triển khai, attribution và giới hạn.
 
 ## Architecture
 
-Vite builds static HTML/CSS and vanilla TypeScript. No frontend framework is required at runtime.
+- Astro 7 builds static pages from TypeScript layouts, components and MDX Content Collections.
+- Zod schemas in src/content.config.ts validate project, case, experience, lab, capability, profile, education and contact records.
+- Shared evidence and repository inventories live in src/data/evidence.json and src/data/repositories.json.
+- Client JavaScript is limited to theme preference and progressive project filtering. Without JavaScript, every project remains readable.
+- Astro generates sitemap.xml. Local URLs use the configured /portfolio base.
 
-```text
-src/
-├── data/          # typed evidence, repository inventory, projects, career, cases and labs
-├── routes.ts      # hash route rendering and page metadata
-├── main.ts        # bootstrap, theme, mobile menu, modal and route focus
-└── styles/        # tokens, global, components, responsive and portfolio rules
-scripts/           # typed content and route/link validators
-tests/             # Vitest/jsdom data and interaction checks
-e2e/               # Playwright checks against the built preview
-docs/audit/        # sanitized audit reports, QA evidence and screenshots
-```
+Directory map:
 
-Hash routes work under the GitHub Pages base `/portfolio/`:
-
-- `#/projects` and `#/projects/:slug`
-- `#/case-studies` and `#/case-studies/:slug`
-- `#/labs`
-- `#/process`
+- src/content/ — MDX records split by collection
+- src/components/ — layouts, navigation, cards, evidence and status
+- src/data/ — shared public-safe evidence and repository JSON
+- src/pages/ — static routes, dynamic project/case pages, 404
+- src/styles/ — global tokens and responsive styles
+- src/utils/ — base-aware paths and evidence display rules
+- scripts/ — content integrity and public URL validators
+- tests/ — Vitest data and path checks
+- e2e/ — Playwright direct-route, accessibility and responsive checks
+- docs/audit/ — source audit baseline and reports
+- docs/redesign/ — migration map, provenance and review evidence
 
 ## Local development
 
-Requires Node.js 22+ and npm:
+Requires Node.js 22 or newer and npm:
 
-```bash
-npm ci
-npm run dev
-```
+    npm ci
+    npm run dev
 
-Open `http://localhost:5173/portfolio/`. Production preview:
+Open http://localhost:4321/portfolio/. Build and preview:
 
-```bash
-npm run build
-npm run preview
-```
+    npm run build
+    npm run preview
 
-## Evidence and privacy
+## Content and evidence
 
-Content contracts live in `src/data/types.ts`; evidence, repositories, and portfolio records live in `src/data/evidence.ts`, `src/data/repositories.ts`, and `src/data/portfolio-content.ts`.
-
-- Source presence, runtime verification, URL availability, feature completeness, and deployment are separate states.
-- Evidence records pin a repository/path/SHA where public and safe, and include an observation date and limitation.
-- Empty `My_Courses` is recorded in the audit and omitted from project cards.
-- Personal compensation was removed from the current historical document without rewriting Git history. Private client and personal media are excluded from public detail pages.
-- Missing PDFs/chat sources, device checks, remote database state, and unrun external tests remain explicit gaps.
+- Each public claim uses an evidence record or is labeled as owner-attested, design, learning, unverified, or MISSING_SOURCE.
+- Source presence, runtime verification, URL availability, feature completeness, and deployment remain separate states.
+- Repository evidence pins the observed branch, commit SHA, source path where safe, and observation date.
+- The empty My_Courses repository remains inventory-only. Restricted private-project source has no public URL, path, branch, SHA, or media link.
+- Historical implementations remain separate. The NanoBio pre-window history gap, missing master-profile PDF and unavailable original chat history are documented.
+- Undated GPA/credits and self-assessed IELTS are omitted. No made-up performance, user, outcome, testimonial, or skill percentage appears.
 
 ## Quality gates
 
-```bash
-npm run lint
-npm run typecheck
-npm test
-npm run validate:project-data
-npm run validate:links
-npm run build
-npm run test:e2e
-npm run validate
-```
+    npm run lint
+    npm run typecheck
+    npm run check:astro
+    npm test
+    npm run validate:project-data
+    npm run validate:links
+    npm run build
+    npm run test:e2e
+    npm run validate
 
-`npm run validate` runs the complete local gate sequence, including Playwright against the built preview. External URL network failures are reported as warnings by the link validator; malformed URLs, invalid evidence references, and unknown route targets fail.
+The full validation runs lint, TypeScript, Astro/Zod checks, unit tests, relationship and URL validation, build, and Playwright against the built preview. Set CHECK_EXTERNAL_LINKS=1 to probe public external URLs; network failures are warnings, while malformed URLs and broken internal references fail.
 
-## GitHub Pages
+## GitHub Pages and rollback
 
-The Vite base remains `/portfolio/`. Pull requests and feature-branch pushes run quality checks; only a push to `main` uploads/deploys a Pages artifact. This branch is not deployed. The existing baseline URL can respond successfully without proving that any feature branch is live.
+Production origin is https://daovanhung-dev.github.io with Astro base /portfolio/ and trailing slashes. Canonical/Open Graph URLs, assets, navigation, sitemap and 404 recovery paths include the base. Pull requests and feature-branch pushes run quality checks; only a push to main can upload and deploy the Pages artifact.
 
-Canonical URL: <https://daovanhung-dev.github.io/portfolio/>
+The feature branch is review evidence, not a deployment. Roll back by reverting the redesign commits or closing the PR; do not rewrite history or modify main directly. Do not merge or manually deploy without explicit authorization.
+
+## Design provenance
+
+The visual system adapts the content hierarchy and selected layout patterns from erlandv/case at pinned commit c7072e44ce345f59e47b9fa5fc0f338bf783943d. Its MIT notice is retained in LICENSE.CASE; details are in THIRD_PARTY_NOTICES.md and docs/redesign/00-theme-audit.md. Demo content and identity were excluded.

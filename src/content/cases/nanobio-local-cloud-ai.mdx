@@ -1,0 +1,51 @@
+---
+{
+  "id": "nano-local-cloud",
+  "slug": "nanobio-local-cloud-ai",
+  "title": "Tách local-first, cloud và các đường đi AI",
+  "context": "Ứng dụng wellness cần giữ luồng local riêng với tính năng phụ thuộc Supabase; AI trên thiết bị cũng cần phân biệt với AI cloud.",
+  "approach": [
+    "Đọc các flow local và test contract trong source",
+    "Tách quyền sở hữu dữ liệu local khỏi tính năng sync/cloud",
+    "Đặt trạng thái AI theo từng đường đi và yêu cầu cấu hình",
+    "Giữ hiệu năng, đồng bộ và trạng thái production ở mức chưa xác minh"
+  ],
+  "result": "Source cho thấy local-first và on-device AI cùng tồn tại với các tính năng cloud tùy cấu hình; audit không chạy app hay backend.",
+  "limitations": [
+    "Không có kết quả benchmark, device acceptance, remote migration, hay clinical outcome."
+  ],
+  "projectSlugs": [
+    "nanobio-local-cloud"
+  ],
+  "role": "Technical Owner · tự thuật",
+  "roleAttribution": "mixed",
+  "constraints": [
+    "Không có kết quả benchmark, device acceptance, remote migration, hay clinical outcome."
+  ],
+  "verification": "Đã đọc README và source/test được dẫn tại commit audit; không chạy app, backend, migration, hay thiết bị trong audit này.",
+  "status": "partial",
+  "evidenceIds": [
+    "ev-nano-mobile",
+    "ev-nano-test-contract"
+  ],
+  "decisions": [],
+  "relatedCaseSlugs": [],
+  "featured": true,
+  "order": 1
+}
+---
+
+## Bối cảnh
+
+Ứng dụng wellness cần giữ luồng local riêng với tính năng phụ thuộc Supabase; AI trên thiết bị cũng cần phân biệt với AI cloud.
+
+## Cách tiếp cận được ghi nhận
+
+- Đọc các flow local và test contract trong source
+- Tách quyền sở hữu dữ liệu local khỏi tính năng sync/cloud
+- Đặt trạng thái AI theo từng đường đi và yêu cầu cấu hình
+- Giữ hiệu năng, đồng bộ và trạng thái production ở mức chưa xác minh
+
+## Kết quả
+
+Source cho thấy local-first và on-device AI cùng tồn tại với các tính năng cloud tùy cấu hình; audit không chạy app hay backend.

@@ -1,0 +1,50 @@
+---
+{
+  "id": "study-contracts",
+  "slug": "study2work-contracts-runtime",
+  "title": "Đọc hợp đồng và trạng thái wiring trong Study2Work",
+  "context": "Monorepo có nhiều ứng dụng và tài liệu contract; branch chứa mã mới nhất liên quan khác với default main.",
+  "approach": [
+    "Chọn branch hoang_xuan_long_dev và SHA đã audit",
+    "Đối chiếu docs contracts với module hiện có",
+    "Tách contract/source presence khỏi service composition",
+    "Ghi nhận Express 4 cho Work API và những phần chưa được chạy end-to-end"
+  ],
+  "result": "Có evidence source cho contracts và các module; audit không xác nhận full-stack runtime hoặc production readiness.",
+  "limitations": [
+    "Không chạy package tests hoặc stack integration trong audit này."
+  ],
+  "projectSlugs": [
+    "study2work-contracts"
+  ],
+  "role": "Contributor / System Design · tự thuật",
+  "roleAttribution": "mixed",
+  "constraints": [
+    "Không chạy package tests hoặc stack integration trong audit này."
+  ],
+  "verification": "Đã đối chiếu source/docs trên branch và SHA được ghi ở evidence; chưa chạy package tests hay tích hợp toàn stack.",
+  "status": "partial",
+  "evidenceIds": [
+    "ev-study-contracts"
+  ],
+  "decisions": [],
+  "relatedCaseSlugs": [],
+  "featured": true,
+  "order": 2
+}
+---
+
+## Bối cảnh
+
+Monorepo có nhiều ứng dụng và tài liệu contract; branch chứa mã mới nhất liên quan khác với default main.
+
+## Cách tiếp cận được ghi nhận
+
+- Chọn branch hoang_xuan_long_dev và SHA đã audit
+- Đối chiếu docs contracts với module hiện có
+- Tách contract/source presence khỏi service composition
+- Ghi nhận Express 4 cho Work API và những phần chưa được chạy end-to-end
+
+## Kết quả
+
+Có evidence source cho contracts và các module; audit không xác nhận full-stack runtime hoặc production readiness.

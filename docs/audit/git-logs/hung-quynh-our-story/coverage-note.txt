@@ -1,5 +1,0 @@
-Sanitized audit record for the private personal project.
-Snapshot: main at 0c53ec64941ec27a3dd51125c4a5eb32b6cdbd64.
-Audit coverage: all 5 remote branches, 0 tags, and 41 commits in the requested window were reviewed.
-Path review was completed locally. Individual ref names, commit subjects, and changed filenames are withheld because path metadata can reveal private media/story details.
-Aggregate package path/change counts and the public-safe technical scope are recorded in docs/audit/01_REPOSITORY_INVENTORY.csv and docs/audit/03_SOURCE_STATUS_MATRIX.csv.

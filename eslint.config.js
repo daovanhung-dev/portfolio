@@ -1,20 +1,44 @@
 import js from '@eslint/js';
+import astro from 'eslint-plugin-astro';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
-  { ignores: ['dist/**', 'node_modules/**', 'docs/audit/git-logs/**', 'test-results/**', 'playwright-report/**'] },
+export default [
+  {
+    ignores: ['dist/**', 'node_modules/**', '.astro/**', 'docs/audit/git-logs/**', 'test-results/**', 'playwright-report/**'],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  ...astro.configs['flat/recommended'],
   {
-    files: ['src/main.ts', 'src/routes.ts', 'src/data/evidence.ts', 'src/data/portfolio-content.ts', 'src/data/repositories.ts', 'scripts/validate-project-data.mjs', 'scripts/validate-links.mjs', 'tests/**/*.ts', 'e2e/**/*.ts', 'playwright.config.ts'],
+    files: ['**/*.{js,mjs,ts,astro}'],
     languageOptions: {
       globals: {
-        AbortController: 'readonly', Element: 'readonly', HTMLAnchorElement: 'readonly', HTMLButtonElement: 'readonly', HTMLDialogElement: 'readonly', HTMLInputElement: 'readonly', HTMLMetaElement: 'readonly', HTMLElement: 'readonly', URL: 'readonly',
-        console: 'readonly', document: 'readonly', fetch: 'readonly', process: 'readonly', setTimeout: 'readonly', clearTimeout: 'readonly', window: 'readonly',
+        AbortController: 'readonly',
+        Element: 'readonly',
+        HTMLButtonElement: 'readonly',
+        HTMLElement: 'readonly',
+        URL: 'readonly',
+        clearTimeout: 'readonly',
+        console: 'readonly',
+        document: 'readonly',
+        fetch: 'readonly',
+        localStorage: 'readonly',
+        process: 'readonly',
+        setTimeout: 'readonly',
+        window: 'readonly',
       },
     },
+  },
+  {
+    files: ['**/*.ts', '**/*.astro'],
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     },
   },
-);
+  {
+    files: ['**/*.mjs', '**/*.js'],
+    rules: {
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    },
+  },
+];

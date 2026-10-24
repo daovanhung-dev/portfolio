@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../../components/SiteLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'vi'));
+const categories = [...new Set(projects.map((project) => project.data.filterGroup))].sort((a, b) => a.localeCompare(b, 'vi'));
+---
+
+<SiteLayout title="Dự án — Đào Văn Hùng" description="Dự án phần mềm với vai trò, trạng thái, evidence và giới hạn đã được ghi rõ.">
+  <div class="page-shell">
+    <header class="page-intro">
+      <span class="eyebrow">Thư viện công việc</span>
+      <h1 class="page-title">Dự án</h1>
+      <p class="page-lede">Các mục được nhóm theo source và phạm vi hiện có. Nhãn trạng thái mô tả mức triển khai được evidence hỗ trợ, không xác nhận hoạt động production.</p>
+    </header>
+    <div class="filter-bar" data-filter-bar hidden role="group" aria-label="Lọc dự án">
+      <span class="filter-label">Lọc theo lĩnh vực</span>
+      <button class="filter-button" type="button" data-filter="all" aria-pressed="true">Tất cả</button>
+      {categories.map((category) => <button class="filter-button" type="button" data-filter={category} aria-pressed="false">{category}</button>)}
+    </div>
+    <p class="visually-hidden" data-filter-status aria-live="polite"></p>
+    <div class="grid project-grid" data-project-list>
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </div>
+</SiteLayout>
+
+<script>
+  const filterBar = document.querySelector<HTMLElement>('[data-filter-bar]');
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const projectCards = document.querySelectorAll<HTMLElement>('[data-project-card]');
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+
+  if (filterBar && filterButtons.length && projectCards.length) {
+    filterBar.hidden = false;
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selected = button.dataset.filter ?? 'all';
+        filterButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+        let visible = 0;
+        projectCards.forEach((card) => {
+          const show = selected === 'all' || card.dataset.category === selected;
+          card.hidden = !show;
+          if (show) visible += 1;
+        });
+        if (status) status.textContent = 'Đang hiển thị ' + visible + ' dự án.';
+      });
+    });
+  }
+</script>

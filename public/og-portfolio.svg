@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#111315"/>
+  <circle cx="1010" cy="60" r="390" fill="#b5f36f" opacity=".07"/>
+  <path d="M0 500h1200" stroke="#343a39"/>
+  <circle cx="102" cy="104" r="27" fill="none" stroke="#b5f36f" stroke-width="2"/>
+  <text x="102" y="109" fill="#b5f36f" font-family="monospace" font-size="14" text-anchor="middle">DVH</text>
+  <text x="100" y="255" fill="#f1f0e9" font-family="Arial,sans-serif" font-size="82" font-weight="700" letter-spacing="-4">Đào Văn Hùng</text>
+  <text x="100" y="335" fill="#b5f36f" font-family="Arial,sans-serif" font-size="32">Kỹ sư phần mềm</text>
+  <text x="100" y="405" fill="#a5aaa8" font-family="Arial,sans-serif" font-size="23">Dự án · case study · evidence</text>
+  <text x="100" y="562" fill="#717977" font-family="monospace" font-size="16">daovanhung-dev.github.io/portfolio</text>
+  <text x="1085" y="562" fill="#b5f36f" font-family="monospace" font-size="17" text-anchor="end">2026</text>
+</svg>
