@@ -26,8 +26,10 @@ Directory map:
 
 ## Local development
 
-Requires Node.js 22 or newer and npm:
+Requires Node.js 22.23.4 or newer and npm. The `.nvmrc` file pins Node 22.23.4 for `nvm` users:
 
+    nvm install
+    nvm use
     npm ci
     npm run dev
 
