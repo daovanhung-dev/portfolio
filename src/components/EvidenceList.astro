@@ -1,5 +1,5 @@
 ---
-import { evidenceFor, evidenceLabel, repositoryName, safeEvidenceNote } from '../utils/evidence';
+import { evidenceLabel, publicEvidenceFor, repositoryName } from '../utils/evidence';
 
 interface Props {
   ids: string[];
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { ids, compact = false } = Astro.props;
-const refs = evidenceFor(ids);
+const refs = publicEvidenceFor(ids);
 ---
 
 {refs.length > 0 && (
@@ -16,15 +16,13 @@ const refs = evidenceFor(ids);
       <li class="evidence-item">
         <div class="evidence-item__top">
           <span class="evidence-kind">{evidenceLabel(ref.kind)}</span>
-          <time datetime={ref.observedAt}>Ghi nhận {ref.observedAt}</time>
         </div>
-        <p>{safeEvidenceNote(ref)}</p>
         <div class="evidence-item__links">
           {repositoryName(ref.repoId) && <span>{repositoryName(ref.repoId)}</span>}
           {ref.path && <code>{ref.path}</code>}
           {ref.url && (
             <a href={ref.url} target="_blank" rel="noreferrer">
-              Mở source đã đối chiếu <span aria-hidden="true">↗</span>
+              Xem mã nguồn <span aria-hidden="true">↗</span>
             </a>
           )}
         </div>

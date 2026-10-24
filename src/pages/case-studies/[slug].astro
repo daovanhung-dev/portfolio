@@ -5,6 +5,7 @@ import StatusBadge from '../../components/StatusBadge.astro';
 import EvidenceList from '../../components/EvidenceList.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { sitePath } from '../../utils/paths';
+import { publicEvidenceFor } from '../../utils/evidence';
 
 export async function getStaticPaths() {
   const cases = await getCollection('cases');
@@ -15,30 +16,31 @@ const { item } = Astro.props;
 const { Content } = await render(item);
 const projects = (await getCollection('projects')).filter((project) => item.data.projectSlugs.includes(project.id));
 const relatedCases = (await getCollection('cases')).filter((other) => item.data.relatedCaseSlugs.includes(other.id));
+const publicEvidence = publicEvidenceFor(item.data.evidenceIds);
 const sections = [
   ['context', 'Bối cảnh'],
   ['constraints', 'Ràng buộc'],
   ['role', 'Vai trò'],
   ['approach', 'Cách tiếp cận'],
-  ['decisions', 'Quyết định'],
   ['verification', 'Kiểm chứng'],
   ['result', 'Kết quả'],
-  ['limitations', 'Giới hạn'],
-  ['evidence', 'Evidence'],
+  ['limitations', 'Phạm vi'],
+  ['evidence', 'Mã nguồn'],
 ];
+if (item.data.decisions.length > 0) sections.splice(4, 0, ['decisions', 'Quyết định']);
+if (publicEvidence.length === 0) sections.pop();
 ---
 
-<SiteLayout title={item.data.title + ' — Case study'} description={item.data.context.slice(0, 155)} route={'/case-studies/' + item.id}>
+<SiteLayout title={item.data.title + ' — Đào Văn Hùng'} description={item.data.context.slice(0, 155)} route={'/case-studies/' + item.id}>
   <div class="page-shell">
     <header class="detail-header">
       <a class="eyebrow-link" href={sitePath('/case-studies')}>← Tất cả case study</a>
-      <span class="eyebrow">Case study</span>
+      <span class="eyebrow">Phân tích dự án</span>
       <h1>{item.data.title}</h1>
       <p class="page-lede">{item.data.context}</p>
       <div class="detail-header__meta">
         <span>{item.data.role}</span>
         <StatusBadge status={item.data.status} />
-        <span>Attribution: {item.data.roleAttribution}</span>
       </div>
     </header>
     <div class="case-layout section">
@@ -49,21 +51,19 @@ const sections = [
       <article class="case-content">
         <section id="context"><h2>Bối cảnh</h2><p>{item.data.context}</p></section>
         <section id="constraints"><h2>Ràng buộc</h2><ul>{item.data.constraints.map((constraint) => <li>{constraint}</li>)}</ul></section>
-        <section id="role"><h2>Vai trò</h2><p>{item.data.role}. Mức attribution: {item.data.roleAttribution}.</p></section>
+        <section id="role"><h2>Vai trò</h2><p>{item.data.role}.</p></section>
         <section id="approach"><h2>Cách tiếp cận</h2><ol>{item.data.approach.map((step) => <li>{step}</li>)}</ol></section>
-        <section id="decisions">
+        {item.data.decisions.length > 0 && <section id="decisions">
           <h2>Quyết định</h2>
-          {item.data.decisions.length > 0
-            ? <ul>{item.data.decisions.map((decision) => <li><strong>{decision.decision}</strong> — {decision.rationale}</li>)}</ul>
-            : <p class="missing-source">MISSING_SOURCE — Không có decision record trong evidence công khai hiện có. Portfolio không suy luận quyết định từ source hoặc kết quả.</p>}
-        </section>
+          <ul>{item.data.decisions.map((decision) => <li><strong>{decision.decision}</strong> — {decision.rationale}</li>)}</ul>
+        </section>}
         <section id="verification"><h2>Kiểm chứng</h2><p>{item.data.verification}</p></section>
         <section id="result"><h2>Kết quả</h2><p>{item.data.result}</p></section>
-        <section id="limitations"><h2>Giới hạn</h2><ul>{item.data.limitations.map((limitation) => <li>{limitation}</li>)}</ul></section>
-        <section id="evidence">
-          <h2>Evidence</h2>
+        <section id="limitations"><h2>Phạm vi</h2><ul>{item.data.limitations.map((limitation) => <li>{limitation}</li>)}</ul></section>
+        {publicEvidence.length > 0 && <section id="evidence">
+          <h2>Mã nguồn và tài liệu</h2>
           <EvidenceList ids={item.data.evidenceIds} />
-        </section>
+        </section>}
         <div class="prose"><Content /></div>
         {projects.length > 0 && (
           <section><h2>Dự án liên quan</h2><div class="grid project-grid">{projects.map((project) => <ProjectCard project={project} />)}</div></section>

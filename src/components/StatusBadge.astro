@@ -7,19 +7,19 @@ interface Props extends HTMLAttributes<'span'> {
 
 const { status, ...attrs } = Astro.props;
 const labels: Record<string, string> = {
-  implemented: 'Đã triển khai trong source',
-  partial: 'Một phần',
+  implemented: 'Đã triển khai trong mã nguồn',
+  partial: 'Triển khai một phần',
   placeholder: 'Placeholder',
-  'source-only': 'Chỉ xác nhận source',
-  design: 'Thiết kế / scaffold',
+  'source-only': 'Mã nguồn',
+  design: 'Thiết kế / bản mẫu',
   'deployed-verified': 'Đã xác minh triển khai',
-  historical: 'Lịch sử',
+  historical: 'Phiên bản lịch sử',
   learning: 'Đang học',
-  planned: 'Định hướng',
+  planned: 'Theo lộ trình',
 };
 ---
 
 <span class="status-badge" data-status={status} {...attrs}>
   <span class="status-badge__dot" aria-hidden="true"></span>
-  {labels[status] ?? status}
+  {labels[status] ?? 'Đang cập nhật'}
 </span>

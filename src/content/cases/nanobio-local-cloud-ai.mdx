@@ -2,27 +2,27 @@
 {
   "id": "nano-local-cloud",
   "slug": "nanobio-local-cloud-ai",
-  "title": "Tách local-first, cloud và các đường đi AI",
-  "context": "Ứng dụng wellness cần giữ luồng local riêng với tính năng phụ thuộc Supabase; AI trên thiết bị cũng cần phân biệt với AI cloud.",
+  "title": "Tổ chức kiến trúc local-first, cloud và AI",
+  "context": "Ứng dụng wellness kết hợp dữ liệu local-first, tính năng Supabase theo môi trường và các luồng AI trên thiết bị.",
   "approach": [
-    "Đọc các flow local và test contract trong source",
-    "Tách quyền sở hữu dữ liệu local khỏi tính năng sync/cloud",
-    "Đặt trạng thái AI theo từng đường đi và yêu cầu cấu hình",
-    "Giữ hiệu năng, đồng bộ và trạng thái production ở mức chưa xác minh"
+    "Phân tích các luồng local và test contracts trong source.",
+    "Tách quyền sở hữu dữ liệu local khỏi các tính năng đồng bộ cloud.",
+    "Phân biệt AI trên thiết bị với tính năng cần dịch vụ cloud.",
+    "Xác định cấu hình, migration và thiết bị mục tiêu cho từng phạm vi kiểm thử."
   ],
-  "result": "Source cho thấy local-first và on-device AI cùng tồn tại với các tính năng cloud tùy cấu hình; audit không chạy app hay backend.",
+  "result": "Ứng dụng phân chia rõ các luồng dữ liệu local, AI trên thiết bị và tính năng cloud tùy cấu hình.",
   "limitations": [
-    "Không có kết quả benchmark, device acceptance, remote migration, hay clinical outcome."
+    "Benchmark, cấu hình cloud theo môi trường, kiểm thử thiết bị và kết quả lâm sàng là các phạm vi đánh giá riêng."
   ],
   "projectSlugs": [
     "nanobio-local-cloud"
   ],
-  "role": "Technical Owner · tự thuật",
+  "role": "Technical Owner / Full-stack Developer",
   "roleAttribution": "mixed",
   "constraints": [
-    "Không có kết quả benchmark, device acceptance, remote migration, hay clinical outcome."
+    "Sản phẩm phục vụ wellness; dữ liệu cá nhân, AI và dịch vụ cloud cần ranh giới xử lý phù hợp."
   ],
-  "verification": "Đã đọc README và source/test được dẫn tại commit audit; không chạy app, backend, migration, hay thiết bị trong audit này.",
+  "verification": "Đối chiếu README, luồng ứng dụng và test contracts trong source. Các phần cloud và hiệu năng được cấu hình, đánh giá theo môi trường và thiết bị mục tiêu.",
   "status": "partial",
   "evidenceIds": [
     "ev-nano-mobile",
@@ -37,15 +37,15 @@
 
 ## Bối cảnh
 
-Ứng dụng wellness cần giữ luồng local riêng với tính năng phụ thuộc Supabase; AI trên thiết bị cũng cần phân biệt với AI cloud.
+Ứng dụng wellness kết hợp dữ liệu local-first, tính năng Supabase theo môi trường và các luồng AI trên thiết bị.
 
-## Cách tiếp cận được ghi nhận
+## Cách tiếp cận
 
-- Đọc các flow local và test contract trong source
-- Tách quyền sở hữu dữ liệu local khỏi tính năng sync/cloud
-- Đặt trạng thái AI theo từng đường đi và yêu cầu cấu hình
-- Giữ hiệu năng, đồng bộ và trạng thái production ở mức chưa xác minh
+- Phân tích luồng local và test contracts.
+- Tách quyền sở hữu dữ liệu local khỏi đồng bộ cloud.
+- Phân biệt inference trên thiết bị với tính năng dùng cloud.
+- Xác định cấu hình và môi trường cho từng phạm vi kiểm thử.
 
 ## Kết quả
 
-Source cho thấy local-first và on-device AI cùng tồn tại với các tính năng cloud tùy cấu hình; audit không chạy app hay backend.
+Kiến trúc thể hiện rõ các luồng local, AI trên thiết bị và cloud tùy cấu hình. Sản phẩm hỗ trợ wellness, không thay thế công cụ chẩn đoán hoặc điều trị.

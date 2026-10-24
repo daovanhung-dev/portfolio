@@ -3,11 +3,11 @@ import SiteLayout from '../components/SiteLayout.astro';
 import { sitePath } from '../utils/paths';
 ---
 
-<SiteLayout title="Không tìm thấy trang — Đào Văn Hùng" description="Trang bạn tìm không tồn tại hoặc đã được chuyển." noindex>
+<SiteLayout title="Không tìm thấy trang — Đào Văn Hùng" description="Khám phá các dự án và kinh nghiệm của Đào Văn Hùng." noindex>
   <div class="not-found">
     <span class="not-found__code">404 / NOT FOUND</span>
-    <h1>Trang này không có ở đây.</h1>
-    <p>Đường dẫn có thể đã thay đổi. Bắt đầu từ trang chủ hoặc xem lại các project hiện có.</p>
+    <h1>Không tìm thấy trang này.</h1>
+    <p>Quay lại trang chủ hoặc khám phá các dự án nổi bật.</p>
     <div class="hero__actions">
       <a class="button button--primary" href={sitePath('/')}>Về trang chủ <span aria-hidden="true">→</span></a>
       <a class="button" href={sitePath('/projects')}>Xem dự án</a>

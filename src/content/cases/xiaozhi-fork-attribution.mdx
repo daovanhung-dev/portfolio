@@ -2,27 +2,27 @@
 {
   "id": "xiaozhi-fork",
   "slug": "xiaozhi-fork-attribution",
-  "title": "Giữ attribution rõ ràng khi làm trên XiaoZhi fork",
-  "context": "Repository fork trộn lịch sử upstream và thay đổi từ nhiều tác giả.",
+  "title": "Đóng góp có ranh giới rõ ràng trên XiaoZhi fork",
+  "context": "Fork XiaoZhi ESP32 bao gồm lịch sử upstream và thay đổi từ nhiều tác giả, cần ghi nhận chính xác phạm vi từng phần.",
   "approach": [
-    "So sánh fork với upstream/main và xác định merge base",
-    "Tách commit riêng của fork khỏi commit upstream/third-party",
-    "Giới hạn mô tả ở board support và tài liệu có attribution",
-    "Không suy ra firmware hoặc voice acceptance từ source"
+    "So sánh fork với upstream/main và xác định merge base.",
+    "Phân biệt commit của fork với commit upstream và bên thứ ba.",
+    "Tập trung vào board support và tài liệu thuộc phạm vi fork.",
+    "Đánh giá firmware và voice interaction riêng trên board mục tiêu."
   ],
-  "result": "Contribution được mô tả ở cấp fork/source; không nhận toàn bộ repository là tác phẩm gốc.",
+  "result": "Portfolio ghi nhận rõ các thay đổi thuộc fork, giữ nguyên attribution upstream và tập trung vào board support cùng tài liệu.",
   "limitations": [
-    "Không build, flash, hoặc xác nhận giao tiếp loa trong lần audit portfolio này."
+    "Phạm vi case là source và Git attribution; firmware build, flash và voice interaction được đánh giá trên thiết bị riêng."
   ],
   "projectSlugs": [
     "xiaozhi-fork-attribution"
   ],
-  "role": "Fork contributor · Git attribution reviewed",
+  "role": "Embedded Contributor · fork",
   "roleAttribution": "source-backed",
   "constraints": [
-    "Không build, flash, hoặc xác nhận giao tiếp loa trong lần audit portfolio này."
+    "Không gộp lịch sử upstream với các thay đổi riêng của fork."
   ],
-  "verification": "Đã so sánh fork attribution/source; không build, flash, hoặc kiểm tra phản hồi qua loa.",
+  "verification": "Đối chiếu lịch sử fork với upstream và rà soát phạm vi thay đổi trong board support/tài liệu.",
   "status": "source-only",
   "evidenceIds": [
     "ev-xiaozhi-fork"
@@ -35,15 +35,15 @@
 
 ## Bối cảnh
 
-Repository fork trộn lịch sử upstream và thay đổi từ nhiều tác giả.
+Fork XiaoZhi ESP32 bao gồm lịch sử upstream và thay đổi từ nhiều tác giả, cần ghi nhận chính xác phạm vi từng phần.
 
-## Cách tiếp cận được ghi nhận
+## Cách tiếp cận
 
-- So sánh fork với upstream/main và xác định merge base
-- Tách commit riêng của fork khỏi commit upstream/third-party
-- Giới hạn mô tả ở board support và tài liệu có attribution
-- Không suy ra firmware hoặc voice acceptance từ source
+- So sánh fork với upstream/main và xác định merge base.
+- Phân biệt commit của fork với commit upstream/bên thứ ba.
+- Tập trung vào board support và tài liệu thuộc phạm vi fork.
+- Đánh giá firmware và voice interaction trên board mục tiêu.
 
 ## Kết quả
 
-Contribution được mô tả ở cấp fork/source; không nhận toàn bộ repository là tác phẩm gốc.
+Phạm vi đóng góp được trình bày minh bạch ở cấp fork, giúp reviewer phân biệt chính xác thay đổi cá nhân và nền tảng upstream.

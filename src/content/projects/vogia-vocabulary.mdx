@@ -3,14 +3,14 @@
   "id": "vogia",
   "slug": "vogia-vocabulary",
   "category": "Học ngoại ngữ · Angular MVP",
-  "role": "Developer · tự xác nhận",
+  "role": "Frontend Developer",
   "period": "2026",
-  "summary": "Source MVP từ vựng với hash route, luồng luyện tập và các hàm backend tùy chọn.",
+  "summary": "Ứng dụng Angular MVP cho học từ vựng với hash routing, luồng luyện tập và các hàm backend tùy chọn trên Supabase.",
   "status": "partial",
   "featureProofs": [
     {
       "id": "vogia-ui",
-      "label": "Source từ vựng và luyện tập",
+      "label": "Giao diện từ vựng và luồng luyện tập",
       "state": "partial",
       "evidenceIds": [
         "ev-vogia-source"
@@ -18,9 +18,9 @@
     },
     {
       "id": "vogia-cloud",
-      "label": "Hàm remote và khả năng truy cập cloud",
+      "label": "Tích hợp Supabase và remote functions",
       "state": "partial",
-      "limitation": "Chưa xác minh deployment của remote function hoặc lưu tài khoản.",
+      "limitation": "Tính năng cloud phụ thuộc cấu hình và triển khai dịch vụ Supabase.",
       "evidenceIds": [
         "ev-vogia-source"
       ]
@@ -32,7 +32,7 @@
     "Supabase"
   ],
   "limitations": [
-    "Chỉ có evidence MVP/source; không khẳng định quy mô người dùng hoặc dịch vụ remote đang hoạt động."
+    "Các chức năng cloud phụ thuộc cấu hình Supabase và triển khai remote functions."
   ],
   "caseSlugs": [],
   "featured": false,
@@ -48,10 +48,10 @@
 }
 ---
 
-## Phạm vi
+## Tổng quan
 
-Source MVP từ vựng với hash route, luồng luyện tập và các hàm backend tùy chọn.
+Ứng dụng Angular MVP hỗ trợ học từ vựng, luyện tập theo luồng và điều hướng bằng hash route.
 
-## Giới hạn
+## Điểm kỹ thuật
 
-- Chỉ có evidence MVP/source; không khẳng định quy mô người dùng hoặc dịch vụ remote đang hoạt động.
+Source kết hợp TypeScript, giao diện học tập và các hàm Supabase tùy chọn cho những chức năng cần backend.

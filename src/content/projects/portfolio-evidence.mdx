@@ -3,14 +3,14 @@
   "id": "portfolio",
   "slug": "portfolio-evidence",
   "category": "Portfolio cá nhân · Astro",
-  "role": "Thiết kế và phát triển · trạng thái nhánh",
+  "role": "Thiết kế và phát triển",
   "period": "2026",
-  "summary": "Portfolio tĩnh theo hướng case study, với nội dung có cấu trúc, evidence tái sử dụng và đường dẫn trực tiếp dưới GitHub Pages base. Nhánh này chưa được triển khai.",
+  "summary": "Portfolio kỹ thuật xây bằng Astro với trang tĩnh, MDX Content Collections, schema Zod và các case study liên kết mã nguồn.",
   "status": "partial",
   "featureProofs": [
     {
       "id": "typed-evidence",
-      "label": "Evidence và source audit có cấu trúc",
+      "label": "Nội dung MDX và dữ liệu có cấu trúc",
       "state": "implemented",
       "evidenceIds": [
         "ev-portfolio-source",
@@ -19,9 +19,9 @@
     },
     {
       "id": "recruiter-routes",
-      "label": "Trang recruiter và route static",
+      "label": "Các trang portfolio và định tuyến tĩnh",
       "state": "partial",
-      "limitation": "Implementation is being completed on this branch; it is not deployed.",
+      "limitation": "Portfolio được hoàn thiện theo các vòng nội dung, kiểm tra và review.",
       "evidenceIds": [
         "ev-astro-source"
       ]
@@ -37,7 +37,7 @@
     "Playwright"
   ],
   "limitations": [
-    "Bản build trên nhánh chỉ là bằng chứng cục bộ; chưa có deployment."
+    "GitHub Actions chạy quality checks trên pull request và feature branch; workflow Pages triển khai từ main."
   ],
   "caseSlugs": [],
   "featured": true,
@@ -54,10 +54,13 @@
 }
 ---
 
-## Phạm vi
+## Tổng quan
 
-Portfolio tĩnh theo hướng case study, với nội dung có cấu trúc, evidence tái sử dụng và đường dẫn trực tiếp dưới GitHub Pages base. Nhánh này chưa được triển khai.
+Portfolio kỹ thuật được xây bằng Astro 7, TypeScript và MDX Content Collections. Schema Zod tổ chức hồ sơ, kinh nghiệm, dự án, case study, năng lực và labs.
 
-## Giới hạn
+## Điểm kỹ thuật
 
-- Bản build trên nhánh chỉ là bằng chứng cục bộ; chưa có deployment.
+- Các trang được render tĩnh với đường dẫn GitHub Pages dưới `/portfolio/`.
+- Dữ liệu dự án liên kết với mã nguồn và case study liên quan.
+- Lọc dự án tăng cường dần bằng JavaScript.
+- GitHub Actions chạy quality checks trên pull request và triển khai Pages từ `main`.

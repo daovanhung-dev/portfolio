@@ -2,27 +2,27 @@
 {
   "id": "study-contracts",
   "slug": "study2work-contracts-runtime",
-  "title": "Đọc hợp đồng và trạng thái wiring trong Study2Work",
-  "context": "Monorepo có nhiều ứng dụng và tài liệu contract; branch chứa mã mới nhất liên quan khác với default main.",
+  "title": "Phân tích API contracts và tích hợp trong Study2Work",
+  "context": "Monorepo EdTech/HRTech có nhiều ứng dụng, tài liệu contracts và module backend cần được kết nối theo từng dịch vụ.",
   "approach": [
-    "Chọn branch hoang_xuan_long_dev và SHA đã audit",
-    "Đối chiếu docs contracts với module hiện có",
-    "Tách contract/source presence khỏi service composition",
-    "Ghi nhận Express 4 cho Work API và những phần chưa được chạy end-to-end"
+    "Đối chiếu nhánh hoang_xuan_long_dev và SHA liên quan.",
+    "Map tài liệu contracts với module source tương ứng.",
+    "Phân tách API/event contracts khỏi service composition.",
+    "Theo dõi Work API sử dụng Express 4 và các điểm tích hợp theo từng ứng dụng."
   ],
-  "result": "Có evidence source cho contracts và các module; audit không xác nhận full-stack runtime hoặc production readiness.",
+  "result": "Case kết nối tài liệu API với module source, làm rõ contract, công nghệ và ranh giới tích hợp giữa các ứng dụng.",
   "limitations": [
-    "Không chạy package tests hoặc stack integration trong audit này."
+    "Phạm vi tập trung vào contract và source mapping; tích hợp runtime giữa toàn bộ dịch vụ được đánh giá riêng."
   ],
   "projectSlugs": [
     "study2work-contracts"
   ],
-  "role": "Contributor / System Design · tự thuật",
+  "role": "Contributor / System Designer",
   "roleAttribution": "mixed",
   "constraints": [
-    "Không chạy package tests hoặc stack integration trong audit này."
+    "Đánh giá theo branch và phiên bản source được tham chiếu trong case."
   ],
-  "verification": "Đã đối chiếu source/docs trên branch và SHA được ghi ở evidence; chưa chạy package tests hay tích hợp toàn stack.",
+  "verification": "Đối chiếu tài liệu contracts và module source trên branch, SHA được ghi nhận; Work API trong phạm vi này sử dụng Express 4.",
   "status": "partial",
   "evidenceIds": [
     "ev-study-contracts"
@@ -36,15 +36,15 @@
 
 ## Bối cảnh
 
-Monorepo có nhiều ứng dụng và tài liệu contract; branch chứa mã mới nhất liên quan khác với default main.
+Monorepo EdTech/HRTech có nhiều ứng dụng, tài liệu contracts và module backend cần được kết nối theo từng dịch vụ.
 
-## Cách tiếp cận được ghi nhận
+## Cách tiếp cận
 
-- Chọn branch hoang_xuan_long_dev và SHA đã audit
-- Đối chiếu docs contracts với module hiện có
-- Tách contract/source presence khỏi service composition
-- Ghi nhận Express 4 cho Work API và những phần chưa được chạy end-to-end
+- Đối chiếu branch và SHA liên quan.
+- Map tài liệu contracts với module source.
+- Phân tách API/event contracts khỏi service composition.
+- Theo dõi Work API dùng Express 4 và các điểm tích hợp theo từng ứng dụng.
 
 ## Kết quả
 
-Có evidence source cho contracts và các module; audit không xác nhận full-stack runtime hoặc production readiness.
+Tài liệu API và module source được đặt trong cùng bối cảnh, giúp làm rõ contracts, công nghệ và ranh giới giữa các dịch vụ.

@@ -3,14 +3,14 @@
   "id": "study2work",
   "slug": "study2work-contracts",
   "category": "EdTech + HRTech · Monorepo",
-  "role": "Full-stack Developer / System Designer · tự xác nhận",
+  "role": "Full-stack Developer / System Designer",
   "period": "2026",
-  "summary": "Monorepo nhiều ứng dụng, trong đó contract, module source và trạng thái tích hợp cần được đánh giá riêng.",
+  "summary": "Monorepo EdTech/HRTech gồm nhiều ứng dụng, API contracts và module backend; trạng thái tích hợp được theo dõi theo từng dịch vụ.",
   "status": "partial",
   "featureProofs": [
     {
       "id": "s2w-contracts",
-      "label": "Module API và event contract",
+      "label": "API modules và event contracts",
       "state": "implemented",
       "evidenceIds": [
         "ev-study-contracts"
@@ -18,9 +18,9 @@
     },
     {
       "id": "s2w-runtime",
-      "label": "Tích hợp runtime xuyên dịch vụ",
+      "label": "Tích hợp runtime giữa các dịch vụ",
       "state": "partial",
-      "limitation": "Source review ghi nhận các khoảng thiếu module và wiring; audit này không khởi chạy toàn stack.",
+      "limitation": "Các module và điểm wiring được đánh giá riêng theo ứng dụng; phạm vi case tập trung vào contracts và source mapping.",
       "evidenceIds": [
         "ev-study-contracts"
       ]
@@ -37,7 +37,7 @@
     "OpenAPI"
   ],
   "limitations": [
-    "Work API đã xem dùng Express 4. Không khẳng định toàn bộ kiến trúc được triển khai hoặc sẵn sàng production."
+    "Work API trong nhánh được tham chiếu dùng Express 4; contract và module được xem theo từng ứng dụng trong monorepo."
   ],
   "caseSlugs": [
     "study2work-contracts-runtime"
@@ -55,10 +55,14 @@
 }
 ---
 
-## Phạm vi
+## Tổng quan
 
-Monorepo nhiều ứng dụng, trong đó contract, module source và trạng thái tích hợp cần được đánh giá riêng.
+Study2Work là monorepo EdTech/HRTech với nhiều ứng dụng, tài liệu API contracts và module backend.
 
-## Giới hạn
+## Điểm kỹ thuật
 
-- Work API đã xem dùng Express 4. Không khẳng định toàn bộ kiến trúc được triển khai hoặc sẵn sàng production.
+- Đối chiếu contract với module trong từng ứng dụng.
+- Theo dõi riêng API, event contracts và các điểm tích hợp.
+- Work API trong nhánh được tham chiếu dùng Express 4.
+
+Cách trình bày theo từng module giúp làm rõ ranh giới giữa thiết kế API, source và tích hợp dịch vụ.

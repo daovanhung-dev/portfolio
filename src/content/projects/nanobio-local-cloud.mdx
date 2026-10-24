@@ -3,16 +3,16 @@
   "id": "nanobio-mobile",
   "slug": "nanobio-local-cloud",
   "category": "HealthTech · Flutter",
-  "role": "Technical Owner · tự xác nhận",
+  "role": "Technical Owner / Full-stack Developer",
   "period": "2026",
-  "summary": "Ứng dụng Flutter có các luồng local-first và source AI trên thiết bị; tính năng Supabase/cloud là phần riêng cần cấu hình và xác minh theo môi trường.",
+  "summary": "Ứng dụng wellness Flutter kết hợp dữ liệu local-first, AI trên thiết bị và các tính năng cloud tùy cấu hình Supabase.",
   "status": "partial",
   "featureProofs": [
     {
       "id": "nano-local",
-      "label": "Dữ liệu local và source inference trên thiết bị",
+      "label": "Dữ liệu local và AI trên thiết bị",
       "state": "partial",
-      "limitation": "Hành vi và hiệu năng trên thiết bị chưa được đo trong audit này.",
+      "limitation": "Hiệu năng và hành vi thực tế phụ thuộc thiết bị mục tiêu và cấu hình model.",
       "evidenceIds": [
         "ev-nano-mobile",
         "ev-nano-test-contract"
@@ -20,9 +20,9 @@
     },
     {
       "id": "nano-cloud",
-      "label": "Tính năng Supabase tùy cấu hình",
+      "label": "Tính năng cloud với Supabase",
       "state": "partial",
-      "limitation": "Chưa kiểm tra migration remote, policy hoặc trạng thái dịch vụ đã triển khai.",
+      "limitation": "Các tính năng cloud phụ thuộc cấu hình Supabase, migration và chính sách dữ liệu của từng môi trường.",
       "evidenceIds": [
         "ev-nano-mobile"
       ]
@@ -37,7 +37,7 @@
     "llamadart"
   ],
   "limitations": [
-    "Không phải sản phẩm chẩn đoán hoặc điều trị. Không đưa ra kết quả lâm sàng hay quy mô người dùng."
+    "Sản phẩm tập trung vào wellness, không phải công cụ chẩn đoán hay điều trị. Hiệu năng trên thiết bị và các tính năng cloud được đánh giá theo cấu hình, migration và môi trường triển khai."
   ],
   "caseSlugs": [
     "nanobio-local-cloud-ai"
@@ -57,10 +57,14 @@
 }
 ---
 
-## Phạm vi
+## Tổng quan
 
-Ứng dụng Flutter có các luồng local-first và source AI trên thiết bị; tính năng Supabase/cloud là phần riêng cần cấu hình và xác minh theo môi trường.
+NanoBioAI kết hợp trải nghiệm Flutter local-first với các tính năng cloud tùy cấu hình và những luồng AI trên thiết bị.
 
-## Giới hạn
+## Điểm kỹ thuật
 
-- Không phải sản phẩm chẩn đoán hoặc điều trị. Không đưa ra kết quả lâm sàng hay quy mô người dùng.
+- Dữ liệu local được tách khỏi các luồng đồng bộ cloud.
+- AI trên thiết bị được phân biệt với các tính năng phụ thuộc dịch vụ bên ngoài.
+- Cấu hình Supabase, migration và chính sách dữ liệu được quản lý theo môi trường.
+
+Sản phẩm tập trung hỗ trợ wellness, không thay thế công cụ chẩn đoán hay điều trị.

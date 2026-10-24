@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import SiteLayout from '../components/SiteLayout.astro';
-import EvidenceList from '../components/EvidenceList.astro';
 
 const contacts = await getCollection('contact');
 const contact = contacts[0].data;
@@ -12,19 +11,18 @@ const contact = contacts[0].data;
     <header class="page-intro">
       <span class="eyebrow">Liên hệ</span>
       <h1 class="page-title">Trao đổi về kỹ thuật và công việc</h1>
-      <p class="page-lede">Nếu muốn thảo luận về một project hoặc xem thêm source công khai, bạn có thể liên hệ qua email hoặc hồ sơ bên dưới.</p>
+      <p class="page-lede">Tôi sẵn sàng trao đổi về cơ hội phát triển phần mềm, hợp tác kỹ thuật và các dự án phù hợp.</p>
     </header>
     <section class="contact-card" aria-labelledby="contact-title">
       <div>
         <span class="eyebrow">Kênh liên hệ</span>
         <h2 id="contact-title">Đào Văn Hùng</h2>
-        <p>Thông tin liên hệ được lấy từ hồ sơ công khai hiện có. Hoạt động tài khoản và thời gian phản hồi chưa được kiểm tra.</p>
+        <p>Kết nối với tôi qua email, GitHub hoặc LinkedIn.</p>
       </div>
       <div class="contact-links">
         <a href={'mailto:' + contact.email}>Gửi email <span aria-hidden="true">↗</span></a>
         {contact.links.map((link) => <a href={link.url} target="_blank" rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>)}
       </div>
     </section>
-    <EvidenceList ids={contact.evidenceIds} compact />
   </div>
 </SiteLayout>

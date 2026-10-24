@@ -6,12 +6,12 @@ import CaseCard from '../../components/CaseCard.astro';
 const cases = (await getCollection('cases')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'vi'));
 ---
 
-<SiteLayout title="Case study — Đào Văn Hùng" description="Các case study ghi rõ bối cảnh, giới hạn, cách tiếp cận, kiểm chứng và evidence.">
+<SiteLayout title="Case study — Đào Văn Hùng" description="Các case study về phân tích vấn đề, lựa chọn kỹ thuật và phát triển phần mềm của Đào Văn Hùng.">
   <div class="page-shell">
     <header class="page-intro">
       <span class="eyebrow">Phân tích công việc</span>
       <h1 class="page-title">Case study</h1>
-      <p class="page-lede">Mỗi trang phân biệt source đã xem, quy trình do chủ sở hữu xác nhận và kết quả chưa được kiểm chứng. Những quyết định không có nguồn được đánh dấu rõ.</p>
+      <p class="page-lede">Từng case trình bày bối cảnh, ràng buộc, vai trò, cách tiếp cận và phạm vi kết quả để nhà tuyển dụng hiểu rõ quá trình làm việc.</p>
     </header>
     <div class="grid case-grid">
       {cases.map((item) => <CaseCard item={item} />)}

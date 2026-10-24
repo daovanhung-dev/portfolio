@@ -7,12 +7,12 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.title.l
 const categories = [...new Set(projects.map((project) => project.data.filterGroup))].sort((a, b) => a.localeCompare(b, 'vi'));
 ---
 
-<SiteLayout title="Dự án — Đào Văn Hùng" description="Dự án phần mềm với vai trò, trạng thái, evidence và giới hạn đã được ghi rõ.">
+<SiteLayout title="Dự án — Đào Văn Hùng" description="Các dự án phần mềm của Đào Văn Hùng trong backend, dữ liệu, ứng dụng di động và công cụ học tập.">
   <div class="page-shell">
     <header class="page-intro">
       <span class="eyebrow">Thư viện công việc</span>
       <h1 class="page-title">Dự án</h1>
-      <p class="page-lede">Các mục được nhóm theo source và phạm vi hiện có. Nhãn trạng thái mô tả mức triển khai được evidence hỗ trợ, không xác nhận hoạt động production.</p>
+      <p class="page-lede">Danh mục dự án thể hiện các bài toán tôi đã tham gia, cách tiếp cận và công nghệ sử dụng. Mỗi trang nêu rõ phạm vi triển khai hiện tại.</p>
     </header>
     <div class="filter-bar" data-filter-bar hidden role="group" aria-label="Lọc dự án">
       <span class="filter-label">Lọc theo lĩnh vực</span>

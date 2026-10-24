@@ -12,7 +12,7 @@ const ROUTES = [
   { path: 'about/', heading: 'Đào Văn Hùng' },
   { path: 'contact/', heading: 'Trao đổi về kỹ thuật và công việc' },
   { path: 'case-studies/', heading: 'Case study' },
-  { path: 'case-studies/nanobio-local-cloud-ai/', heading: 'Tách local-first, cloud và các đường đi AI' },
+  { path: 'case-studies/nanobio-local-cloud-ai/', heading: 'Tổ chức kiến trúc local-first, cloud và AI' },
 ];
 
 test('static pages and deep routes open directly and survive refresh under the Pages base', async ({ page }) => {
@@ -65,11 +65,12 @@ test('project filters enhance the static list and retain an all-items state', as
   await noScript.close();
 });
 
-test('case table of contents, reduced motion, and private project boundaries render correctly', async ({ page }) => {
+test('case navigation, reduced motion, and private project boundaries render correctly', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto(APP + 'case-studies/nanobio-local-cloud-ai/');
-  await expect(page.getByRole('navigation', { name: 'Trong case study' }).getByRole('link', { name: 'Quyết định' })).toHaveAttribute('href', '#decisions');
-  await expect(page.getByText(/MISSING_SOURCE/).first()).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Trong case study' }).getByRole('link', { name: 'Quyết định' })).toHaveCount(0);
+  await expect(page.getByText(/MISSING_SOURCE|tự xác nhận|tự thuật|unverified|chưa được cung cấp|mức attribution/i)).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Phạm vi', level: 2 })).toBeVisible();
   const scrollBehavior = await page.locator('html').evaluate((element) => getComputedStyle(element).scrollBehavior);
   expect(scrollBehavior).toBe('auto');
 
@@ -82,7 +83,7 @@ test('case table of contents, reduced motion, and private project boundaries ren
 test('unknown direct route returns a readable 404 with working base links', async ({ page }) => {
   const response = await page.goto(APP + 'does-not-exist/');
   expect(response?.status()).toBe(404);
-  await expect(page.getByRole('heading', { name: 'Trang này không có ở đây.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Không tìm thấy trang này.' })).toBeVisible();
   await expect(page.getByRole('link', { name: /Về trang chủ/ })).toHaveAttribute('href', APP);
   await expect(page.getByRole('link', { name: 'Xem dự án' })).toHaveAttribute('href', APP + 'projects/');
 });

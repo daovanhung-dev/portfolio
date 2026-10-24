@@ -3,16 +3,16 @@
   "id": "embedded",
   "slug": "xiaozhi-esp32-source-study",
   "title": "XiaoZhi / ESP32 source study",
-  "description": "Đọc fork, board support, giao thức và ranh giới attribution cho embedded voice projects.",
+  "description": "Nghiên cứu kiến trúc fork XiaoZhi ESP32, board support, giao thức và tổ chức firmware embedded voice.",
   "topics": [
     "ESP-IDF source",
-    "fork attribution",
-    "board support",
-    "device verification gaps"
+    "Phân tích lịch sử fork",
+    "Board support",
+    "Giao thức voice"
   ],
   "state": "source-only",
   "limitations": [
-    "Không có firmware build hoặc speaker acceptance trong audit hiện tại."
+    "Phạm vi gồm source, board support và giao thức; firmware build và voice validation được đánh giá riêng trên thiết bị."
   ],
   "evidenceIds": [
     "ev-xiaozhi-fork"
@@ -20,13 +20,9 @@
 }
 ---
 
-## Chủ đề học tập
+## Chủ đề trọng tâm
 
-- ESP-IDF source
-- fork attribution
-- board support
-- device verification gaps
-
-## Giới hạn
-
-- Không có firmware build hoặc speaker acceptance trong audit hiện tại.
+- Cấu trúc ESP-IDF và firmware source
+- Phân tích khác biệt giữa fork và upstream
+- Board support
+- Giao thức và kiến trúc embedded voice

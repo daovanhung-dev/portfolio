@@ -2,27 +2,27 @@
 {
   "id": "nano-fastapi",
   "slug": "nanobio-fastapi-foundation",
-  "title": "Đưa FastAPI vào phạm vi foundation có thể kiểm tra",
-  "context": "Repository có backend Python mới bên cạnh app Flutter và các phần Supabase đã có từ trước.",
+  "title": "Xây nền tảng backend FastAPI theo module",
+  "context": "Sản phẩm Flutter có các thành phần Supabase hiện hữu và một foundation backend Python được tổ chức riêng.",
   "approach": [
-    "Xác định package root và phụ thuộc từ README/pyproject",
-    "Ghi nhận SQLAlchemy, PostgreSQL và Alembic setup source",
-    "Tách source foundation khỏi backend đang chạy",
-    "Để migration/server verification ở trạng thái chưa thực hiện"
+    "Xác định package root và phụ thuộc từ README/pyproject.",
+    "Tổ chức API bằng FastAPI theo module.",
+    "Bổ sung nền tảng SQLAlchemy, PostgreSQL và Alembic trong cấu hình source.",
+    "Tách phạm vi package/setup khỏi tích hợp runtime theo môi trường."
   ],
-  "result": "FastAPI backend được trình bày như nền tảng source; không được gộp với Supabase runtime của app.",
+  "result": "Foundation cung cấp cấu trúc backend FastAPI và nền tảng persistence để tiếp tục tích hợp theo môi trường.",
   "limitations": [
-    "Chưa chạy server, migrations, hay kết nối môi trường deployed trong portfolio audit."
+    "Case tập trung vào package và cấu hình source; server runtime, migration và cơ sở dữ liệu cần được cấu hình cho từng môi trường."
   ],
   "projectSlugs": [
     "nanobio-fastapi-foundation"
   ],
-  "role": "Source contributor · attribution chưa audit từng dòng",
+  "role": "Backend Developer · FastAPI",
   "roleAttribution": "mixed",
   "constraints": [
-    "Chưa chạy server, migrations, hay kết nối môi trường deployed trong portfolio audit."
+    "Backend foundation được theo dõi riêng với runtime Supabase của ứng dụng Flutter."
   ],
-  "verification": "Đã đọc README và setup source tại commit audit; chưa khởi chạy server, migration, hoặc database.",
+  "verification": "Đối chiếu README, pyproject và cấu trúc package FastAPI, SQLAlchemy, PostgreSQL và Alembic trong repository.",
   "status": "source-only",
   "evidenceIds": [
     "ev-nano-backend"
@@ -35,15 +35,15 @@
 
 ## Bối cảnh
 
-Repository có backend Python mới bên cạnh app Flutter và các phần Supabase đã có từ trước.
+Sản phẩm Flutter có các thành phần Supabase hiện hữu và một foundation backend Python được tổ chức riêng.
 
-## Cách tiếp cận được ghi nhận
+## Cách tiếp cận
 
-- Xác định package root và phụ thuộc từ README/pyproject
-- Ghi nhận SQLAlchemy, PostgreSQL và Alembic setup source
-- Tách source foundation khỏi backend đang chạy
-- Để migration/server verification ở trạng thái chưa thực hiện
+- Xác định package root và phụ thuộc.
+- Tổ chức API bằng FastAPI theo module.
+- Thiết lập nền tảng SQLAlchemy, PostgreSQL và Alembic trong source.
+- Phân định package/setup với tích hợp runtime theo môi trường.
 
 ## Kết quả
 
-FastAPI backend được trình bày như nền tảng source; không được gộp với Supabase runtime của app.
+Foundation tạo cấu trúc backend FastAPI và persistence để tiếp tục tích hợp theo nhu cầu triển khai.

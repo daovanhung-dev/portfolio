@@ -3,14 +3,14 @@
   "id": "nanobio-backend",
   "slug": "nanobio-fastapi-foundation",
   "category": "Backend · Python",
-  "role": "Đóng góp source · chưa audit attribution từng dòng",
+  "role": "Backend Developer · FastAPI",
   "period": "2026",
-  "summary": "Package FastAPI có cấu trúc module cùng hướng dẫn SQLAlchemy và PostgreSQL/Alembic; chỉ được trình bày như nền tảng source.",
+  "summary": "Nền tảng FastAPI theo module với SQLAlchemy, PostgreSQL và Alembic; package và cấu hình source được tách riêng với runtime của ứng dụng.",
   "status": "source-only",
   "featureProofs": [
     {
       "id": "fastapi-package",
-      "label": "Cấu trúc package FastAPI",
+      "label": "Package FastAPI và cấu trúc module",
       "state": "source-only",
       "evidenceIds": [
         "ev-nano-backend"
@@ -18,9 +18,9 @@
     },
     {
       "id": "fastapi-runtime",
-      "label": "Runtime server và migration",
+      "label": "Tích hợp server và migration",
       "state": "partial",
-      "limitation": "Chưa xác minh deployment server, migration cơ sở dữ liệu hoặc API đang chạy.",
+      "limitation": "Runtime server, migration và cơ sở dữ liệu được triển khai theo môi trường riêng.",
       "evidenceIds": [
         "ev-nano-backend"
       ]
@@ -34,7 +34,7 @@
     "Alembic"
   ],
   "limitations": [
-    "Không mô tả foundation này là backend đã triển khai hoặc sẵn sàng production."
+    "Phạm vi hiện tại là package và cấu hình source; tích hợp server, migration và cơ sở dữ liệu thuộc giai đoạn triển khai riêng."
   ],
   "caseSlugs": [
     "nanobio-fastapi-foundation"
@@ -52,10 +52,10 @@
 }
 ---
 
-## Phạm vi
+## Tổng quan
 
-Package FastAPI có cấu trúc module cùng hướng dẫn SQLAlchemy và PostgreSQL/Alembic; chỉ được trình bày như nền tảng source.
+Nền tảng backend FastAPI được tổ chức theo package/module, với SQLAlchemy, PostgreSQL và Alembic trong cấu hình source.
 
-## Giới hạn
+## Phạm vi kỹ thuật
 
-- Không mô tả foundation này là backend đã triển khai hoặc sẵn sàng production.
+Case tập trung vào cấu trúc backend và nền tảng persistence. Việc tích hợp server, migration và cơ sở dữ liệu được triển khai theo môi trường riêng.

@@ -3,14 +3,14 @@
   "id": "ai-local",
   "slug": "ai-local-inference",
   "category": "AI trên thiết bị · Flutter",
-  "role": "Developer · repository attribution",
+  "role": "Flutter Developer",
   "period": "2026",
-  "summary": "Source Flutter cho inference GGUF local, streaming, tải/resume/kiểm tra hash model và lưu trữ Drift.",
+  "summary": "Ứng dụng Flutter hỗ trợ inference GGUF local, streaming token, tải/resume và kiểm tra hash model; lịch sử được lưu bằng Drift/SQLite.",
   "status": "partial",
   "featureProofs": [
     {
       "id": "ai-local-source",
-      "label": "Source inference và quản lý model",
+      "label": "Inference local, tải model và lưu trữ",
       "state": "partial",
       "evidenceIds": [
         "ev-ai-local-source"
@@ -18,9 +18,9 @@
     },
     {
       "id": "ai-local-performance",
-      "label": "Latency, memory, nhiệt và tương thích thiết bị",
+      "label": "Đánh giá hiệu năng và tương thích thiết bị",
       "state": "partial",
-      "limitation": "Audit này không thu thập số đo trên thiết bị hoặc hiệu năng.",
+      "limitation": "Đánh giá cần số đo trên thiết bị mục tiêu: latency, memory, nhiệt độ và khả năng hoạt động offline.",
       "evidenceIds": [
         "ev-ai-local-source"
       ]
@@ -34,7 +34,7 @@
     "SQLite"
   ],
   "limitations": [
-    "Không có số đo latency, memory, nhiệt, offline hoặc bản build iOS."
+    "Phạm vi hiện tại tập trung vào mã nguồn; latency, memory, nhiệt độ, hoạt động offline và bản build iOS cần được đánh giá riêng trên thiết bị mục tiêu."
   ],
   "caseSlugs": [
     "ai-local-inference"
@@ -52,10 +52,10 @@
 }
 ---
 
-## Phạm vi
+## Tổng quan
 
-Source Flutter cho inference GGUF local, streaming, tải/resume/kiểm tra hash model và lưu trữ Drift.
+Ứng dụng Flutter cho inference GGUF local, tổ chức vòng đời model từ tải xuống và resume đến kiểm tra hash, streaming token và lưu lịch sử bằng Drift/SQLite.
 
-## Giới hạn
+## Phạm vi đánh giá
 
-- Không có số đo latency, memory, nhiệt, offline hoặc bản build iOS.
+Mã nguồn thể hiện các luồng ứng dụng và quản lý model. Hiệu năng, nhiệt độ, mức sử dụng bộ nhớ, khả năng offline và tương thích iOS cần được đo trên thiết bị mục tiêu.

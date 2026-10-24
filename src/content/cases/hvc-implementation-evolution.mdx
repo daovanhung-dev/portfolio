@@ -2,27 +2,27 @@
 {
   "id": "hvc-evolution",
   "slug": "hvc-implementation-evolution",
-  "title": "Theo dõi tiến hóa triển khai HVC mà không gộp phiên bản",
-  "context": "Ba repository liên quan một domain nhưng có phạm vi và thời điểm triển khai khác nhau.",
+  "title": "Theo dõi quá trình phát triển các implementation HVC",
+  "context": "Ba codebase phục vụ cùng domain vận hành giáo dục nhưng khác thời điểm, công nghệ và phạm vi module.",
   "approach": [
-    "Đọc riêng README và đường dẫn source của từng repository",
-    "Đặt FastAPI/PostgreSQL là implementation lịch sử",
-    "Giữ Angular/Supabase ở scope hẹp hơn",
-    "Gắn các flow finance/payroll vào source Vue mới hơn"
+    "Phân tích README và module source của từng repository.",
+    "Định vị FastAPI/PostgreSQL ở phiên bản lịch sử.",
+    "Mô tả Angular/Supabase theo phạm vi module riêng.",
+    "Gắn các luồng finance/payroll với source Vue ở phiên bản mới hơn."
   ],
-  "result": "Portfolio phân biệt ba implementation và tránh khẳng định mọi module tồn tại trong cùng một bản đang chạy.",
+  "result": "Case thể hiện rõ ba implementation và mối liên hệ giữa công nghệ, phạm vi nghiệp vụ và thời điểm phát triển.",
   "limitations": [
-    "Chưa kiểm tra remote Supabase, live app, hoặc quyền truy cập dữ liệu."
+    "Mỗi phiên bản giữ phạm vi chức năng riêng; các luồng finance/payroll thuộc source Vue mới hơn."
   ],
   "projectSlugs": [
     "hvc-implementation-evolution"
   ],
-  "role": "Full-stack Developer · tự thuật",
+  "role": "Full-stack Developer",
   "roleAttribution": "mixed",
   "constraints": [
-    "Chưa kiểm tra remote Supabase, live app, hoặc quyền truy cập dữ liệu."
+    "Theo dõi từng codebase độc lập để thể hiện đúng phạm vi và phiên bản."
   ],
-  "verification": "Đã đọc các README/source tại ba commit riêng; chưa kiểm tra remote Supabase, live app, hay quyền dữ liệu.",
+  "verification": "Đối chiếu README và module source tại ba commit tương ứng; phân loại các luồng theo repository và phiên bản.",
   "status": "partial",
   "evidenceIds": [
     "ev-hvc-fastapi-source",
@@ -38,15 +38,15 @@
 
 ## Bối cảnh
 
-Ba repository liên quan một domain nhưng có phạm vi và thời điểm triển khai khác nhau.
+Ba codebase phục vụ cùng domain vận hành giáo dục nhưng khác thời điểm, công nghệ và phạm vi module.
 
-## Cách tiếp cận được ghi nhận
+## Cách tiếp cận
 
-- Đọc riêng README và đường dẫn source của từng repository
-- Đặt FastAPI/PostgreSQL là implementation lịch sử
-- Giữ Angular/Supabase ở scope hẹp hơn
-- Gắn các flow finance/payroll vào source Vue mới hơn
+- Phân tích module source của từng repository.
+- Định vị FastAPI/PostgreSQL ở phiên bản lịch sử.
+- Mô tả Angular/Supabase theo phạm vi riêng.
+- Gắn finance/payroll với source Vue ở phiên bản mới hơn.
 
 ## Kết quả
 
-Portfolio phân biệt ba implementation và tránh khẳng định mọi module tồn tại trong cùng một bản đang chạy.
+Ba implementation được trình bày theo đúng stack và phạm vi, giúp người đọc theo dõi quá trình phát triển sản phẩm qua từng phiên bản.

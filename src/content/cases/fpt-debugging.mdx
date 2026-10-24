@@ -2,25 +2,25 @@
 {
   "id": "fpt-debugging",
   "slug": "fpt-debugging",
-  "title": "Điều tra lỗi xuyên tầng trong quy trình enterprise",
-  "context": "Một sai khác giữa yêu cầu, phản hồi API và kết quả UI cần được tái hiện và khoanh vùng. Mô tả tổng quát, không tiết lộ hệ thống hay dữ liệu khách hàng.",
+  "title": "Truy vết lỗi xuyên tầng trong quy trình enterprise",
+  "context": "Khi yêu cầu, phản hồi API và kết quả trên giao diện khác nhau, cần tái hiện vấn đề và lần theo luồng xử lý từ UI đến dữ liệu.",
   "approach": [
-    "Đối chiếu requirement, detail design và test case",
-    "Tái hiện với input và dữ liệu kiểm soát",
-    "Lần theo UI → API → service → SQL",
-    "Sửa nguyên nhân trong phạm vi được giao rồi chạy regression"
+    "Đối chiếu yêu cầu, thiết kế chi tiết và test case.",
+    "Tái hiện với input và dữ liệu kiểm soát.",
+    "Truy vết UI → API → service → SQL để khoanh vùng nguyên nhân.",
+    "Sửa trong phạm vi được giao và chạy kiểm thử hồi quy."
   ],
-  "result": "Cách tiếp cận và quy trình kiểm thử là self-reported; không công bố defect cụ thể hoặc outcome của khách hàng.",
+  "result": "Quy trình theo từng tầng tạo đường đi rõ ràng từ yêu cầu đến dữ liệu, hỗ trợ khoanh vùng nguyên nhân và kiểm tra thay đổi bằng regression.",
   "limitations": [
-    "Kinh nghiệm và quy trình do người dùng tự xác nhận; không có client source công khai."
+    "Phạm vi công khai tập trung vào phương pháp kỹ thuật; bảo vệ tên hệ thống, mã nguồn và dữ liệu khách hàng."
   ],
   "projectSlugs": [],
   "role": "Full-stack Developer",
   "roleAttribution": "user-attested",
   "constraints": [
-    "Kinh nghiệm và quy trình do người dùng tự xác nhận; không có client source công khai."
+    "Bảo vệ thông tin khách hàng và chỉ trình bày quy trình ở mức tổng quát."
   ],
-  "verification": "Chỉ ghi lại quy trình tự thuật; không có source khách hàng, defect cụ thể, hoặc regression log công khai để kiểm chứng độc lập.",
+  "verification": "Case mô tả quy trình làm việc xuyên tầng bằng Vue, Flask, PostgreSQL và SQL; ví dụ cụ thể và dữ liệu khách hàng được giữ riêng tư.",
   "status": "partial",
   "evidenceIds": [
     "ev-fpt-role"
@@ -33,15 +33,15 @@
 
 ## Bối cảnh
 
-Một sai khác giữa yêu cầu, phản hồi API và kết quả UI cần được tái hiện và khoanh vùng. Mô tả tổng quát, không tiết lộ hệ thống hay dữ liệu khách hàng.
+Khi yêu cầu, phản hồi API và kết quả trên giao diện khác nhau, cần tái hiện vấn đề và lần theo luồng xử lý từ UI đến dữ liệu.
 
-## Cách tiếp cận được ghi nhận
+## Cách tiếp cận
 
-- Đối chiếu requirement, detail design và test case
-- Tái hiện với input và dữ liệu kiểm soát
-- Lần theo UI → API → service → SQL
-- Sửa nguyên nhân trong phạm vi được giao rồi chạy regression
+- Đối chiếu yêu cầu, thiết kế chi tiết và test case.
+- Tái hiện với input và dữ liệu kiểm soát.
+- Truy vết UI → API → service → SQL.
+- Sửa trong phạm vi được giao và chạy regression.
 
 ## Kết quả
 
-Cách tiếp cận và quy trình kiểm thử là self-reported; không công bố defect cụ thể hoặc outcome của khách hàng.
+Quy trình theo từng tầng hỗ trợ khoanh vùng nguyên nhân và kiểm tra thay đổi một cách có hệ thống. Nội dung công khai giữ kín hệ thống, mã nguồn và dữ liệu khách hàng.

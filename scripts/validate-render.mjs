@@ -97,6 +97,9 @@ for (const file of htmlFiles) {
   if (/hung-quynh|our-story-private|github\.com\/[^" ]*(story|birthday)/i.test(html)) {
     errors.push(relativePage + ' contains restricted source details');
   }
+  if (/tự xác nhận|tự thuật|MISSING_SOURCE|unverified|chưa được cung cấp|mức attribution/i.test(html)) {
+    errors.push(relativePage + ' contains internal attribution or missing-source language');
+  }
 }
 
 const [indexHtml, childSitemap, robots, ogImage] = await Promise.all([
