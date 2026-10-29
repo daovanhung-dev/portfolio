@@ -1,0 +1,236 @@
+---
+import { siteAsset } from '../utils/paths';
+
+const firstTrack = siteAsset('mp3/background-music-part-1.mp3');
+const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
+---
+
+<aside
+  class="ambient-player"
+  data-ambient-player
+  data-second-track={secondTrack}
+  transition:persist
+  aria-label="Trình phát nhạc nền"
+  hidden
+>
+  <audio
+    data-audio
+    data-part="1"
+    data-first-track={firstTrack}
+    src={firstTrack}
+    preload="none"
+    hidden
+  ></audio>
+  <div class="ambient-player__notice" data-notice role="status" aria-live="polite">
+    <span data-notice-message>Portfolio có nhạc nền</span>
+    <button class="ambient-player__dismiss" type="button" data-dismiss aria-label="Ẩn thông báo nhạc nền">×</button>
+  </div>
+  <div class="ambient-player__controls">
+    <span class="ambient-player__label visually-hidden">Nhạc nền</span>
+    <button class="ambient-player__button" type="button" data-toggle aria-label="Phát nhạc nền">
+      <span data-play-icon aria-hidden="true">▶</span>
+    </button>
+    <button class="ambient-player__button" type="button" data-mute aria-label="Tắt tiếng" aria-pressed="false">
+      <span data-mute-icon aria-hidden="true">♪</span>
+    </button>
+    <label class="visually-hidden" for="ambient-volume">Âm lượng nhạc nền</label>
+    <input
+      id="ambient-volume"
+      class="ambient-player__volume"
+      data-volume
+      type="range"
+      min="0"
+      max="1"
+      step="0.05"
+      value="0.2"
+      aria-label="Âm lượng nhạc nền"
+    />
+  </div>
+</aside>
+
+<script>
+  const player = document.querySelector<HTMLElement>('[data-ambient-player]');
+
+  if (player && player.dataset.initialized !== 'true') {
+    player.dataset.initialized = 'true';
+
+    const audio = player.querySelector<HTMLAudioElement>('[data-audio]');
+    const notice = player.querySelector<HTMLElement>('[data-notice]');
+    const noticeMessage = player.querySelector<HTMLElement>('[data-notice-message]');
+    const toggleButton = player.querySelector<HTMLButtonElement>('[data-toggle]');
+    const playIcon = player.querySelector<HTMLElement>('[data-play-icon]');
+    const muteButton = player.querySelector<HTMLButtonElement>('[data-mute]');
+    const muteIcon = player.querySelector<HTMLElement>('[data-mute-icon]');
+    const volumeInput = player.querySelector<HTMLInputElement>('[data-volume]');
+    const dismissButton = player.querySelector<HTMLButtonElement>('[data-dismiss]');
+    const secondTrack = player.dataset.secondTrack;
+
+    if (audio && notice && noticeMessage && toggleButton && playIcon && muteButton && muteIcon && volumeInput && secondTrack) {
+      let isPlaying = false;
+      let finished = false;
+      let noticeTimer: number | undefined;
+
+      const dismissNotice = () => {
+        notice.hidden = true;
+        if (noticeTimer !== undefined) window.clearTimeout(noticeTimer);
+      };
+
+      const showNotice = (message: string) => {
+        noticeMessage.textContent = message;
+        notice.hidden = false;
+        if (noticeTimer !== undefined) window.clearTimeout(noticeTimer);
+        noticeTimer = window.setTimeout(dismissNotice, 5000);
+      };
+
+      const updatePlaybackControls = () => {
+        player.dataset.playing = String(isPlaying);
+        toggleButton.setAttribute(
+          'aria-label',
+          isPlaying ? 'Tạm dừng nhạc nền' : finished ? 'Phát lại nhạc nền' : 'Phát nhạc nền',
+        );
+        playIcon.textContent = isPlaying ? 'Ⅱ' : '▶';
+      };
+
+      const attemptPlayback = (fromUser = false) => {
+        audio.play().then(() => {
+          isPlaying = true;
+          updatePlaybackControls();
+          if (fromUser) dismissNotice();
+        }).catch(() => {
+          isPlaying = false;
+          updatePlaybackControls();
+          showNotice('Trình duyệt đã chặn tự phát. Bấm phát để nghe nhạc.');
+        });
+      };
+
+      toggleButton.addEventListener('click', () => {
+        if (isPlaying) {
+          audio.pause();
+          isPlaying = false;
+          updatePlaybackControls();
+          dismissNotice();
+          return;
+        }
+
+        if (finished) {
+          audio.src = audio.dataset.firstTrack ?? audio.src;
+          audio.dataset.part = '1';
+          audio.load();
+          finished = false;
+        }
+        attemptPlayback(true);
+      });
+
+      muteButton.addEventListener('click', () => {
+        audio.muted = !audio.muted;
+        muteButton.setAttribute('aria-pressed', String(audio.muted));
+        muteButton.setAttribute('aria-label', audio.muted ? 'Bật tiếng' : 'Tắt tiếng');
+        muteIcon.textContent = audio.muted ? '×' : '♪';
+        dismissNotice();
+      });
+
+      volumeInput.addEventListener('input', () => {
+        audio.volume = Number(volumeInput.value);
+        dismissNotice();
+      });
+
+      dismissButton?.addEventListener('click', dismissNotice);
+
+      audio.addEventListener('ended', () => {
+        if (audio.dataset.part === '1') {
+          audio.dataset.part = '2';
+          audio.src = secondTrack;
+          audio.load();
+          attemptPlayback();
+          return;
+        }
+
+        isPlaying = false;
+        finished = true;
+        updatePlaybackControls();
+      });
+
+      audio.addEventListener('error', () => {
+        isPlaying = false;
+        updatePlaybackControls();
+        showNotice('Không tải được nhạc nền. Vui lòng kiểm tra kết nối mạng.');
+      });
+
+      player.hidden = false;
+      audio.volume = Number(volumeInput.value);
+      showNotice('Portfolio có nhạc nền');
+      attemptPlayback();
+    }
+  }
+</script>
+
+<style>
+  .ambient-player[hidden] { display: none; }
+
+  .ambient-player {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 30;
+    display: grid;
+    justify-items: end;
+    gap: .55rem;
+    color: var(--text);
+    font-size: .78rem;
+  }
+
+  .ambient-player__notice {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    max-width: min(21rem, calc(100vw - 2rem));
+    padding: .65rem .7rem .65rem .9rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .ambient-player__notice[hidden] { display: none; }
+
+  .ambient-player__dismiss,
+  .ambient-player__button {
+    display: inline-grid;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 2rem;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .ambient-player__dismiss { width: 1.65rem; height: 1.65rem; flex-basis: 1.65rem; font-size: 1rem; }
+  .ambient-player__button { font-size: .8rem; }
+  .ambient-player__dismiss:hover,
+  .ambient-player__button:hover { border-color: var(--accent); color: var(--accent); }
+
+  .ambient-player__controls {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .45rem .65rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--surface) 94%, transparent);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+  }
+
+  .ambient-player__volume { width: 2.5rem; height: 1.25rem; margin: 0; accent-color: var(--accent); cursor: pointer; }
+
+  @media (max-width: 560px) {
+    .ambient-player__controls { gap: .4rem; padding-inline: .55rem; }
+  }
+</style>

@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const APP = '/portfolio/';
 const ROUTES = [
@@ -14,6 +14,40 @@ const ROUTES = [
   { path: 'case-studies/', heading: 'Case study' },
   { path: 'case-studies/nanobio-local-cloud-ai/', heading: 'Tổ chức kiến trúc local-first, cloud và AI' },
 ];
+
+async function installAudioStub(page: Page) {
+  await page.addInitScript(() => {
+    type AudioTestWindow = Window & {
+      __portfolioAudioPlayResults: string[];
+      __portfolioAudioPlayCalls: number;
+      __portfolioAudioPauseCalls: number;
+    };
+
+    const testWindow = window as unknown as AudioTestWindow;
+    const configuredResults = new URLSearchParams(window.location.search).get('audio-play-results');
+    testWindow.__portfolioAudioPlayResults = configuredResults
+      ? configuredResults.split(',')
+      : ['playing'];
+    testWindow.__portfolioAudioPlayCalls = 0;
+    testWindow.__portfolioAudioPauseCalls = 0;
+
+    HTMLMediaElement.prototype.play = function () {
+      testWindow.__portfolioAudioPlayCalls += 1;
+      const result = testWindow.__portfolioAudioPlayResults.shift() ?? 'playing';
+      return result === 'blocked'
+        ? Promise.reject(new DOMException('Autoplay is blocked in this test.', 'NotAllowedError'))
+        : Promise.resolve();
+    };
+    HTMLMediaElement.prototype.pause = function () {
+      testWindow.__portfolioAudioPauseCalls += 1;
+    };
+    HTMLMediaElement.prototype.load = function () {};
+  });
+}
+
+test.beforeEach(async ({ page }) => {
+  await installAudioStub(page);
+});
 
 test('static pages and deep routes open directly and survive refresh under the Pages base', async ({ page }) => {
   for (const route of ROUTES) {
@@ -86,6 +120,94 @@ test('header avatar loads on home and project pages with circular styling', asyn
   }
 });
 
+test('background music notice remains for five seconds, then fades from view', async ({ page }) => {
+  await page.goto(APP);
+
+  const notice = page.getByRole('status');
+  await expect(notice).toContainText('Portfolio có nhạc nền');
+  await expect(notice).toBeVisible();
+  await page.waitForTimeout(4500);
+  expect(await notice.isVisible()).toBe(true);
+  await expect(notice).toBeHidden({ timeout: 1500 });
+});
+
+test('blocked autoplay shows a play hint and the player provides keyboard audio controls', async ({ page }) => {
+  await page.goto(APP + '?audio-play-results=blocked,playing');
+  const notice = page.getByRole('status');
+  await expect(notice).toContainText('Trình duyệt đã chặn tự phát. Bấm phát để nghe nhạc.');
+
+  const audio = page.locator('[data-audio]');
+  const playButton = page.getByRole('button', { name: 'Phát nhạc nền' });
+  await playButton.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('button', { name: 'Tạm dừng nhạc nền' })).toBeVisible();
+  await expect(notice).toBeHidden();
+  await expect.poll(() => audio.evaluate((element) => (element as HTMLAudioElement).volume)).toBe(0.2);
+
+  const volume = page.getByRole('slider', { name: 'Âm lượng nhạc nền' });
+  await volume.focus();
+  await page.keyboard.press('End');
+  await expect(volume).toHaveValue('1');
+  await expect.poll(() => audio.evaluate((element) => (element as HTMLAudioElement).volume)).toBe(1);
+
+  const mute = page.getByRole('button', { name: 'Tắt tiếng' });
+  await mute.click();
+  await expect(page.getByRole('button', { name: 'Bật tiếng' })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: 'Bật tiếng' }).click();
+  await expect(page.getByRole('button', { name: 'Tắt tiếng' })).toHaveAttribute('aria-pressed', 'false');
+});
+
+test('background music advances to part two once, stops, and can be restarted', async ({ page }) => {
+  await page.goto(APP);
+  const audio = page.locator('[data-audio]');
+  const player = page.locator('[data-ambient-player]');
+  await expect(audio).toHaveAttribute('src', APP + 'mp3/background-music-part-1.mp3');
+
+  await audio.evaluate((element) => element.dispatchEvent(new Event('ended')));
+  await expect(audio).toHaveAttribute('src', APP + 'mp3/background-music-part-2.mp3');
+  await expect(audio).toHaveAttribute('data-part', '2');
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __portfolioAudioPlayCalls: number }).__portfolioAudioPlayCalls)).toBe(2);
+
+  await audio.evaluate((element) => element.dispatchEvent(new Event('ended')));
+  await expect(player).toHaveAttribute('data-playing', 'false');
+  await expect(page.getByRole('button', { name: 'Phát lại nhạc nền' })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __portfolioAudioPlayCalls: number }).__portfolioAudioPlayCalls)).toBe(2);
+
+  await page.getByRole('button', { name: 'Phát lại nhạc nền' }).click();
+  await expect(audio).toHaveAttribute('src', APP + 'mp3/background-music-part-1.mp3');
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __portfolioAudioPlayCalls: number }).__portfolioAudioPlayCalls)).toBe(3);
+});
+
+test('the audio element and playback state persist during internal navigation', async ({ page }) => {
+  await page.goto(APP);
+  await page.evaluate(() => {
+    (window as Window & { __portfolioAudioElement?: HTMLAudioElement }).__portfolioAudioElement =
+      document.querySelector<HTMLAudioElement>('[data-audio]') ?? undefined;
+  });
+
+  await page.getByRole('link', { name: 'Dự án' }).first().click();
+  await expect(page).toHaveURL(/\/portfolio\/projects\/$/);
+  await expect(page.locator('[data-ambient-player]')).toHaveAttribute('data-playing', 'true');
+  const persistedElement = await page.evaluate(() => (
+    document.querySelector('[data-audio]') ===
+    (window as Window & { __portfolioAudioElement?: HTMLAudioElement }).__portfolioAudioElement
+  ));
+  expect(persistedElement).toBe(true);
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __portfolioAudioPlayCalls: number }).__portfolioAudioPlayCalls)).toBe(1);
+});
+
+test('the fixed music controls stay inside mobile and desktop viewports', async ({ page }) => {
+  await page.goto(APP);
+  for (const width of [360, 1440]) {
+    await page.setViewportSize({ width, height: 844 });
+    const bounds = await page.locator('[data-ambient-player]').boundingBox();
+    expect(bounds).not.toBeNull();
+    expect(bounds!.x).toBeGreaterThanOrEqual(0);
+    expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
+    expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(844);
+  }
+});
+
 test('project filters enhance the static list and retain an all-items state', async ({ page, browser }) => {
   await page.goto(APP + 'projects/');
   const cards = page.locator('[data-project-card]');
@@ -100,6 +222,7 @@ test('project filters enhance the static list and retain an all-items state', as
   const noScript = await browser.newPage({ javaScriptEnabled: false });
   await noScript.goto(APP + 'projects/');
   await expect(noScript.locator('[data-filter-bar]')).toBeHidden();
+  await expect(noScript.locator('[data-ambient-player]')).toBeHidden();
   await expect(noScript.locator('[data-project-card]')).toHaveCount(14);
   await noScript.close();
 });
@@ -168,6 +291,7 @@ test('representative routes pass automated accessibility checks', async ({ page 
 test('captures recruiter-facing desktop and mobile previews', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(APP);
+  await page.getByRole('button', { name: 'Ẩn thông báo nhạc nền' }).click();
   await page.screenshot({ path: 'docs/redesign/screenshots/desktop.png', fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: 'docs/redesign/screenshots/mobile.png', fullPage: true });
