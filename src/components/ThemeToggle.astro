@@ -4,12 +4,12 @@
 </button>
 
 <script>
-  const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
-  const root = document.documentElement;
   const storageKey = 'dvh-theme';
+  type Theme = 'dark' | 'light';
 
-  function applyTheme(theme: 'dark' | 'light') {
-    root.dataset.theme = theme;
+  function applyTheme(theme: Theme, targetDocument: Document = document) {
+    targetDocument.documentElement.dataset.theme = theme;
+    const button = targetDocument.querySelector<HTMLButtonElement>('.theme-toggle');
     if (button) {
       button.setAttribute('aria-pressed', String(theme === 'light'));
       const label = button.querySelector('.theme-toggle__label');
@@ -17,23 +17,34 @@
     }
   }
 
-  let initialTheme: 'dark' | 'light' = 'dark';
+  let currentTheme: Theme = 'dark';
   try {
     const saved = localStorage.getItem(storageKey);
-    if (saved === 'light' || saved === 'dark') initialTheme = saved;
-    else if (window.matchMedia('(prefers-color-scheme: light)').matches) initialTheme = 'light';
+    if (saved === 'light' || saved === 'dark') currentTheme = saved;
+    else if (window.matchMedia('(prefers-color-scheme: light)').matches) currentTheme = 'light';
   } catch {
     // Keep the static dark theme if storage is unavailable.
   }
-  applyTheme(initialTheme);
+  applyTheme(currentTheme);
 
-  button?.addEventListener('click', () => {
-    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-    applyTheme(next);
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    const button = target instanceof Element
+      ? target.closest<HTMLButtonElement>('.theme-toggle')
+      : null;
+    if (!button) return;
+
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(currentTheme);
     try {
-      localStorage.setItem(storageKey, next);
+      localStorage.setItem(storageKey, currentTheme);
     } catch {
       // Theme still changes for the current page.
     }
+  });
+
+  document.addEventListener('astro:before-swap', (event) => {
+    const newDocument = (event as Event & { newDocument?: Document }).newDocument;
+    if (newDocument) applyTheme(currentTheme, newDocument);
   });
 </script>

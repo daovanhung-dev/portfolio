@@ -61,6 +61,7 @@ test('static pages and deep routes open directly and survive refresh under the P
 });
 
 test('navigation, theme switch, and keyboard focus work', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto(APP);
   await page.keyboard.press('Tab');
   const skip = page.getByRole('link', { name: 'Đi tới nội dung chính' });
@@ -73,12 +74,53 @@ test('navigation, theme switch, and keyboard focus work', async ({ page }) => {
   const toggle = page.getByRole('button', { name: /Chuyển giao diện/ });
   await toggle.click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfter);
+  const chosenLabel = themeAfter === 'light' ? 'Giao diện sáng' : 'Giao diện tối';
+  await expect(toggle).toHaveAttribute('aria-pressed', String(themeAfter === 'light'));
+  await expect(toggle).toContainText(chosenLabel);
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfter);
 
   await page.getByRole('link', { name: 'Dự án' }).first().click();
   await expect(page).toHaveURL(/\/portfolio\/projects\/$/);
   await expect(page.getByRole('heading', { name: 'Dự án', level: 1 })).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfter);
+  const routedToggle = page.getByRole('button', { name: /Chuyển giao diện/ });
+  await expect(routedToggle).toHaveAttribute('aria-pressed', String(themeAfter === 'light'));
+  await routedToggle.click();
+  const themeAfterRoutedToggle = themeAfter === 'light' ? 'dark' : 'light';
+  await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfterRoutedToggle);
+
+  await page.getByRole('link', { name: 'Giới thiệu' }).click();
+  await expect(page).toHaveURL(/\/portfolio\/about\/$/);
+  await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfterRoutedToggle);
+  await page.goBack();
+  await expect(page).toHaveURL(/\/portfolio\/projects\/$/);
+  await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfterRoutedToggle);
+  await page.goForward();
+  await expect(page).toHaveURL(/\/portfolio\/about\/$/);
+  await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfterRoutedToggle);
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfterRoutedToggle);
+  await page.goto(APP + 'skills/');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfterRoutedToggle);
+});
+
+test('system color preference is retained across client-side navigation without a saved choice', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto(APP);
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('dvh-theme'))).toBeNull();
+
+  await page.getByRole('link', { name: 'Dự án' }).first().click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+
+  await page.evaluate(() => localStorage.removeItem('dvh-theme'));
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto(APP + 'about/');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.getByRole('link', { name: 'Năng lực' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('dvh-theme'))).toBeNull();
 });
 
 test('profile portraits load with base-aware URLs on home and about pages', async ({ page }) => {
