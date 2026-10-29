@@ -62,6 +62,30 @@ test('profile portraits load with base-aware URLs on home and about pages', asyn
   }
 });
 
+test('header avatar loads on home and project pages with circular styling', async ({ page }) => {
+  for (const path of ['', 'projects/nanobio-local-cloud/']) {
+    await page.goto(APP + path);
+    await expect(page.getByRole('link', { name: 'Đào Văn Hùng — trang chủ' })).toBeVisible();
+
+    const avatar = page.locator('.brand__mark');
+    await expect(avatar).toBeVisible();
+    await expect(avatar).toHaveAttribute('src', APP + 'AVT2.jpg');
+    await expect(avatar).toHaveAttribute('alt', '');
+    await expect(avatar).toHaveAttribute('aria-hidden', 'true');
+    await expect(avatar).toHaveCSS('width', '38px');
+    await expect(avatar).toHaveCSS('height', '38px');
+    await expect(avatar).toHaveCSS('border-radius', '50%');
+    await expect(avatar).toHaveCSS('object-fit', 'cover');
+    await expect(avatar).toHaveCSS('object-position', '50% 35%');
+
+    const loaded = await avatar.evaluate((element) => {
+      const image = element as HTMLImageElement;
+      return image.complete && image.naturalWidth === 256 && image.naturalHeight === 256;
+    });
+    expect(loaded, path || 'home').toBe(true);
+  }
+});
+
 test('project filters enhance the static list and retain an all-items state', async ({ page, browser }) => {
   await page.goto(APP + 'projects/');
   const cards = page.locator('[data-project-card]');
