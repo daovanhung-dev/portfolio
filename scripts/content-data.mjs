@@ -145,8 +145,22 @@ export function validatePortfolioData(portfolio) {
 
   for (const entry of collections.experiences) {
     checkRefs(entry.data.evidenceIds, 'Experience ' + entry.data.id);
+    if (!Number.isInteger(entry.data.order) || entry.data.order < 1) {
+      errors.push('Experience ' + entry.data.id + ' needs a positive display order');
+    }
+    if (!Array.isArray(entry.data.technologies)) {
+      errors.push('Experience ' + entry.data.id + ' must have a technologies array');
+    } else {
+      if (entry.data.technologies.some((technology) => typeof technology !== 'string' || !technology.trim())) {
+        errors.push('Experience ' + entry.data.id + ' has an empty technology');
+      }
+      if (new Set(entry.data.technologies).size !== entry.data.technologies.length) {
+        errors.push('Experience ' + entry.data.id + ' has duplicate technologies');
+      }
+    }
     for (const slug of entry.data.projectSlugs ?? []) if (!projectSlugs.has(slug)) errors.push('Experience ' + entry.data.id + ' references missing project ' + slug);
   }
+  uniqueBy(collections.experiences, 'order', 'Experiences', errors);
   for (const entry of cases) {
     const item = entry.data;
     checkRefs(item.evidenceIds, 'Case ' + item.id);

@@ -162,6 +162,48 @@ test('header avatar loads on home and project pages with circular styling', asyn
   }
 });
 
+test('experience page presents workplaces, roles, and related technologies without project links', async ({ page }) => {
+  await page.goto(APP + 'experience/');
+
+  const entries = page.locator('[data-experience-entry]');
+  await expect(entries).toHaveCount(7);
+  expect(await entries.evaluateAll((items) => items.map((item) => (item as HTMLElement).dataset.experienceId))).toEqual([
+    'fpt', 'nano-owner', 'venturex', 'study-work', 'vnua-study', 'hvc-work', 'maiatech',
+  ]);
+  await expect(page.locator('main a[href*="/projects/"]')).toHaveCount(0);
+
+  for (const entry of await entries.all()) {
+    await expect(entry.locator('h2')).toBeVisible();
+    await expect(entry.locator('h3')).toBeVisible();
+    await expect(entry.locator('time')).not.toBeEmpty();
+    await expect(entry.locator('p').first()).not.toBeEmpty();
+  }
+
+  for (const projectName of ['Learn2Earn', 'LinguaSphere', 'LabVnua', 'EduAI']) {
+    await expect(page.locator('main').getByText(projectName, { exact: false })).toHaveCount(0);
+  }
+
+  const fpt = page.locator('[data-experience-id="fpt"]');
+  await expect(fpt.locator('[data-experience-technologies]')).toBeVisible();
+  await expect(fpt.locator('[data-experience-technologies]')).toContainText('Vue');
+  await expect(fpt.locator('[data-experience-technologies]')).toContainText('Flask');
+
+  const ventureX = page.locator('[data-experience-id="venturex"]');
+  await expect(ventureX.locator('[data-experience-technologies]')).toHaveCount(0);
+
+  for (const width of [360, 1440]) {
+    await page.setViewportSize({ width, height: 844 });
+    const list = page.locator('.timeline-list');
+    const dimensions = await list.evaluate((element) => ({
+      client: element.clientWidth,
+      scroll: element.scrollWidth,
+      right: element.getBoundingClientRect().right,
+    }));
+    expect(dimensions.scroll, width + 'px experience list').toBeLessThanOrEqual(dimensions.client);
+    expect(dimensions.right).toBeLessThanOrEqual(width);
+  }
+});
+
 test('background music notice remains for five seconds, then fades from view', async ({ page }) => {
   await page.goto(APP);
 
@@ -312,7 +354,7 @@ test('responsive routes have no horizontal overflow at required widths', async (
 });
 
 test('representative routes pass automated accessibility checks', async ({ page }) => {
-  for (const path of ['', 'projects/', 'case-studies/nanobio-local-cloud-ai/', 'contact/']) {
+  for (const path of ['', 'projects/', 'experience/', 'case-studies/nanobio-local-cloud-ai/', 'contact/']) {
     await page.goto(APP + path);
     for (const theme of ['dark', 'light']) {
       await page.evaluate((value) => { document.documentElement.dataset.theme = value; }, theme);
