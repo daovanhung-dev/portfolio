@@ -13,8 +13,8 @@ const [profiles, allProjects, allCases] = await Promise.all([
 const profile = profiles[0].data;
 const featuredProjects = allProjects
   .filter((item) => item.data.featured)
-  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'vi'))
-  .slice(0, 4);
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999)
+    || a.data.title.localeCompare(b.data.title, 'vi'));
 const featuredCases = allCases
   .filter((item) => item.data.featured)
   .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
@@ -59,9 +59,9 @@ const featuredCases = allCases
       <div>
         <span class="eyebrow">Chọn lọc</span>
         <h2 id="selected-work">Dự án tiêu biểu</h2>
-        <p>Khám phá các sản phẩm, bài toán và giải pháp kỹ thuật tôi đã phát triển.</p>
+        <p>Các dự án được chọn để thể hiện phần việc, lựa chọn kỹ thuật và trạng thái kiểm chứng.</p>
       </div>
-      <a class="text-link" href={sitePath('/projects')}>Tất cả dự án <span aria-hidden="true">→</span></a>
+      <a class="text-link" href={sitePath('/projects')}>Xem danh mục <span aria-hidden="true">→</span></a>
     </div>
     <div class="grid project-grid">
       {featuredProjects.map((project) => <ProjectCard project={project} />)}

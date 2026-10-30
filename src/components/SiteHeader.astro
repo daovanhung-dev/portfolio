@@ -1,5 +1,5 @@
 ---
-import { sitePath } from '../utils/paths';
+import { siteAsset, sitePath } from '../utils/paths';
 import ThemeToggle from './ThemeToggle.astro';
 
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
@@ -17,7 +17,15 @@ const navItems = [
 <header class="site-header">
   <div class="site-header__inner">
     <a class="brand" href={sitePath('/')} aria-label="Đào Văn Hùng — trang chủ">
-      <span class="brand__mark" aria-hidden="true">DVH</span>
+      <img
+        class="brand__mark"
+        src={siteAsset('AVT2.jpg')}
+        alt=""
+        aria-hidden="true"
+        width="38"
+        height="38"
+        decoding="async"
+      />
       <span class="brand__name">Đào Văn Hùng</span>
     </a>
     <nav class="primary-nav" aria-label="Điều hướng chính">

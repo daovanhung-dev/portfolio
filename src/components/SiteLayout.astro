@@ -1,6 +1,8 @@
 ---
 import SiteHeader from './SiteHeader.astro';
 import SiteFooter from './SiteFooter.astro';
+import AudioPlayer from './AudioPlayer.astro';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import { siteAsset, sitePath } from '../utils/paths';
 
@@ -47,6 +49,7 @@ const socialImage = new URL(siteAsset('og-portfolio.png'), origin).toString();
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
     <title>{title}</title>
+    <ClientRouter />
   </head>
   <body>
     <SiteHeader />
@@ -54,5 +57,6 @@ const socialImage = new URL(siteAsset('og-portfolio.png'), origin).toString();
       <slot />
     </main>
     <SiteFooter />
+    <AudioPlayer />
   </body>
 </html>

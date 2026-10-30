@@ -2,17 +2,17 @@
 {
   "id": "nano-local-cloud",
   "slug": "nanobio-local-cloud-ai",
-  "title": "Tổ chức kiến trúc local-first, cloud và AI",
+  "title": "Tổ chức ranh giới local, cloud và AI trong NanoBioAI",
   "context": "Ứng dụng wellness kết hợp dữ liệu local-first, tính năng Supabase theo môi trường và các luồng AI trên thiết bị.",
   "approach": [
-    "Phân tích các luồng local và test contracts trong source.",
-    "Tách quyền sở hữu dữ liệu local khỏi các tính năng đồng bộ cloud.",
-    "Phân biệt AI trên thiết bị với tính năng cần dịch vụ cloud.",
-    "Xác định cấu hình, migration và thiết bị mục tiêu cho từng phạm vi kiểm thử."
+    "Đối chiếu README, source ứng dụng và test contract liên quan.",
+    "Tách quyền sở hữu dữ liệu local khỏi các luồng đồng bộ cloud.",
+    "Phân biệt inference trên thiết bị với chức năng cần dịch vụ cloud.",
+    "Xác định cấu hình, migration và thiết bị mục tiêu cần kiểm tra riêng."
   ],
-  "result": "Ứng dụng phân chia rõ các luồng dữ liệu local, AI trên thiết bị và tính năng cloud tùy cấu hình.",
+  "result": "Source thể hiện các ranh giới riêng cho dữ liệu local, AI trên thiết bị và tính năng cloud tùy cấu hình.",
   "limitations": [
-    "Benchmark, cấu hình cloud theo môi trường, kiểm thử thiết bị và kết quả lâm sàng là các phạm vi đánh giá riêng."
+    "Portfolio audit chưa xác minh runtime cloud, migration/chính sách từ xa, hiệu năng thiết bị hoặc kết quả lâm sàng. Sản phẩm hỗ trợ wellness, không chẩn đoán hay điều trị."
   ],
   "projectSlugs": [
     "nanobio-local-cloud"
@@ -20,11 +20,12 @@
   "role": "Technical Owner / Full-stack Developer",
   "roleAttribution": "mixed",
   "constraints": [
-    "Sản phẩm phục vụ wellness; dữ liệu cá nhân, AI và dịch vụ cloud cần ranh giới xử lý phù hợp."
+    "Sản phẩm thuộc phạm vi wellness; cần giữ rõ ranh giới dữ liệu cá nhân, xử lý AI và tính năng phụ thuộc cloud."
   ],
-  "verification": "Đối chiếu README, luồng ứng dụng và test contracts trong source. Các phần cloud và hiệu năng được cấu hình, đánh giá theo môi trường và thiết bị mục tiêu.",
+  "verification": "Đối chiếu README, các luồng ứng dụng được chọn và test contract files ở SHA ghi trong evidence. Portfolio audit không chạy ứng dụng mobile hoặc kiểm tra backend từ xa.",
   "status": "partial",
   "evidenceIds": [
+    "ev-nanobio-role",
     "ev-nano-mobile",
     "ev-nano-test-contract"
   ],
@@ -34,18 +35,3 @@
   "order": 1
 }
 ---
-
-## Bối cảnh
-
-Ứng dụng wellness kết hợp dữ liệu local-first, tính năng Supabase theo môi trường và các luồng AI trên thiết bị.
-
-## Cách tiếp cận
-
-- Phân tích luồng local và test contracts.
-- Tách quyền sở hữu dữ liệu local khỏi đồng bộ cloud.
-- Phân biệt inference trên thiết bị với tính năng dùng cloud.
-- Xác định cấu hình và môi trường cho từng phạm vi kiểm thử.
-
-## Kết quả
-
-Kiến trúc thể hiện rõ các luồng local, AI trên thiết bị và cloud tùy cấu hình. Sản phẩm hỗ trợ wellness, không thay thế công cụ chẩn đoán hoặc điều trị.

@@ -1,23 +1,13 @@
 # Project proof index
 
-Repository snapshots and source-path details are recorded in `docs/audit/01_REPOSITORY_INVENTORY.csv` and `03_SOURCE_STATUS_MATRIX.csv`. The public page uses typed records from `src/data/portfolio-content.ts`, repository metadata from `src/data/repositories.ts`, and evidence links from `src/data/evidence.ts`.
+The public portfolio presents five selected projects. Repository snapshots and source-path details remain in docs/audit/01_REPOSITORY_INVENTORY.csv, docs/audit/03_SOURCE_STATUS_MATRIX.csv, src/data/repositories.json, and src/data/evidence.json. Audited repositories can remain in that inventory without a public project page.
 
-| Project | Source repository mapping | State | Evidence refs |
+| Selected project | Source repository mapping | State | Evidence refs |
 |---|---|---|---|
-| Engineering Portfolio | portfolio | Partial on feature branch | `ev-portfolio-source` |
-| NanoBioAI local-first mobile | NanoBioAI | Partial | `ev-nano-mobile`, `ev-nano-test-contract` |
-| NanoBioAI FastAPI foundation | NanoBioAI/backend | Source-only | `ev-nano-backend` |
-| Study2Work | Study2Work, latest relevant branch `hoang_xuan_long_dev` | Partial; runtime unverified | `ev-study-contracts` |
-| HVC implementation evolution | edu_hvc, HVC_EDU, HVC_EDU_NEW | Historical + partial by version | `ev-hvc-fastapi-source`, `ev-hvc-angular-source`, `ev-hvc-vue-source` |
-| LabVnua / EduAI | LabVnua/develop | Partial | `ev-labvnua-source`, `ev-vnua-role` |
-| Privacy-safe interactive delivery | Private personal project source | Partial; no public link | `ev-story-delivery` |
-| XiaoZhi ESP32 fork | xiaozhi-esp32 | Source-only | `ev-xiaozhi-fork` |
-| NanoBio Trust Center | nanobioai-privacy | Source-only | `ev-privacy-source` |
-| Nihongo Learning System | Nihongo-Learning-System | Design / scaffold | `ev-nihongo-design` |
-| Learn2Earn | Learn2Earn | Historical | `ev-learn2earn-source` |
-| vogiaVocabulary | vogiaVocabulary | Partial MVP | `ev-vogia-source` |
-| ai_local | ai_local | Partial | `ev-ai-local-source` |
-| QTM | QTM | Implemented source | `ev-qtm-source` |
-| My_Courses | Empty repository | Empty; not a project card | `docs/audit/01_REPOSITORY_INVENTORY.csv` |
+| NanoBioAI local-first mobile | NanoBioAI | Partial; runtime and cloud behavior unverified | ev-nanobio-role, ev-nano-mobile, ev-nano-test-contract |
+| Study2Work | Study2Work, branch hoang_xuan_long_dev at recorded SHA | Partial; runtime unverified | ev-study-role, ev-study-contracts |
+| HVC implementation evolution | edu_hvc, HVC_EDU, HVC_EDU_NEW | Historical + partial by version | ev-hvc-role, ev-hvc-fastapi-source, ev-hvc-angular-source, ev-hvc-vue-source |
+| LabVnua / EduAI | LabVnua/develop | Partial; runtime unverified | ev-labvnua-source, ev-vnua-role |
+| ai_local | ai_local | Partial; device performance unverified | ev-ai-local-source |
 
-FPT and VentureX are career/design evidence, not public code repositories; neither is represented as a fake repository link.
+No selected project is labeled deployed-verified. FPT debugging remains a user-attested, sanitized case study rather than a public code repository.

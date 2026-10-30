@@ -2,17 +2,17 @@
 {
   "id": "ai-local",
   "slug": "ai-local-inference",
-  "title": "Thiết kế vòng đời model local trong ai_local",
-  "context": "Ứng dụng local inference cần quản lý model files, sinh token theo luồng và lưu lịch sử ngay trên thiết bị.",
+  "title": "Quản lý vòng đời model trong ai_local",
+  "context": "Ứng dụng mobile chạy inference local cần quản lý model files, sinh token theo luồng và lưu lịch sử ngay trên thiết bị.",
   "approach": [
-    "Phân tích service inference và luồng quản lý model.",
-    "Theo dõi tải xuống, resume và kiểm tra hash để quản lý model files.",
-    "Tách persistence local bằng Drift khỏi xử lý inference.",
-    "Xác định các chỉ số thiết bị cần đánh giá riêng: latency, memory, nhiệt độ và khả năng tương thích."
+    "Đối chiếu service inference với luồng quản lý model.",
+    "Rà soát tải xuống, tiếp tục tải và kiểm tra hash của model files.",
+    "Xác định persistence bằng Drift/SQLite tách khỏi xử lý inference.",
+    "Liệt kê các chỉ số cần đo trên thiết bị mục tiêu: latency, bộ nhớ và nhiệt độ."
   ],
-  "result": "Mã nguồn tổ chức được các phần inference GGUF local, streaming, quản lý model và persistence bằng Drift.",
+  "result": "Source mô tả các thành phần inference GGUF local, token streaming, quản lý model và persistence cục bộ.",
   "limitations": [
-    "Hiệu năng và tương thích phụ thuộc model cùng thiết bị mục tiêu; cần số đo runtime riêng để đánh giá."
+    "Portfolio audit chỉ đối chiếu source; chưa xác nhận runtime, hiệu năng, nhiệt độ, hoạt động offline hoặc tương thích trên thiết bị mục tiêu."
   ],
   "projectSlugs": [
     "ai-local-inference"
@@ -20,9 +20,9 @@
   "role": "Flutter Developer",
   "roleAttribution": "source-backed",
   "constraints": [
-    "Case tập trung vào cấu trúc source và vòng đời model; hiệu năng được đánh giá trên thiết bị mục tiêu."
+    "Đánh giá tập trung vào vòng đời model trong source; khả năng và hiệu năng thực tế phụ thuộc model cùng thiết bị."
   ],
-  "verification": "Đối chiếu service inference, luồng tải model và persistence trong repository. Phạm vi này mô tả hành vi trong source; đánh giá hiệu năng cần thực hiện trên thiết bị mục tiêu.",
+  "verification": "Đối chiếu service inference, luồng tải model và persistence trong repository tại SHA được ghi trong evidence. Không thực hiện benchmark thiết bị trong portfolio audit.",
   "status": "partial",
   "evidenceIds": [
     "ev-ai-local-source"
@@ -32,18 +32,3 @@
   "featured": false
 }
 ---
-
-## Bối cảnh
-
-Ứng dụng local inference cần quản lý model files, sinh token theo luồng và lưu lịch sử ngay trên thiết bị.
-
-## Cách tiếp cận
-
-- Phân tích service inference và quản lý model.
-- Theo dõi luồng tải, resume và kiểm tra hash.
-- Tách persistence local bằng Drift khỏi xử lý inference.
-- Xác định các chỉ số thiết bị cần đánh giá riêng.
-
-## Kết quả
-
-Mã nguồn tổ chức các phần inference GGUF local, streaming, quản lý model và persistence bằng Drift. Đánh giá latency, memory, nhiệt độ và tương thích cần thực hiện trên thiết bị mục tiêu.

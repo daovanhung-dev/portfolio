@@ -3,16 +3,18 @@ import { getCollection } from 'astro:content';
 import SiteLayout from '../../components/SiteLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'vi'));
+const projects = (await getCollection('projects')).filter((project) => project.data.featured)
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999)
+    || a.data.title.localeCompare(b.data.title, 'vi'));
 const categories = [...new Set(projects.map((project) => project.data.filterGroup))].sort((a, b) => a.localeCompare(b, 'vi'));
 ---
 
-<SiteLayout title="Dự án — Đào Văn Hùng" description="Các dự án phần mềm của Đào Văn Hùng trong backend, dữ liệu, ứng dụng di động và công cụ học tập.">
+<SiteLayout title="Dự án tiêu biểu — Đào Văn Hùng" description="Các dự án được chọn của Đào Văn Hùng trong backend, dữ liệu, ứng dụng di động và AI trên thiết bị.">
   <div class="page-shell">
     <header class="page-intro">
-      <span class="eyebrow">Thư viện công việc</span>
-      <h1 class="page-title">Dự án</h1>
-      <p class="page-lede">Danh mục dự án thể hiện các bài toán tôi đã tham gia, cách tiếp cận và công nghệ sử dụng. Mỗi trang nêu rõ phạm vi triển khai hiện tại.</p>
+      <span class="eyebrow">Hồ sơ năng lực</span>
+      <h1 class="page-title">Dự án tiêu biểu</h1>
+      <p class="page-lede">Một nhóm dự án thể hiện kinh nghiệm về API và hệ thống, ứng dụng di động, dữ liệu local và AI trên thiết bị. Mỗi hồ sơ nêu rõ vai trò, bằng chứng và giới hạn kiểm chứng.</p>
     </header>
     <div class="filter-bar" data-filter-bar hidden role="group" aria-label="Lọc dự án">
       <span class="filter-label">Lọc theo lĩnh vực</span>

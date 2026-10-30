@@ -210,15 +210,15 @@
   {
     "id": "ev-fpt-role",
     "kind": "user-attested",
-    "observedAt": "2026-10-24",
-    "note": "Role, dates, and generic work scope are self-reported; client source and confidential details are not included.",
+    "observedAt": "2026-10-30",
+    "note": "FPT role, dates, generic work scope, and Intern stack are user-attested; client source and confidential details are not included. No stage-specific stack is claimed for Fresher.",
     "publicSafe": true
   },
   {
     "id": "ev-learn2earn-role",
     "kind": "user-attested",
-    "observedAt": "2026-10-24",
-    "note": "Backend Developer role and 09/2025–03/2026 dates are self-reported; source confirms project technologies, not individual line ownership.",
+    "observedAt": "2026-10-30",
+    "note": "Backend Developer role and 09/2025–11/2026 dates are user-attested; historical source confirms related technologies, not individual line ownership.",
     "publicSafe": true
   },
   {
@@ -238,8 +238,8 @@
   {
     "id": "ev-vnua-role",
     "kind": "user-attested",
-    "observedAt": "2026-10-24",
-    "note": "Study scope and team coordination are self-reported; exact dates and team size remain approximate.",
+    "observedAt": "2026-10-30",
+    "note": "Flutter Team Lead role and 11/2025–03/2026 dates are user-attested; application source supports related technologies, not an independent employment record.",
     "publicSafe": true
   },
   {

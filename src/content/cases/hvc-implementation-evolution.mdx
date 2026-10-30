@@ -2,17 +2,17 @@
 {
   "id": "hvc-evolution",
   "slug": "hvc-implementation-evolution",
-  "title": "Theo dõi quá trình phát triển các implementation HVC",
-  "context": "Ba codebase phục vụ cùng domain vận hành giáo dục nhưng khác thời điểm, công nghệ và phạm vi module.",
+  "title": "Phân định phạm vi ba implementation HVC",
+  "context": "Ba codebase phục vụ cùng domain vận hành giáo dục nhưng khác thời điểm, kiến trúc và phạm vi module.",
   "approach": [
-    "Phân tích README và module source của từng repository.",
-    "Định vị FastAPI/PostgreSQL ở phiên bản lịch sử.",
-    "Mô tả Angular/Supabase theo phạm vi module riêng.",
-    "Gắn các luồng finance/payroll với source Vue ở phiên bản mới hơn."
+    "Đối chiếu README và module source của từng repository.",
+    "Ghi nhận FastAPI/PostgreSQL là implementation lịch sử.",
+    "Giữ Angular/Supabase ở phạm vi module hẹp hơn.",
+    "Gắn finance/payroll với source Vue ở phiên bản mới hơn."
   ],
-  "result": "Case thể hiện rõ ba implementation và mối liên hệ giữa công nghệ, phạm vi nghiệp vụ và thời điểm phát triển.",
+  "result": "Source mapping phân biệt ba implementation theo stack, thời điểm và phạm vi nghiệp vụ; finance/payroll chỉ được gắn với source Vue.",
   "limitations": [
-    "Mỗi phiên bản giữ phạm vi chức năng riêng; các luồng finance/payroll thuộc source Vue mới hơn."
+    "Các phiên bản là codebase riêng. Portfolio audit không xác nhận một ứng dụng hợp nhất, runtime từ xa hoặc trạng thái production."
   ],
   "projectSlugs": [
     "hvc-implementation-evolution"
@@ -20,11 +20,12 @@
   "role": "Full-stack Developer",
   "roleAttribution": "mixed",
   "constraints": [
-    "Theo dõi từng codebase độc lập để thể hiện đúng phạm vi và phiên bản."
+    "Không chuyển tính năng giữa các phiên bản hoặc suy ra phạm vi triển khai ngoài source tương ứng."
   ],
-  "verification": "Đối chiếu README và module source tại ba commit tương ứng; phân loại các luồng theo repository và phiên bản.",
+  "verification": "Đối chiếu README và module source tại ba commit được ghi trong evidence; phân loại từng luồng theo repository và phiên bản.",
   "status": "partial",
   "evidenceIds": [
+    "ev-hvc-role",
     "ev-hvc-fastapi-source",
     "ev-hvc-angular-source",
     "ev-hvc-vue-source"
@@ -35,18 +36,3 @@
   "order": 3
 }
 ---
-
-## Bối cảnh
-
-Ba codebase phục vụ cùng domain vận hành giáo dục nhưng khác thời điểm, công nghệ và phạm vi module.
-
-## Cách tiếp cận
-
-- Phân tích module source của từng repository.
-- Định vị FastAPI/PostgreSQL ở phiên bản lịch sử.
-- Mô tả Angular/Supabase theo phạm vi riêng.
-- Gắn finance/payroll với source Vue ở phiên bản mới hơn.
-
-## Kết quả
-
-Ba implementation được trình bày theo đúng stack và phạm vi, giúp người đọc theo dõi quá trình phát triển sản phẩm qua từng phiên bản.

@@ -27,6 +27,7 @@ const urls = new Set([
   ]),
   ...portfolio.evidence.flatMap((item) => item.url ? [item.url] : []),
   ...portfolio.repositories.flatMap((item) => item.url ? [item.url] : []),
+  ...portfolio.collections.experiences.flatMap((item) => item.data.mapUrl ? [item.data.mapUrl] : []),
 ]);
 
 for (const value of urls) {
