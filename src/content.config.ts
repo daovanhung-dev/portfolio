@@ -48,6 +48,8 @@ const experiences = defineCollection({
     role: z.string(),
     period: z.string(),
     order: z.number().int().positive(),
+    displayOnExperiencePage: z.boolean(),
+    mapUrl: z.url().optional(),
     summary: z.string(),
     technologies: z.array(z.string().trim().min(1)).default([]),
     evidenceIds: z.array(z.string()).min(1),

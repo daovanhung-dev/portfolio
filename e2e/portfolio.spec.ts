@@ -162,45 +162,52 @@ test('header avatar loads on home and project pages with circular styling', asyn
   }
 });
 
-test('experience page presents workplaces, roles, and related technologies without project links', async ({ page }) => {
+test('experience page presents the four selected work stages with dates, maps, and related technologies', async ({ page }) => {
   await page.goto(APP + 'experience/');
 
   const entries = page.locator('[data-experience-entry]');
-  await expect(entries).toHaveCount(7);
+  await expect(entries).toHaveCount(4);
   expect(await entries.evaluateAll((items) => items.map((item) => (item as HTMLElement).dataset.experienceId))).toEqual([
-    'fpt', 'nano-owner', 'venturex', 'study-work', 'vnua-study', 'hvc-work', 'maiatech',
+    'maiatech', 'vnua-study', 'fpt', 'fpt-fresher',
   ]);
   await expect(page.locator('main a[href*="/projects/"]')).toHaveCount(0);
 
-  for (const entry of await entries.all()) {
-    await expect(entry.locator('h2')).toBeVisible();
-    await expect(entry.locator('h3')).toBeVisible();
-    await expect(entry.locator('time')).not.toBeEmpty();
+  const expectedStages = [
+    { id: 'maiatech', organization: 'MaiATech', role: 'Backend Developer', period: '09/2025–11/2026', map: 'https://maps.app.goo.gl/Ps8RDSpJFxtjoqW38' },
+    { id: 'vnua-study', organization: 'Trung tâm nghiên cứu xuất sắc và đổi mới sáng tạo HVNNVN', role: 'Flutter Team Lead', period: '11/2025–03/2026', map: 'https://maps.app.goo.gl/gCFZrxWAxdYPJRWw5' },
+    { id: 'fpt', organization: 'FPT Software Hòa Lạc (F2)', role: 'Full-stack Developer Intern', period: '03/2026–07/2026', map: 'https://maps.app.goo.gl/dA3DyvS7BwZFpBPB6' },
+    { id: 'fpt-fresher', organization: 'FPT Software Hòa Lạc (F2)', role: 'Full-stack Developer Fresher', period: '07/2026–10/2026', map: 'https://maps.app.goo.gl/dA3DyvS7BwZFpBPB6' },
+  ];
+  for (const stage of expectedStages) {
+    const entry = page.locator('[data-experience-id="' + stage.id + '"]');
+    await expect(entry.locator('h2')).toHaveText(stage.organization);
+    await expect(entry.locator('h3')).toHaveText(stage.role);
+    await expect(entry.locator('time')).toHaveText(stage.period);
     await expect(entry.locator('p').first()).not.toBeEmpty();
+    await expect(entry.locator('.timeline-entry__location')).toHaveAttribute('href', stage.map);
+    await expect(entry.locator('.timeline-entry__location')).toHaveAttribute('target', '_blank');
   }
 
-  for (const projectName of ['Learn2Earn', 'LinguaSphere', 'LabVnua', 'EduAI']) {
-    await expect(page.locator('main').getByText(projectName, { exact: false })).toHaveCount(0);
+  const technologyLabels = async (id: string) =>
+    page.locator('[data-experience-id="' + id + '"] [data-experience-technologies] .tag').allTextContents();
+  expect(await technologyLabels('maiatech')).toEqual(['Node.js', 'TypeScript', 'Express', 'EJS', 'Prisma', 'MySQL', 'Flutter']);
+  expect(await technologyLabels('vnua-study')).toEqual(['Flutter', 'Dart', 'SQLite', 'Supabase Realtime']);
+  expect(await technologyLabels('fpt')).toEqual(['FastAPI', 'Vue.js', 'PostgreSQL']);
+  await expect(page.locator('[data-experience-id="fpt-fresher"] [data-experience-technologies]')).toHaveCount(0);
+
+  for (const hiddenName of ['Hùng Cường Education', 'NanoBioAI', 'Study2Work', 'VentureX', 'Learn2Earn', 'LinguaSphere', 'LabVnua', 'EduAI']) {
+    await expect(page.locator('main').getByText(hiddenName, { exact: false })).toHaveCount(0);
   }
 
-  const fpt = page.locator('[data-experience-id="fpt"]');
-  await expect(fpt.locator('[data-experience-technologies]')).toBeVisible();
-  await expect(fpt.locator('[data-experience-technologies]')).toContainText('Vue');
-  await expect(fpt.locator('[data-experience-technologies]')).toContainText('Flask');
-
-  const ventureX = page.locator('[data-experience-id="venturex"]');
-  await expect(ventureX.locator('[data-experience-technologies]')).toHaveCount(0);
+  await expect(page.locator('.timeline-entry__location')).toHaveCount(4);
 
   for (const width of [360, 1440]) {
     await page.setViewportSize({ width, height: 844 });
-    const list = page.locator('.timeline-list');
-    const dimensions = await list.evaluate((element) => ({
+    const dimensions = await page.locator('html').evaluate((element) => ({
       client: element.clientWidth,
       scroll: element.scrollWidth,
-      right: element.getBoundingClientRect().right,
     }));
-    expect(dimensions.scroll, width + 'px experience list').toBeLessThanOrEqual(dimensions.client);
-    expect(dimensions.right).toBeLessThanOrEqual(width);
+    expect(dimensions.scroll, width + 'px experience page').toBeLessThanOrEqual(dimensions.client);
   }
 });
 

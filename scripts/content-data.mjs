@@ -145,8 +145,15 @@ export function validatePortfolioData(portfolio) {
 
   for (const entry of collections.experiences) {
     checkRefs(entry.data.evidenceIds, 'Experience ' + entry.data.id);
+    if (typeof entry.data.displayOnExperiencePage !== 'boolean') {
+      errors.push('Experience ' + entry.data.id + ' needs an explicit page display state');
+    }
     if (!Number.isInteger(entry.data.order) || entry.data.order < 1) {
       errors.push('Experience ' + entry.data.id + ' needs a positive display order');
+    }
+    if (entry.data.mapUrl) checkUrl(entry.data.mapUrl, 'Experience ' + entry.data.id + ' map URL');
+    if (entry.data.displayOnExperiencePage && !entry.data.mapUrl) {
+      errors.push('Visible experience ' + entry.data.id + ' needs a map URL');
     }
     if (!Array.isArray(entry.data.technologies)) {
       errors.push('Experience ' + entry.data.id + ' must have a technologies array');
@@ -160,7 +167,7 @@ export function validatePortfolioData(portfolio) {
     }
     for (const slug of entry.data.projectSlugs ?? []) if (!projectSlugs.has(slug)) errors.push('Experience ' + entry.data.id + ' references missing project ' + slug);
   }
-  uniqueBy(collections.experiences, 'order', 'Experiences', errors);
+  uniqueBy(collections.experiences.filter((entry) => entry.data.displayOnExperiencePage), 'order', 'Visible experiences', errors);
   for (const entry of cases) {
     const item = entry.data;
     checkRefs(item.evidenceIds, 'Case ' + item.id);
