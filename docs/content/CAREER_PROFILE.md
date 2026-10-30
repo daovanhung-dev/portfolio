@@ -18,7 +18,7 @@ Other recorded work contexts remain in the source records for project relationsh
 | Period | Organization / scope | Public wording | Evidence level / boundary |
 |---|---|---|---|
 | 2025–2026 | Hùng Cường Education | Software development across three implementations | Mixed: three repository snapshots + user-attested role; version scope stays separate. |
-| 2026 | Study2Work | Contributor / System Design | Mixed: source/contracts + user-attested role; team repository and runtime gaps remain. |
+| 2026 | Study2Work | TechLead | Role and contribution scope are user-attested; team source at `develop` @ `376054183df9b611c65b14c4e650037b051fb49f` includes 66 Study API IDs with routes and 21 Work API operations; #99–103 remain DD-only in that snapshot, with no demo/production verification. |
 | 2026 | VentureX · LinguaSphere | Business/system analysis và API detail design | User-attested, design scope; không phải production implementation. |
 | 10/05/2026–present | NanoBioAI | Full-stack Developer / Technical Owner | Mixed: repository source + user-attested role; không claim clinical outcome hoặc deployed backend. |
 

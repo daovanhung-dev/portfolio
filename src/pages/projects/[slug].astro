@@ -21,7 +21,7 @@ const pageDescription = project.data.summary.slice(0, 155);
 
 <SiteLayout title={project.data.title + ' — Đào Văn Hùng'} description={pageDescription} route={'/projects/' + project.id}>
   <div class="page-shell">
-    <header class="detail-header">
+    <header class:list={['detail-header', { 'detail-header--study2work': project.data.id === 'study2work' }]}>
       <a class="eyebrow-link" href={sitePath('/projects')}>← Dự án tiêu biểu</a>
       <h1>{project.data.title}</h1>
       <p class="page-lede">{project.data.summary}</p>
@@ -35,8 +35,8 @@ const pageDescription = project.data.summary.slice(0, 155);
         {project.data.availability !== 'unknown' && <span>Tính sẵn có: {project.data.availability}</span>}
       </div>
     </header>
-    <div class="detail-body">
-      <article class="prose">
+    <div class:list={['detail-body', { 'detail-body--study2work': project.data.id === 'study2work' }]}>
+      <article class:list={['prose', { 'study2work-prose': project.data.id === 'study2work' }]}>
         <Content />
         <section class="detail-section">
           <h2>Tính năng và trạng thái</h2>
@@ -67,6 +67,18 @@ const pageDescription = project.data.summary.slice(0, 155);
         )}
       </article>
       <aside class="detail-sidebar" aria-label="Thông tin dự án">
+        {project.data.id === 'study2work' && (
+          <section class="content-panel study2work-status-panel" aria-labelledby="study2work-status-title">
+            <p class="s2w-kicker">Trạng thái · 30/10/2026</p>
+            <h2 id="study2work-status-title">Chưa có demo hoặc production</h2>
+            <p>Đây là snapshot source và tài liệu công khai. Chưa xác nhận triển khai live hoặc runtime end-to-end.</p>
+            <p><strong>develop</strong><br /><code>376054183df9b611c65b14c4e650037b051fb49f</code></p>
+            <p><strong>main mặc định</strong><br /><code>bb9e2be2e146285f004cdc00e8d632ca8ed1b4a3</code></p>
+            <a class="s2w-repo-link" href="https://github.com/daovanhung-dev/Study2Work" target="_blank" rel="noreferrer">
+              Mở mã nguồn Study2Work <span aria-hidden="true">↗</span>
+            </a>
+          </section>
+        )}
         <section class="content-panel">
           <h2>Công nghệ chính</h2>
           <div class="tag-list">{project.data.stack.map((tag) => <span class="tag">{tag}</span>)}</div>

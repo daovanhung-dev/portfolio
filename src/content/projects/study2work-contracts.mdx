@@ -2,76 +2,184 @@
 {
   "id": "study2work",
   "slug": "study2work-contracts",
-  "category": "EdTech + HRTech · Monorepo",
+  "category": "EdTech × HRTech · Monorepo",
   "order": 2,
-  "role": "Contributor / System Designer",
+  "role": "TechLead",
   "period": "2026",
-  "summary": "Đối chiếu API/event contracts với module trong monorepo EdTech/HRTech, làm rõ phạm vi từng service; Work API ở nhánh được rà soát dùng Express 4.",
+  "summary": "Định hướng một hành trình nối học tập, bằng chứng năng lực, hồ sơ nghề nghiệp và tuyển dụng. TechLead và phạm vi đóng góp được người sở hữu xác nhận; source có nhưng chưa có demo hoặc production.",
   "status": "partial",
   "featureProofs": [
     {
-      "id": "s2w-contracts",
-      "label": "API modules và event contracts",
-      "state": "implemented",
-      "evidenceIds": [
-        "ev-study-contracts"
-      ]
+      "id": "s2w-study-api-source",
+      "label": "Study API · 66 API ID có route source",
+      "state": "partial",
+      "limitation": "Đối chiếu tại develop @ 376054183df9b611c65b14c4e650037b051fb49f; không chứng minh runtime hoặc deployment. API #99–103 có DD nhưng chưa có route source.",
+      "evidenceIds": ["ev-study-api-source"]
     },
     {
-      "id": "s2w-runtime",
-      "label": "Tích hợp runtime giữa các dịch vụ",
+      "id": "s2w-work-api-source",
+      "label": "Work API · 21 HTTP operations trong source",
       "state": "partial",
-      "limitation": "Portfolio audit rà soát contract và source mapping; không xác nhận tích hợp runtime toàn hệ thống.",
-      "evidenceIds": [
-        "ev-study-contracts"
-      ]
+      "limitation": "Source dùng Express 4 và Prisma; chưa có kiểm chứng end-to-end hoặc production.",
+      "evidenceIds": ["ev-work-api-source"]
+    },
+    {
+      "id": "s2w-design-inventory",
+      "label": "Study & Work Mobile · thiết kế màn hình",
+      "state": "design",
+      "limitation": "83 Study surfaces và 45 Work Mobile views là tài liệu thiết kế, không phải số màn hình đã vận hành.",
+      "evidenceIds": ["ev-study-screen-design", "ev-work-mobile-design"]
+    },
+    {
+      "id": "s2w-client-source",
+      "label": "Study Web, Work Web & Mobile · source theo snapshot",
+      "state": "partial",
+      "limitation": "Study Web source được đối chiếu trên main; Work Web và Work Mobile source trên develop. Mobile là prototype; không có nghiệm thu UI end-to-end hoặc production.",
+      "evidenceIds": ["ev-study-web-source", "ev-work-web-source", "ev-work-mobile-source"]
+    },
+    {
+      "id": "s2w-db-admin-source",
+      "label": "DB Admin · source trên main, local-only",
+      "state": "source-only",
+      "limitation": "Web/API source có trong main @ bb9e2be2e146285f004cdc00e8d632ca8ed1b4a3, vắng trong cây apps/ của develop đã rà; chỉ dành cho công cụ cục bộ, không phải dịch vụ hosted.",
+      "evidenceIds": ["ev-db-admin-source"]
+    },
+    {
+      "id": "s2w-learning-career-vision",
+      "label": "Kết nối học tập, kỹ năng và việc làm",
+      "state": "design",
+      "limitation": "Khóa học miễn phí, hỗ trợ AI cho học tập/CV/JD và tích hợp Study–Work là định hướng sản phẩm; chưa được xác nhận là tính năng đang chạy.",
+      "evidenceIds": ["ev-study-contracts", "ev-ai-api-source"]
     }
   ],
   "stack": [
-    "FastAPI",
     "Python",
-    "Vue",
-    "React",
-    "Express",
-    "PostgreSQL",
-    "Redis",
-    "OpenAPI"
+    "FastAPI",
+    "Pydantic",
+    "SQLAlchemy",
+    "PostgreSQL / Neon",
+    "Vue 3",
+    "React 19",
+    "TypeScript",
+    "Express 4",
+    "Prisma",
+    "Flutter / Dart",
+    "Riverpod",
+    "Angular / Material",
+    "Ollama",
+    "OpenAPI & event contracts"
   ],
   "limitations": [
-    "Bằng chứng phản ánh branch và commit được ghi nhận ngày 24/10/2026. Work API trong phạm vi đó dùng Express 4; tích hợp runtime giữa các dịch vụ chưa được nghiệm thu."
+    "Đối chiếu hai snapshot: develop @ 376054183df9b611c65b14c4e650037b051fb49f và main mặc định @ bb9e2be2e146285f004cdc00e8d632ca8ed1b4a3. Kiến trúc tám package được tổng hợp qua hai nhánh, không cùng hiện diện trong một snapshot.",
+    "Không có demo hoặc production đã xác nhận. Study–Work integration là target chưa wired; Work Mobile là prototype, AI API ở mức thử nghiệm, DB Admin local-only.",
+    "TechLead và phạm vi đóng góp cá nhân là user-attested. Source hiện có route cho 66 Study API IDs và 21 Work API operations; #99–103 chưa có route source."
   ],
-  "caseSlugs": [
-    "study2work-contracts-runtime"
-  ],
+  "caseSlugs": ["study2work-contracts-runtime"],
   "featured": true,
   "availability": "unknown",
   "evidenceIds": [
     "ev-study-role",
-    "ev-study-contracts"
+    "ev-study-api-source",
+    "ev-study-contracts",
+    "ev-work-api-source",
+    "ev-work-web-source",
+    "ev-study-web-source",
+    "ev-study-screen-design",
+    "ev-work-mobile-source",
+    "ev-work-mobile-design",
+    "ev-ai-api-source",
+    "ev-db-admin-source"
   ],
-  "repositoryIds": [
-    "study2work"
-  ],
-  "title": "Study2Work · API contracts và ranh giới dịch vụ",
+  "repositoryIds": ["study2work"],
+  "title": "Study2Work · Từ học tập đến cơ hội nghề nghiệp",
   "filterGroup": "Backend & dữ liệu"
 }
 ---
 
-## Bài toán
+<div class="s2w-story">
+  <section class="s2w-position" aria-labelledby="s2w-position-title">
+    <p class="s2w-kicker">Định vị sản phẩm</p>
+    <h2 id="s2w-position-title">Từ học tập đến công việc phù hợp</h2>
+    <p>Study2Work được định hướng như một nền tảng EdTech–HRTech, nơi người học có thể tiếp cận kiến thức, rèn kỹ năng và xây bằng chứng năng lực; doanh nghiệp có thể tìm ứng viên dựa trên yêu cầu công việc và hồ sơ rõ ràng hơn.</p>
+    <p class="s2w-callout">Tầm nhìn: mở rộng cơ hội học tập cho cộng đồng và giúp hai phía — sinh viên cùng nhà tuyển dụng — tiến gần hơn tới sự phù hợp về kỹ năng, kỳ vọng và cơ hội phát triển.</p>
+  </section>
 
-Monorepo EdTech/HRTech có nhiều ứng dụng, tài liệu contract và module backend. Reviewer cần thấy rõ đâu là API/event contract, đâu là phần tích hợp service đã có trong source.
+  <section class="s2w-section" aria-labelledby="s2w-problem-title">
+    <p class="s2w-kicker">Bài toán thực tế</p>
+    <h2 id="s2w-problem-title">Khoảng cách giữa kỹ năng, cơ hội và thông tin đáng tin cậy</h2>
+    <p>Doanh nghiệp cần người có năng lực phù hợp với vị trí; sinh viên cần cơ hội đúng với kỹ năng và định hướng. Khi thông tin tuyển dụng, đào tạo và năng lực ứng viên nằm rời rạc, cả hai phía đều khó đánh giá mức độ phù hợp. Đây là bài toán về kết nối và khả năng tiếp cận, không phải quy kết động lực của người học.</p>
+    <div class="s2w-metric-grid" aria-label="Một số dữ kiện về thị trường lao động và tiếp cận học tập">
+      <article class="s2w-metric-card">
+        <strong>8,67%</strong>
+        <p>Tỷ lệ thất nghiệp của thanh niên Việt Nam 15–24 tuổi trong quý II/2026, gần bốn lần mức chung; 1,4 triệu thanh niên thuộc nhóm NEET.</p>
+        <a href="https://www.ilo.org/resource/news/youth-employment-takes-centre-stage-viet-nam%E2%80%99s-future-work" target="_blank" rel="noreferrer">ILO · 18/09/2026 <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="s2w-metric-card">
+        <strong>5,6×</strong>
+        <p>OECD dẫn số liệu World Bank 2016: hộ giàu chi cho khóa học ngoài trường trung bình gấp 5,6 lần hộ nghèo; chênh lệch lớn hơn ở bậc trung học.</p>
+        <a href="https://www.oecd.org/en/publications/oecd-economic-surveys-viet-nam-2025_fb37254b-en/full-report/towards-more-inclusive-growth_0f09c63a.html" target="_blank" rel="noreferrer">OECD · Economic Survey 2025 <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="s2w-metric-card">
+        <strong>63%</strong>
+        <p>Doanh nghiệp trong khảo sát toàn cầu của WEF xem khoảng cách kỹ năng là rào cản lớn cho chuyển đổi giai đoạn 2025–2030.</p>
+        <a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/4-workforce-strategies" target="_blank" rel="noreferrer">WEF · Future of Jobs 2025 <span aria-hidden="true">↗</span></a>
+      </article>
+    </div>
+    <p class="s2w-source-note">Bên cạnh chênh lệch kỹ năng và chi phí học tập, Cổng Thông tin Chính phủ cũng cảnh báo về tin tuyển dụng giả và hành vi mạo danh doanh nghiệp. Nền tảng hướng tới việc làm rõ thông tin và hành trình nghề nghiệp; điều này không đồng nghĩa S2W đã xác minh mọi nhà tuyển dụng.</p>
+    <a class="s2w-inline-source" href="https://baochinhphu.vn/lua-dao-tuyen-dung-truc-tuyen-bay-tinh-vi-nham-vao-nguoi-tim-viec-1022509300917299.htm" target="_blank" rel="noreferrer">Cổng Thông tin Chính phủ · cảnh báo lừa đảo tuyển dụng trực tuyến <span aria-hidden="true">↗</span></a>
+  </section>
 
-## Phần việc
+  <section class="s2w-section" aria-labelledby="s2w-vision-title">
+    <p class="s2w-kicker">Tầm nhìn sản phẩm · target</p>
+    <h2 id="s2w-vision-title">Một hành trình liền mạch từ học đến tuyển dụng</h2>
+    <div class="s2w-journey" aria-label="Hành trình mục tiêu: học, thực hành, tạo bằng chứng năng lực, xây hồ sơ, tìm việc và ứng tuyển">
+      <div class="s2w-journey-step"><span>01</span><strong>Học</strong><p>Khóa học và tài nguyên hướng tới khả năng tiếp cận rộng, gồm học liệu miễn phí phục vụ cộng đồng.</p></div>
+      <div class="s2w-journey-step"><span>02</span><strong>Thực hành</strong><p>Bài tập, dự án và hoạt động học tập giúp người học rèn năng lực theo mục tiêu nghề nghiệp.</p></div>
+      <div class="s2w-journey-step"><span>03</span><strong>Bằng chứng</strong><p>Ghi nhận kỹ năng và kết quả học tập để hình thành hồ sơ nghề nghiệp có ngữ cảnh.</p></div>
+      <div class="s2w-journey-step"><span>04</span><strong>Hồ sơ & CV</strong><p>AI được định hướng hỗ trợ hoàn thiện, tìm kiếm và lọc CV theo tiêu chí do người dùng lựa chọn.</p></div>
+      <div class="s2w-journey-step"><span>05</span><strong>JD & cơ hội</strong><p>Hỗ trợ tìm và lọc mô tả công việc, rồi đối chiếu yêu cầu với năng lực đã thể hiện.</p></div>
+      <div class="s2w-journey-step"><span>06</span><strong>Ứng tuyển</strong><p>Kết nối ứng viên với doanh nghiệp và nhu cầu đào tạo, với AI hỗ trợ như công cụ tham khảo.</p></div>
+    </div>
+    <p class="s2w-callout">Đây là product vision. AI matching, AI tutor, đào tạo nhân lực và đồng bộ bằng chứng Study–Work chưa được xác nhận là tính năng production.</p>
+  </section>
 
-- Đối chiếu tài liệu API contracts với module tương ứng trong repository.
-- Map event contracts với ứng dụng và service liên quan.
-- Phân biệt thiết kế contract với service composition.
-- Xác định Work API trong nhánh được rà soát sử dụng Express 4.
+  <section class="s2w-section" aria-labelledby="s2w-architecture-title">
+    <p class="s2w-kicker">Kiến trúc repository</p>
+    <h2 id="s2w-architecture-title">Tám deployable units, trạng thái theo từng phần</h2>
+    <p>Monorepo tách các bề mặt Study, Work, AI và DB Admin theo trách nhiệm. Tám package dưới đây được tổng hợp từ hai snapshot: phần lớn source ở <code>develop</code>; Study Web và DB Admin được đối chiếu trên <code>main</code>. Đây là kiến trúc repository qua các nhánh, không khẳng định có tám dịch vụ production trong cùng một snapshot.</p>
+    <div class="s2w-architecture-grid">
+      <article class="s2w-architecture-card"><span class="s2w-domain">STUDY · WEB</span><h3>Study Web</h3><p>Vue 3 · TypeScript · Vite. Source được đối chiếu trên <code>main</code>; <code>develop</code> có inventory 83 surfaces dạng tài liệu thiết kế, không đại diện 83 màn hình runtime.</p><span class="s2w-state s2w-state--partial">Source · main</span></article>
+      <article class="s2w-architecture-card"><span class="s2w-domain">STUDY · API</span><h3>Study API</h3><p>Python · FastAPI · Pydantic · SQLAlchemy/psycopg · PostgreSQL/Neon.</p><span class="s2w-state s2w-state--partial">66 API IDs có route source</span></article>
+      <article class="s2w-architecture-card"><span class="s2w-domain">WORK · WEB</span><h3>Work Web</h3><p>React 19 · TypeScript · Vite · React Query · Zustand · Zod; các luồng có mức kết nối khác nhau.</p><span class="s2w-state s2w-state--partial">Source · chưa nghiệm thu end-to-end</span></article>
+      <article class="s2w-architecture-card"><span class="s2w-domain">WORK · API</span><h3>Work API</h3><p>Express 4 · TypeScript · Prisma · PostgreSQL; route theo candidate, business, jobs, CV và applications.</p><span class="s2w-state s2w-state--partial">21 HTTP operations trong source</span></article>
+      <article class="s2w-architecture-card"><span class="s2w-domain">WORK · MOBILE</span><h3>Work Mobile</h3><p>Flutter · Dart · Riverpod · GoRouter; Student và Business flavors trong source <code>develop</code>. Tích hợp trực tiếp Neon/Gemini là prototype boundary.</p><span class="s2w-state s2w-state--prototype">Prototype · 45 views là tài liệu</span></article>
+      <article class="s2w-architecture-card"><span class="s2w-domain">AI</span><h3>AI API</h3><p>FastAPI · httpx · Ollama. Source hiện có chat endpoint tối thiểu; chưa chứng minh AI lọc CV/JD hay trợ giảng.</p><span class="s2w-state s2w-state--prototype">Thử nghiệm</span></article>
+      <article class="s2w-architecture-card"><span class="s2w-domain">DB ADMIN · WEB</span><h3>DB Admin Web</h3><p>Angular · Angular Material · CodeMirror cho công cụ quản trị cơ sở dữ liệu; source có trong <code>main</code>, không có trong cây <code>apps/</code> đã rà của <code>develop</code>.</p><span class="s2w-state s2w-state--local">main · local-only</span></article>
+      <article class="s2w-architecture-card"><span class="s2w-domain">DB ADMIN · API</span><h3>DB Admin API</h3><p>FastAPI · SQLAlchemy · psycopg · JWT/Argon2id; source có trong <code>main</code> cho control plane cục bộ, không có trong cây <code>apps/</code> đã rà của <code>develop</code>.</p><span class="s2w-state s2w-state--local">main · local-only</span></article>
+    </div>
+    <p class="s2w-source-note">API/event contracts và hạ tầng dữ liệu hỗ trợ các package này. Tích hợp Study–Work vẫn là target chưa wired; không suy luận database hoặc provider đã chạy live từ DDL hay source.</p>
+  </section>
 
-## Kết quả thể hiện trong mã nguồn
+  <section class="s2w-section" aria-labelledby="s2w-contribution-title">
+    <p class="s2w-kicker">Đóng góp cá nhân</p>
+    <h2 id="s2w-contribution-title">TechLead · phạm vi do người sở hữu xác nhận</h2>
+    <p class="s2w-attestation">Role và các hạng mục bên dưới là user-attested; commit trong repository nhóm không tự chứng minh quyền sở hữu cá nhân.</p>
+    <ul class="s2w-contributions">
+      <li>Khởi tạo ý tưởng, tham khảo thị trường và xây dựng kịch bản nghiệp vụ.</li>
+      <li>Định hình kiến trúc tổng thể, chọn công nghệ và thiết kế các diagram hệ thống.</li>
+      <li>Thiết kế Detail Design cho API và mô hình cơ sở dữ liệu.</li>
+      <li>Tham gia coding codebase và các API #1–8, #48–103 theo xác nhận cá nhân.</li>
+    </ul>
+  </section>
 
-Source mapping làm rõ các contract, module và ranh giới tích hợp trong phạm vi đã kiểm tra.
-
-## Giới hạn kiểm chứng
-
-Vai trò Contributor / System Designer có phần tự khai báo. Bằng chứng gắn với branch và commit được ghi nhận; không khẳng định toàn bộ dịch vụ đã tích hợp hoặc chạy cùng nhau.
+  <section class="s2w-section s2w-evidence-boundary" aria-labelledby="s2w-boundary-title">
+    <p class="s2w-kicker">Evidence & giới hạn</p>
+    <h2 id="s2w-boundary-title">Source hiện tại, thiết kế và mục tiêu được tách riêng</h2>
+    <ul>
+      <li>Snapshot <code>develop</code> có route cho 66 Study API IDs; #99–103 có tài liệu DD nhưng chưa có route trong source đã đối chiếu.</li>
+      <li>Work API có 21 HTTP operations trong source. Số lượng route không tự chứng minh runtime hay chất lượng tích hợp.</li>
+      <li>Study Web và DB Admin source được đối chiếu trên <code>main</code>; DB Admin vắng trong cây <code>apps/</code> của <code>develop</code>. 83 Study surfaces và 45 Work Mobile views là inventory/DD; Work Mobile là prototype.</li>
+      <li>Không có demo hoặc production đã xác nhận. GitHub là liên kết mã nguồn; các khả năng AI và hành trình Study–Work phía trên là định hướng.</li>
+    </ul>
+  </section>
+</div>

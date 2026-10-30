@@ -22,8 +22,8 @@ const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
     hidden
   ></audio>
   <div class="ambient-player__notice" data-notice role="status" aria-live="polite">
-    <span data-notice-message>Portfolio có nhạc nền</span>
-    <button class="ambient-player__dismiss" type="button" data-dismiss aria-label="Ẩn thông báo nhạc nền">×</button>
+    <span data-notice-message>Nhạc nền sẽ được phát sau <span data-countdown>5</span> giây.</span>
+    <button class="ambient-player__cancel" type="button" data-cancel hidden>Bấm để không phát nhạc</button>
   </div>
   <div class="ambient-player__controls">
     <span class="ambient-player__label visually-hidden">Nhạc nền</span>
@@ -57,29 +57,58 @@ const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
     const audio = player.querySelector<HTMLAudioElement>('[data-audio]');
     const notice = player.querySelector<HTMLElement>('[data-notice]');
     const noticeMessage = player.querySelector<HTMLElement>('[data-notice-message]');
+    const countdownValue = player.querySelector<HTMLElement>('[data-countdown]');
+    const cancelButton = player.querySelector<HTMLButtonElement>('[data-cancel]');
     const toggleButton = player.querySelector<HTMLButtonElement>('[data-toggle]');
     const playIcon = player.querySelector<HTMLElement>('[data-play-icon]');
     const muteButton = player.querySelector<HTMLButtonElement>('[data-mute]');
     const muteIcon = player.querySelector<HTMLElement>('[data-mute-icon]');
     const volumeInput = player.querySelector<HTMLInputElement>('[data-volume]');
-    const dismissButton = player.querySelector<HTMLButtonElement>('[data-dismiss]');
     const secondTrack = player.dataset.secondTrack;
 
-    if (audio && notice && noticeMessage && toggleButton && playIcon && muteButton && muteIcon && volumeInput && secondTrack) {
+    if (audio && notice && noticeMessage && countdownValue && cancelButton && toggleButton && playIcon && muteButton && muteIcon && volumeInput && secondTrack) {
       let isPlaying = false;
       let finished = false;
       let noticeTimer: number | undefined;
+      let countdownTimer: number | undefined;
+      let countdownSeconds = 5;
+      let autoplayCancelled = false;
+      let playbackAttemptId = 0;
 
       const dismissNotice = () => {
         notice.hidden = true;
         if (noticeTimer !== undefined) window.clearTimeout(noticeTimer);
       };
 
+      const stopAutoplayCountdown = () => {
+        if (countdownTimer !== undefined) window.clearInterval(countdownTimer);
+        countdownTimer = undefined;
+      };
+
       const showNotice = (message: string) => {
         noticeMessage.textContent = message;
+        cancelButton.hidden = true;
         notice.hidden = false;
         if (noticeTimer !== undefined) window.clearTimeout(noticeTimer);
         noticeTimer = window.setTimeout(dismissNotice, 5000);
+      };
+
+      const showCountdown = () => {
+        countdownSeconds = 5;
+        countdownValue.textContent = String(countdownSeconds);
+        cancelButton.hidden = false;
+        notice.hidden = false;
+
+        countdownTimer = window.setInterval(() => {
+          if (countdownSeconds === 1) {
+            stopAutoplayCountdown();
+            if (!autoplayCancelled) attemptPlayback(true);
+            return;
+          }
+
+          countdownSeconds -= 1;
+          countdownValue.textContent = String(countdownSeconds);
+        }, 1000);
       };
 
       const updatePlaybackControls = () => {
@@ -91,12 +120,15 @@ const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
         playIcon.textContent = isPlaying ? 'Ⅱ' : '▶';
       };
 
-      const attemptPlayback = (fromUser = false) => {
+      const attemptPlayback = (dismissOnSuccess = false) => {
+        const playbackAttempt = ++playbackAttemptId;
         audio.play().then(() => {
+          if (playbackAttempt !== playbackAttemptId) return;
           isPlaying = true;
           updatePlaybackControls();
-          if (fromUser) dismissNotice();
+          if (dismissOnSuccess) dismissNotice();
         }).catch(() => {
+          if (playbackAttempt !== playbackAttemptId) return;
           isPlaying = false;
           updatePlaybackControls();
           showNotice('Trình duyệt đã chặn tự phát. Bấm phát để nghe nhạc.');
@@ -112,6 +144,8 @@ const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
           return;
         }
 
+        stopAutoplayCountdown();
+        autoplayCancelled = false;
         if (finished) {
           audio.src = audio.dataset.firstTrack ?? audio.src;
           audio.dataset.part = '1';
@@ -126,15 +160,23 @@ const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
         muteButton.setAttribute('aria-pressed', String(audio.muted));
         muteButton.setAttribute('aria-label', audio.muted ? 'Bật tiếng' : 'Tắt tiếng');
         muteIcon.textContent = audio.muted ? '×' : '♪';
-        dismissNotice();
+        if (countdownTimer === undefined) dismissNotice();
       });
 
       volumeInput.addEventListener('input', () => {
         audio.volume = Number(volumeInput.value);
-        dismissNotice();
+        if (countdownTimer === undefined) dismissNotice();
       });
 
-      dismissButton?.addEventListener('click', dismissNotice);
+      cancelButton.addEventListener('click', () => {
+        autoplayCancelled = true;
+        playbackAttemptId += 1;
+        stopAutoplayCountdown();
+        audio.pause();
+        isPlaying = false;
+        updatePlaybackControls();
+        dismissNotice();
+      });
 
       audio.addEventListener('ended', () => {
         if (audio.dataset.part === '1') {
@@ -158,8 +200,7 @@ const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
 
       player.hidden = false;
       audio.volume = Number(volumeInput.value);
-      showNotice('Portfolio có nhạc nền');
-      attemptPlayback();
+      showCountdown();
     }
   }
 </script>
@@ -180,9 +221,9 @@ const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
   }
 
   .ambient-player__notice {
-    display: flex;
-    align-items: center;
-    gap: .7rem;
+    display: grid;
+    justify-items: start;
+    gap: .6rem;
     max-width: min(21rem, calc(100vw - 2rem));
     padding: .65rem .7rem .65rem .9rem;
     border: 1px solid var(--line);
@@ -195,7 +236,6 @@ const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
 
   .ambient-player__notice[hidden] { display: none; }
 
-  .ambient-player__dismiss,
   .ambient-player__button {
     display: inline-grid;
     width: 2rem;
@@ -211,10 +251,23 @@ const secondTrack = siteAsset('mp3/background-music-part-2.mp3');
     line-height: 1;
   }
 
-  .ambient-player__dismiss { width: 1.65rem; height: 1.65rem; flex-basis: 1.65rem; font-size: 1rem; }
   .ambient-player__button { font-size: .8rem; }
-  .ambient-player__dismiss:hover,
   .ambient-player__button:hover { border-color: var(--accent); color: var(--accent); }
+
+  .ambient-player__cancel {
+    min-height: 2rem;
+    padding: .35rem .6rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--accent);
+    font: inherit;
+    font-size: .74rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .ambient-player__cancel:hover { border-color: var(--accent); }
+  .ambient-player__cancel[hidden] { display: none; }
 
   .ambient-player__controls {
     display: flex;
