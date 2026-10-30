@@ -359,6 +359,9 @@ test('project filters enhance the static list and retain an all-items state', as
 test('Study2Work project and case separate product vision from source status', async ({ page }) => {
   await page.goto(APP + 'projects/study2work-contracts/');
   await expect(page.getByRole('heading', { name: 'Study2Work · Từ học tập đến cơ hội nghề nghiệp' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Tôi định hình sản phẩm và dẫn dắt kỹ thuật' })).toBeVisible();
+  await expect(page.getByText('Tôi trực tiếp coding codebase và các API #1–8, #48–103.')).toBeVisible();
+  await expect(page.getByText(/user-attested|do người sở hữu xác nhận|theo xác nhận cá nhân/i)).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Tám deployable units, trạng thái theo từng phần' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Chưa có demo hoặc production' })).toBeVisible();
   await expect(page.getByRole('link', { name: /Mở mã nguồn Study2Work/ })).toHaveAttribute(
@@ -370,7 +373,8 @@ test('Study2Work project and case separate product vision from source status', a
 
   await page.goto(APP + 'case-studies/study2work-contracts-runtime/');
   await expect(page.getByRole('heading', { name: 'Study2Work — Thiết kế hệ thống từ học tập đến việc làm' })).toBeVisible();
-  await expect(page.getByText('TechLead.')).toBeVisible();
+  await expect(page.getByText('Tôi trực tiếp coding codebase và các API #1–8, #48–103.')).toBeVisible();
+  await expect(page.getByText(/user-attested|do người sở hữu xác nhận|theo xác nhận cá nhân/i)).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Quyết định' })).toBeVisible();
 });
 

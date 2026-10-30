@@ -3,18 +3,17 @@
   "id": "study-contracts",
   "slug": "study2work-contracts-runtime",
   "title": "Study2Work — Thiết kế hệ thống từ học tập đến việc làm",
-  "context": "Study2Work được định hướng như nền tảng EdTech–HRTech nối quá trình học, bằng chứng năng lực và tuyển dụng. Case này trình bày vai trò TechLead theo xác nhận cá nhân, kiến trúc monorepo và ranh giới giữa tầm nhìn, tài liệu thiết kế và source hiện có.",
+  "context": "Tôi dẫn dắt Study2Work với vai trò TechLead, định hình nền tảng EdTech–HRTech nối học tập, bằng chứng năng lực và tuyển dụng. Tôi đưa dự án từ nghiên cứu bài toán, ý tưởng và kịch bản sản phẩm đến kiến trúc, Detail Design, cơ sở dữ liệu và coding.",
   "approach": [
-    "Khảo sát bài toán hai phía: người học cần tiếp cận kiến thức và thể hiện năng lực; doanh nghiệp cần tìm ứng viên phù hợp với yêu cầu công việc.",
-    "Định hình hành trình mục tiêu Learn → Practice → Evidence → Career Profile/CV → Jobs → Applications, cùng ý tưởng khóa học miễn phí và AI hỗ trợ tìm kiếm, học tập, đào tạo.",
-    "Thiết kế kiến trúc monorepo theo domain Study, Work, AI và DB Admin; chọn công nghệ theo ranh giới từng package.",
-    "Thiết kế diagrams hệ thống, API Detail Design và mô hình dữ liệu; phạm vi đóng góp này là user-attested.",
-    "Tham gia coding codebase và API #1–8, #48–103 theo xác nhận cá nhân; tách claim đóng góp khỏi trạng thái source tại snapshot công khai.",
-    "Đối chiếu source develop @ 376054183df9b611c65b14c4e650037b051fb49f và main mặc định @ bb9e2be2e146285f004cdc00e8d632ca8ed1b4a3 để ghi nhận route, tài liệu và giới hạn hiện tại."
+    "Tôi nghiên cứu bài toán hai phía: người học cần cơ hội tiếp cận kiến thức và thể hiện năng lực; doanh nghiệp cần tìm ứng viên phù hợp với yêu cầu công việc.",
+    "Tôi định hình hành trình Learn → Practice → Evidence → Career Profile/CV → Jobs → Applications, cùng tầm nhìn khóa học miễn phí và AI hỗ trợ tìm kiếm, học tập, đào tạo.",
+    "Tôi thiết kế kiến trúc monorepo theo domain Study, Work, AI và DB Admin, đồng thời lựa chọn công nghệ phù hợp với từng package.",
+    "Tôi thiết kế toàn bộ system diagrams, API Detail Design và mô hình cơ sở dữ liệu.",
+    "Tôi trực tiếp coding codebase và các API #1–8, #48–103.",
+    "Tôi đối chiếu source tại develop @ 376054183df9b611c65b14c4e650037b051fb49f và main mặc định @ bb9e2be2e146285f004cdc00e8d632ca8ed1b4a3 để phân biệt source hiện có, tài liệu thiết kế và các hạng mục tiếp theo."
   ],
-  "result": "Portfolio thể hiện được product vision, kiến trúc đa package và phạm vi công việc TechLead theo xác nhận cá nhân, đồng thời cho người xem kiểm tra source và phân biệt rõ phần đã có route với phần mới dừng ở DD. Không tuyên bố người dùng, tác động xã hội đã đo lường, demo, runtime toàn hệ thống hay production.",
+  "result": "Tôi xây dựng tầm nhìn sản phẩm và nền tảng thiết kế kỹ thuật cho Study2Work, từ kiến trúc đa package đến Detail Design, mô hình dữ liệu và codebase. Case study giúp recruiter thấy rõ tư duy sản phẩm, năng lực dẫn dắt kỹ thuật và trạng thái source của từng phần. Demo và production hiện chưa có.",
   "limitations": [
-    "TechLead và các hạng mục đóng góp cá nhân là user-attested; repository là sản phẩm nhóm và commit source không xác nhận riêng quyền sở hữu từng thay đổi.",
     "Snapshot develop có route cho 66 Study API IDs; API #99–103 có tài liệu DD nhưng chưa có route source tại commit được ghi nhận.",
     "Work API có 21 HTTP operations trong source; source presence không chứng minh runtime hoặc client/server acceptance end-to-end.",
     "83 Study surfaces và 45 Work Mobile views là tài liệu thiết kế. Study–Work chưa wired; Work Mobile là prototype, AI API thử nghiệm. Study Web và DB Admin được đối chiếu trên main; DB Admin local-only và vắng trong cây apps/ của develop.",
@@ -65,7 +64,7 @@
     },
     {
       "decision": "Gắn nhãn riêng role, design, source, runtime và deployment.",
-      "rationale": "TechLead/đóng góp cá nhân do người sở hữu xác nhận; source review không bao gồm runtime hoặc production acceptance.",
+      "rationale": "Tôi dẫn dắt vai trò TechLead; source review thể hiện package, route và trạng thái tại snapshot, còn runtime và production acceptance chưa được kiểm chứng.",
       "evidenceIds": ["ev-study-role", "ev-study-api-source", "ev-study-screen-design"],
       "attribution": "audit-scope"
     }
@@ -82,9 +81,9 @@ Luồng mục tiêu của Study2Work là **Learn → Practice → Evidence → C
 
 Kiến trúc repository gồm Study Web (Vue), Study API (FastAPI), Work Web (React), Work API (Express/Prisma), Work Mobile (Flutter), AI API (FastAPI/Ollama) và hai package DB Admin (Angular/FastAPI). Tám package này được tổng hợp từ hai snapshot: phần lớn ở `develop`; Study Web và DB Admin được đối chiếu trên default `main`. Chúng có mức hoàn thiện khác nhau và không phải tám dịch vụ production trong cùng một snapshot.
 
-## Cách đọc bằng chứng
+## Đóng góp và trạng thái source
 
-- API #1–8 và #48–103 là phạm vi đóng góp do người sở hữu xác nhận. Router source ở snapshot công khai có route cho 66 Study API IDs; #99–103 hiện mới có DD.
+- Tôi coding codebase và các API #1–8, #48–103. Router source tại snapshot `develop` có route cho 66 Study API IDs; #99–103 hiện ở mức DD, chưa có route trong snapshot này.
 - Work API có 21 HTTP operations trong source; điều này không chứng minh mọi màn hình Work đã kết nối hoặc toàn hệ thống chạy end-to-end.
 - 83 Study surfaces và 45 Work Mobile views là inventory/design docs. Prototype, local-only và target integration được ghi nhãn riêng.
 - Study Web và DB Admin source ở `main`; DB Admin không có trong cây `apps/` đã rà của `develop` và chỉ là công cụ local-only.
