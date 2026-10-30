@@ -2,10 +2,11 @@
 {
   "id": "labvnua",
   "slug": "labvnua-student-app",
-  "category": "Ứng dụng hỗ trợ sinh viên · Flutter",
+  "category": "Ứng dụng học vụ · Flutter",
+  "order": 5,
   "role": "Flutter Team Lead",
   "period": "2025–2026",
-  "summary": "Ứng dụng Flutter hỗ trợ sinh viên với luồng học vụ, cache local, thông báo và tích hợp Supabase Realtime trong phạm vi MVP.",
+  "summary": "MVP Flutter hỗ trợ luồng học vụ, cache local, thông báo và Supabase Realtime; vai trò điều phối nhóm được ghi nhận riêng với bằng chứng mã nguồn.",
   "status": "partial",
   "featureProofs": [
     {
@@ -20,7 +21,7 @@
       "id": "vnua-tests",
       "label": "Kiểm thử tự động",
       "state": "partial",
-      "limitation": "Mã nguồn mô tả bộ kiểm thử tự động ở mức cơ bản; trang này tập trung vào phạm vi MVP.",
+      "limitation": "README và source audit mô tả bộ kiểm thử ở mức cơ bản; chưa xác nhận hành vi runtime trong portfolio audit.",
       "evidenceIds": [
         "ev-labvnua-source"
       ]
@@ -33,10 +34,10 @@
     "Supabase Realtime"
   ],
   "limitations": [
-    "Phạm vi MVP tập trung vào trải nghiệm học vụ, cache local, thông báo và tích hợp dịch vụ."
+    "MVP tập trung vào luồng học vụ, cache local, thông báo và tích hợp dịch vụ. Runtime chưa được xác minh; vai trò team lead là tự khai báo và không nêu quy mô nhóm."
   ],
   "caseSlugs": [],
-  "featured": false,
+  "featured": true,
   "availability": "unknown",
   "evidenceIds": [
     "ev-labvnua-source",
@@ -50,10 +51,20 @@
 }
 ---
 
-## Tổng quan
+## Bài toán
 
-Ứng dụng Flutter hỗ trợ sinh viên tiếp cận các luồng học vụ, thông báo và dịch vụ liên quan trong một trải nghiệm di động.
+Ứng dụng hướng tới các tác vụ học vụ thường dùng, cần kết hợp dữ liệu trên thiết bị với thông báo và các dịch vụ liên quan.
 
-## Điểm kỹ thuật
+## Phần triển khai
 
-MVP kết hợp cache local, SQLite và Supabase Realtime, tập trung vào tổ chức dữ liệu và các tác vụ học tập thường dùng.
+- Xây dựng MVP bằng Flutter và Dart.
+- Tổ chức cache local với SQLite.
+- Tích hợp Supabase Realtime và luồng thông báo trong phạm vi source.
+
+## Kết quả thể hiện trong mã nguồn
+
+README và cấu trúc ứng dụng cho thấy các luồng học vụ, dữ liệu local và tích hợp dịch vụ. Vai trò Flutter Team Lead được ghi nhận theo thông tin tự khai báo.
+
+## Giới hạn kiểm chứng
+
+Portfolio audit đã đối chiếu README và một số cấu trúc app/test; chưa kiểm tra runtime hoặc deployment. Không công bố số lượng thành viên hay kết quả sử dụng.

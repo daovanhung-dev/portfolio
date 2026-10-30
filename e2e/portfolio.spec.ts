@@ -4,7 +4,7 @@ import { expect, test, type Page } from '@playwright/test';
 const APP = '/portfolio/';
 const ROUTES = [
   { path: '', heading: 'Đào Văn Hùng' },
-  { path: 'projects/', heading: 'Dự án' },
+  { path: 'projects/', heading: 'Dự án tiêu biểu' },
   { path: 'projects/nanobio-local-cloud/', heading: 'NanoBioAI · ứng dụng local-first' },
   { path: 'experience/', heading: 'Kinh nghiệm' },
   { path: 'skills/', heading: 'Năng lực' },
@@ -12,7 +12,7 @@ const ROUTES = [
   { path: 'about/', heading: 'Đào Văn Hùng' },
   { path: 'contact/', heading: 'Trao đổi về kỹ thuật và công việc' },
   { path: 'case-studies/', heading: 'Case study' },
-  { path: 'case-studies/nanobio-local-cloud-ai/', heading: 'Tổ chức kiến trúc local-first, cloud và AI' },
+  { path: 'case-studies/nanobio-local-cloud-ai/', heading: 'Tổ chức ranh giới local, cloud và AI trong NanoBioAI' },
 ];
 
 async function installAudioStub(page: Page) {
@@ -82,7 +82,7 @@ test('navigation, theme switch, and keyboard focus work', async ({ page }) => {
 
   await page.getByRole('link', { name: 'Dự án' }).first().click();
   await expect(page).toHaveURL(/\/portfolio\/projects\/$/);
-  await expect(page.getByRole('heading', { name: 'Dự án', level: 1 })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Dự án tiêu biểu', level: 1 })).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('data-theme', themeAfter);
   const routedToggle = page.getByRole('button', { name: /Chuyển giao diện/ });
   await expect(routedToggle).toHaveAttribute('aria-pressed', String(themeAfter === 'light'));
@@ -302,19 +302,19 @@ test('the fixed music controls stay inside mobile and desktop viewports', async 
 test('project filters enhance the static list and retain an all-items state', async ({ page, browser }) => {
   await page.goto(APP + 'projects/');
   const cards = page.locator('[data-project-card]');
-  await expect(cards).toHaveCount(14);
+  await expect(cards).toHaveCount(5);
   const mobileAi = page.getByRole('button', { name: 'Mobile & AI' });
   await mobileAi.click();
   await expect(cards.filter({ visible: true })).toHaveCount(3);
   await expect(page.getByText('Đang hiển thị 3 dự án.')).toBeAttached();
   await page.getByRole('button', { name: 'Tất cả' }).click();
-  await expect(cards.filter({ visible: true })).toHaveCount(14);
+  await expect(cards.filter({ visible: true })).toHaveCount(5);
 
   const noScript = await browser.newPage({ javaScriptEnabled: false });
   await noScript.goto(APP + 'projects/');
   await expect(noScript.locator('[data-filter-bar]')).toBeHidden();
   await expect(noScript.locator('[data-ambient-player]')).toBeHidden();
-  await expect(noScript.locator('[data-project-card]')).toHaveCount(14);
+  await expect(noScript.locator('[data-project-card]')).toHaveCount(5);
   await noScript.close();
 });
 
@@ -327,10 +327,9 @@ test('case navigation, reduced motion, and private project boundaries render cor
   const scrollBehavior = await page.locator('html').evaluate((element) => getComputedStyle(element).scrollBehavior);
   expect(scrollBehavior).toBe('auto');
 
-  await page.goto(APP + 'projects/privacy-safe-story-delivery/');
-  await expect(page.getByRole('heading', { name: 'Interactive delivery an toàn về riêng tư' })).toBeVisible();
-  await expect(page.locator('main').getByRole('link', { name: /GitHub|source/i })).toHaveCount(0);
-  await expect(page.locator('main').getByText(/github\.com|daovanhung-dev\/hung/i)).toHaveCount(0);
+  const removedProject = await page.goto(APP + 'projects/privacy-safe-story-delivery/');
+  expect(removedProject?.status()).toBe(404);
+  await expect(page.getByRole('heading', { name: 'Không tìm thấy trang này.' })).toBeVisible();
 });
 
 test('unknown direct route returns a readable 404 with working base links', async ({ page }) => {

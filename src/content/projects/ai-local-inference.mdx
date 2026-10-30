@@ -3,14 +3,15 @@
   "id": "ai-local",
   "slug": "ai-local-inference",
   "category": "AI trên thiết bị · Flutter",
+  "order": 4,
   "role": "Flutter Developer",
   "period": "2026",
-  "summary": "Ứng dụng Flutter hỗ trợ inference GGUF local, streaming token, tải/resume và kiểm tra hash model; lịch sử được lưu bằng Drift/SQLite.",
+  "summary": "Ứng dụng Flutter quản lý model GGUF trên thiết bị, từ tải và tiếp tục tải đến kiểm tra hash, streaming token và lưu lịch sử bằng Drift/SQLite.",
   "status": "partial",
   "featureProofs": [
     {
       "id": "ai-local-source",
-      "label": "Inference local, tải model và lưu trữ",
+      "label": "Inference local, quản lý model và lưu trữ",
       "state": "partial",
       "evidenceIds": [
         "ev-ai-local-source"
@@ -18,9 +19,9 @@
     },
     {
       "id": "ai-local-performance",
-      "label": "Đánh giá hiệu năng và tương thích thiết bị",
+      "label": "Hiệu năng và tương thích thiết bị",
       "state": "partial",
-      "limitation": "Đánh giá cần số đo trên thiết bị mục tiêu: latency, memory, nhiệt độ và khả năng hoạt động offline.",
+      "limitation": "Cần đo latency, bộ nhớ, nhiệt độ và khả năng hoạt động offline trên thiết bị mục tiêu.",
       "evidenceIds": [
         "ev-ai-local-source"
       ]
@@ -34,12 +35,12 @@
     "SQLite"
   ],
   "limitations": [
-    "Phạm vi hiện tại tập trung vào mã nguồn; latency, memory, nhiệt độ, hoạt động offline và bản build iOS cần được đánh giá riêng trên thiết bị mục tiêu."
+    "Đánh giá hiện dựa trên mã nguồn. Hiệu năng, mức sử dụng tài nguyên, hoạt động offline và tương thích iOS chưa được xác nhận trên thiết bị mục tiêu."
   ],
   "caseSlugs": [
     "ai-local-inference"
   ],
-  "featured": false,
+  "featured": true,
   "availability": "unknown",
   "evidenceIds": [
     "ev-ai-local-source"
@@ -47,15 +48,25 @@
   "repositoryIds": [
     "ai-local"
   ],
-  "title": "ai_local",
+  "title": "ai_local · suy luận AI trên thiết bị",
   "filterGroup": "Mobile & AI"
 }
 ---
 
-## Tổng quan
+## Bài toán
 
-Ứng dụng Flutter cho inference GGUF local, tổ chức vòng đời model từ tải xuống và resume đến kiểm tra hash, streaming token và lưu lịch sử bằng Drift/SQLite.
+Ứng dụng suy luận local cần quản lý model files, sinh token theo luồng và lưu lịch sử trên thiết bị. Luồng tải model cũng cần hỗ trợ tiếp tục sau gián đoạn và kiểm tra tính toàn vẹn của tệp.
 
-## Phạm vi đánh giá
+## Phần triển khai
 
-Mã nguồn thể hiện các luồng ứng dụng và quản lý model. Hiệu năng, nhiệt độ, mức sử dụng bộ nhớ, khả năng offline và tương thích iOS cần được đo trên thiết bị mục tiêu.
+- Tổ chức inference GGUF trong ứng dụng Flutter.
+- Quản lý tải model, tiếp tục tải và kiểm tra hash.
+- Tách lưu lịch sử hội thoại bằng Drift/SQLite khỏi xử lý inference.
+
+## Kết quả thể hiện trong mã nguồn
+
+Repository có các thành phần cho inference local, token streaming, vòng đời model và persistence cục bộ.
+
+## Giới hạn kiểm chứng
+
+Portfolio audit đã đối chiếu service inference, luồng tải model và persistence trong source. Chưa có số đo runtime về latency, bộ nhớ, nhiệt độ hoặc khả năng tương thích trên thiết bị mục tiêu.

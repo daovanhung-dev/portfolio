@@ -3,9 +3,10 @@
   "id": "hvc-evolution",
   "slug": "hvc-implementation-evolution",
   "category": "Vận hành giáo dục · nhiều phiên bản",
+  "order": 3,
   "role": "Full-stack Developer",
   "period": "2025–2026",
-  "summary": "Ba codebase cho nghiệp vụ vận hành giáo dục: FastAPI/PostgreSQL lịch sử, Angular/Supabase với phạm vi hẹp hơn và Vue/Supabase ở phiên bản mới hơn.",
+  "summary": "Phân tích ba codebase cho nghiệp vụ vận hành giáo dục: FastAPI/PostgreSQL lịch sử, Angular/Supabase phạm vi hẹp và Vue/Supabase ở phiên bản mới hơn.",
   "status": "partial",
   "featureProofs": [
     {
@@ -18,9 +19,9 @@
     },
     {
       "id": "hvc-angular",
-      "label": "Angular/Supabase · implementation phạm vi hẹp",
+      "label": "Angular/Supabase · phạm vi module hẹp hơn",
       "state": "partial",
-      "limitation": "Phiên bản Angular có phạm vi module hẹp hơn bản Vue.",
+      "limitation": "Implementation Angular có phạm vi module hẹp hơn phiên bản Vue.",
       "evidenceIds": [
         "ev-hvc-angular-source"
       ]
@@ -29,7 +30,7 @@
       "id": "hvc-vue",
       "label": "Vue/Supabase · phiên bản mới hơn",
       "state": "partial",
-      "limitation": "Các chức năng được mô tả theo source của phiên bản Vue; cấu hình và dịch vụ phụ thuộc môi trường triển khai.",
+      "limitation": "Source được đối chiếu; runtime và dịch vụ phụ thuộc cấu hình từng môi trường.",
       "evidenceIds": [
         "ev-hvc-vue-source"
       ]
@@ -45,7 +46,7 @@
     "Edge Functions"
   ],
   "limitations": [
-    "Mỗi phiên bản được trình bày theo codebase riêng; các luồng finance và payroll thuộc source Vue mới hơn."
+    "Ba codebase được mô tả theo phạm vi và thời điểm riêng. Các luồng finance/payroll thuộc source Vue mới hơn; runtime và triển khai chưa được xác minh."
   ],
   "caseSlugs": [
     "hvc-implementation-evolution"
@@ -53,6 +54,7 @@
   "featured": true,
   "availability": "unknown",
   "evidenceIds": [
+    "ev-hvc-role",
     "ev-hvc-fastapi-source",
     "ev-hvc-angular-source",
     "ev-hvc-vue-source"
@@ -67,14 +69,21 @@
 }
 ---
 
-## Tổng quan
+## Bài toán
 
-Ba implementation phục vụ nghiệp vụ vận hành giáo dục được phát triển trên các stack khác nhau: FastAPI/PostgreSQL, Angular/Supabase và Vue/Supabase.
+Các implementation HVC phục vụ cùng domain vận hành giáo dục nhưng khác thời điểm, kiến trúc và phạm vi module. Việc trình bày cần giữ đúng ranh giới giữa các codebase.
 
-## Điểm kỹ thuật
+## Phần việc
 
-- FastAPI/PostgreSQL là implementation lịch sử.
-- Angular/Supabase giữ phạm vi module hẹp hơn.
-- Finance và payroll thuộc source Vue ở phiên bản mới hơn.
+- Đối chiếu README và module source của ba repository.
+- Xác định FastAPI/PostgreSQL là implementation lịch sử.
+- Mô tả Angular/Supabase theo phạm vi module riêng.
+- Gắn các luồng finance/payroll với source Vue mới hơn.
 
-Mỗi codebase được giới thiệu độc lập để thể hiện đúng quá trình phát triển.
+## Kết quả thể hiện trong mã nguồn
+
+Source được lập bản đồ theo phiên bản, giúp phân biệt stack, module và phạm vi nghiệp vụ của từng implementation.
+
+## Giới hạn kiểm chứng
+
+Vai trò Full-stack Developer có phần tự khai báo; source được ghi nhận riêng cho từng repository và commit. Không suy ra ba codebase là một ứng dụng thống nhất hoặc đang vận hành production.

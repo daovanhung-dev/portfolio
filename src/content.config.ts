@@ -19,6 +19,7 @@ const projects = defineCollection({
     title: z.string(),
     category: z.string(),
     filterGroup: z.string(),
+    order: z.number().int().positive().optional(),
     role: z.string(),
     period: z.string().optional(),
     summary: z.string(),

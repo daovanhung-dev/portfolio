@@ -3,9 +3,10 @@
   "id": "study2work",
   "slug": "study2work-contracts",
   "category": "EdTech + HRTech · Monorepo",
-  "role": "Full-stack Developer / System Designer",
+  "order": 2,
+  "role": "Contributor / System Designer",
   "period": "2026",
-  "summary": "Monorepo EdTech/HRTech gồm nhiều ứng dụng, API contracts và module backend; trạng thái tích hợp được theo dõi theo từng dịch vụ.",
+  "summary": "Đối chiếu API/event contracts với module trong monorepo EdTech/HRTech, làm rõ phạm vi từng service; Work API ở nhánh được rà soát dùng Express 4.",
   "status": "partial",
   "featureProofs": [
     {
@@ -20,7 +21,7 @@
       "id": "s2w-runtime",
       "label": "Tích hợp runtime giữa các dịch vụ",
       "state": "partial",
-      "limitation": "Các module và điểm wiring được đánh giá riêng theo ứng dụng; phạm vi case tập trung vào contracts và source mapping.",
+      "limitation": "Portfolio audit rà soát contract và source mapping; không xác nhận tích hợp runtime toàn hệ thống.",
       "evidenceIds": [
         "ev-study-contracts"
       ]
@@ -37,7 +38,7 @@
     "OpenAPI"
   ],
   "limitations": [
-    "Work API trong nhánh được tham chiếu dùng Express 4; contract và module được xem theo từng ứng dụng trong monorepo."
+    "Bằng chứng phản ánh branch và commit được ghi nhận ngày 24/10/2026. Work API trong phạm vi đó dùng Express 4; tích hợp runtime giữa các dịch vụ chưa được nghiệm thu."
   ],
   "caseSlugs": [
     "study2work-contracts-runtime"
@@ -45,24 +46,32 @@
   "featured": true,
   "availability": "unknown",
   "evidenceIds": [
+    "ev-study-role",
     "ev-study-contracts"
   ],
   "repositoryIds": [
     "study2work"
   ],
-  "title": "Study2Work",
+  "title": "Study2Work · API contracts và ranh giới dịch vụ",
   "filterGroup": "Backend & dữ liệu"
 }
 ---
 
-## Tổng quan
+## Bài toán
 
-Study2Work là monorepo EdTech/HRTech với nhiều ứng dụng, tài liệu API contracts và module backend.
+Monorepo EdTech/HRTech có nhiều ứng dụng, tài liệu contract và module backend. Reviewer cần thấy rõ đâu là API/event contract, đâu là phần tích hợp service đã có trong source.
 
-## Điểm kỹ thuật
+## Phần việc
 
-- Đối chiếu contract với module trong từng ứng dụng.
-- Theo dõi riêng API, event contracts và các điểm tích hợp.
-- Work API trong nhánh được tham chiếu dùng Express 4.
+- Đối chiếu tài liệu API contracts với module tương ứng trong repository.
+- Map event contracts với ứng dụng và service liên quan.
+- Phân biệt thiết kế contract với service composition.
+- Xác định Work API trong nhánh được rà soát sử dụng Express 4.
 
-Cách trình bày theo từng module giúp làm rõ ranh giới giữa thiết kế API, source và tích hợp dịch vụ.
+## Kết quả thể hiện trong mã nguồn
+
+Source mapping làm rõ các contract, module và ranh giới tích hợp trong phạm vi đã kiểm tra.
+
+## Giới hạn kiểm chứng
+
+Vai trò Contributor / System Designer có phần tự khai báo. Bằng chứng gắn với branch và commit được ghi nhận; không khẳng định toàn bộ dịch vụ đã tích hợp hoặc chạy cùng nhau.

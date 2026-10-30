@@ -133,7 +133,7 @@ export function validatePortfolioData(portfolio) {
     if (!Array.isArray(project.limitations) || !project.limitations.length) errors.push('Project ' + project.id + ' needs limitations');
     for (const repoId of project.repositoryIds ?? []) {
       if (!repos.has(repoId)) errors.push('Project ' + project.id + ' references missing repository ' + repoId);
-      if (repos.get(repoId)?.state === 'empty') errors.push('Project ' + project.id + ' references an empty repository');
+      else if (repos.get(repoId)?.state !== 'available') errors.push('Project ' + project.id + ' references a repository that is not public and available');
     }
     for (const feature of project.featureProofs ?? []) {
       checkRefs(feature.evidenceIds, 'Feature ' + project.id + '/' + feature.id);
@@ -188,10 +188,10 @@ export function validatePortfolioData(portfolio) {
   for (const link of collections.contact.flatMap((entry) => entry.data.links ?? [])) checkUrl(link.url, 'Contact ' + link.label);
   for (const entry of collections.contact) checkUrl('mailto:' + entry.data.email, 'Contact email');
 
-  const availableRepositoryIds = new Set(repositories.filter((repo) => repo.state === 'available').map((repo) => repo.id));
-  const representedRepositoryIds = new Set(projects.flatMap((entry) => entry.data.repositoryIds ?? []));
-  for (const id of availableRepositoryIds) if (!representedRepositoryIds.has(id)) errors.push('Public repository ' + id + ' is not mapped to a project');
-  if (representedRepositoryIds.has('my-courses')) errors.push('Empty My_Courses inventory item must not be shown as a project');
+  // Repository inventory retains audited sources that are intentionally not selected as public project pages.
+  if (projects.some((entry) => (entry.data.repositoryIds ?? []).includes('my-courses'))) {
+    errors.push('Empty My_Courses inventory item must not be shown as a project');
+  }
 
   const sourceText = [
     ...Object.values(collections).flatMap((items) => items.map((item) => item.source)),

@@ -2,25 +2,25 @@
 {
   "id": "fpt-debugging",
   "slug": "fpt-debugging",
-  "title": "Truy vết lỗi xuyên tầng trong quy trình enterprise",
-  "context": "Khi yêu cầu, phản hồi API và kết quả trên giao diện khác nhau, cần tái hiện vấn đề và lần theo luồng xử lý từ UI đến dữ liệu.",
+  "title": "Truy vết lỗi từ giao diện đến dữ liệu",
+  "context": "Khi yêu cầu nghiệp vụ, phản hồi API và trạng thái giao diện không khớp, cần tái hiện lỗi rồi lần theo luồng xử lý.",
   "approach": [
     "Đối chiếu yêu cầu, thiết kế chi tiết và test case.",
-    "Tái hiện với input và dữ liệu kiểm soát.",
-    "Truy vết UI → API → service → SQL để khoanh vùng nguyên nhân.",
-    "Sửa trong phạm vi được giao và chạy kiểm thử hồi quy."
+    "Tái hiện vấn đề bằng input và dữ liệu đã kiểm soát.",
+    "Lần theo luồng UI → API → service → SQL để khoanh vùng nguyên nhân.",
+    "Sửa trong phạm vi được giao và kiểm tra hồi quy."
   ],
-  "result": "Quy trình theo từng tầng tạo đường đi rõ ràng từ yêu cầu đến dữ liệu, hỗ trợ khoanh vùng nguyên nhân và kiểm tra thay đổi bằng regression.",
+  "result": "Quy trình tạo một đường truy vết từ yêu cầu đến dữ liệu, giúp khoanh vùng lớp phát sinh sai lệch trước khi kiểm tra hồi quy.",
   "limitations": [
-    "Phạm vi công khai tập trung vào phương pháp kỹ thuật; bảo vệ tên hệ thống, mã nguồn và dữ liệu khách hàng."
+    "Đây là mô tả phương pháp do người thực hiện tự khai báo; không công bố hệ thống, mã nguồn, dữ liệu khách hàng, số lượng lỗi hoặc mức cải thiện."
   ],
   "projectSlugs": [],
   "role": "Full-stack Developer",
   "roleAttribution": "user-attested",
   "constraints": [
-    "Bảo vệ thông tin khách hàng và chỉ trình bày quy trình ở mức tổng quát."
+    "Chỉ trình bày phương pháp kỹ thuật tổng quát; không đưa tên hệ thống, mã nguồn hoặc dữ liệu khách hàng lên portfolio."
   ],
-  "verification": "Case mô tả quy trình làm việc xuyên tầng bằng Vue, Flask, PostgreSQL và SQL; ví dụ cụ thể và dữ liệu khách hàng được giữ riêng tư.",
+  "verification": "Case được gắn nhãn user-attested và kiểm tra ở mức nội dung đã khử thông tin riêng tư. Không có bằng chứng công khai để xác minh ví dụ hoặc kết quả định lượng.",
   "status": "partial",
   "evidenceIds": [
     "ev-fpt-role"
@@ -30,18 +30,3 @@
   "featured": false
 }
 ---
-
-## Bối cảnh
-
-Khi yêu cầu, phản hồi API và kết quả trên giao diện khác nhau, cần tái hiện vấn đề và lần theo luồng xử lý từ UI đến dữ liệu.
-
-## Cách tiếp cận
-
-- Đối chiếu yêu cầu, thiết kế chi tiết và test case.
-- Tái hiện với input và dữ liệu kiểm soát.
-- Truy vết UI → API → service → SQL.
-- Sửa trong phạm vi được giao và chạy regression.
-
-## Kết quả
-
-Quy trình theo từng tầng hỗ trợ khoanh vùng nguyên nhân và kiểm tra thay đổi một cách có hệ thống. Nội dung công khai giữ kín hệ thống, mã nguồn và dữ liệu khách hàng.

@@ -3,16 +3,17 @@
   "id": "nanobio-mobile",
   "slug": "nanobio-local-cloud",
   "category": "HealthTech · Flutter",
+  "order": 1,
   "role": "Technical Owner / Full-stack Developer",
   "period": "2026",
-  "summary": "Ứng dụng wellness Flutter kết hợp dữ liệu local-first, AI trên thiết bị và các tính năng cloud tùy cấu hình Supabase.",
+  "summary": "Ứng dụng wellness Flutter kết hợp dữ liệu local-first, AI trên thiết bị và tính năng Supabase theo môi trường; mỗi luồng có trạng thái và giới hạn riêng.",
   "status": "partial",
   "featureProofs": [
     {
       "id": "nano-local",
       "label": "Dữ liệu local và AI trên thiết bị",
       "state": "partial",
-      "limitation": "Hiệu năng và hành vi thực tế phụ thuộc thiết bị mục tiêu và cấu hình model.",
+      "limitation": "Hiệu năng và hành vi thực tế phụ thuộc thiết bị mục tiêu cùng cấu hình model.",
       "evidenceIds": [
         "ev-nano-mobile",
         "ev-nano-test-contract"
@@ -22,7 +23,7 @@
       "id": "nano-cloud",
       "label": "Tính năng cloud với Supabase",
       "state": "partial",
-      "limitation": "Các tính năng cloud phụ thuộc cấu hình Supabase, migration và chính sách dữ liệu của từng môi trường.",
+      "limitation": "Các luồng cloud phụ thuộc cấu hình Supabase, migration và chính sách dữ liệu của từng môi trường.",
       "evidenceIds": [
         "ev-nano-mobile"
       ]
@@ -37,7 +38,7 @@
     "llamadart"
   ],
   "limitations": [
-    "Sản phẩm tập trung vào wellness, không phải công cụ chẩn đoán hay điều trị. Hiệu năng trên thiết bị và các tính năng cloud được đánh giá theo cấu hình, migration và môi trường triển khai."
+    "Source được đối chiếu nhưng cấu hình cloud, migration, chính sách dữ liệu và hiệu năng trên thiết bị cần được xác minh riêng. Sản phẩm hỗ trợ wellness, không chẩn đoán hay điều trị."
   ],
   "caseSlugs": [
     "nanobio-local-cloud-ai"
@@ -57,14 +58,21 @@
 }
 ---
 
-## Tổng quan
+## Bài toán
 
-NanoBioAI kết hợp trải nghiệm Flutter local-first với các tính năng cloud tùy cấu hình và những luồng AI trên thiết bị.
+Ứng dụng wellness cần phân định rõ dữ liệu được xử lý trên thiết bị với tính năng phụ thuộc dịch vụ cloud. Các luồng AI tại chỗ cũng cần được mô tả tách biệt với tích hợp từ xa.
 
-## Điểm kỹ thuật
+## Phần việc
 
-- Dữ liệu local được tách khỏi các luồng đồng bộ cloud.
-- AI trên thiết bị được phân biệt với các tính năng phụ thuộc dịch vụ bên ngoài.
-- Cấu hình Supabase, migration và chính sách dữ liệu được quản lý theo môi trường.
+- Phát triển ứng dụng Flutter với dữ liệu local-first.
+- Tách lưu trữ cục bộ khỏi các luồng đồng bộ cloud.
+- Phân biệt AI trên thiết bị với tính năng cần Supabase.
+- Theo dõi cấu hình và trạng thái theo từng môi trường.
 
-Sản phẩm tập trung hỗ trợ wellness, không thay thế công cụ chẩn đoán hay điều trị.
+## Kết quả thể hiện trong mã nguồn
+
+README, source ứng dụng và test contract mô tả các ranh giới local, AI trên thiết bị và cloud theo cấu hình. Vai trò Technical Owner / Full-stack Developer có phần tự khai báo.
+
+## Giới hạn kiểm chứng
+
+Portfolio audit chưa đo hiệu năng trên thiết bị, kiểm tra migration/chính sách từ xa hoặc xác nhận deployment. Sản phẩm hướng tới wellness, không phải công cụ chẩn đoán hay điều trị.

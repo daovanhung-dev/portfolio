@@ -2,17 +2,17 @@
 {
   "id": "study-contracts",
   "slug": "study2work-contracts-runtime",
-  "title": "Phân tích API contracts và tích hợp trong Study2Work",
-  "context": "Monorepo EdTech/HRTech có nhiều ứng dụng, tài liệu contracts và module backend cần được kết nối theo từng dịch vụ.",
+  "title": "Đối chiếu API contracts với module Study2Work",
+  "context": "Monorepo EdTech/HRTech chứa nhiều ứng dụng, tài liệu contract và module backend cần được phân định theo từng service.",
   "approach": [
-    "Đối chiếu nhánh hoang_xuan_long_dev và SHA liên quan.",
-    "Map tài liệu contracts với module source tương ứng.",
-    "Phân tách API/event contracts khỏi service composition.",
-    "Theo dõi Work API sử dụng Express 4 và các điểm tích hợp theo từng ứng dụng."
+    "Đối chiếu branch hoang_xuan_long_dev và SHA được ghi trong evidence.",
+    "Map tài liệu API/event contracts với module source tương ứng.",
+    "Tách contract khỏi service composition và các điểm wiring.",
+    "Xác nhận Work API trong phạm vi rà soát sử dụng Express 4."
   ],
-  "result": "Case kết nối tài liệu API với module source, làm rõ contract, công nghệ và ranh giới tích hợp giữa các ứng dụng.",
+  "result": "Source mapping làm rõ mối liên hệ giữa contract, module và ranh giới tích hợp trong phạm vi đã kiểm tra.",
   "limitations": [
-    "Phạm vi tập trung vào contract và source mapping; tích hợp runtime giữa toàn bộ dịch vụ được đánh giá riêng."
+    "Phân tích dựa trên branch và commit được ghi nhận; không xác nhận runtime hoặc tích hợp toàn bộ dịch vụ."
   ],
   "projectSlugs": [
     "study2work-contracts"
@@ -20,11 +20,12 @@
   "role": "Contributor / System Designer",
   "roleAttribution": "mixed",
   "constraints": [
-    "Đánh giá theo branch và phiên bản source được tham chiếu trong case."
+    "Không suy rộng kết quả rà soát một branch thành trạng thái hiện tại của toàn bộ monorepo."
   ],
-  "verification": "Đối chiếu tài liệu contracts và module source trên branch, SHA được ghi nhận; Work API trong phạm vi này sử dụng Express 4.",
+  "verification": "Đối chiếu tài liệu contracts và module source tại branch/SHA được ghi trong evidence; Work API thuộc phạm vi này dùng Express 4.",
   "status": "partial",
   "evidenceIds": [
+    "ev-study-role",
     "ev-study-contracts"
   ],
   "decisions": [],
@@ -33,18 +34,3 @@
   "order": 2
 }
 ---
-
-## Bối cảnh
-
-Monorepo EdTech/HRTech có nhiều ứng dụng, tài liệu contracts và module backend cần được kết nối theo từng dịch vụ.
-
-## Cách tiếp cận
-
-- Đối chiếu branch và SHA liên quan.
-- Map tài liệu contracts với module source.
-- Phân tách API/event contracts khỏi service composition.
-- Theo dõi Work API dùng Express 4 và các điểm tích hợp theo từng ứng dụng.
-
-## Kết quả
-
-Tài liệu API và module source được đặt trong cùng bối cảnh, giúp làm rõ contracts, công nghệ và ranh giới giữa các dịch vụ.
