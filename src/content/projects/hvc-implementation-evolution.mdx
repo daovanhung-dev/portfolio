@@ -2,88 +2,81 @@
 {
   "id": "hvc-evolution",
   "slug": "hvc-implementation-evolution",
-  "category": "Vận hành giáo dục · nhiều phiên bản",
+  "category": "Vận hành giáo dục",
   "order": 3,
   "role": "Full-stack Developer",
   "period": "2025–2026",
-  "summary": "Phân tích ba codebase cho nghiệp vụ vận hành giáo dục: FastAPI/PostgreSQL lịch sử, Angular/Supabase phạm vi hẹp và Vue/Supabase ở phiên bản mới hơn.",
+  "summary": "Tôi phát triển HVC_EDU_NEW để quản lý lớp học và duy trì hồ sơ học tập theo từng buổi bằng giao diện Vue và dịch vụ Supabase.",
   "status": "partial",
   "featureProofs": [
     {
-      "id": "hvc-fastapi",
-      "label": "FastAPI/PostgreSQL · phiên bản lịch sử",
-      "state": "historical",
-      "evidenceIds": [
-        "ev-hvc-fastapi-source"
-      ]
+      "id": "hvc-class-sessions",
+      "label": "Lớp, membership, lịch lặp và buổi học",
+      "state": "partial",
+      "limitation": "Các luồng này có trong source; runtime Supabase chưa được kiểm tra trong lần rà soát portfolio.",
+      "evidenceIds": ["ev-hvc-vue-source"]
     },
     {
-      "id": "hvc-angular",
-      "label": "Angular/Supabase · phạm vi module hẹp hơn",
+      "id": "hvc-learning-records",
+      "label": "Điểm danh và hồ sơ học tập liên tục",
       "state": "partial",
-      "limitation": "Implementation Angular có phạm vi module hẹp hơn phiên bản Vue.",
-      "evidenceIds": [
-        "ev-hvc-angular-source"
-      ]
+      "limitation": "Source có luồng điểm danh và đánh giá theo buổi; chưa xác minh chấp nhận trên môi trường từ xa.",
+      "evidenceIds": ["ev-hvc-vue-source"]
     },
     {
-      "id": "hvc-vue",
-      "label": "Vue/Supabase · phiên bản mới hơn",
+      "id": "hvc-student-review-ai",
+      "label": "Video bài học và hỏi AI theo nội dung bài đã chọn",
       "state": "partial",
-      "limitation": "Source được đối chiếu; runtime và dịch vụ phụ thuộc cấu hình từng môi trường.",
-      "evidenceIds": [
-        "ev-hvc-vue-source"
-      ]
+      "limitation": "Đây là phạm vi được mô tả trong source; không khẳng định chất lượng câu trả lời hoặc trạng thái dịch vụ AI.",
+      "evidenceIds": ["ev-hvc-vue-source"]
+    },
+    {
+      "id": "hvc-session-timesheets",
+      "label": "Chấm công giáo viên theo buổi",
+      "state": "partial",
+      "limitation": "Source có luồng gửi, duyệt và chốt chấm công theo buổi; chưa xác minh vận hành từ xa.",
+      "evidenceIds": ["ev-hvc-vue-source"]
     }
   ],
   "stack": [
-    "FastAPI",
-    "PostgreSQL",
-    "Angular",
-    "Vue",
+    "Vue 3",
     "TypeScript",
+    "Pinia",
+    "Vue Router",
+    "Vite",
     "Supabase",
+    "PostgreSQL",
     "Edge Functions"
   ],
   "limitations": [
-    "Ba codebase được mô tả theo phạm vi và thời điểm riêng. Các luồng finance/payroll thuộc source Vue mới hơn; runtime và triển khai chưa được xác minh."
+    "Đã đối chiếu source HVC_EDU_NEW tại main @ c2b0f5f47466204b39f69eaa17616e14a1b5ebd3; chưa kiểm chứng runtime Supabase hoặc triển khai production.",
+    "ClassMonth, học phí, payroll và kế toán là dữ liệu hoặc module lịch sử, không thuộc phạm vi ứng dụng hiện hành."
   ],
-  "caseSlugs": [
-    "hvc-implementation-evolution"
-  ],
+  "caseSlugs": ["hvc-implementation-evolution"],
   "featured": true,
   "availability": "unknown",
-  "evidenceIds": [
-    "ev-hvc-role",
-    "ev-hvc-fastapi-source",
-    "ev-hvc-angular-source",
-    "ev-hvc-vue-source"
-  ],
-  "repositoryIds": [
-    "edu-hvc",
-    "hvc-angular",
-    "hvc-new"
-  ],
-  "title": "HVC Education · các phiên bản triển khai",
+  "evidenceIds": ["ev-hvc-role", "ev-hvc-vue-source"],
+  "repositoryIds": ["hvc-new"],
+  "title": "HVC Education · Quản lý lớp và học tập liên tục",
   "filterGroup": "Backend & dữ liệu"
 }
 ---
 
 ## Bài toán
 
-Các implementation HVC phục vụ cùng domain vận hành giáo dục nhưng khác thời điểm, kiến trúc và phạm vi module. Việc trình bày cần giữ đúng ranh giới giữa các codebase.
+HVC_EDU_NEW tập trung quản lý lớp học và theo dõi quá trình học tập liên tục theo từng buổi. Hệ thống nối hồ sơ lớp, membership, lịch lặp, buổi học và kết quả học tập trong cùng một ứng dụng.
 
 ## Phần việc
 
-- Đối chiếu README và module source của ba repository.
-- Xác định FastAPI/PostgreSQL là implementation lịch sử.
-- Mô tả Angular/Supabase theo phạm vi module riêng.
-- Gắn các luồng finance/payroll với source Vue mới hơn.
+- Tôi phát triển giao diện Vue 3 với TypeScript, Pinia, Vue Router và Vite, kết nối Supabase cho xác thực và dữ liệu.
+- Tôi triển khai các luồng lớp học, membership, lịch, buổi học, điểm danh, kết quả học tập và hồ sơ học sinh.
+- Tôi kết nối luồng video bài học, hỏi AI theo nội dung bài được chọn và chấm công giáo viên theo từng buổi.
+- Tôi giữ kiểm tra quyền và thao tác đặc quyền ở PostgreSQL/RLS, RPC và Edge Functions; route guard phía giao diện chỉ hỗ trợ điều hướng.
 
 ## Kết quả thể hiện trong mã nguồn
 
-Source được lập bản đồ theo phiên bản, giúp phân biệt stack, module và phạm vi nghiệp vụ của từng implementation.
+Source mô tả một luồng quản lý học vụ liên tục từ lịch và buổi học đến hồ sơ kết quả, video và chấm công. Luồng AI dùng ngữ cảnh bài học được chọn; điểm số, chuyên cần, nhận xét cá nhân và video không được gửi làm ngữ cảnh.
 
 ## Giới hạn kiểm chứng
 
-Vai trò Full-stack Developer có phần tự khai báo; source được ghi nhận riêng cho từng repository và commit. Không suy ra ba codebase là một ứng dụng thống nhất hoặc đang vận hành production.
+GitHub `main` và checkout local được đối chiếu tại cùng commit `c2b0f5f47466204b39f69eaa17616e14a1b5ebd3`. Nội dung này phản ánh source; chưa kiểm tra runtime Supabase hoặc xác nhận triển khai production. Các luồng ClassMonth, tài chính và payroll cũ không được mô tả như tính năng hiện hành.

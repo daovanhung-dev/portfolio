@@ -2,30 +2,71 @@
 {
   "id": "nanobio-mobile",
   "slug": "nanobio-local-cloud",
-  "category": "HealthTech · Flutter",
+  "category": "Wellness · Flutter & AI",
   "order": 1,
   "role": "Technical Owner / Full-stack Developer",
   "period": "2026",
-  "summary": "Ứng dụng wellness Flutter kết hợp dữ liệu local-first, AI trên thiết bị và tính năng Supabase theo môi trường; mỗi luồng có trạng thái và giới hạn riêng.",
+  "summary": "Nabi là ứng dụng wellness Flutter đã phát hành trên Google Play: dữ liệu cốt lõi được lưu cục bộ bằng SQLite, còn chat, lập kế hoạch và phân tích ảnh đi qua API FastAPI/Ollama có xác thực.",
+  "storeUrl": "https://play.google.com/store/apps/details?id=com.nanobioai.app",
+  "coverImage": {
+    "file": "projects/nanobio/logo.jpg",
+    "alt": "Logo Nabi với biểu tượng xanh dương kết hợp chiếc lá xanh trên nền trắng.",
+    "width": 2560,
+    "height": 2560
+  },
+  "gallery": [
+    { "file": "projects/nanobio/screen-01.jpg", "alt": "Màn hình quét món ăn với Nabi, có thể chụp ảnh hoặc tải ảnh thực phẩm.", "caption": "Quét món ăn cùng Nabi bằng cách chụp hoặc tải ảnh thực phẩm." },
+    { "file": "projects/nanobio/screen-02.jpg", "alt": "Màn hình trò chuyện bằng giọng nói với Nabi, có tùy chọn bắt đầu nói hoặc nhập chữ.", "caption": "Tương tác với Nabi bằng giọng nói hoặc nhập tin nhắn." },
+    { "file": "projects/nanobio/screen-03.jpg", "alt": "Bảng theo dõi Hành Trình Sống Khỏe với các nhóm công cụ wellness.", "caption": "Các lối tắt tới công cụ sức khỏe, lịch sinh hoạt và wellness." },
+    { "file": "projects/nanobio/screen-04.jpg", "alt": "Màn hình giám sát giấc ngủ với tùy chọn lịch và nhắc nhở.", "caption": "Thiết lập khung giờ và tùy chọn theo dõi giấc ngủ." },
+    { "file": "projects/nanobio/screen-05.jpg", "alt": "Màn hình Ngày của tôi liệt kê hoạt động theo từng mốc thời gian.", "caption": "Theo dõi hoạt động và kế hoạch trong ngày." },
+    { "file": "projects/nanobio/screen-06.jpg", "alt": "Màn hình thực đơn trong ngày với các lựa chọn món ăn.", "caption": "Xem thực đơn và kế hoạch bữa ăn trong ngày." },
+    { "file": "projects/nanobio/screen-07.jpg", "alt": "Tổng quan sức khỏe với các chỉ số và trạng thái theo dõi.", "caption": "Tổng quan các chỉ số và trạng thái sức khỏe cá nhân." },
+    { "file": "projects/nanobio/screen-08.jpg", "alt": "Màn hình chat với trợ lý AI Nabi, gồm gợi ý câu hỏi và ô nhập tin nhắn.", "caption": "Bắt đầu hội thoại AI từ gợi ý hoặc câu hỏi riêng." }
+  ],
   "status": "partial",
   "featureProofs": [
     {
-      "id": "nano-local",
-      "label": "Dữ liệu local và AI trên thiết bị",
+      "id": "nano-android-release",
+      "label": "Ứng dụng Android đã phát hành trên Google Play",
+      "state": "deployed-verified",
+      "limitation": "Listing công khai xác nhận trang phát hành; chưa thay thế kiểm thử ứng dụng đã cài hoặc backend production.",
+      "evidenceIds": [
+        "ev-nanobio-play-store"
+      ]
+    },
+    {
+      "id": "nano-local-data",
+      "label": "Dữ liệu sức khỏe và lịch sinh hoạt trên SQLite",
       "state": "partial",
-      "limitation": "Hiệu năng và hành vi thực tế phụ thuộc thiết bị mục tiêu cùng cấu hình model.",
+      "limitation": "Source có các luồng lưu trữ cục bộ; trải nghiệm offline trên thiết bị chưa được kiểm thử trong portfolio audit.",
       "evidenceIds": [
         "ev-nano-mobile",
+        "ev-nano-local-data"
+      ]
+    },
+    {
+      "id": "nano-ai-api",
+      "label": "Chat và tạo kế hoạch qua AI API tự host",
+      "state": "partial",
+      "limitation": "Client yêu cầu đăng nhập; cấu hình model và backend runtime chưa được xác minh trong môi trường triển khai.",
+      "evidenceIds": [
+        "ev-nano-ai-client",
+        "ev-nano-backend",
+        "ev-nano-api-routes",
+        "ev-nano-ollama-source",
         "ev-nano-test-contract"
       ]
     },
     {
-      "id": "nano-cloud",
-      "label": "Tính năng cloud với Supabase",
+      "id": "nano-food-vision",
+      "label": "Phân tích ảnh thực phẩm bằng vision model",
       "state": "partial",
-      "limitation": "Các luồng cloud phụ thuộc cấu hình Supabase, migration và chính sách dữ liệu của từng môi trường.",
+      "limitation": "API yêu cầu bật vision và gói thành viên phù hợp; availability và runtime chưa được xác minh.",
       "evidenceIds": [
-        "ev-nano-mobile"
+        "ev-nano-ai-client",
+        "ev-nano-api-routes",
+        "ev-nano-ollama-source"
       ]
     }
   ],
@@ -34,11 +75,13 @@
     "Dart",
     "Riverpod",
     "SQLite",
-    "Supabase",
-    "llamadart"
+    "FastAPI",
+    "PostgreSQL",
+    "Ollama"
   ],
   "limitations": [
-    "Source được đối chiếu nhưng cấu hình cloud, migration, chính sách dữ liệu và hiệu năng trên thiết bị cần được xác minh riêng. Sản phẩm hỗ trợ wellness, không chẩn đoán hay điều trị."
+    "Google Play listing xác nhận public release; portfolio chưa xác minh thiết bị, backend server runtime hoặc các API production.",
+    "NanoBioAI hướng tới hỗ trợ wellness, không chẩn đoán hay điều trị."
   ],
   "caseSlugs": [
     "nanobio-local-cloud-ai"
@@ -47,32 +90,43 @@
   "availability": "unknown",
   "evidenceIds": [
     "ev-nano-mobile",
+    "ev-nano-local-data",
+    "ev-nano-ai-client",
+    "ev-nano-backend",
+    "ev-nano-api-routes",
+    "ev-nano-ollama-source",
     "ev-nano-test-contract",
+    "ev-nanobio-play-store",
     "ev-nanobio-role"
   ],
   "repositoryIds": [
     "nanobio"
   ],
-  "title": "NanoBioAI · ứng dụng local-first",
+  "title": "NanoBioAI · Nabi, trợ lý wellness Flutter và AI tự host",
   "filterGroup": "Mobile & AI"
 }
 ---
 
-## Bài toán
+## Nhu cầu sản phẩm
 
-Ứng dụng wellness cần phân định rõ dữ liệu được xử lý trên thiết bị với tính năng phụ thuộc dịch vụ cloud. Các luồng AI tại chỗ cũng cần được mô tả tách biệt với tích hợp từ xa.
+Bài toán sản phẩm là tập hợp dữ liệu sức khỏe, bữa ăn và lịch sinh hoạt trong một trải nghiệm, đồng thời tách các tác vụ AI cần dịch vụ backend khỏi phần dữ liệu cốt lõi trên thiết bị.
 
-## Phần việc
+## Trải nghiệm Nabi
 
-- Phát triển ứng dụng Flutter với dữ liệu local-first.
-- Tách lưu trữ cục bộ khỏi các luồng đồng bộ cloud.
-- Phân biệt AI trên thiết bị với tính năng cần Supabase.
-- Theo dõi cấu hình và trạng thái theo từng môi trường.
+NanoBioAI đưa dữ liệu sức khỏe cá nhân, kế hoạch bữa ăn và lịch sinh hoạt vào một ứng dụng Flutter. Nabi hướng tới hỗ trợ người dùng theo dõi thói quen wellness, trò chuyện và tạo kế hoạch; phân tích ảnh thực phẩm chỉ mở khi tài khoản và cấu hình dịch vụ đáp ứng điều kiện. Các tác vụ AI đi qua backend sau khi người dùng đăng nhập.
 
-## Kết quả thể hiện trong mã nguồn
+## Kiến trúc và lựa chọn kỹ thuật
 
-README, source ứng dụng và test contract mô tả các ranh giới local, AI trên thiết bị và cloud theo cấu hình. Vai trò Technical Owner / Full-stack Developer có phần tự khai báo.
+- Tôi tổ chức ứng dụng Flutter theo feature và quản lý trạng thái bằng Riverpod; dữ liệu cốt lõi được lưu qua các datasource SQLite để các luồng cơ bản gắn với trạng thái trên thiết bị.
+- Client gửi yêu cầu chat và tạo nội dung có cấu trúc tới API FastAPI tự host. Backend quản lý lời nhắc an toàn, giới hạn tài nguyên và giao tiếp với Ollama thay vì nhúng model AI vào Flutter.
+- Luồng phân tích ảnh thực phẩm có endpoint riêng. Source kiểm tra định dạng/kích thước ảnh, cấu hình vision và quyền thành viên trước khi gọi model.
 
-## Giới hạn kiểm chứng
+## Phần việc tôi trực tiếp thực hiện
 
-Portfolio audit chưa đo hiệu năng trên thiết bị, kiểm tra migration/chính sách từ xa hoặc xác nhận deployment. Sản phẩm hướng tới wellness, không phải công cụ chẩn đoán hay điều trị.
+Tôi tự thiết kế kiến trúc tổng thể và trực tiếp coding ứng dụng Flutter cùng backend FastAPI/PostgreSQL/Ollama. Tôi tổ chức các luồng dữ liệu local với các tác vụ cần AI server, xây dựng và cấu hình server, tự kiểm thử sản phẩm, xử lý lỗi và hoàn tất release Android.
+
+Google Play hiện có trang phát hành công khai cho NanoBio; listing hiển thị developer Lê Phú Thạch. Phần coding và ownership kỹ thuật xuyên suốt sản phẩm do tôi trực tiếp đảm nhiệm. Mô tả phạm vi cá nhân này do tôi xác nhận; repository chứng minh cấu trúc source, còn listing chứng minh trang phát hành.
+
+## Trạng thái kiểm chứng
+
+Các nhận định kỹ thuật được đối chiếu với source tại `main` @ `d867cd134fd03635022af306229d8a0c3ef64c8e`; phạm vi công việc cá nhân là do tôi xác nhận. Google Play xác nhận listing Android công khai, nhưng portfolio audit chưa cài/chạy ứng dụng hoặc kiểm tra backend, Ollama và API production. Trạng thái project vẫn `partial`, availability vẫn `unknown`, và sản phẩm hỗ trợ wellness chứ không chẩn đoán hay điều trị y tế.

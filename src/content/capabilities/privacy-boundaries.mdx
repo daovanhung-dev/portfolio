@@ -1,7 +1,7 @@
 ---
 {
   "id": "privacy-boundaries",
-  "label": "Thiết kế sản phẩm tôn trọng quyền riêng tư",
+  "label": "Ranh giới dữ liệu local và dịch vụ AI",
   "state": "partial",
   "projectSlugs": [
     "nanobio-local-cloud"
@@ -12,4 +12,4 @@
 }
 ---
 
-Tách các luồng xử lý local, AI và cloud theo cấu hình sản phẩm wellness. Source evidence không thay thế việc đánh giá chính sách hoặc vận hành trong môi trường triển khai.
+Trong NanoBioAI, các luồng dữ liệu local bằng SQLite được phân biệt với request AI đã xác thực tới backend FastAPI tự host. Đây là mô tả ranh giới kiến trúc trong source; chưa phải xác nhận chính sách bảo mật, cấu hình production hoặc đánh giá quyền riêng tư.

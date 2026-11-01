@@ -26,6 +26,18 @@ const projects = defineCollection({
     status,
     repositoryIds: z.array(z.string()),
     evidenceIds: z.array(z.string()).min(1),
+    storeUrl: z.url().optional(),
+    coverImage: z.object({
+      file: z.string().regex(/^projects\/[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i),
+      alt: z.string().trim().min(1),
+      width: z.number().int().positive(),
+      height: z.number().int().positive(),
+    }).optional(),
+    gallery: z.array(z.object({
+      file: z.string().regex(/^projects\/[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i),
+      alt: z.string().trim().min(1),
+      caption: z.string().trim().min(1),
+    })).default([]),
     featureProofs: z.array(z.object({
       id: z.string(),
       label: z.string(),
@@ -41,6 +53,25 @@ const projects = defineCollection({
   }),
 });
 
+const experienceImagePath = z.string().regex(/^experiences\/[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i);
+const experienceCompanyMedia = z.object({
+  logo: z.object({
+    file: experienceImagePath,
+    alt: z.string().trim().min(1),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    sourceUrl: z.url(),
+  }),
+  photos: z.array(z.object({
+    file: experienceImagePath,
+    alt: z.string().trim().min(1),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    caption: z.string().trim().min(1),
+    sourceUrl: z.url(),
+  })).default([]),
+});
+
 const experiences = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/experiences' }),
   schema: z.object({
@@ -50,8 +81,10 @@ const experiences = defineCollection({
     period: z.string(),
     order: z.number().int().positive(),
     displayOnExperiencePage: z.boolean(),
+    detailPage: z.boolean().default(false),
     mapUrl: z.url().optional(),
     summary: z.string(),
+    companyMedia: experienceCompanyMedia.optional(),
     technologies: z.array(z.string().trim().min(1)).default([]),
     evidenceIds: z.array(z.string()).min(1),
     projectSlugs: z.array(z.string()),
@@ -121,6 +154,8 @@ const profile = defineCollection({
     supportingStatement: z.string(),
     availability: z.string(),
     summary: z.string(),
+    responsibilityStatement: z.string().trim().min(1),
+    aboutProjectSlugs: z.array(z.string().trim().min(1)).min(1),
     principles: z.array(z.object({
       number: z.string(),
       title: z.string(),

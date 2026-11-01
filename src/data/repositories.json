@@ -18,15 +18,15 @@
     "name": "NanoBioAI",
     "url": "https://github.com/daovanhung-dev/NanoBioAI",
     "defaultBranch": "main",
-    "defaultSha": "f26e89c6e5f644c6bea1992b11debe06833aa2a0",
+    "defaultSha": "d867cd134fd03635022af306229d8a0c3ef64c8e",
     "newestBranch": "main",
-    "newestBranchSha": "f26e89c6e5f644c6bea1992b11debe06833aa2a0",
-    "remoteBranchCount": 3,
+    "newestBranchSha": "d867cd134fd03635022af306229d8a0c3ef64c8e",
+    "remoteBranchCount": 4,
     "tagCount": 1,
     "windowCommitCount": 68,
     "auditMode": "shallow-window",
     "state": "available",
-    "coverageNote": "Fetched all refs and the requested window; history before the window was not downloaded after a full clone stalled."
+    "coverageNote": "Main SHA and remote branch count refreshed from GitHub on 2026-11-01. Tag and shallow-window counts remain from the 2026-10-24 audit; history before that window remains incomplete."
   },
   {
     "id": "study2work",
@@ -86,7 +86,7 @@
   },
   {
     "id": "labvnua",
-    "name": "LabVnua",
+    "name": "EduAI",
     "url": "https://github.com/daovanhung-dev/LabVnua",
     "defaultBranch": "develop",
     "defaultSha": "72c1090e7a76e0a10e9feb3e429fb86ba4c0c67b",

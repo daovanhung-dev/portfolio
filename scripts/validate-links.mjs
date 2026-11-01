@@ -25,6 +25,7 @@ const urls = new Set([
     'mailto:' + entry.data.email,
     ...(entry.data.links ?? []).map((link) => link.url),
   ]),
+  ...portfolio.collections.projects.flatMap((entry) => entry.data.storeUrl ? [entry.data.storeUrl] : []),
   ...portfolio.evidence.flatMap((item) => item.url ? [item.url] : []),
   ...portfolio.repositories.flatMap((item) => item.url ? [item.url] : []),
   ...portfolio.collections.experiences.flatMap((item) => item.data.mapUrl ? [item.data.mapUrl] : []),

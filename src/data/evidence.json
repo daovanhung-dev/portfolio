@@ -27,12 +27,12 @@
     "id": "ev-nano-mobile",
     "kind": "verified-source",
     "repoId": "nanobio",
-    "path": "README.md",
-    "commitSha": "f26e89c6e5f644c6bea1992b11debe06833aa2a0",
+    "path": "lib/main.dart",
+    "commitSha": "d867cd134fd03635022af306229d8a0c3ef64c8e",
     "branch": "main",
-    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/f26e89c6e5f644c6bea1992b11debe06833aa2a0/README.md",
-    "observedAt": "2026-10-24",
-    "note": "Current README and selected local AI source/tests inspected.",
+    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/d867cd134fd03635022af306229d8a0c3ef64c8e/lib/main.dart",
+    "observedAt": "2026-11-01",
+    "note": "Unified Flutter entrypoint and backend initialization source inspected; source presence does not verify device runtime.",
     "publicSafe": true
   },
   {
@@ -40,22 +40,78 @@
     "kind": "verified-source",
     "repoId": "nanobio",
     "path": "backend/README.md",
-    "commitSha": "f26e89c6e5f644c6bea1992b11debe06833aa2a0",
+    "commitSha": "d867cd134fd03635022af306229d8a0c3ef64c8e",
     "branch": "main",
-    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/f26e89c6e5f644c6bea1992b11debe06833aa2a0/backend/README.md",
-    "observedAt": "2026-10-24",
-    "note": "FastAPI package/setup source exists; deployment instructions were not run.",
+    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/d867cd134fd03635022af306229d8a0c3ef64c8e/backend/README.md",
+    "observedAt": "2026-11-01",
+    "note": "Current backend README describes the FastAPI/PostgreSQL architecture and Ollama API; setup and deployment instructions were not executed.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nano-api-routes",
+    "kind": "verified-source",
+    "repoId": "nanobio",
+    "path": "backend/src/nanobio_backend/modules/edge_api/router.py",
+    "commitSha": "d867cd134fd03635022af306229d8a0c3ef64c8e",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/d867cd134fd03635022af306229d8a0c3ef64c8e/backend/src/nanobio_backend/modules/edge_api/router.py",
+    "observedAt": "2026-11-01",
+    "note": "FastAPI source declares authenticated AI text, stream, and food-scan routes; server runtime was not verified.",
     "publicSafe": true
   },
   {
     "id": "ev-nano-test-contract",
     "kind": "verified-source",
     "repoId": "nanobio",
-    "path": "test/services/ai/no_remote_ai_transport_contract_test.dart",
-    "commitSha": "f26e89c6e5f644c6bea1992b11debe06833aa2a0",
+    "path": "backend/tests/test_ai_ollama.py",
+    "commitSha": "d867cd134fd03635022af306229d8a0c3ef64c8e",
     "branch": "main",
-    "observedAt": "2026-10-24",
-    "note": "Test source exists; tests were not run during this portfolio audit.",
+    "observedAt": "2026-11-01",
+    "note": "Backend Ollama provider tests cover request settings and truncation behavior; these tests were inspected but not run in this portfolio task.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nano-local-data",
+    "kind": "verified-source",
+    "repoId": "nanobio",
+    "path": "lib/core/storage/localdb/database_version.dart",
+    "commitSha": "d867cd134fd03635022af306229d8a0c3ef64c8e",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/d867cd134fd03635022af306229d8a0c3ef64c8e/lib/core/storage/localdb/database_version.dart",
+    "observedAt": "2026-11-01",
+    "note": "SQLite database version source inspected alongside local schedule and meal data sources; device/offline acceptance was not tested.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nano-ai-client",
+    "kind": "verified-source",
+    "repoId": "nanobio",
+    "path": "lib/core/network/backend_ai_text_client.dart",
+    "commitSha": "d867cd134fd03635022af306229d8a0c3ef64c8e",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/d867cd134fd03635022af306229d8a0c3ef64c8e/lib/core/network/backend_ai_text_client.dart",
+    "observedAt": "2026-11-01",
+    "note": "Flutter AI client sends authenticated text, streaming, and image-analysis requests to backend routes; endpoint availability was not tested.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nano-ollama-source",
+    "kind": "verified-source",
+    "repoId": "nanobio",
+    "path": "backend/src/nanobio_backend/services/ollama_client.py",
+    "commitSha": "d867cd134fd03635022af306229d8a0c3ef64c8e",
+    "branch": "main",
+    "url": "https://github.com/daovanhung-dev/NanoBioAI/blob/d867cd134fd03635022af306229d8a0c3ef64c8e/backend/src/nanobio_backend/services/ollama_client.py",
+    "observedAt": "2026-11-01",
+    "note": "Ollama provider source contains bounded request deadlines, output/context settings, and truncation handling; production configuration was not inspected.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-nanobio-play-store",
+    "kind": "verified-release",
+    "url": "https://play.google.com/store/apps/details?id=com.nanobioai.app",
+    "observedAt": "2026-11-01",
+    "note": "Public Android listing for Nanobio observed on Google Play; developer is displayed as LÊ PHÚ THẠCH. Confirms the listing, not installed-app, backend-runtime, or feature-operation acceptance.",
     "publicSafe": true
   },
   {
@@ -185,8 +241,9 @@
     "path": "frontend/src/",
     "commitSha": "c2b0f5f47466204b39f69eaa17616e14a1b5ebd3",
     "branch": "main",
-    "observedAt": "2026-10-24",
-    "note": "Current Vue app, migrations, functions, and tests inspected; remote state not checked.",
+    "url": "https://github.com/daovanhung-dev/HVC_EDU_NEW/tree/c2b0f5f47466204b39f69eaa17616e14a1b5ebd3/frontend/src",
+    "observedAt": "2026-11-01",
+    "note": "GitHub main and local checkout match this commit; README, implementation notes, frontend routes/services, and migrations 0059–0060 reviewed. Supabase runtime was not checked.",
     "publicSafe": true
   },
   {
@@ -219,8 +276,8 @@
     "commitSha": "72c1090e7a76e0a10e9feb3e429fb86ba4c0c67b",
     "branch": "develop",
     "url": "https://github.com/daovanhung-dev/LabVnua/blob/72c1090e7a76e0a10e9feb3e429fb86ba4c0c67b/README.md",
-    "observedAt": "2026-10-24",
-    "note": "README and selected application/test structure inspected; runtime not verified.",
+    "observedAt": "2026-11-01",
+    "note": "README, manifest, Gemini REST client, and selected feature/test sources inspected at this commit; app and service runtime were not verified.",
     "publicSafe": true
   },
   {
@@ -275,8 +332,8 @@
     "commitSha": "ca1daa48cc862b1e94ebadf1365143c589ae33dc",
     "branch": "main",
     "url": "https://github.com/daovanhung-dev/Learn2Earn/blob/ca1daa48cc862b1e94ebadf1365143c589ae33dc/README.md",
-    "observedAt": "2026-10-24",
-    "note": "Historical repository snapshot inspected; no commits in the audit window.",
+    "observedAt": "2026-11-01",
+    "note": "Public main source inspected at this commit as a reference for analogous system architecture and technology. The owner confirms similarity except domain content; this repository does not evidence Mai A internal code, workflows, individual contributions, runtime or production operation.",
     "publicSafe": true
   },
   {
@@ -318,15 +375,39 @@
   {
     "id": "ev-fpt-role",
     "kind": "user-attested",
-    "observedAt": "2026-10-30",
-    "note": "FPT role, dates, generic work scope, and Intern stack are user-attested; client source and confidential details are not included. No stage-specific stack is claimed for Fresher.",
+    "observedAt": "2026-11-01",
+    "note": "FPT role, dates, phase-specific stacks, and contributions are user-attested. Intern: Flask, Python, PostgreSQL, Vue.js; 50 DD API/17 screens, 50 UTC API/17 screens, 24 UTR API/8 screens, and design/implementation of 20 APIs/5 screens. Fresher: FastAPI, Python, Angular, PostgreSQL; 10 DD API/3 screens and design/implementation of 30 APIs/15 screens. Study2Work is an architecture reference only, not source evidence for FPT.",
     "publicSafe": true
   },
   {
-    "id": "ev-learn2earn-role",
+    "id": "ev-fpt-legal-entity",
+    "kind": "verified-source",
+    "url": "https://fpt.com/vi/tin-tuc/fpt-software-ky-hop-dong-thue-ha-tang-ky-thuat-tai-khu-cong-nghe-cao-hoa-lac",
+    "observedAt": "2026-11-01",
+    "note": "Official FPT article uses the Vietnamese company name Công ty TNHH Phần mềm FPT and describes the Hòa Lạc/F-Ville context; it does not establish individual employment or work scope.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-fpt-company-profile",
+    "kind": "verified-source",
+    "url": "https://fptsoftware.com/about-us",
+    "observedAt": "2026-11-01",
+    "note": "Official FPT Software profile reviewed for company relationship and public service context; it does not establish individual employment, role, or work scope.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-fpt-hola-lac",
+    "kind": "verified-source",
+    "url": "https://fptsoftware.com/about-us/global-presence",
+    "observedAt": "2026-11-01",
+    "note": "Official global-presence page reviewed for FPT Software's Hoa Lac location and F-Ville campus context; this is organizational context, not individual employment evidence.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-maiatech-role",
     "kind": "user-attested",
-    "observedAt": "2026-10-30",
-    "note": "Backend Developer role and 09/2025–11/2026 dates are user-attested; historical source confirms related technologies, not individual line ownership.",
+    "observedAt": "2026-11-01",
+    "note": "Backend Developer Intern role and 09/2025–11/2025 dates, API design, 30 API contribution, qualitative API-logic optimization, reuse of shared utilities, and the system's analogous backend/mobile technology stack and layered architecture are user-attested. Learn2Earn is a public architecture/technology reference, not source evidence for Mai A workflows or internal code; runtime and production operation are not independently verified.",
     "publicSafe": true
   },
   {
@@ -346,8 +427,16 @@
   {
     "id": "ev-vnua-role",
     "kind": "user-attested",
-    "observedAt": "2026-10-30",
-    "note": "Flutter Team Lead role and 11/2025–03/2026 dates are user-attested; application source supports related technologies, not an independent employment record.",
+    "observedAt": "2026-11-01",
+    "note": "Flutter Team Lead role, dates, ownership of EduAI architecture, and task assignment for a five-person team including the user are user-attested. EduAI source supports the feature-first code organization and widgets/controllers/services structure; CREI's official page supports organization identity and context, not the employment record.",
+    "publicSafe": true
+  },
+  {
+    "id": "ev-crei-about",
+    "kind": "verified-source",
+    "url": "https://crei.vnua.edu.vn/?page_id=29",
+    "observedAt": "2026-11-01",
+    "note": "Official CREI introduction page reviewed for the center's identity, institutional context, mission, and public imagery; it is not evidence of individual role or contribution.",
     "publicSafe": true
   },
   {
@@ -360,8 +449,8 @@
   {
     "id": "ev-nanobio-role",
     "kind": "user-attested",
-    "observedAt": "2026-10-24",
-    "note": "Technical-owner role is self-reported; product deployment and clinical outcomes are not claimed.",
+    "observedAt": "2026-11-01",
+    "note": "Sole technical ownership, architecture, end-to-end coding, server setup, testing, fixes, and release are user-attested. Repository source supports technical structure but not individual authorship; the Google Play listing independently confirms the public Android listing only.",
     "publicSafe": true
   },
   {

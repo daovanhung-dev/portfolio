@@ -22,7 +22,7 @@ const refs = publicEvidenceFor(ids);
           {ref.path && <code>{ref.path}</code>}
           {ref.url && (
             <a href={ref.url} target="_blank" rel="noreferrer">
-              Xem mã nguồn <span aria-hidden="true">↗</span>
+              {ref.kind === 'verified-release' ? 'Mở Google Play' : 'Xem mã nguồn'} <span aria-hidden="true">↗</span>
             </a>
           )}
         </div>

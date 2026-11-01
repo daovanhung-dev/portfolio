@@ -2,17 +2,19 @@
 {
   "id": "nano-local-cloud",
   "slug": "nanobio-local-cloud-ai",
-  "title": "Tổ chức ranh giới local, cloud và AI trong NanoBioAI",
-  "context": "Ứng dụng wellness kết hợp dữ liệu local-first, tính năng Supabase theo môi trường và các luồng AI trên thiết bị.",
+  "title": "NanoBioAI · Từ dữ liệu wellness local đến AI tự host",
+  "context": "Bài toán sản phẩm là tập hợp dữ liệu sức khỏe, bữa ăn và lịch sinh hoạt trong một trải nghiệm, đồng thời tách các tác vụ AI cần backend khỏi dữ liệu cốt lõi trên thiết bị. Tôi xây Nabi trên Flutter với chat, tạo kế hoạch và phân tích ảnh qua các API có xác thực.",
   "approach": [
-    "Đối chiếu README, source ứng dụng và test contract liên quan.",
-    "Tách quyền sở hữu dữ liệu local khỏi các luồng đồng bộ cloud.",
-    "Phân biệt inference trên thiết bị với chức năng cần dịch vụ cloud.",
-    "Xác định cấu hình, migration và thiết bị mục tiêu cần kiểm tra riêng."
+    "Tôi tự thiết kế kiến trúc Flutter theo feature, dùng Riverpod và các datasource SQLite để quản lý dữ liệu sức khỏe, bữa ăn và lịch sinh hoạt.",
+    "Tôi trực tiếp coding client gọi FastAPI cho chat và nội dung có cấu trúc; tôi xây backend chọn model Ollama cùng các giới hạn xử lý phía server.",
+    "Tôi triển khai riêng luồng phân tích ảnh thực phẩm, kiểm soát định dạng ảnh, cấu hình vision và quyền thành viên trước khi gọi model.",
+    "Tôi tự kiểm thử, xử lý lỗi và sửa luồng tích hợp; phạm vi cá nhân này do tôi xác nhận, còn test source được đối chiếu riêng."
   ],
-  "result": "Source thể hiện các ranh giới riêng cho dữ liệu local, AI trên thiết bị và tính năng cloud tùy cấu hình.",
+  "result": "Tôi đưa sản phẩm Android tới listing công khai trên Google Play. Source thể hiện kiến trúc SQLite trên mobile và FastAPI/Ollama cho các request AI; listing xác nhận trang phát hành nhưng không chứng minh runtime của ứng dụng hoặc backend.",
   "limitations": [
-    "Portfolio audit chưa xác minh runtime cloud, migration/chính sách từ xa, hiệu năng thiết bị hoặc kết quả lâm sàng. Sản phẩm hỗ trợ wellness, không chẩn đoán hay điều trị."
+    "Portfolio audit đối chiếu source tại d867cd134fd03635022af306229d8a0c3ef64c8e và listing Google Play; chưa chạy app, backend tests, thiết bị hoặc API production.",
+    "AI text yêu cầu đăng nhập; quét ảnh yêu cầu cấu hình vision và gói phù hợp. Khả năng phục vụ thực tế phụ thuộc môi trường backend.",
+    "NanoBioAI hỗ trợ wellness, không đưa ra chẩn đoán hoặc điều trị y tế."
   ],
   "projectSlugs": [
     "nanobio-local-cloud"
@@ -20,16 +22,52 @@
   "role": "Technical Owner / Full-stack Developer",
   "roleAttribution": "mixed",
   "constraints": [
-    "Sản phẩm thuộc phạm vi wellness; cần giữ rõ ranh giới dữ liệu cá nhân, xử lý AI và tính năng phụ thuộc cloud."
+    "Giữ các luồng dữ liệu cốt lõi gắn với SQLite trên thiết bị, nhưng không mô tả model AI là inference on-device.",
+    "Đưa tác vụ AI cá nhân hóa qua API có xác thực; cấu hình model, entitlement và trạng thái backend ảnh hưởng đến khả năng dùng tính năng.",
+    "Giữ ranh giới wellness rõ ràng và không đưa ra tuyên bố hiệu quả sức khỏe hoặc clinical outcome."
   ],
-  "verification": "Đối chiếu README, các luồng ứng dụng được chọn và test contract files ở SHA ghi trong evidence. Portfolio audit không chạy ứng dụng mobile hoặc kiểm tra backend từ xa.",
+  "verification": "Tôi đối chiếu Flutter entrypoint, BackendAiTextClient, API routes, OllamaClient và test source tại main @ d867cd134fd03635022af306229d8a0c3ef64c8e; Google Play listing được xác minh công khai vào 2026-11-01. Phạm vi coding, kiến trúc, server, kiểm thử, sửa lỗi và release do tôi xác nhận; portfolio không chạy test NanoBioAI hoặc xác nhận mobile/backend runtime.",
   "status": "partial",
   "evidenceIds": [
     "ev-nanobio-role",
     "ev-nano-mobile",
-    "ev-nano-test-contract"
+    "ev-nano-local-data",
+    "ev-nano-ai-client",
+    "ev-nano-backend",
+    "ev-nano-api-routes",
+    "ev-nano-ollama-source",
+    "ev-nano-test-contract",
+    "ev-nanobio-play-store"
   ],
-  "decisions": [],
+  "decisions": [
+    {
+      "decision": "Giữ dữ liệu nghiệp vụ cốt lõi ở SQLite và tách request AI sang API backend.",
+      "rationale": "Cách tổ chức này tách persistence trên mobile khỏi provider inference, đồng thời cho phép kiểm soát auth và cấu hình model ở backend.",
+      "evidenceIds": [
+        "ev-nano-local-data",
+        "ev-nano-ai-client"
+      ],
+      "attribution": "source-backed"
+    },
+    {
+      "decision": "Dùng OllamaClient phía FastAPI để giới hạn inference và không trả nội dung bị cắt như câu trả lời hoàn chỉnh.",
+      "rationale": "Source đặt giới hạn context/output/thời gian và phân loại truncation thành lỗi riêng; test source bao phủ các phản hồi dừng do giới hạn.",
+      "evidenceIds": [
+        "ev-nano-ollama-source",
+        "ev-nano-test-contract"
+      ],
+      "attribution": "source-backed"
+    },
+    {
+      "decision": "Đặt phân tích ảnh thực phẩm trên endpoint vision có kiểm soát entitlement và cấu hình.",
+      "rationale": "Ảnh được kiểm tra định dạng/kích thước; endpoint chỉ xử lý khi vision được bật và tài khoản có gói phù hợp.",
+      "evidenceIds": [
+        "ev-nano-ai-client",
+        "ev-nano-api-routes"
+      ],
+      "attribution": "source-backed"
+    }
+  ],
   "relatedCaseSlugs": [],
   "featured": true,
   "order": 1

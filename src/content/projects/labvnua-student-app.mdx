@@ -2,17 +2,27 @@
 {
   "id": "labvnua",
   "slug": "labvnua-student-app",
-  "category": "Ứng dụng học vụ · Flutter",
+  "category": "Ứng dụng học vụ sinh viên · Flutter",
   "order": 5,
   "role": "Flutter Team Lead",
   "period": "2025–2026",
-  "summary": "MVP Flutter hỗ trợ luồng học vụ, cache local, thông báo và Supabase Realtime; vai trò điều phối nhóm được ghi nhận riêng với bằng chứng mã nguồn.",
+  "summary": "EduAI là ứng dụng Flutter hỗ trợ sinh viên VNUA tra cứu học vụ, lưu dữ liệu cục bộ, nhận thông báo và dùng các dịch vụ học tập tích hợp.",
   "status": "partial",
   "featureProofs": [
     {
-      "id": "vnua-source",
-      "label": "Luồng học vụ, cache local và tích hợp dịch vụ",
+      "id": "vnua-learning",
+      "label": "Đăng nhập và các luồng học vụ sinh viên",
       "state": "partial",
+      "limitation": "README ghi nhận một số mục menu vẫn là placeholder; không xem toàn bộ mục hiển thị là luồng đã hoàn thiện.",
+      "evidenceIds": [
+        "ev-labvnua-source"
+      ]
+    },
+    {
+      "id": "vnua-local-services",
+      "label": "SQLite, thông báo nền, Supabase Realtime, AI và quét QR",
+      "state": "partial",
+      "limitation": "Mã nguồn thể hiện các tích hợp; runtime dịch vụ và hành vi ứng dụng chưa được xác minh trong portfolio audit.",
       "evidenceIds": [
         "ev-labvnua-source"
       ]
@@ -21,7 +31,7 @@
       "id": "vnua-tests",
       "label": "Kiểm thử tự động",
       "state": "partial",
-      "limitation": "README và source audit mô tả bộ kiểm thử ở mức cơ bản; chưa xác nhận hành vi runtime trong portfolio audit.",
+      "limitation": "README mô tả độ bao phủ kiểm thử còn hạn chế; bộ kiểm thử của repo nguồn không được chạy trong audit này.",
       "evidenceIds": [
         "ev-labvnua-source"
       ]
@@ -30,11 +40,14 @@
   "stack": [
     "Flutter",
     "Dart",
+    "HTTP · API học vụ VNUA và Gemini REST",
     "SQLite",
-    "Supabase Realtime"
+    "Supabase Realtime",
+    "Thông báo nền · Workmanager",
+    "QR · mobile_scanner"
   ],
   "limitations": [
-    "MVP tập trung vào luồng học vụ, cache local, thông báo và tích hợp dịch vụ. Runtime chưa được xác minh; vai trò team lead là tự khai báo và không nêu quy mô nhóm."
+    "Repo mô tả MVP đang phát triển và một số mục giao diện chưa hoàn thiện. Trạng thái runtime, Supabase/Gemini từ xa và production chưa được xác minh."
   ],
   "caseSlugs": [],
   "featured": true,
@@ -46,25 +59,25 @@
   "repositoryIds": [
     "labvnua"
   ],
-  "title": "LabVnua / EduAI",
+  "title": "EduAI",
   "filterGroup": "Mobile & AI"
 }
 ---
 
 ## Bài toán
 
-Ứng dụng hướng tới các tác vụ học vụ thường dùng, cần kết hợp dữ liệu trên thiết bị với thông báo và các dịch vụ liên quan.
+Sinh viên cần truy cập lịch học, điểm số, học phí và các thông tin đào tạo từ ứng dụng di động. EduAI gom các luồng học vụ cùng dữ liệu lưu trên thiết bị, thông báo và một số tiện ích hỗ trợ học tập.
 
 ## Phần triển khai
 
-- Xây dựng MVP bằng Flutter và Dart.
-- Tổ chức cache local với SQLite.
-- Tích hợp Supabase Realtime và luồng thông báo trong phạm vi source.
+- Phát triển ứng dụng Flutter/Dart theo cấu trúc feature-first, dùng widgets, controllers và services của Flutter.
+- Kết nối API đào tạo VNUA qua HTTP; lưu phiên và dữ liệu học vụ được hỗ trợ trong SQLite.
+- Tích hợp thông báo cục bộ và đồng bộ nền, chat realtime qua Supabase, trợ lý Gemini qua REST, cùng màn hình quét QR.
 
 ## Kết quả thể hiện trong mã nguồn
 
-README và cấu trúc ứng dụng cho thấy các luồng học vụ, dữ liệu local và tích hợp dịch vụ. Vai trò Flutter Team Lead được ghi nhận theo thông tin tự khai báo.
+Repo có các module đăng nhập sinh viên, thời khóa biểu, tra cứu và phân tích điểm, học phí, đăng ký học phần, chương trình đào tạo, môn tiên quyết, hồ sơ cá nhân, thông báo, chat, AI và QR. Đây là bằng chứng về phạm vi mã nguồn; README cũng nêu một số mục menu chưa được nối thành luồng hoàn chỉnh.
 
 ## Giới hạn kiểm chứng
 
-Portfolio audit đã đối chiếu README và một số cấu trúc app/test; chưa kiểm tra runtime hoặc deployment. Không công bố số lượng thành viên hay kết quả sử dụng.
+README mô tả EduAI là MVP đang phát triển với độ bao phủ kiểm thử còn hạn chế. Portfolio audit đã đối chiếu repo `develop` tại commit `72c1090e7a76e0a10e9feb3e429fb86ba4c0c67b` vào ngày 2026-11-01; chưa chạy ứng dụng, bộ test nguồn hoặc xác minh dịch vụ/production.

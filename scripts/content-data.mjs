@@ -58,6 +58,7 @@ export function validatePortfolioData(portfolio) {
   const projectSlugs = new Set(projects.map((item) => item.slug));
   const caseSlugs = new Set(cases.map((item) => item.slug));
   const stateSet = new Set(['implemented', 'partial', 'placeholder', 'source-only', 'design', 'deployed-verified', 'historical']);
+  const evidenceKindSet = new Set(['verified-source', 'verified-runtime', 'verified-release', 'sanitized-private', 'user-attested', 'design-doc', 'learning-lab', 'unverified']);
   const allowedProtocols = new Set(['https:', 'mailto:']);
   const checkUrl = (value, label) => {
     try {
@@ -109,6 +110,7 @@ export function validatePortfolioData(portfolio) {
   }
 
   for (const ref of evidence) {
+    if (!evidenceKindSet.has(ref.kind)) errors.push('Evidence ' + ref.id + ' has an invalid kind');
     if (ref.publicSafe !== true) errors.push('Evidence ' + ref.id + ' is not marked public safe');
     if (!/^\d{4}-\d{2}-\d{2}$/.test(ref.observedAt ?? '')) errors.push('Evidence ' + ref.id + ' has an invalid observed date');
     if (!ref.note?.trim()) errors.push('Evidence ' + ref.id + ' is missing a note');
@@ -131,6 +133,32 @@ export function validatePortfolioData(portfolio) {
     if (!project.title?.trim() || !project.summary?.trim() || !project.role?.trim()) errors.push('Project ' + project.id + ' is missing title, summary, or role');
     if (!project.filterGroup?.trim()) errors.push('Project ' + project.id + ' is missing its filter group');
     if (!Array.isArray(project.limitations) || !project.limitations.length) errors.push('Project ' + project.id + ' needs limitations');
+    if (project.storeUrl) {
+      checkUrl(project.storeUrl, 'Project ' + project.id + ' store URL');
+      const hasReleaseEvidence = (project.evidenceIds ?? []).some((id) => {
+        const ref = refs.get(id);
+        return ref?.kind === 'verified-release' && ref.url === project.storeUrl;
+      });
+      if (!hasReleaseEvidence) errors.push('Project ' + project.id + ' store URL needs matching verified-release evidence');
+    }
+    if (project.coverImage) {
+      if (typeof project.coverImage.file !== 'string' || !/^projects\/[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i.test(project.coverImage.file)) {
+        errors.push('Project ' + project.id + ' has an invalid cover asset path');
+      }
+      if (!project.coverImage.alt?.trim()) errors.push('Project ' + project.id + ' cover image needs alt text');
+      if (!Number.isInteger(project.coverImage.width) || project.coverImage.width < 1 || !Number.isInteger(project.coverImage.height) || project.coverImage.height < 1) {
+        errors.push('Project ' + project.id + ' cover image needs positive pixel dimensions');
+      }
+    }
+    const galleryFiles = new Set();
+    for (const image of project.gallery ?? []) {
+      if (typeof image.file !== 'string' || !/^projects\/[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i.test(image.file)) {
+        errors.push('Project ' + project.id + ' has an invalid gallery asset path');
+      }
+      if (!image.alt?.trim() || !image.caption?.trim()) errors.push('Project ' + project.id + ' gallery items need alt text and captions');
+      if (galleryFiles.has(image.file)) errors.push('Project ' + project.id + ' has a duplicate gallery asset: ' + image.file);
+      galleryFiles.add(image.file);
+    }
     for (const repoId of project.repositoryIds ?? []) {
       if (!repos.has(repoId)) errors.push('Project ' + project.id + ' references missing repository ' + repoId);
       else if (repos.get(repoId)?.state !== 'available') errors.push('Project ' + project.id + ' references a repository that is not public and available');
@@ -184,6 +212,15 @@ export function validatePortfolioData(portfolio) {
   }
   for (const name of ['profile', 'education', 'contact']) {
     for (const entry of collections[name]) checkRefs(entry.data.evidenceIds, name + ' ' + entry.slug);
+  }
+  for (const entry of collections.profile) {
+    const aboutProjectSlugs = entry.data.aboutProjectSlugs ?? [];
+    if (new Set(aboutProjectSlugs).size !== aboutProjectSlugs.length) {
+      errors.push('Profile ' + entry.slug + ' has duplicate About project references');
+    }
+    for (const slug of aboutProjectSlugs) {
+      if (!projectSlugs.has(slug)) errors.push('Profile ' + entry.slug + ' references missing About project ' + slug);
+    }
   }
   for (const link of collections.contact.flatMap((entry) => entry.data.links ?? [])) checkUrl(link.url, 'Contact ' + link.label);
   for (const entry of collections.contact) checkUrl('mailto:' + entry.data.email, 'Contact email');

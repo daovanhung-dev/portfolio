@@ -2,37 +2,45 @@
 {
   "id": "hvc-evolution",
   "slug": "hvc-implementation-evolution",
-  "title": "Phân định phạm vi ba implementation HVC",
-  "context": "Ba codebase phục vụ cùng domain vận hành giáo dục nhưng khác thời điểm, kiến trúc và phạm vi module.",
-  "approach": [
-    "Đối chiếu README và module source của từng repository.",
-    "Ghi nhận FastAPI/PostgreSQL là implementation lịch sử.",
-    "Giữ Angular/Supabase ở phạm vi module hẹp hơn.",
-    "Gắn finance/payroll với source Vue ở phiên bản mới hơn."
-  ],
-  "result": "Source mapping phân biệt ba implementation theo stack, thời điểm và phạm vi nghiệp vụ; finance/payroll chỉ được gắn với source Vue.",
-  "limitations": [
-    "Các phiên bản là codebase riêng. Portfolio audit không xác nhận một ứng dụng hợp nhất, runtime từ xa hoặc trạng thái production."
-  ],
-  "projectSlugs": [
-    "hvc-implementation-evolution"
+  "title": "HVC_EDU_NEW · Xây luồng quản lý lớp và học tập liên tục",
+  "projectSlugs": ["hvc-implementation-evolution"],
+  "context": "HVC_EDU_NEW quản lý lớp, lịch, buổi học và kết quả học tập liên tục trên Vue và Supabase.",
+  "constraints": [
+    "Mô tả duy nhất repository HVC_EDU_NEW; không gộp codebase FastAPI hoặc Angular vào implementation hiện hành.",
+    "Không trình bày ClassMonth, học phí, payroll hoặc kế toán cũ như nghiệp vụ app hiện hành.",
+    "Source evidence không đủ để khẳng định runtime Supabase hoặc production đã được xác minh."
   ],
   "role": "Full-stack Developer",
   "roleAttribution": "mixed",
-  "constraints": [
-    "Không chuyển tính năng giữa các phiên bản hoặc suy ra phạm vi triển khai ngoài source tương ứng."
-  ],
-  "verification": "Đối chiếu README và module source tại ba commit được ghi trong evidence; phân loại từng luồng theo repository và phiên bản.",
-  "status": "partial",
-  "evidenceIds": [
-    "ev-hvc-role",
-    "ev-hvc-fastapi-source",
-    "ev-hvc-angular-source",
-    "ev-hvc-vue-source"
+  "approach": [
+    "Tôi lần theo route Vue đến data query, command, RPC và Edge Function để giữ đúng ranh giới giữa giao diện và quyền dữ liệu.",
+    "Tôi mô hình hóa luồng từ lớp và membership đến lịch lặp, buổi học, điểm danh và hồ sơ học tập.",
+    "Tôi giữ luồng video, hỏi AI theo bài đã chọn và chấm công giáo viên theo buổi trong phạm vi source tương ứng.",
+    "Tôi đối chiếu migration để mô tả các kiểm tra quyền và thao tác chốt attendance/chấm công ở phía database."
   ],
   "decisions": [],
+  "verification": "Đối chiếu GitHub main với checkout local tại c2b0f5f47466204b39f69eaa17616e14a1b5ebd3; đọc README, docs/IMPLEMENTATION.md, router và services frontend, cùng migrations 0059–0060. Đây là rà soát source; không chạy ứng dụng hoặc kiểm tra Supabase từ xa trong lần cập nhật này.",
+  "result": "Source tại commit được ghim thể hiện một ứng dụng Vue/Supabase cho vận hành lớp học, kết quả học tập liên tục và chấm công theo buổi; trạng thái dự án vẫn là partial.",
+  "evidenceIds": ["ev-hvc-role", "ev-hvc-vue-source"],
+  "status": "partial",
+  "limitations": [
+    "Không xác minh runtime Supabase, triển khai production hoặc chấp nhận end-to-end.",
+    "Các repository HVC đời trước được giữ làm tư liệu riêng; tính năng của chúng không được chuyển sang HVC_EDU_NEW."
+  ],
   "relatedCaseSlugs": [],
   "featured": true,
   "order": 3
 }
 ---
+
+## Bối cảnh
+
+HVC_EDU_NEW tập trung theo dõi hoạt động học tập qua lớp, lịch và từng buổi học. Các vai trò Admin, giáo viên và học sinh có luồng riêng trên ứng dụng.
+
+## Cách tiếp cận
+
+Tôi đối chiếu đường đi của dữ liệu từ route và service Vue tới Supabase, rồi kiểm tra migration cho các thao tác cần quyền cao. Cách trình bày giữ membership, lịch lặp, buổi học, hồ sơ học tập và chấm công trong cùng phạm vi source hiện tại mà không mang chức năng lịch sử của repository khác sang.
+
+## Phạm vi
+
+Repository có source cho điểm danh và đánh giá theo buổi, video bài học, hỏi AI theo nội dung bài được chọn, cùng yêu cầu chấm công giáo viên. Đây là trạng thái source; runtime và triển khai chưa được kiểm chứng trong lần rà soát này.

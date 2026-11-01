@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import SiteLayout from '../components/SiteLayout.astro';
+import { siteAsset, sitePath } from '../utils/paths';
 
 const experiences = (await getCollection('experiences'))
   .filter((item) => item.data.displayOnExperiencePage)
@@ -19,9 +20,52 @@ const experiences = (await getCollection('experiences'))
         <li class="timeline-entry" data-experience-entry data-experience-id={item.data.id}>
           <time class="timeline-entry__date">{item.data.period}</time>
           <article class="timeline-entry__content">
-            <h2>{item.data.organization}</h2>
-            <h3>{item.data.role}</h3>
-            <p>{item.data.summary}</p>
+            {item.data.companyMedia ? (
+              <div class="experience-entry__overview" data-experience-media>
+                <div class="experience-entry__copy">
+                  <div class="experience-entry__identity">
+                    <a class="experience-company-logo" href={item.data.companyMedia.logo.sourceUrl} target="_blank" rel="noreferrer" aria-label="Mở nguồn biểu trưng công ty">
+                      <img
+                        data-experience-logo
+                        src={siteAsset(item.data.companyMedia.logo.file)}
+                        alt={item.data.companyMedia.logo.alt}
+                        width={item.data.companyMedia.logo.width}
+                        height={item.data.companyMedia.logo.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </a>
+                    <div>
+                      <h2>{item.data.organization}</h2>
+                      <h3>{item.data.role}</h3>
+                    </div>
+                  </div>
+                  <p>{item.data.summary}</p>
+                </div>
+                {item.data.companyMedia.photos[0] && (
+                  <figure class="experience-company-photo">
+                    <img
+                      data-experience-photo
+                      src={siteAsset(item.data.companyMedia.photos[0].file)}
+                      alt={item.data.companyMedia.photos[0].alt}
+                      width={item.data.companyMedia.photos[0].width}
+                      height={item.data.companyMedia.photos[0].height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <figcaption>
+                      {item.data.companyMedia.photos[0].caption} · <a href={item.data.companyMedia.photos[0].sourceUrl} target="_blank" rel="noreferrer">Nguồn ảnh <span aria-hidden="true">↗</span></a>
+                    </figcaption>
+                  </figure>
+                )}
+              </div>
+            ) : (
+              <>
+                <h2>{item.data.organization}</h2>
+                <h3>{item.data.role}</h3>
+                <p>{item.data.summary}</p>
+              </>
+            )}
             {item.data.mapUrl && (
               <a class="timeline-entry__location" href={item.data.mapUrl} target="_blank" rel="noreferrer">
                 Xem địa điểm trên Google Maps <span aria-hidden="true">↗</span>
@@ -34,6 +78,11 @@ const experiences = (await getCollection('experiences'))
                   {item.data.technologies.map((technology) => <li class="tag">{technology}</li>)}
                 </ul>
               </div>
+            )}
+            {item.data.detailPage && (
+              <a class="button button--quiet timeline-entry__detail-link" data-experience-detail-link href={sitePath('/experience/' + item.id)}>
+                Xem rõ hơn về công việc và vai trò của tôi <span aria-hidden="true">→</span>
+              </a>
             )}
           </article>
         </li>

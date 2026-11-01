@@ -4,6 +4,7 @@ import repositories from '../data/repositories.json';
 export type EvidenceKind =
   | 'verified-source'
   | 'verified-runtime'
+  | 'verified-release'
   | 'sanitized-private'
   | 'user-attested'
   | 'design-doc'
@@ -36,6 +37,7 @@ const repositoryRecords = repositories as RepositoryRecord[];
 const labels: Record<EvidenceKind, string> = {
   'verified-source': 'Mã nguồn',
   'verified-runtime': 'Kiểm thử ứng dụng',
+  'verified-release': 'Phát hành công khai',
   'sanitized-private': 'Tư liệu riêng tư',
   'user-attested': 'Thông tin hồ sơ',
   'design-doc': 'Tài liệu thiết kế',
@@ -53,9 +55,10 @@ export function evidenceFor(ids: string[]): EvidenceRecord[] {
 }
 
 export function publicEvidenceFor(ids: string[]): EvidenceRecord[] {
-  return evidenceFor(ids).filter((record) =>
-    ['verified-source', 'verified-runtime', 'design-doc'].includes(record.kind) && repositoryName(record.repoId),
-  );
+  return evidenceFor(ids).filter((record) => {
+    if (record.kind === 'verified-release') return Boolean(record.url);
+    return ['verified-source', 'verified-runtime', 'design-doc'].includes(record.kind) && repositoryName(record.repoId);
+  });
 }
 
 export function repositoryName(id: string | undefined): string | undefined {

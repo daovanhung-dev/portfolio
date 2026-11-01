@@ -52,6 +52,9 @@ const expectedRoutes = [
   'contact/index.html',
   'case-studies/index.html',
   '404.html',
+  ...portfolio.collections.experiences
+    .filter((entry) => entry.data.detailPage)
+    .map((entry) => 'experience/' + entry.slug + '/index.html'),
   ...portfolio.collections.projects.map((entry) => 'projects/' + entry.slug + '/index.html'),
   ...portfolio.collections.cases.map((entry) => 'case-studies/' + entry.slug + '/index.html'),
 ];

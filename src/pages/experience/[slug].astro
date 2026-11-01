@@ -1,0 +1,436 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../../components/SiteLayout.astro';
+import { siteAsset, sitePath } from '../../utils/paths';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('experiences', ({ data }) => data.detailPage);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const isMaia = entry.data.id === 'maiatech';
+const isVnua = entry.data.id === 'vnua-study';
+const isFptIntern = entry.data.id === 'fpt';
+const isFptFresher = entry.data.id === 'fpt-fresher';
+const isFpt = isFptIntern || isFptFresher;
+const experienceRecords = isFptIntern ? await getCollection('experiences') : [];
+const fptMedia = experienceRecords.find((candidate) => candidate.id === 'fpt-fresher')?.data.companyMedia;
+const media = entry.data.companyMedia ?? (isFptIntern ? fptMedia : undefined);
+const projects = await getCollection('projects');
+const relatedProject = projects.find((project) => entry.data.projectSlugs.includes(project.id));
+const technologyGroups = isFptFresher ? [
+  {
+    id: 'fpt-fresher-backend',
+    title: 'Backend',
+    description: 'Tôi phát triển API và xử lý nghiệp vụ với Python.',
+    technologies: ['FastAPI', 'Python'],
+  },
+  {
+    id: 'fpt-fresher-frontend',
+    title: 'Frontend',
+    description: 'Tôi xây dựng các màn hình và luồng giao diện web.',
+    technologies: ['Angular'],
+  },
+  {
+    id: 'fpt-fresher-data',
+    title: 'Cơ sở dữ liệu',
+    description: 'Tôi làm việc với dữ liệu quan hệ trong PostgreSQL.',
+    technologies: ['PostgreSQL'],
+  },
+] : isFptIntern ? [
+  {
+    id: 'fpt-intern-backend',
+    title: 'Backend',
+    description: 'Tôi xây dựng API và xử lý nghiệp vụ phía máy chủ.',
+    technologies: ['Flask', 'Python'],
+  },
+  {
+    id: 'fpt-intern-frontend',
+    title: 'Frontend',
+    description: 'Tôi phát triển giao diện và tương tác trên ứng dụng web.',
+    technologies: ['Vue.js'],
+  },
+  {
+    id: 'fpt-intern-data',
+    title: 'Cơ sở dữ liệu',
+    description: 'Tôi làm việc với dữ liệu quan hệ trong PostgreSQL.',
+    technologies: ['PostgreSQL'],
+  },
+] : isMaia ? [
+  {
+    id: 'backend-web',
+    title: 'Backend & web',
+    description: 'Stack máy chủ, giao diện web và các lớp truy cập dữ liệu.',
+    technologies: ['Node.js', 'TypeScript', 'Express', 'EJS', 'Prisma ORM', 'MySQL', 'Passport.js', 'Express Session', 'JWT', 'Multer', 'Supabase'],
+  },
+  {
+    id: 'mobile-context',
+    title: 'Bối cảnh ứng dụng mobile',
+    description: 'Công nghệ client mobile và lưu trữ cục bộ trong hệ thống.',
+    technologies: ['Flutter', 'Dart', 'Supabase', 'SQLite'],
+  },
+] : isVnua ? [{
+  id: 'vnua-app',
+  title: 'Ứng dụng học vụ EduAI',
+  description: 'Công nghệ liên quan đến ứng dụng di động trong phạm vi vai trò tại CREI.',
+  technologies: entry.data.technologies,
+}] : [{
+  id: 'related-experience',
+  title: 'Công nghệ liên quan',
+  description: 'Các công nghệ được ghi nhận cho vai trò này.',
+  technologies: entry.data.technologies,
+}];
+const architectureSteps = [
+  { title: 'Express Route', description: 'Khai báo endpoint và chuyển request đến handler phù hợp.' },
+  { title: 'Middleware', description: 'Kiểm tra phiên đăng nhập, quyền truy cập và xử lý request dùng chung.' },
+  { title: 'Controller', description: 'Nhận dữ liệu HTTP, gọi nghiệp vụ và trả response cho client.' },
+  { title: 'Service', description: 'Điều phối quy tắc nghiệp vụ và các bước xử lý API.' },
+  { title: 'Prisma · Data Access', description: 'Đóng gói truy vấn, thao tác đọc/ghi và ánh xạ dữ liệu.' },
+  { title: 'MySQL', description: 'Lưu trữ dữ liệu quan hệ được backend sử dụng.' },
+];
+const supportingComponents = [
+  { title: 'Passport.js · Express Session', description: 'Thành phần xác thực và quản lý phiên.' },
+  { title: 'Multer', description: 'Middleware hỗ trợ tiếp nhận tệp tải lên.' },
+  { title: 'Supabase', description: 'Dịch vụ tích hợp trong bối cảnh hệ thống.' },
+  { title: 'SQLite', description: 'Lớp lưu trữ cục bộ trong bối cảnh ứng dụng mobile.' },
+];
+const contributions = [
+  {
+    id: 'api-count',
+    title: '30 API',
+    description: 'Tôi tham gia xây dựng và hoàn thiện API cho hệ thống thương mại điện tử.',
+  },
+  {
+    id: 'api-design',
+    title: 'Thiết kế API',
+    description: 'Tôi thiết kế API theo phạm vi nghiệp vụ của hệ thống.',
+  },
+  {
+    id: 'api-optimization',
+    title: 'Tối ưu logic API',
+    description: 'Tôi rà soát và tối ưu logic xử lý trong các API.',
+  },
+  {
+    id: 'shared-utilities',
+    title: 'Tái sử dụng utilities',
+    description: 'Tôi tái sử dụng utility dùng chung để hỗ trợ tối ưu và giữ cách xử lý nhất quán.',
+  },
+];
+const fptContributions = [
+  {
+    id: 'fpt-dd',
+    title: 'Thiết kế Detail Design (DD)',
+    metric: '50 API · 17 màn hình',
+    description: 'Tôi xây dựng thiết kế chi tiết cho API và giao diện trong phạm vi được giao.',
+  },
+  {
+    id: 'fpt-utc',
+    title: 'Thiết kế UTC',
+    metric: '50 API · 17 màn hình',
+    description: 'Tôi chuẩn bị các trường hợp kiểm thử cho API và màn hình.',
+  },
+  {
+    id: 'fpt-utr',
+    title: 'Thực hiện UTR',
+    metric: '24 API · 8 màn hình',
+    description: 'Tôi chạy kiểm thử, ghi nhận kết quả và log lỗi phát hiện được.',
+  },
+  {
+    id: 'fpt-coding',
+    title: 'Thiết kế và lập trình',
+    metric: '20 API · 5 màn hình',
+    description: 'Tôi thiết kế và lập trình API cùng màn hình theo yêu cầu.',
+  },
+];
+const fptFresherContributions = [
+  {
+    id: 'fpt-fresher-dd',
+    title: 'Thiết kế Detail Design (DD)',
+    metric: '10 API · 3 màn hình',
+    description: 'Tôi chuẩn bị thiết kế chi tiết cho các API và màn hình được giao.',
+  },
+  {
+    id: 'fpt-fresher-coding',
+    title: 'Thiết kế và lập trình',
+    metric: '30 API · 15 màn hình',
+    description: 'Tôi thiết kế và lập trình API cùng giao diện theo yêu cầu.',
+  },
+];
+const fptInternBackendSteps = [
+  { title: 'Flask Route / Blueprint', description: 'Khai báo endpoint và chuyển request đến xử lý phù hợp.' },
+  { title: 'Kiểm tra dữ liệu', description: 'Xác thực input và chuẩn hóa dữ liệu trước khi chạy nghiệp vụ.' },
+  { title: 'Service', description: 'Điều phối quy tắc nghiệp vụ và các bước xử lý của API.' },
+  { title: 'Data Access', description: 'Tổ chức thao tác đọc, ghi và truy vấn dữ liệu.' },
+  { title: 'PostgreSQL', description: 'Lưu trữ dữ liệu quan hệ mà ứng dụng sử dụng.' },
+];
+const fptInternFrontendSteps = [
+  { title: 'Vue View / Component', description: 'Hiển thị trang và các thành phần giao diện có thể tái sử dụng.' },
+  { title: 'Trạng thái giao diện', description: 'Quản lý dữ liệu hiển thị và trạng thái tương tác của người dùng.' },
+  { title: 'API client', description: 'Tập trung gửi request và tiếp nhận dữ liệu từ backend.' },
+  { title: 'Flask API', description: 'Nhận request từ giao diện và trả kết quả xử lý.' },
+];
+const fptFresherBackendSteps = [
+  { title: 'FastAPI Router', description: 'Khai báo endpoint và chuyển request đến luồng xử lý phù hợp.' },
+  { title: 'Kiểm tra dữ liệu', description: 'Xác thực và chuẩn hóa dữ liệu đầu vào trước khi xử lý.' },
+  { title: 'Service', description: 'Điều phối logic nghiệp vụ và các bước xử lý API.' },
+  { title: 'Data Access', description: 'Tổ chức các thao tác đọc, ghi và truy vấn dữ liệu.' },
+  { title: 'PostgreSQL', description: 'Lưu trữ dữ liệu quan hệ của ứng dụng.' },
+];
+const fptFresherFrontendSteps = [
+  { title: 'Angular Page / Component', description: 'Tổ chức trang và thành phần giao diện theo chức năng.' },
+  { title: 'Trạng thái và logic giao diện', description: 'Điều phối trạng thái hiển thị và phản hồi tương tác người dùng.' },
+  { title: 'API Service', description: 'Đóng gói request HTTP và cung cấp dữ liệu cho component.' },
+  { title: 'FastAPI', description: 'Tiếp nhận request từ frontend và trả kết quả API.' },
+];
+---
+
+<SiteLayout
+  title={entry.data.organization + ' · ' + entry.data.role + ' — Đào Văn Hùng'}
+  description={entry.data.summary.slice(0, 155)}
+  route={'/experience/' + entry.id}
+>
+    <div class:list={['page-shell', 'experience-detail-page', isVnua && 'experience-detail-page--vnua', isFpt && 'experience-detail-page--fpt']} data-experience-id={entry.data.id}>
+    <header class="experience-detail-hero">
+      <div class="experience-detail-hero__copy">
+        <a class="eyebrow-link" href={sitePath('/experience')}>← Tất cả kinh nghiệm</a>
+        <span class="eyebrow experience-detail__company">{entry.data.organization}</span>
+        <h1>{entry.data.role}</h1>
+        <p class="page-lede">{entry.data.summary}</p>
+        <div class="detail-header__meta">
+          <span>{entry.data.period}</span>
+          <span>{isMaia ? 'Backend · Node.js · TypeScript · Express · MySQL' : entry.data.technologies.join(' · ')}</span>
+        </div>
+        {isMaia && <section class="experience-contributions" aria-labelledby="experience-contributions-title">
+          <h2 id="experience-contributions-title">Đóng góp nổi bật</h2>
+          <ul class="experience-contributions__grid">
+            {contributions.map((contribution) => (
+              <li class="experience-contribution-card" data-contribution={contribution.id}>
+                <div>
+                  <h3>{contribution.title}</h3>
+                  <p>{contribution.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>}
+      </div>
+      {media && (
+        <div class="experience-detail__media" aria-label="Hình ảnh công ty">
+          {media.photos.map((photo, index) => (
+            <figure class="experience-detail__photo">
+              <img
+                data-experience-photo
+                src={siteAsset(photo.file)}
+                alt={photo.alt}
+                width={photo.width}
+                height={photo.height}
+              />
+              <figcaption class="experience-detail__caption">
+                {index === 0 && (
+                  <a class="experience-detail__logo" href={media.logo.sourceUrl} target="_blank" rel="noreferrer" aria-label="Mở nguồn biểu trưng công ty">
+                    <img
+                      data-experience-logo
+                      src={siteAsset(media.logo.file)}
+                      alt={media.logo.alt}
+                      width={media.logo.width}
+                      height={media.logo.height}
+                    />
+                  </a>
+                )}
+                <span class="experience-detail__caption-copy">
+                  {photo.caption} · <a href={photo.sourceUrl} target="_blank" rel="noreferrer">Nguồn ảnh <span aria-hidden="true">↗</span></a>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+    </header>
+
+    {isFptIntern && <section class="experience-contributions" aria-labelledby="experience-contributions-title" data-fpt-contributions>
+      <h2 id="experience-contributions-title">Đóng góp nổi bật trong giai đoạn Intern</h2>
+      <ul class="experience-contributions__grid">
+        {fptContributions.map((contribution) => (
+          <li class="experience-contribution-card" data-contribution={contribution.id}>
+            <div>
+              <h3>{contribution.title}</h3>
+              <p class="experience-contribution-card__metric">{contribution.metric}</p>
+              <p>{contribution.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>}
+
+    {isFptFresher && <section class="experience-contributions" aria-labelledby="fpt-fresher-contributions-title" data-fpt-fresher-contributions>
+      <h2 id="fpt-fresher-contributions-title">Đóng góp nổi bật trong giai đoạn Fresher</h2>
+      <ul class="experience-contributions__grid">
+        {fptFresherContributions.map((contribution) => (
+          <li class="experience-contribution-card" data-contribution={contribution.id}>
+            <div>
+              <h3>{contribution.title}</h3>
+              <p class="experience-contribution-card__metric">{contribution.metric}</p>
+              <p>{contribution.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>}
+
+    <div class="detail-body experience-detail-body">
+      <article class="prose experience-detail-prose">
+        <Content />
+      </article>
+      <aside class="detail-sidebar experience-detail__facts" aria-label="Thông tin vai trò">
+        {isMaia ? <section class="content-panel experience-detail__company-facts">
+          <h2>Doanh nghiệp</h2>
+          <p>{entry.data.organization}</p>
+          <a href="https://maiatech.com.vn/gioi-thieu" target="_blank" rel="noreferrer">Website chính thức <span aria-hidden="true">↗</span></a>
+        </section> : isVnua ? <>
+          <section class="content-panel crei-context-panel" aria-labelledby="crei-context-title">
+            <span class="crei-context-panel__eyebrow">CREI · HVNNVN</span>
+            <h2 id="crei-context-title">Bối cảnh Trung tâm</h2>
+            <p>CREI trực thuộc Học viện Nông nghiệp Việt Nam, được xây dựng trong khuôn khổ SAHEP-VNUA với sự hỗ trợ của Ngân hàng Thế giới. Trung tâm hướng tới thúc đẩy nghiên cứu, phát triển công nghệ, đổi mới sáng tạo và đào tạo chất lượng.</p>
+            <a href="https://crei.vnua.edu.vn/?page_id=29" target="_blank" rel="noreferrer">Trang giới thiệu CREI <span aria-hidden="true">↗</span></a>
+          </section>
+          {relatedProject && <section class="content-panel experience-related-project" aria-labelledby="related-project-title">
+            <span class="eyebrow">Dự án liên quan</span>
+            <h2 id="related-project-title">{relatedProject.data.title}</h2>
+            <p>Ứng dụng học vụ tôi tham gia phát triển trong phạm vi vai trò tại CREI.</p>
+            <a href={sitePath('/projects/' + relatedProject.id)}>Xem dự án EduAI <span aria-hidden="true">→</span></a>
+          </section>}
+        </> : isFpt ? <section class="content-panel experience-detail__company-facts">
+          <h2>FPT Software · Hòa Lạc</h2>
+          <p>FPT Software là đơn vị công nghệ thuộc Tập đoàn FPT; F-Ville là một trong các campus được giới thiệu tại Hòa Lạc.</p>
+          <a href="https://fptsoftware.com/about-us/global-presence" target="_blank" rel="noreferrer">Thông tin campus FPT Software <span aria-hidden="true">↗</span></a>
+        </section> : <section class="content-panel experience-detail__company-facts">
+          <h2>Đơn vị</h2>
+          <p>{entry.data.organization}</p>
+        </section>}
+      </aside>
+    </div>
+
+    <section class="experience-tech-stack" aria-labelledby="experience-tech-stack-title">
+      <div class="experience-architecture__intro">
+        <span class="eyebrow">{isMaia ? 'Technology context' : isVnua ? 'Ứng dụng liên quan' : isFpt ? 'Stack phát triển' : 'Experience context'}</span>
+        <h2 id="experience-tech-stack-title">{isMaia ? 'Công nghệ trong hệ thống' : isFpt ? 'Công nghệ tôi sử dụng' : 'Công nghệ liên quan'}</h2>
+        <p>{isMaia ? 'Tôi phát triển backend trong hệ thống có các lớp web và mobile; nhóm công nghệ dưới đây mô tả bối cảnh kỹ thuật của hệ thống.' : isVnua ? 'Các công nghệ dưới đây gắn với ứng dụng EduAI trong phạm vi vai trò của tôi.' : isFpt ? 'Tôi làm việc trên giao diện web, API backend và lớp dữ liệu của ứng dụng.' : 'Các công nghệ liên quan được ghi nhận cho vai trò này.'}</p>
+      </div>
+      <div class="experience-tech-stack__grid">
+        {technologyGroups.map((group) => (
+          <section class="experience-tech-card" data-tech-group={group.id}>
+            <h3>{group.title}</h3>
+            <p>{group.description}</p>
+            <ul class="tag-list" aria-label={group.title}>
+              {group.technologies.map((technology) => <li class="tag">{technology}</li>)}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </section>
+
+    {isMaia && <section class="experience-architecture" aria-labelledby="experience-architecture-title">
+      <div class="experience-architecture__intro">
+        <span class="eyebrow">Backend architecture</span>
+        <h2 id="experience-architecture-title">Kiến trúc backend phân lớp</h2>
+        <p>Tôi tham gia phát triển API theo luồng phân lớp, tách định tuyến, kiểm soát truy cập, nghiệp vụ và truy cập dữ liệu để mỗi phần có trách nhiệm rõ ràng.</p>
+      </div>
+      <div class="experience-architecture__clients" data-architecture-clients>
+        <span class="experience-architecture__clients-label">Lớp giao diện</span>
+        <span class="experience-architecture__client">Web · EJS</span>
+        <span class="experience-architecture__client">Mobile · Flutter / Dart</span>
+      </div>
+      <ol class="experience-architecture__flow">
+        {architectureSteps.map((step, index) => (
+          <li class="experience-architecture__step" data-architecture-step>
+            <span class="experience-architecture__index">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+          </li>
+        ))}
+      </ol>
+      <ul class="experience-architecture__support" aria-label="Thành phần tích hợp và hỗ trợ">
+        {supportingComponents.map((component) => (
+          <li class="experience-architecture__support-item" data-architecture-support>
+            <strong>{component.title}</strong>
+            <span>{component.description}</span>
+          </li>
+        ))}
+      </ul>
+    </section>}
+
+    {isFptIntern && <>
+      <section class="experience-architecture" aria-labelledby="fpt-backend-architecture-title" data-architecture="backend">
+        <div class="experience-architecture__intro">
+          <span class="eyebrow">Backend architecture</span>
+          <h2 id="fpt-backend-architecture-title">Kiến trúc backend · Flask</h2>
+          <p>Tôi tổ chức luồng xử lý theo các lớp rõ trách nhiệm, từ tiếp nhận request đến truy cập PostgreSQL.</p>
+        </div>
+        <ol class="experience-architecture__flow">
+          {fptInternBackendSteps.map((step, index) => (
+            <li class="experience-architecture__step" data-architecture-step>
+              <span class="experience-architecture__index">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="experience-architecture" aria-labelledby="fpt-frontend-architecture-title" data-architecture="frontend">
+        <div class="experience-architecture__intro">
+          <span class="eyebrow">Frontend architecture</span>
+          <h2 id="fpt-frontend-architecture-title">Kiến trúc frontend · Vue.js</h2>
+          <p>Tôi tách phần hiển thị, trạng thái tương tác và giao tiếp HTTP để giao diện làm việc với backend qua API.</p>
+        </div>
+        <ol class="experience-architecture__flow">
+          {fptInternFrontendSteps.map((step, index) => (
+            <li class="experience-architecture__step" data-architecture-step>
+              <span class="experience-architecture__index">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </>}
+
+    {isFptFresher && <>
+      <section class="experience-architecture" aria-labelledby="fpt-fresher-backend-architecture-title" data-architecture="backend">
+        <div class="experience-architecture__intro">
+          <span class="eyebrow">Backend architecture</span>
+          <h2 id="fpt-fresher-backend-architecture-title">Kiến trúc backend · FastAPI</h2>
+          <p>Tôi tổ chức API theo các lớp, tách tiếp nhận request, kiểm tra dữ liệu, xử lý nghiệp vụ và truy cập PostgreSQL.</p>
+        </div>
+        <ol class="experience-architecture__flow">
+          {fptFresherBackendSteps.map((step, index) => (
+            <li class="experience-architecture__step" data-architecture-step>
+              <span class="experience-architecture__index">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="experience-architecture" aria-labelledby="fpt-fresher-frontend-architecture-title" data-architecture="frontend">
+        <div class="experience-architecture__intro">
+          <span class="eyebrow">Frontend architecture</span>
+          <h2 id="fpt-fresher-frontend-architecture-title">Kiến trúc frontend · Angular</h2>
+          <p>Tôi chia giao diện thành trang và component, tách logic hiển thị khỏi lớp API service để kết nối với backend.</p>
+        </div>
+        <ol class="experience-architecture__flow">
+          {fptFresherFrontendSteps.map((step, index) => (
+            <li class="experience-architecture__step" data-architecture-step>
+              <span class="experience-architecture__index">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </>}
+  </div>
+</SiteLayout>

@@ -51,6 +51,7 @@ Run the checks relevant to each change, then the full set before delivery. Exter
 - Use semantic landmarks and headings, visible keyboard focus, accessible names, working keyboard navigation, and reduced-motion behavior.
 - Test direct links and refresh on GitHub Pages. Check mobile and desktop layouts for overflow.
 - Do not use unmeasured skill percentages or invented metrics. Project details must show role, status, evidence, and limitations where applicable.
+- For experience timeline and detail-page layout, use `docs/content/EXPERIENCE_DESIGN_CONTEXT.md` as the reusable visual reference. Adapt it to each role and its evidence; do not copy Mai A's facts, media, or technology claims to another experience.
 
 ## Git and delivery
 
