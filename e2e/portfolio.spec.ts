@@ -324,25 +324,25 @@ test('About presents Tech Lead capability, project breadth, and end-to-end respo
   await expect(page.locator('[data-about-project]')).toHaveCount(5);
 });
 
-test('header avatar loads on home and project pages with circular styling', async ({ page }) => {
+test('light DVH logo loads in the header and favicon on home and project pages', async ({ page }) => {
   for (const path of ['', 'projects/nanobio-local-cloud/']) {
     await page.goto(APP + path);
     await expect(page.getByRole('link', { name: 'Đào Văn Hùng — trang chủ' })).toBeVisible();
 
-    const avatar = page.locator('.brand__mark');
-    await expect(avatar).toBeVisible();
-    await expect(avatar).toHaveAttribute('src', APP + 'AVT2.jpg');
-    await expect(avatar).toHaveAttribute('alt', '');
-    await expect(avatar).toHaveAttribute('aria-hidden', 'true');
-    await expect(avatar).toHaveCSS('width', '38px');
-    await expect(avatar).toHaveCSS('height', '38px');
-    await expect(avatar).toHaveCSS('border-radius', '50%');
-    await expect(avatar).toHaveCSS('object-fit', 'cover');
-    await expect(avatar).toHaveCSS('object-position', '50% 35%');
+    const logo = page.locator('.brand__mark');
+    await expect(logo).toBeVisible();
+    await expect(logo).toHaveAttribute('src', APP + 'favicon.svg');
+    await expect(logo).toHaveAttribute('alt', '');
+    await expect(logo).toHaveAttribute('aria-hidden', 'true');
+    await expect(logo).toHaveCSS('width', '38px');
+    await expect(logo).toHaveCSS('height', '38px');
+    await expect(logo).toHaveCSS('border-radius', '12px');
+    await expect(logo).toHaveCSS('object-fit', 'contain');
+    await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', APP + 'favicon.svg');
 
-    const loaded = await avatar.evaluate((element) => {
+    const loaded = await logo.evaluate((element) => {
       const image = element as HTMLImageElement;
-      return image.complete && image.naturalWidth === 256 && image.naturalHeight === 256;
+      return image.complete && image.naturalWidth === 64 && image.naturalHeight === 64;
     });
     expect(loaded, path || 'home').toBe(true);
   }
