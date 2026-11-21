@@ -1,5 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="32" fill="#111315"/>
-  <circle cx="32" cy="32" r="27" fill="none" stroke="#8ab4f8" stroke-width="2"/>
-  <text x="32" y="36" fill="#8ab4f8" font-family="ui-monospace,monospace" font-size="14" text-anchor="middle">DVH</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#F6F9FE" stroke="#C7DCF4" stroke-width="2"/>
+  <g stroke="#153B67" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8">
+    <path d="M12.5 20v24h4.7c7.3 0 12.3-4.8 12.3-12s-5-12-12.3-12h-4.7Z"/>
+    <path d="m31 20 7 24 7.5-24"/>
+    <path d="M48.5 20v24m10-24v24m-10-12h10"/>
+  </g>
+  <circle cx="53.5" cy="11" r="3.5" fill="#2478E5"/>
 </svg>
