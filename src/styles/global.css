@@ -480,11 +480,14 @@ body:has(.experience-detail-hero) > .ambient-player {
 .feature-list,
 .principle-list,
 .timeline-list { display: grid; gap: .8rem; margin: 0; padding: 0; list-style: none; }
+.feature-list { min-width: 0; grid-template-columns: minmax(0, 1fr); }
 .feature-row,
 .principle-card { padding: 1rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
-.feature-row__top { display: flex; justify-content: space-between; gap: .75rem; align-items: start; }
+.feature-row { min-width: 0; }
+.feature-row__top { display: flex; min-width: 0; flex-wrap: wrap; justify-content: space-between; gap: .75rem; align-items: start; }
 .feature-row h3,
 .principle-card h3 { margin: 0; font-size: .92rem; }
+.feature-row h3 { min-width: 0; overflow-wrap: anywhere; }
 .feature-row p,
 .principle-card p { margin: .4rem 0 0; color: var(--muted); font-size: .8rem; }
 .evidence-list { display: grid; gap: .7rem; margin: 1rem 0 0; padding: 0; list-style: none; }
