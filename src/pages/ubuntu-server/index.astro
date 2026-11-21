@@ -25,127 +25,196 @@ const gateChapterNumbers: Record<string, string> = {
 const gates = gateRows.map((cells) => {
   const gateCode = cells[0]?.match(/^(G[1-8])/)?.[1] ?? '';
   const chapter = chapters.find((heading) => heading.text.startsWith(`${gateChapterNumbers[gateCode] ?? ''}.`));
-  return { label: cells[0] ?? '', pass: cells[1] ?? '', fail: cells[2] ?? '', href: chapter ? `#${chapter.slug}` : '#ubuntu-runbook-content' };
+  return { label: cells[0] ?? '', pass: cells[1] ?? '', href: chapter ? `#${chapter.slug}` : '#ubuntu-runbook-content' };
 });
 const legacyNotices = Object.fromEntries(aliases.filter((alias) => alias.notice).map((alias) => [alias.slug, { notice: alias.notice, targetHeading: alias.targetHeading }]));
 const overview = runbook.data.description;
 const lastReviewed = runbook.data.verified_on;
 ---
 <SiteLayout title={`${pageTitle} — Lab | Đào Văn Hùng`} description={overview} route="/ubuntu-server">
-  <div class="ubuntu-page ubuntu-page--runbook" data-legacy-notices={JSON.stringify(legacyNotices)}>
+  <div class="ubuntu-page ubuntu-page--report" data-legacy-notices={JSON.stringify(legacyNotices)}>
     <nav class="ubuntu-breadcrumb" aria-label="Đường dẫn">
       <a href={sitePath('/labs')}>Labs</a><span aria-hidden="true">/</span><span aria-current="page">Ubuntu Server</span>
     </nav>
 
-    <header class="ubuntu-runbook-hero">
-      <div class="ubuntu-runbook-hero__copy">
-        <span class="eyebrow">Infrastructure / DevOps · Lab hướng dẫn</span>
-        <h1 class="ubuntu-runbook-title">{pageTitle}</h1>
-        <p>{overview}</p>
+    <header class="ubuntu-report-hero">
+      <div class="ubuntu-report-hero__copy">
+        <p class="ubuntu-report-kicker">INFRASTRUCTURE / DEVOPS · HỒ SƠ LAB KỸ THUẬT</p>
+        <h1>{pageTitle}</h1>
+        <p class="ubuntu-report-lede">{overview}</p>
+        <div class="ubuntu-report-actions">
+          <a class="ubuntu-report-primary" href="#lab-method">Xem mục tiêu và phương pháp</a>
+          <a class="ubuntu-report-secondary" href="#full-runbook">Mở hướng dẫn kỹ thuật</a>
+        </div>
       </div>
-      <dl class="ubuntu-runbook-meta">
-        <div><dt>Phiên bản</dt><dd>{runbook.data.version}</dd></div>
-        <div><dt>Rà soát nội dung</dt><dd>{lastReviewed}</dd></div>
-        <div><dt>Luồng học</dt><dd>{chapters.length} chương · {gates.length} cổng</dd></div>
+      <dl class="ubuntu-report-meta">
+        <div><dt>Loại hồ sơ</dt><dd>Learning lab</dd></div>
+        <div><dt>Rà soát nguồn</dt><dd>{lastReviewed} · v{runbook.data.version}</dd></div>
+        <div><dt>Trạng thái</dt><dd>Chưa nghiệm thu trên máy thật</dd></div>
       </dl>
     </header>
 
     <div class="ubuntu-legacy-topic-note" id="ubuntu-legacy-topic-note" role="note" aria-live="polite" hidden>
       <div><strong>Nội dung của URL cũ</strong><p></p></div>
-      <a href="#ubuntu-runbook-content">Xem mục liên quan</a>
+      <a href="#full-runbook">Mở mục liên quan</a>
       <button type="button" aria-label="Ẩn thông báo">Ẩn</button>
     </div>
 
-    <section class="ubuntu-runbook-orientation" aria-labelledby="ubuntu-runbook-orientation-title">
-      <div class="ubuntu-runbook-orientation__heading">
-        <span class="ubuntu-overline">BẮT ĐẦU TỪ SỐ 0</span>
-        <h2 id="ubuntu-runbook-orientation-title">Hai luồng của lab</h2>
-        <p>Đi theo thứ tự, kiểm chứng từng lớp và dừng khi điều kiện PASS chưa đạt.</p>
-      </div>
-      <div class="ubuntu-runbook-flows">
-        <div class="ubuntu-runbook-flow">
-          <h3>Đưa dịch vụ ra Internet</h3>
-          <p><span>Client</span><b aria-hidden="true">→</b><span>DNS</span><b aria-hidden="true">→</b><span>WAN / Router NAT</span><b aria-hidden="true">→</b><span>Ubuntu / Nginx HTTPS</span><b aria-hidden="true">→</b><span>FastAPI / systemd</span></p>
-          <small>DNS chỉ phân giải hostname; request đi tiếp qua TCP đến IP đã phân giải.</small>
+    <div class="ubuntu-report">
+      <section class="ubuntu-report-section ubuntu-report-summary" aria-labelledby="report-summary-title">
+        <div class="ubuntu-report-section__heading">
+          <p class="ubuntu-report-index">01 / TÓM TẮT</p>
+          <h2 id="report-summary-title">Bài lab giải quyết bài toán gì?</h2>
         </div>
-        <div class="ubuntu-runbook-flow">
-          <h3>Quản trị từ xa</h3>
-          <p><span>Laptop / Chrome</span><b aria-hidden="true">→</b><span>Tailscale + OpenSSH</span><b aria-hidden="true">→</b><span>Router trong LAN</span></p>
-          <small>Không cần bật WAN Remote Management chỉ để mở trang quản trị router.</small>
+        <div class="ubuntu-report-summary__body">
+          <p class="ubuntu-report-summary__lead">Xây dựng lộ trình có thể lặp lại để đưa Ubuntu Server từ khởi tạo ban đầu đến một dịch vụ web có quản trị từ xa, reverse proxy, HTTPS và quy trình vận hành an toàn.</p>
+          <dl class="ubuntu-report-facts">
+            <div><dt>Mục tiêu</dt><dd>Triển khai FastAPI phía sau Nginx/systemd và quản trị qua Tailscale + OpenSSH.</dd></div>
+            <div><dt>Phạm vi kỹ thuật</dt><dd>Linux, mạng, DHCP Reservation, DNS/NAT, firewall, TLS, backup và rollback.</dd></div>
+            <div><dt>Cách đọc</dt><dd>Đọc báo cáo tóm tắt trước; mở quy trình và CLI reference khi cần thực hành hoặc thẩm định.</dd></div>
+          </dl>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="ubuntu-runbook-gates" aria-labelledby="ubuntu-gates-title">
-      <div class="ubuntu-runbook-section-title">
-        <div><span class="ubuntu-overline">CHECKPOINTS / G1 → G8</span><h2 id="ubuntu-gates-title">Tiến trình nghiệm thu</h2></div>
-        <p>Mỗi cổng phải được kiểm tra trên môi trường của bạn. Website không tự đánh dấu PASS.</p>
-      </div>
-      <ol class="ubuntu-gate-list">
-        {gates.map((gate, index) => <li class="ubuntu-gate">
-          <a class="ubuntu-gate__link" href={gate.href} aria-label={`Mở nội dung ${gate.label}`}>
-            <span class="ubuntu-gate__number">{String(index + 1).padStart(2, '0')}</span>
-            <strong>{gate.label}</strong>
-          </a>
-          <p><b>PASS</b> {gate.pass}</p>
-          <p class="ubuntu-gate__fail"><b>Nếu FAIL</b> {gate.fail}</p>
-        </li>)}
-      </ol>
-    </section>
-
-    <div class="ubuntu-runbook-workspace">
-      <aside class="ubuntu-runbook-sidebar" aria-label="Mục lục tài liệu">
-        <details class="ubuntu-runbook-toc" open>
-          <summary><span class="ubuntu-overline">MỤC LỤC</span><span>{chapters.length} chương</span></summary>
-          <nav aria-label="Các chương trong lab">
-            <ol>
-              {chapters.map((chapter) => {
-                const chapterNumber = chapter.text.match(/^(\d{2})\./)?.[1] ?? '';
-                const children = subsections.filter((item) => item.text.startsWith(`${Number(chapterNumber)}.`));
-                return <li>
-                  <a class="ubuntu-runbook-toc__chapter" href={`#${chapter.slug}`}>{chapter.text}</a>
-                  {children.length > 0 && <details class="ubuntu-runbook-toc__subsections">
-                    <summary aria-label={`Mở các mục trong ${chapter.text}`}>Mục con <span aria-hidden="true">+</span></summary>
-                    <ol>{children.map((item) => <li><a href={`#${item.slug}`}>{item.text}</a></li>)}</ol>
-                  </details>}
-                </li>;
-              })}
+      <section class="ubuntu-report-section" aria-labelledby="report-architecture-title">
+        <div class="ubuntu-report-section__heading">
+          <p class="ubuntu-report-index">02 / KIẾN TRÚC</p>
+          <h2 id="report-architecture-title">Hai luồng hoạt động độc lập</h2>
+        </div>
+        <figure class="ubuntu-report-architecture">
+          <div class="ubuntu-report-flow">
+            <h3>Phục vụ ứng dụng</h3>
+            <ol aria-label="Luồng request public">
+              <li>Client</li><li>DNS</li><li>WAN / NAT</li><li>Nginx / HTTPS</li><li>FastAPI / systemd</li>
             </ol>
-          </nav>
-        </details>
-        <div class="ubuntu-runbook-safety" role="note">
-          <strong>Trước khi thay đổi</strong>
-          <p>Chuẩn bị console hoặc đường truy cập dự phòng trước khi sửa SSH, Netplan hay firewall.</p>
-        </div>
-      </aside>
+            <p>DNS phân giải tên miền; kết nối tiếp tục qua TCP đến IP đã phân giải.</p>
+          </div>
+          <div class="ubuntu-report-flow ubuntu-report-flow--private">
+            <h3>Quản trị riêng</h3>
+            <ol aria-label="Luồng quản trị riêng">
+              <li>Laptop / Chrome</li><li>Tailscale / OpenSSH</li><li>Router trong LAN</li>
+            </ol>
+            <p>Luồng quản trị qua tailnet tách biệt với truy cập website công khai.</p>
+          </div>
+          <figcaption>Hình 1. Mô hình mục tiêu của lab theo sơ đồ và mô tả trong tài liệu nguồn.</figcaption>
+        </figure>
+      </section>
 
-      <div class="ubuntu-runbook-main">
-        <div class="ubuntu-runbook-searchbox">
-          <label class="ubuntu-runbook-search">
-            <svg viewBox="0 0 24 24" aria-hidden="true" width="19" height="19"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
-            <input type="search" id="ubuntu-runbook-search" autocomplete="off" placeholder="Tìm lệnh, Netplan, DNS, systemd…" aria-label="Tìm trong lab Ubuntu Server" aria-controls="ubuntu-runbook-search-results" />
-            <kbd>/</kbd>
-          </label>
-          <span class="ubuntu-runbook-search-status" id="ubuntu-runbook-search-status" aria-live="polite"></span>
-          <div class="ubuntu-runbook-search-results" id="ubuntu-runbook-search-results" hidden>
-            <p class="ubuntu-overline">KẾT QUẢ TRONG TÀI LIỆU</p>
-            <ol></ol>
+      <section class="ubuntu-report-section" id="lab-method" aria-labelledby="report-method-title">
+        <div class="ubuntu-report-section__heading">
+          <p class="ubuntu-report-index">03 / PHƯƠNG PHÁP</p>
+          <h2 id="report-method-title">Tám checkpoint từ máy mới đến vận hành</h2>
+        </div>
+        <p class="ubuntu-report-section__intro">Mỗi checkpoint có điều kiện đạt và liên kết đến chương hướng dẫn tương ứng. Website không tự xác nhận máy chủ của người đọc đã PASS.</p>
+        <ol class="ubuntu-report-phases">
+          {gates.map((gate, index) => <li>
+            <span class="ubuntu-report-phase-number">{String(index + 1).padStart(2, '0')}</span>
+            <div><a href={gate.href}>{gate.label}</a><p>{gate.pass}</p></div>
+          </li>)}
+        </ol>
+      </section>
+
+      <section class="ubuntu-report-section" aria-labelledby="report-evidence-title">
+        <div class="ubuntu-report-section__heading">
+          <p class="ubuntu-report-index">04 / BẰNG CHỨNG & GIỚI HẠN</p>
+          <h2 id="report-evidence-title">Phân biệt nội dung đã rà soát và kết quả chạy thật</h2>
+        </div>
+        <div class="ubuntu-report-evidence">
+          <div><span class="ubuntu-report-status ubuntu-report-status--reviewed">ĐÃ RÀ SOÁT</span><h3>Tài liệu và quy trình</h3><p>{runbook.data.status}; có nguồn kỹ thuật và tiêu chí kiểm tra cho từng lớp.</p></div>
+          <div><span class="ubuntu-report-status ubuntu-report-status--unverified">CHƯA XÁC MINH</span><h3>Nghiệm thu trên server</h3><p>Chưa chạy toàn bộ quy trình trên một máy Ubuntu thật trong lần biên tập tài liệu này.</p></div>
+          <div><span class="ubuntu-report-status ubuntu-report-status--unverified">KHÔNG TUYÊN BỐ</span><h3>Production / người dùng</h3><p>Không dùng trang tĩnh này để khẳng định dịch vụ đang public, có người dùng hoặc sẵn sàng production.</p></div>
+        </div>
+      </section>
+
+      <section class="ubuntu-report-section ubuntu-report-discussion" aria-labelledby="report-discussion-title">
+        <div class="ubuntu-report-section__heading">
+          <p class="ubuntu-report-index">05 / THẢO LUẬN</p>
+          <h2 id="report-discussion-title">Nguyên tắc kỹ thuật nổi bật</h2>
+        </div>
+        <ul>
+          <li>Tách đường quản trị riêng qua tailnet khỏi đường phục vụ public qua DNS, router, Nginx và TLS.</li>
+          <li>Kiểm tra theo từng lớp; health check local không thay thế phép thử từ mạng ngoài.</li>
+          <li>Thay đổi mạng và firewall phải có đường truy cập dự phòng, backup cấu hình và phương án rollback.</li>
+        </ul>
+        <p class="ubuntu-report-conclusion">Kết luận: đây là learning lab có thể lặp lại; trạng thái hoàn tất chỉ được ghi nhận sau khi người học lưu bằng chứng cho các checkpoint trên môi trường của mình.</p>
+      </section>
+
+      <section class="ubuntu-report-section ubuntu-report-references" aria-labelledby="report-references-title">
+        <div class="ubuntu-report-section__heading">
+          <p class="ubuntu-report-index">06 / HÌNH THỨC THAM KHẢO</p>
+          <h2 id="report-references-title">Quy ước báo cáo và lab thực hành</h2>
+        </div>
+        <p>Cấu trúc báo cáo dùng các mục tiêu, phương pháp, kết quả, thảo luận, kết luận và phụ lục; phần nội dung thực hành giữ dạng nhiệm vụ có checkpoint để người đọc làm theo.</p>
+        <ul>
+          <li><a href="https://ocw.mit.edu/courses/16-01-unified-engineering-i-ii-iii-iv-fall-2005-spring-2006/7b1fb14b0bb9c2ad7721f0107993ed88_guidelines.pdf" target="_blank" rel="noopener noreferrer">MIT OpenCourseWare — Guidelines for writing lab reports</a></li>
+          <li><a href="https://www.usna.edu/MechEngDept/Resources/PDF_MechE_Department_Lab_Report_Style_and_Formatting_Guide1" target="_blank" rel="noopener noreferrer">U.S. Naval Academy — Format and Style Guide for Laboratory Reports</a></li>
+          <li><a href="https://decal.ocf.berkeley.edu/archives/2022-spring/labs/a4/" target="_blank" rel="noopener noreferrer">UC Berkeley Sysadmin DeCal — Linux post-install lab</a></li>
+          <li><a href="https://www.d3s.mff.cuni.cz/teaching/nswi106/" target="_blank" rel="noopener noreferrer">Charles University — Linux Administration course and checkpoints</a></li>
+        </ul>
+      </section>
+
+      <details class="ubuntu-runbook-panel" id="full-runbook">
+        <summary>
+          <span><small>PHỤ LỤC KỸ THUẬT</small><strong>Mở toàn bộ quy trình lab và CLI reference</strong></span>
+          <span class="ubuntu-runbook-panel__meta">{chapters.length} chương · {gates.length} checkpoint</span>
+        </summary>
+
+        <div class="ubuntu-runbook-workspace">
+          <aside class="ubuntu-runbook-sidebar" aria-label="Mục lục tài liệu">
+            <details class="ubuntu-runbook-toc" open>
+              <summary><span class="ubuntu-overline">MỤC LỤC</span><span>{chapters.length} chương</span></summary>
+              <nav aria-label="Các chương trong lab">
+                <ol>
+                  {chapters.map((chapter) => {
+                    const chapterNumber = chapter.text.match(/^(\d{2})\./)?.[1] ?? '';
+                    const children = subsections.filter((item) => item.text.startsWith(`${Number(chapterNumber)}.`));
+                    return <li>
+                      <a class="ubuntu-runbook-toc__chapter" href={`#${chapter.slug}`}>{chapter.text}</a>
+                      {children.length > 0 && <details class="ubuntu-runbook-toc__subsections">
+                        <summary aria-label={`Mở các mục trong ${chapter.text}`}>Mục con <span aria-hidden="true">+</span></summary>
+                        <ol>{children.map((item) => <li><a href={`#${item.slug}`}>{item.text}</a></li>)}</ol>
+                      </details>}
+                    </li>;
+                  })}
+                </ol>
+              </nav>
+            </details>
+            <div class="ubuntu-runbook-safety" role="note">
+              <strong>Trước khi thay đổi</strong>
+              <p>Chuẩn bị console hoặc đường truy cập dự phòng trước khi sửa SSH, Netplan hay firewall.</p>
+            </div>
+          </aside>
+
+          <div class="ubuntu-runbook-main">
+            <div class="ubuntu-runbook-searchbox">
+              <label class="ubuntu-runbook-search">
+                <svg viewBox="0 0 24 24" aria-hidden="true" width="19" height="19"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+                <input type="search" id="ubuntu-runbook-search" autocomplete="off" placeholder="Tìm lệnh, Netplan, DNS, systemd…" aria-label="Tìm trong lab Ubuntu Server" aria-controls="ubuntu-runbook-search-results" />
+                <kbd>/</kbd>
+              </label>
+              <span class="ubuntu-runbook-search-status" id="ubuntu-runbook-search-status" aria-live="polite"></span>
+              <div class="ubuntu-runbook-search-results" id="ubuntu-runbook-search-results" hidden>
+                <p class="ubuntu-overline">KẾT QUẢ TRONG TÀI LIỆU</p>
+                <ol></ol>
+              </div>
+            </div>
+            <p class="ubuntu-runbook-source-note">Nguồn kỹ thuật: <strong>{runbook.data.title}</strong> · {runbook.data.status}. Nội dung đầy đủ gồm quy trình, mã lệnh, checklist và CLI reference.</p>
+            <article class="ubuntu-runbook-body" id="ubuntu-runbook-content">
+              <Content />
+            </article>
           </div>
         </div>
-        <p class="ubuntu-runbook-source-note">Nguồn: <strong>{runbook.data.title}</strong> · {runbook.data.status}. Tài liệu đã được rà soát, nhưng không khẳng định đã nghiệm thu trên máy thật.</p>
-        <article class="ubuntu-runbook-body" id="ubuntu-runbook-content">
-          <Content />
-        </article>
-      </div>
+      </details>
     </div>
   </div>
 </SiteLayout>
 <script>
   function initUbuntuRunbook() {
-    const root = document.querySelector<HTMLElement>('.ubuntu-page--runbook');
+    const root = document.querySelector<HTMLElement>('.ubuntu-page--report');
     if (!root || root.dataset.initialized === 'true') return;
     root.dataset.initialized = 'true';
     const article = root.querySelector<HTMLElement>('#ubuntu-runbook-content');
+    const articlePanel = root.querySelector<HTMLDetailsElement>('#full-runbook');
     const search = root.querySelector<HTMLInputElement>('#ubuntu-runbook-search');
     const resultBox = root.querySelector<HTMLElement>('#ubuntu-runbook-search-results');
     const resultList = resultBox?.querySelector<HTMLOListElement>('ol');
@@ -165,6 +234,24 @@ const lastReviewed = runbook.data.verified_on;
       legacyNote.hidden = false;
       dismiss?.addEventListener('click', () => { legacyNote.hidden = true; });
     }
+
+    const revealRunbookHash = () => {
+      if (!root.isConnected) return;
+      const hash = window.location.hash.slice(1);
+      if (!hash || !articlePanel || !article) return;
+      let target: HTMLElement | null = null;
+      try { target = document.getElementById(decodeURIComponent(hash)); } catch { target = null; }
+      if (target === articlePanel) {
+        articlePanel.open = true;
+        window.requestAnimationFrame(() => articlePanel.querySelector('summary')?.scrollIntoView({ block: 'start' }));
+        return;
+      }
+      if (!target || !article.contains(target)) return;
+      articlePanel.open = true;
+      window.requestAnimationFrame(() => target?.scrollIntoView({ block: 'start' }));
+    };
+    revealRunbookHash();
+    window.addEventListener('hashchange', revealRunbookHash);
 
     const normalize = (value: string) => value.toLocaleLowerCase('vi').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
     const headings = [...article.querySelectorAll<HTMLHeadingElement>('h2, h3, h4')];
@@ -212,6 +299,7 @@ const lastReviewed = runbook.data.verified_on;
     search?.addEventListener('input', renderSearch);
     resultList?.addEventListener('click', (event) => {
       if ((event.target as HTMLElement).closest('a')) {
+        if (articlePanel) articlePanel.open = true;
         if (search) search.value = '';
         renderSearch();
       }
@@ -222,6 +310,7 @@ const lastReviewed = runbook.data.verified_on;
       const editing = !!target?.closest('input,textarea,[contenteditable]');
       if (((event.key === '/' && !editing) || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k')) && search) {
         event.preventDefault();
+        if (articlePanel) articlePanel.open = true;
         search.focus();
       }
       if (event.key === 'Escape' && search && document.activeElement === search) {

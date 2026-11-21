@@ -89,8 +89,10 @@ test('all previous Ubuntu Server URLs land on their matching v3 section', async 
   await page.goto(APP + 'ubuntu-server/setup-netplan/');
   await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=setup-netplan#/);
   await expect(page.locator('main h1').first()).toContainText('Ubuntu Server');
+  await expect(page.locator('#full-runbook')).toHaveAttribute('open', '');
   await page.reload();
   await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=setup-netplan#/);
+  await expect(page.locator('#full-runbook')).toHaveAttribute('open', '');
 
   const dockerAlias = ubuntuAliases.find((alias) => alias.slug === 'deploy-docker-compose');
   await page.goto(APP + 'ubuntu-server/deploy-docker-compose/');
@@ -104,14 +106,22 @@ test('Ubuntu Server v3 lab search and chapter navigation work', async ({ page })
   await page.goto(APP + 'ubuntu-server/');
   const search = page.getByRole('searchbox', { name: 'Tìm trong lab Ubuntu Server' });
   await expect(page.locator('.ubuntu-runbook-toc nav > ol > li')).toHaveCount(21);
-  await expect(page.locator('.ubuntu-gate')).toHaveCount(8);
-  await expect(page.getByRole('heading', { name: 'Cách đọc tài liệu và độ tin cậy', exact: true })).toBeVisible();
+  await expect(page.locator('.ubuntu-report-phases > li')).toHaveCount(8);
+  await expect(page.locator('#full-runbook')).not.toHaveAttribute('open', '');
+  await expect(page.getByRole('heading', { name: 'Bài lab giải quyết bài toán gì?' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Cách đọc tài liệu và độ tin cậy', exact: true })).toBeHidden();
+  await expect(page.locator('.ubuntu-report')).not.toContainText('Dừng: sửa NIC/DHCP/Netplan');
 
   await page.keyboard.press('/');
   await expect(search).toBeFocused();
+  await expect(page.locator('#full-runbook')).toHaveAttribute('open', '');
+  await expect(page.getByRole('heading', { name: 'Cách đọc tài liệu và độ tin cậy', exact: true })).toBeVisible();
   await search.fill('netplan try');
   await expect(page.locator('#ubuntu-runbook-search-results')).toBeVisible();
-  await expect(page.locator('#ubuntu-runbook-search-results a').filter({ hasText: /Netplan/i }).first()).toBeVisible();
+  const result = page.locator('#ubuntu-runbook-search-results a').filter({ hasText: /Netplan/i }).first();
+  await expect(result).toBeVisible();
+  await result.click();
+  await expect(page).toHaveURL(/#.*netplan/i);
 
   await page.keyboard.press('Control+k');
   await expect(search).toBeFocused();
@@ -124,6 +134,7 @@ test('Ubuntu Server v3 lab search and chapter navigation work', async ({ page })
 test('Ubuntu Server lab copies exact code and checklist state resets on reload', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: 'http://127.0.0.1:4173' });
   await page.goto(APP + 'ubuntu-server/');
+  await page.locator('#full-runbook > summary').click();
   await expect(page.locator('.ubuntu-runbook-warning').first()).toBeVisible();
   await expect(page.locator('.ubuntu-runbook-code')).not.toHaveCount(0);
 
@@ -139,6 +150,8 @@ test('Ubuntu Server lab copies exact code and checklist state resets on reload',
   await checklist.check();
   await expect(checklist).toBeChecked();
   await page.reload();
+  await expect(page.locator('#full-runbook')).not.toHaveAttribute('open', '');
+  await page.locator('#full-runbook > summary').click();
   await expect(page.locator('.ubuntu-runbook-body input[type="checkbox"]').first()).not.toBeChecked();
 });
 

@@ -249,3 +249,78 @@
 @media(max-width:800px){.ubuntu-runbook-hero{align-items:start;flex-direction:column;gap:1rem}.ubuntu-runbook-meta{width:100%}.ubuntu-runbook-orientation{grid-template-columns:1fr;gap:.8rem}.ubuntu-runbook-workspace{grid-template-columns:1fr}.ubuntu-runbook-sidebar{position:static;max-height:none;overflow:visible;order:-1}.ubuntu-runbook-toc nav>ol{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem 1rem}.ubuntu-runbook-safety{display:none}.ubuntu-runbook-toc__subsections ol{grid-template-columns:1fr}}
 @media(max-width:560px){.ubuntu-runbook-title{font-size:clamp(2rem,8vw,2.75rem)}.ubuntu-runbook-meta{grid-template-columns:repeat(2,minmax(0,1fr))}.ubuntu-runbook-meta>div:last-child{grid-column:1/-1}.ubuntu-runbook-flows{grid-template-columns:1fr}.ubuntu-runbook-flow p{font-size:.64rem}.ubuntu-runbook-gates{padding-block:1.4rem}.ubuntu-runbook-section-title{align-items:start;flex-direction:column;gap:.25rem}.ubuntu-runbook-section-title>p{text-align:left}.ubuntu-gate-list{grid-template-columns:1fr}.ubuntu-gate{padding:.75rem}.ubuntu-runbook-toc nav>ol{grid-template-columns:1fr}.ubuntu-runbook-toc__chapter{font-size:.75rem}.ubuntu-runbook-search kbd,.ubuntu-runbook-search-status{display:none}.ubuntu-runbook-search-results{max-height:45vh}.ubuntu-runbook-body{font-size:.82rem}.ubuntu-runbook-body>h2{font-size:1.3rem}.ubuntu-runbook-body table{font-size:.68rem}.ubuntu-runbook-body th,.ubuntu-runbook-body td{min-width:7rem;padding:.45rem .55rem}.ubuntu-runbook-body .ubuntu-runbook-code pre{padding:.8rem;font-size:.68rem}.ubuntu-runbook-code__bar>span{font-size:.57rem}.ubuntu-runbook-copy{min-height:32px}.ubuntu-legacy-redirect{margin:2rem 0}.ubuntu-legacy-topic-note{align-items:flex-start;flex-wrap:wrap}.ubuntu-legacy-topic-note>div{flex:1 1 100%}.ubuntu-legacy-topic-note>a{margin-right:auto}}
 @media(prefers-reduced-motion:reduce){.ubuntu-page--runbook *{scroll-behavior:auto}}
+
+/* Recruiter-facing technical report and expandable runbook appendix */
+.ubuntu-page--report{padding-bottom:clamp(4.5rem,9vw,8rem)}
+.ubuntu-report-hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(255px,.65fr);align-items:end;gap:clamp(1.5rem,5vw,4rem);padding:0 0 clamp(2rem,4vw,3.1rem);border-bottom:1px solid var(--line)}
+.ubuntu-report-hero__copy{min-width:0}
+.ubuntu-report-kicker,.ubuntu-report-index{margin:0;color:var(--accent);font:700 .67rem/1.5 var(--ubuntu-mono);letter-spacing:.12em;text-transform:uppercase}
+.ubuntu-report-hero h1{max-width:23ch;margin:.7rem 0 .85rem;color:var(--text);font-size:clamp(2.35rem,5.2vw,4.2rem);line-height:1.06;letter-spacing:-.06em;text-wrap:balance}
+.ubuntu-report-lede{max-width:68ch;margin:0;color:var(--muted);font-size:clamp(.95rem,1.4vw,1.08rem);line-height:1.75}
+.ubuntu-report-actions{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.4rem}
+.ubuntu-report-actions a{display:inline-flex;min-height:44px;align-items:center;justify-content:center;padding:.62rem .9rem;border:1px solid var(--line);border-radius:5px;font-size:.75rem;font-weight:700;line-height:1.4}
+.ubuntu-report-primary{background:var(--accent);border-color:var(--accent)!important;color:var(--accent-ink)!important}
+.ubuntu-report-primary:hover{filter:brightness(1.08)}
+.ubuntu-report-secondary{background:var(--surface);color:var(--text)}
+.ubuntu-report-secondary:hover{border-color:var(--accent);background:var(--accent-soft);color:var(--text)}
+.ubuntu-report-meta{display:grid;gap:.55rem;margin:0}
+.ubuntu-report-meta>div{display:grid;grid-template-columns:minmax(90px,.55fr) minmax(0,1fr);gap:.75rem;align-items:start;padding:.7rem .8rem;border:1px solid var(--line);border-radius:5px;background:var(--surface)}
+.ubuntu-report-meta dt{color:var(--subtle);font-size:.67rem;line-height:1.5}
+.ubuntu-report-meta dd{margin:0;color:var(--text);font:600 .68rem/1.55 var(--ubuntu-mono);overflow-wrap:anywhere}
+.ubuntu-report{min-width:0}
+.ubuntu-report-section{display:grid;grid-template-columns:minmax(190px,.55fr) minmax(0,1.45fr);column-gap:clamp(1.4rem,4vw,3.5rem);row-gap:.9rem;padding:clamp(1.8rem,3.8vw,2.7rem) 0;border-bottom:1px solid var(--line);scroll-margin-top:1.5rem}
+.ubuntu-report-section__heading{min-width:0}
+.ubuntu-report-section__heading h2{margin:.4rem 0 0;color:var(--text);font-size:clamp(1.15rem,2.15vw,1.55rem);line-height:1.3;letter-spacing:-.035em;text-wrap:balance}
+.ubuntu-report-section__intro{grid-column:2;margin:0 0 .25rem;color:var(--muted);font-size:.8rem;line-height:1.7}
+.ubuntu-report-summary__body{display:grid;gap:1.1rem}
+.ubuntu-report-summary__lead{margin:0;color:var(--text);font-size:clamp(.93rem,1.45vw,1.08rem);line-height:1.75}
+.ubuntu-report-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin:0}
+.ubuntu-report-facts>div{min-width:0;padding:.75rem .8rem;border-top:2px solid var(--accent);background:var(--surface)}
+.ubuntu-report-facts dt{margin-bottom:.35rem;color:var(--subtle);font:700 .62rem/1.5 var(--ubuntu-mono);letter-spacing:.07em;text-transform:uppercase}
+.ubuntu-report-facts dd{margin:0;color:var(--muted);font-size:.72rem;line-height:1.65}
+.ubuntu-report-architecture{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:0}
+.ubuntu-report-flow{min-width:0;padding:1rem 1.05rem;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.ubuntu-report-flow h3{margin:0 0 .8rem;color:var(--text);font-size:.84rem;letter-spacing:-.015em}
+.ubuntu-report-flow ol{display:flex;align-items:stretch;gap:.3rem;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+.ubuntu-report-flow li{display:inline-flex;align-items:center;min-height:32px;padding:.3rem .5rem;border-radius:3px;background:var(--surface-raised);color:var(--text);font-size:.64rem;font-weight:650;line-height:1.4}
+.ubuntu-report-flow li+li::before{content:'→';margin-left:-.72rem;margin-right:.3rem;color:var(--accent);font:700 .75rem var(--ubuntu-mono)}
+.ubuntu-report-flow p{margin:.75rem 0 0;color:var(--subtle);font-size:.67rem;line-height:1.6}
+.ubuntu-report-architecture figcaption{grid-column:1/-1;margin:.15rem 0 0;color:var(--subtle);font-size:.64rem;line-height:1.55}
+.ubuntu-report-phases{grid-column:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.55rem;margin:0;padding:0;list-style:none}
+.ubuntu-report-phases>li{display:flex;gap:.65rem;min-width:0;min-height:112px;padding:.8rem;border:1px solid var(--line);border-radius:5px;background:var(--surface)}
+.ubuntu-report-phase-number{flex:0 0 auto;color:var(--accent);font:700 .66rem/1.6 var(--ubuntu-mono)}
+.ubuntu-report-phases>li>div{min-width:0}
+.ubuntu-report-phases a{color:var(--text);font-size:.73rem;font-weight:700;line-height:1.5}
+.ubuntu-report-phases a:hover{color:var(--accent)}
+.ubuntu-report-phases p{margin:.35rem 0 0;color:var(--muted);font-size:.65rem;line-height:1.55}
+.ubuntu-report-evidence{grid-column:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}
+.ubuntu-report-evidence>div{min-width:0;padding:.85rem;border:1px solid var(--line);border-radius:5px;background:var(--surface)}
+.ubuntu-report-status{display:inline-flex;align-items:center;min-height:23px;padding:.18rem .38rem;border:1px solid var(--line);border-radius:3px;color:var(--subtle);font:700 .56rem/1.4 var(--ubuntu-mono);letter-spacing:.04em}
+.ubuntu-report-status--reviewed{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));background:var(--accent-soft);color:var(--accent)}
+.ubuntu-report-status--unverified{border-color:color-mix(in srgb,var(--warm) 38%,var(--line));color:var(--warm)}
+.ubuntu-report-evidence h3{margin:.65rem 0 .25rem;color:var(--text);font-size:.76rem;line-height:1.45}
+.ubuntu-report-evidence p{margin:0;color:var(--muted);font-size:.66rem;line-height:1.65}
+.ubuntu-report-discussion ul,.ubuntu-report-references ul{grid-column:2;display:grid;gap:.48rem;margin:0;padding-left:1.15rem;color:var(--muted);font-size:.75rem;line-height:1.7}
+.ubuntu-report-discussion li::marker{color:var(--accent)}
+.ubuntu-report-conclusion{grid-column:2;margin:.25rem 0 0;padding:.85rem 1rem;border-left:3px solid var(--accent);background:var(--accent-soft);color:var(--text);font-size:.76rem;line-height:1.7}
+.ubuntu-report-references>p{margin:0;color:var(--muted);font-size:.77rem;line-height:1.7}
+.ubuntu-report-references a{color:var(--accent);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 40%,transparent);text-underline-offset:2px}
+.ubuntu-report-references a:hover{text-decoration-color:currentColor}
+.ubuntu-report-references li::marker{color:var(--accent)}
+.ubuntu-runbook-panel{margin-top:1.5rem;border:1px solid var(--line);border-radius:7px;background:var(--surface)}
+.ubuntu-runbook-panel>summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:78px;padding:1rem 1.15rem;cursor:pointer;list-style:none}
+.ubuntu-runbook-panel>summary::-webkit-details-marker{display:none}
+.ubuntu-runbook-panel>summary::after{content:'+';display:grid;flex:0 0 29px;place-items:center;width:29px;height:29px;border:1px solid var(--line);border-radius:50%;color:var(--accent);font:500 1.15rem/1 var(--ubuntu-mono)}
+.ubuntu-runbook-panel[open]>summary::after{content:'−'}
+.ubuntu-runbook-panel>summary>span:first-child{display:grid;gap:.3rem}
+.ubuntu-runbook-panel>summary small{color:var(--accent);font:700 .59rem var(--ubuntu-mono);letter-spacing:.12em}
+.ubuntu-runbook-panel>summary strong{color:var(--text);font-size:.91rem;line-height:1.45}
+.ubuntu-runbook-panel__meta{color:var(--subtle);font:500 .66rem/1.5 var(--ubuntu-mono);text-align:right}
+.ubuntu-runbook-panel[open]>summary{border-bottom:1px solid var(--line)}
+.ubuntu-runbook-panel .ubuntu-runbook-workspace{padding:1.2rem}
+.ubuntu-runbook-panel .ubuntu-runbook-sidebar{top:1rem}
+@media(max-width:1020px){.ubuntu-report-phases{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:800px){.ubuntu-report-hero{grid-template-columns:1fr;gap:1.3rem}.ubuntu-report-meta{grid-template-columns:repeat(3,minmax(0,1fr))}.ubuntu-report-meta>div{grid-template-columns:1fr;gap:.25rem}.ubuntu-report-section{grid-template-columns:minmax(150px,.6fr) minmax(0,1.4fr);column-gap:1.4rem}.ubuntu-report-facts{grid-template-columns:1fr}.ubuntu-report-facts>div{display:grid;grid-template-columns:minmax(95px,.4fr) 1fr;gap:.65rem}.ubuntu-report-facts dt{margin:0}.ubuntu-report-evidence{grid-template-columns:1fr}.ubuntu-report-evidence>div{display:grid;grid-template-columns:120px minmax(0,1fr);column-gap:.7rem;align-items:start}.ubuntu-report-evidence h3{margin:.1rem 0 .25rem}.ubuntu-report-evidence p{grid-column:2}.ubuntu-runbook-panel .ubuntu-runbook-workspace{padding:.9rem}.ubuntu-runbook-panel .ubuntu-runbook-sidebar{order:0}}
+@media(max-width:600px){.ubuntu-page--report{padding-top:1.35rem}.ubuntu-breadcrumb{margin-bottom:1.45rem}.ubuntu-report-hero h1{font-size:clamp(2.15rem,9vw,3.15rem)}.ubuntu-report-meta{grid-template-columns:1fr}.ubuntu-report-meta>div{grid-template-columns:minmax(95px,.55fr) minmax(0,1fr)}.ubuntu-report-actions{display:grid;grid-template-columns:1fr}.ubuntu-report-actions a{width:100%}.ubuntu-report-section{grid-template-columns:1fr;gap:.8rem;padding:1.7rem 0}.ubuntu-report-section__heading h2{max-width:30ch}.ubuntu-report-section__intro,.ubuntu-report-conclusion{grid-column:1}.ubuntu-report-architecture{grid-template-columns:1fr}.ubuntu-report-architecture figcaption{grid-column:1}.ubuntu-report-phases{grid-template-columns:1fr}.ubuntu-report-phases>li{min-height:0}.ubuntu-report-evidence>div{grid-template-columns:1fr;gap:.45rem}.ubuntu-report-evidence h3{margin:.1rem 0}.ubuntu-report-evidence p{grid-column:1}.ubuntu-runbook-panel>summary{align-items:flex-start;padding:.85rem}.ubuntu-runbook-panel__meta{max-width:11ch;font-size:.59rem}.ubuntu-runbook-panel .ubuntu-runbook-workspace{padding:.65rem}.ubuntu-runbook-panel .ubuntu-runbook-toc nav>ol{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ubuntu-page--report *{scroll-behavior:auto}}
+@media(max-width:600px){.ubuntu-report-phases,.ubuntu-report-evidence,.ubuntu-report-discussion>ul,.ubuntu-report-references>ul{grid-column:1}}
