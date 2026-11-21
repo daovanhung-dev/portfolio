@@ -1,0 +1,99 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import { sitePath } from '../../utils/paths';
+import { ubuntuGroups, ubuntuGuides, ubuntuGuideSequence, ubuntuRiskLabels, type UbuntuGuide } from '../../data/ubuntuServer';
+import '../../styles/ubuntu-server.css';
+
+export function getStaticPaths() {
+  return ubuntuGuides.map(guide => ({ params: { slug: guide.slug }, props: { guide } }));
+}
+const { guide } = Astro.props as { guide: UbuntuGuide };
+const { prev, next } = ubuntuGuideSequence(guide);
+const group = ubuntuGroups.find(section => section.id === guide.group)!;
+const groupCount = ubuntuGuides.filter(item => item.group === guide.group).length;
+---
+<SiteLayout title={`${guide.title} — Quản trị Ubuntu Server`} description={guide.summary} route={`/ubuntu-server/${guide.slug}`}>
+  <div class="ubuntu-page ubuntu-page--detail">
+    <nav class="ubuntu-breadcrumb" aria-label="Đường dẫn">
+      <a href={sitePath('/ubuntu-server')}>Ubuntu Server</a><span aria-hidden="true">/</span>
+      <a href={sitePath('/ubuntu-server') + '#' + group.id}>{group.title}</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Bài {String(guide.order).padStart(2, '0')}</span>
+    </nav>
+    <header class="ubuntu-detail-head">
+      <div class="ubuntu-detail-head__kicker"><span class="ubuntu-group__index">{group.label.toUpperCase()}</span><span class="ubuntu-head-separator" aria-hidden="true">·</span><span>BÀI {String(guide.order).padStart(2, '0')} / {groupCount}</span></div>
+      <h1>{guide.title}</h1>
+      <p>{guide.summary}</p>
+      <div class="ubuntu-detail-meta">
+        <span><span aria-hidden="true">◷</span> {guide.minutes} phút</span>
+        <span>{guide.commands.length} bước</span>
+        <span class:list={['ubuntu-risk-label', guide.risk === 'high' && 'is-high']}>{ubuntuRiskLabels[guide.risk]}</span>
+      </div>
+    </header>
+
+    <div class="ubuntu-detail-grid">
+      <article class="ubuntu-article">
+        {guide.risk === 'high' && <aside class="ubuntu-danger" aria-label="Lưu ý an toàn"><span class="ubuntu-danger__symbol" aria-hidden="true">!</span><p><strong>Chú ý trước khi chạy lệnh</strong> Thao tác có thể làm gián đoạn kết nối hoặc dịch vụ. Chuẩn bị console/SSH dự phòng và sao lưu cấu hình.</p></aside>}
+        <section class="ubuntu-article-section" id="commands">
+          <div class="ubuntu-section-heading"><div><span class="ubuntu-group__index">THỰC HÀNH</span><h2>Các bước thực hiện</h2></div><p>Đọc mô tả, kiểm tra đúng máy rồi mới sao chép lệnh.</p></div>
+          <ol class="ubuntu-steps">
+            {guide.commands.map((command, index) => <li class="ubuntu-step" id={'command-' + (index + 1)}>
+              <div class="ubuntu-step__heading"><span class="ubuntu-step__index">{String(index + 1).padStart(2, '0')}</span><h3>{command.title}</h3></div>
+              <div class="ubuntu-command" data-command>
+                <div class="ubuntu-command__bar"><span class="ubuntu-command__lang">{command.lang === 'bash' ? 'TERMINAL / BASH' : command.lang.toUpperCase() || 'CONFIG'}</span><button class="ubuntu-copy" type="button" aria-label={'Sao chép lệnh bước ' + (index + 1)}>Sao chép <span aria-hidden="true">⧉</span></button></div>
+                <pre><code>{command.code}</code></pre>
+              </div>
+              <p class="ubuntu-step__why">{command.why}</p>
+            </li>)}
+          </ol>
+        </section>
+        {guide.note && <aside class="ubuntu-note" id="note"><span class="ubuntu-note__icon" aria-hidden="true">i</span><div><h2>Ghi nhớ</h2><p>{guide.note}</p></div></aside>}
+        <section class="ubuntu-verify" id="verify"><div class="ubuntu-verify__heading"><span aria-hidden="true">✓</span><h2>Kiểm tra kết quả</h2></div><p>Kiểm tra trạng thái và log, sau đó thử từ máy khác. Lệnh chạy xong không đồng nghĩa dịch vụ đã truy cập được từ Internet.</p></section>
+        <nav class="ubuntu-pagination" aria-label="Bài học liền kề">
+          {prev ? <a class="ubuntu-pagination__prev" href={sitePath('/ubuntu-server/' + prev.slug)}><small>← Bài trước</small><strong>{prev.title}</strong></a> : <a href={sitePath('/ubuntu-server')}><small>← Quay lại</small><strong>Danh sách bài học</strong></a>}
+          {next ? <a class="ubuntu-pagination__next" href={sitePath('/ubuntu-server/' + next.slug)}><small>Bài tiếp theo →</small><strong>{next.title}</strong></a> : <a class="ubuntu-pagination__next" href={sitePath('/ubuntu-server')}><small>Hoàn thành ✓</small><strong>Xem tất cả bài học</strong></a>}
+        </nav>
+      </article>
+      <aside class="ubuntu-toc" aria-label="Mục lục bài học">
+        <span class="ubuntu-overline">TRONG BÀI NÀY</span>
+        <a href="#commands" class="ubuntu-toc__root">Các bước thực hiện</a>
+        <ol>{guide.commands.map((command, index) => <li><a href={'#command-' + (index + 1)}><span>{String(index + 1).padStart(2, '0')}</span>{command.title}</a></li>)}</ol>
+        {guide.note && <a href="#note" class="ubuntu-toc__root">Ghi nhớ</a>}
+        <a href="#verify" class="ubuntu-toc__root">Kiểm tra kết quả</a>
+        <div class="ubuntu-toc__end"><a href={sitePath('/ubuntu-server')}>← Tất cả 37 bài</a></div>
+      </aside>
+    </div>
+  </div>
+</SiteLayout>
+<script>
+  function initUbuntuCopy() {
+    document.querySelectorAll<HTMLButtonElement>('.ubuntu-copy').forEach(button => {
+      if (button.dataset.ready === 'true') return;
+      button.dataset.ready = 'true';
+      button.addEventListener('click', async () => {
+        const code = button.closest('[data-command]')?.querySelector('code')?.textContent || '';
+        const previous = button.innerHTML;
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = 'Đã sao chép ✓';
+        } catch {
+          // Fallback for insecure contexts where navigator.clipboard is unavailable.
+          try {
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            textarea.style.cssText = 'position:fixed;left:-10000px;top:0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            const ok = document.execCommand('copy');
+            textarea.remove();
+            if (!ok) throw new Error('Copy rejected');
+            button.textContent = 'Đã sao chép ✓';
+          } catch { button.textContent = 'Không thể sao chép'; }
+        }
+        window.setTimeout(() => { if (button.isConnected) button.innerHTML = previous; }, 1700);
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initUbuntuCopy);
+  if (document.readyState !== 'loading') initUbuntuCopy();
+  else document.addEventListener('DOMContentLoaded', initUbuntuCopy, { once: true });
+</script>

@@ -1,0 +1,146 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import { sitePath } from '../../utils/paths';
+import { ubuntuGroups, ubuntuGuides } from '../../data/ubuntuServer';
+import '../../styles/ubuntu-server.css';
+
+const totalCommands = ubuntuGuides.reduce((sum, guide) => sum + guide.commands.length, 0);
+const recommended = [
+  { id: '01', eyebrow: 'Bắt đầu từ đây', title: 'Truy cập server từ xa', summary: 'SSH, Tailscale và quản trị router', slug: 'setup-tailscale' },
+  { id: '02', eyebrow: 'Triển khai', title: 'Đưa API lên Internet', summary: 'Backend, systemd và Nginx', slug: 'deploy-nginx' },
+  { id: '03', eyebrow: 'Xử lý sự cố', title: 'Debug HTTPS :443', summary: 'Xác định lỗi mạng và firewall', slug: 'operate-port-443-playbook' },
+];
+---
+<SiteLayout title="Quản trị Ubuntu Server — Đào Văn Hùng" description="Sổ tay Ubuntu Server dễ tra cứu: SSH, Tailscale, Nginx, triển khai backend và xử lý sự cố thực tế." route="/ubuntu-server">
+  <div class="ubuntu-page ubuntu-page--index">
+    <nav class="ubuntu-breadcrumb" aria-label="Đường dẫn">
+      <a href={sitePath('/labs')}>Labs</a><span aria-hidden="true">/</span><span aria-current="page">Ubuntu Server</span>
+    </nav>
+    <header class="ubuntu-masthead">
+      <div class="ubuntu-masthead__intro">
+        <span class="eyebrow">Linux / Operations handbook</span>
+        <h1>Quản trị <span>Ubuntu Server</span><span class="ubuntu-title-period">.</span></h1>
+        <p>Hướng dẫn ngắn, có lệnh thực tế. Từ kết nối từ xa, triển khai backend đến tìm và sửa lỗi server.</p>
+      </div>
+      <div class="ubuntu-masthead__stats" aria-label="Thống kê tài liệu">
+        <span><strong>{ubuntuGuides.length}</strong> bài học</span>
+        <span><strong>{totalCommands}</strong> khối lệnh</span>
+        <span><strong>03</strong> học phần</span>
+      </div>
+    </header>
+
+    <section class="ubuntu-shortcuts" aria-labelledby="ubuntu-shortcuts-heading">
+      <div class="ubuntu-overline" id="ubuntu-shortcuts-heading">LỐI TẮT / BẮT ĐẦU NHANH</div>
+      <div class="ubuntu-shortcuts__grid">
+        {recommended.map(item => <a class="ubuntu-shortcut" href={sitePath('/ubuntu-server/' + item.slug)}>
+          <span class="ubuntu-shortcut__number">{item.id}</span>
+          <span class="ubuntu-shortcut__body"><small>{item.eyebrow}</small><strong>{item.title}</strong><span>{item.summary}</span></span>
+          <span class="ubuntu-shortcut__arrow" aria-hidden="true">↗</span>
+        </a>)}
+      </div>
+    </section>
+
+    <div class="ubuntu-workspace">
+      <aside class="ubuntu-sidebar" aria-label="Mục lục học phần">
+        <div class="ubuntu-overline">HỌC PHẦN</div>
+        <nav class="ubuntu-sidebar__nav">
+          {ubuntuGroups.map((group, index) => <a class="ubuntu-sidebar__link" href={'#' + group.id}>
+            <span class="ubuntu-sidebar__number">0{index+1}</span>
+            <span>{group.title}</span>
+            <small>{ubuntuGuides.filter(guide => guide.group === group.id).length}</small>
+          </a>)}
+        </nav>
+        <div class="ubuntu-sidebar__tip"><span class="ubuntu-tip-symbol" aria-hidden="true">!</span><p>Trước khi sửa <strong>SSH, Netplan hoặc firewall</strong>, luôn có đường truy cập dự phòng.</p></div>
+      </aside>
+
+      <div class="ubuntu-content">
+        <div class="ubuntu-toolbar">
+          <label class="ubuntu-search">
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="19" height="19"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8"/></svg>
+            <input type="search" id="ubuntu-search" autocomplete="off" placeholder="Tìm lệnh, Nginx, Tailscale, lỗi 443…" aria-label="Tìm trong tài liệu Ubuntu Server" aria-controls="ubuntu-chapters" />
+            <kbd>/</kbd>
+          </label>
+          <span id="ubuntu-result-count" class="ubuntu-result-count" aria-live="polite">{ubuntuGuides.length} bài</span>
+        </div>
+        <div class="ubuntu-filters" aria-label="Lọc nội dung">
+          <button class="ubuntu-filter is-active" type="button" data-filter="all" aria-pressed="true">Tất cả</button>
+          {ubuntuGroups.map((group, i) => <button type="button" class="ubuntu-filter" data-filter={group.id} aria-pressed="false">0{i+1} · {group.title}</button>)}
+        </div>
+        <div id="ubuntu-chapters" class="ubuntu-chapters">
+          {ubuntuGroups.map((group, groupIndex) => <section class="ubuntu-group" id={group.id} data-group={group.id} aria-labelledby={'ubuntu-heading-' + group.id}>
+            <div class="ubuntu-group__heading">
+              <div><span class="ubuntu-group__index">0{groupIndex+1} / {group.label.split('/').at(-1)?.trim().toUpperCase()}</span><h2 id={'ubuntu-heading-' + group.id}>{group.title}</h2><p>{group.summary}</p></div>
+              <span class="ubuntu-group__counter">{ubuntuGuides.filter(guide => guide.group === group.id).length} bài</span>
+            </div>
+            <div class="ubuntu-lesson-list">
+              {ubuntuGuides.filter(guide => guide.group === group.id).map(guide => <a class="ubuntu-lesson" href={sitePath('/ubuntu-server/' + guide.slug)} data-search={`${guide.title} ${guide.summary} ${guide.tags.join(' ')} ${guide.commands.map(command => command.title + ' ' + command.code).join(' ')}`}>
+                <span class="ubuntu-lesson__number">{String(guide.order).padStart(2, '0')}</span>
+                <span class="ubuntu-lesson__main"><strong>{guide.title}</strong><span>{guide.summary}</span></span>
+                <span class="ubuntu-lesson__meta"><small>{guide.minutes} phút</small>{guide.risk === 'high' ? <span class="ubuntu-lesson__warning">Thận trọng</span> : <small>{guide.commands.length} lệnh</small>}</span>
+                <span class="ubuntu-lesson__arrow" aria-hidden="true">↗</span>
+              </a>)}
+            </div>
+          </section>)}
+        </div>
+        <div class="ubuntu-empty" id="ubuntu-empty" hidden><strong>Không tìm thấy bài phù hợp</strong><p>Thử “SSH”, “Nginx”, “Tailscale” hoặc “443”.</p><button id="ubuntu-search-reset" type="button">Xóa bộ lọc</button></div>
+        <p class="ubuntu-footnote">Lệnh và địa chỉ trong bài là ví dụ. Kiểm tra môi trường thật trước khi chạy trên production.</p>
+      </div>
+    </div>
+  </div>
+</SiteLayout>
+<script>
+  function initUbuntuIndex() {
+    const root = document.querySelector<HTMLElement>('.ubuntu-page--index');
+    if (!root || root.dataset.initialized === 'true') return;
+    root.dataset.initialized = 'true';
+    const search = root.querySelector<HTMLInputElement>('#ubuntu-search');
+    const rows = [...root.querySelectorAll<HTMLElement>('.ubuntu-lesson')];
+    const groups = [...root.querySelectorAll<HTMLElement>('.ubuntu-group')];
+    const filters = [...root.querySelectorAll<HTMLButtonElement>('.ubuntu-filter')];
+    const count = root.querySelector<HTMLElement>('#ubuntu-result-count');
+    const empty = root.querySelector<HTMLElement>('#ubuntu-empty');
+    const reset = root.querySelector<HTMLButtonElement>('#ubuntu-search-reset');
+    if (!search) return;
+    const normalize = (v: string) => v.toLocaleLowerCase('vi').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').trim();
+    const searchable = rows.map(row => normalize(row.dataset.search || ''));
+    let active = 'all';
+    function render() {
+      const term = normalize(search!.value);
+      let visible = 0;
+      rows.forEach((row, index) => {
+        const groupId = row.closest<HTMLElement>('.ubuntu-group')?.dataset.group;
+        const matched = (active === 'all' || active === groupId) && (!term || searchable[index].includes(term));
+        row.hidden = !matched;
+        if (matched) visible += 1;
+      });
+      groups.forEach(group => { group.hidden = !group.querySelector('.ubuntu-lesson:not([hidden])'); });
+      if (count) count.textContent = `${visible} / ${rows.length} bài`;
+      if (empty) empty.hidden = visible !== 0;
+    }
+    search.addEventListener('input', render);
+    filters.forEach(button => button.addEventListener('click', () => {
+      active = button.dataset.filter || 'all';
+      filters.forEach(item => { const selected = item === button; item.classList.toggle('is-active', selected); item.setAttribute('aria-pressed', String(selected)); });
+      render();
+    }));
+    reset?.addEventListener('click', () => {
+      active = 'all'; search!.value = '';
+      filters.forEach(item => { const selected = item.dataset.filter === 'all'; item.classList.toggle('is-active', selected); item.setAttribute('aria-pressed', String(selected)); });
+      render(); search!.focus();
+    });
+    // The root can be swapped by Astro ClientRouter; the listener exits for disconnected pages.
+    document.addEventListener('keydown', event => {
+      if (!root.isConnected || event.altKey) return;
+      const target = event.target as HTMLElement | null;
+      const editing = !!target?.closest('input,textarea,[contenteditable]');
+      if (((event.key === '/' && !editing) || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k'))) {
+        event.preventDefault(); search!.focus();
+      }
+      if (event.key === 'Escape' && document.activeElement === search) search!.blur();
+    });
+    render();
+  }
+  document.addEventListener('astro:page-load', initUbuntuIndex);
+  if (document.readyState !== 'loading') initUbuntuIndex();
+  else document.addEventListener('DOMContentLoaded', initUbuntuIndex, { once: true });
+</script>

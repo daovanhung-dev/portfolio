@@ -1,0 +1,135 @@
+/* Ubuntu Server handbook V3. Inherits all palette/type/layout tokens from portfolio/global.css. */
+.ubuntu-page{--ubuntu-mono:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;--ubuntu-corner:8px;padding:2.1rem 0 clamp(3.5rem,8vw,7rem);min-width:0}
+.ubuntu-page [hidden]{display:none!important}
+.ubuntu-page button,.ubuntu-page input{font:inherit}
+.ubuntu-breadcrumb{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:0 0 2.2rem;color:var(--subtle);font-size:.76rem}
+.ubuntu-breadcrumb a:hover{color:var(--accent)}
+.ubuntu-breadcrumb span[aria-hidden]{opacity:.55}
+.ubuntu-masthead{display:flex;align-items:end;justify-content:space-between;gap:2rem 4rem;padding:0 0 2.7rem;border-bottom:1px solid var(--line)}
+.ubuntu-masthead__intro{max-width:760px;min-width:0}
+.ubuntu-masthead h1{margin:.5rem 0 .85rem;color:var(--text);font-size:clamp(2.5rem,5.3vw,4.45rem);font-weight:700;line-height:1.09;letter-spacing:-.055em;text-wrap:balance}
+.ubuntu-masthead h1>span:not(.ubuntu-title-period){color:var(--accent)}
+.ubuntu-title-period{color:var(--text)}
+.ubuntu-masthead p{margin:0;max-width:56ch;color:var(--muted);font-size:clamp(.95rem,1.5vw,1.09rem);line-height:1.7}
+.ubuntu-masthead__stats{display:grid;grid-template-columns:1fr;gap:.55rem;flex:0 0 auto;margin:0 0 .35rem;padding-left:1.8rem;border-left:1px solid var(--line)}
+.ubuntu-masthead__stats span{display:flex;align-items:baseline;gap:.5rem;color:var(--subtle);white-space:nowrap;font-size:.75rem}
+.ubuntu-masthead__stats strong{font:700 1.15rem var(--ubuntu-mono);color:var(--text)}
+.ubuntu-overline{color:var(--subtle);font:600 .65rem/1.4 var(--ubuntu-mono);letter-spacing:.12em}
+.ubuntu-shortcuts{padding:1.8rem 0 2.6rem;border-bottom:1px solid var(--line)}
+.ubuntu-shortcuts__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin-top:1rem}
+.ubuntu-shortcut{display:flex;align-items:flex-start;gap:.8rem;min-width:0;min-height:132px;padding:1rem 1.05rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--ubuntu-corner);transition:border-color 150ms,background-color 150ms}
+.ubuntu-shortcut:hover{border-color:var(--accent);background:var(--accent-soft);color:var(--text)}
+.ubuntu-shortcut__number{padding-top:.1rem;color:var(--accent);font:700 .72rem var(--ubuntu-mono)}
+.ubuntu-shortcut__body{display:grid;min-width:0;gap:.18rem}
+.ubuntu-shortcut__body small{color:var(--subtle);font-size:.67rem}
+.ubuntu-shortcut__body strong{color:var(--text);font-size:.94rem;line-height:1.45;letter-spacing:-.02em}
+.ubuntu-shortcut__body>span{color:var(--muted);font-size:.73rem;line-height:1.5}
+.ubuntu-shortcut__arrow{margin-left:auto;color:var(--accent);font-size:1rem}
+.ubuntu-workspace{display:grid;grid-template-columns:218px minmax(0,1fr);align-items:start;gap:clamp(2rem,5vw,3.8rem);padding-top:2.7rem}
+.ubuntu-sidebar{position:sticky;top:1.5rem}
+.ubuntu-sidebar__nav{display:grid;gap:.3rem;margin-top:.9rem}
+.ubuntu-sidebar__link{display:grid;grid-template-columns:25px minmax(0,1fr) 18px;align-items:start;gap:.35rem;padding:.72rem .35rem;border-radius:5px;color:var(--muted);font-size:.77rem;font-weight:600;line-height:1.55}
+.ubuntu-sidebar__link:hover{background:var(--surface-raised);color:var(--text)}
+.ubuntu-sidebar__number{color:var(--accent);font:500 .65rem/1.9 var(--ubuntu-mono)}
+.ubuntu-sidebar__link small{color:var(--subtle);text-align:right;font:400 .67rem/1.9 var(--ubuntu-mono)}
+.ubuntu-sidebar__tip{display:flex;gap:.8rem;margin-top:1.7rem;padding:.85rem .9rem;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.ubuntu-tip-symbol{display:grid;flex:0 0 18px;place-items:center;width:18px;height:18px;border:1px solid var(--warm);border-radius:50%;color:var(--warm);font:800 .66rem var(--ubuntu-mono)}
+.ubuntu-sidebar__tip p{margin:0;color:var(--muted);font-size:.71rem;line-height:1.65}
+.ubuntu-sidebar__tip strong{color:var(--text);font-weight:600}
+.ubuntu-content{min-width:0}
+.ubuntu-toolbar{display:flex;align-items:center;gap:1rem}
+.ubuntu-search{display:flex;flex:1;align-items:center;gap:.8rem;min-width:0;min-height:54px;padding:.7rem .95rem;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--subtle);transition:border-color 150ms}
+.ubuntu-search:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.ubuntu-search input{width:100%;min-width:0;outline:0;border:0;background:transparent;color:var(--text);font-size:.86rem}
+.ubuntu-search input::placeholder{color:var(--subtle)}
+.ubuntu-search kbd{flex:0 0 auto;padding:.05rem .4rem;border:1px solid var(--line);border-radius:3px;color:var(--subtle);font:500 .68rem var(--ubuntu-mono)}
+.ubuntu-result-count{flex:0 0 auto;color:var(--subtle);font:500 .68rem var(--ubuntu-mono);white-space:nowrap}
+.ubuntu-filters{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 2.5rem}
+.ubuntu-filter{padding:.42rem .72rem;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--muted);cursor:pointer;font-size:.75rem!important;line-height:1.4}
+.ubuntu-filter:hover{background:var(--surface-raised);color:var(--text)}
+.ubuntu-filter.is-active{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 37%,var(--line));color:var(--accent);font-weight:700}
+.ubuntu-group{margin-bottom:2.8rem;scroll-margin-top:1.25rem}
+.ubuntu-group__heading{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:0 0 .9rem}
+.ubuntu-group__index{color:var(--accent);font:600 .69rem var(--ubuntu-mono);letter-spacing:.065em}
+.ubuntu-group__heading h2{margin:.35rem 0 .25rem;font-size:clamp(1.35rem,2.7vw,1.7rem);line-height:1.25;letter-spacing:-.04em;color:var(--text)}
+.ubuntu-group__heading p{margin:0;color:var(--muted);font-size:.76rem;line-height:1.6}
+.ubuntu-group__counter{color:var(--subtle);white-space:nowrap;font:500 .71rem var(--ubuntu-mono)}
+.ubuntu-lesson-list{border:1px solid var(--line);border-radius:var(--ubuntu-corner);overflow:hidden;background:var(--surface)}
+.ubuntu-lesson{display:grid;grid-template-columns:30px minmax(0,1fr) 86px 16px;gap:.6rem 1rem;align-items:center;min-width:0;padding:1.05rem 1.05rem;color:var(--text);transition:background-color 150ms}
+.ubuntu-lesson+.ubuntu-lesson{border-top:1px solid var(--line)}
+.ubuntu-lesson:hover{background:var(--accent-soft);color:var(--text)}
+.ubuntu-lesson__number{align-self:start;padding-top:.12rem;color:var(--accent);font:700 .7rem var(--ubuntu-mono)}
+.ubuntu-lesson__main{display:grid;gap:.25rem;min-width:0}
+.ubuntu-lesson__main strong{overflow-wrap:anywhere;font-size:.92rem;line-height:1.42;letter-spacing:-.018em}
+.ubuntu-lesson__main>span{color:var(--muted);font-size:.75rem;line-height:1.5}
+.ubuntu-lesson__meta{display:grid;justify-items:end;gap:.2rem;color:var(--subtle);font-size:.71rem;white-space:nowrap}
+.ubuntu-lesson__meta small{font-size:.69rem}
+.ubuntu-lesson__warning{color:var(--warm);font-size:.66rem}
+.ubuntu-lesson__arrow{color:var(--accent);font-size:1.08rem}
+.ubuntu-empty{padding:2.7rem 1.5rem;border:1px dashed var(--line);border-radius:7px;text-align:center;background:var(--surface)}
+.ubuntu-empty strong{font-size:1rem}
+.ubuntu-empty p{margin:.5rem 0 1rem;color:var(--muted);font-size:.82rem}
+.ubuntu-empty button{border:1px solid var(--line);border-radius:5px;padding:.5rem .8rem;background:transparent;color:var(--accent);cursor:pointer;font-size:.78rem}
+.ubuntu-footnote{margin:2rem 0 0;color:var(--subtle);font-size:.72rem;line-height:1.6}
+/* Article view */
+.ubuntu-page--detail{padding-top:2.1rem}
+.ubuntu-detail-head{max-width:920px;padding:0 0 2.05rem;border-bottom:1px solid var(--line)}
+.ubuntu-detail-head__kicker{display:flex;align-items:center;gap:.7rem;color:var(--subtle);font:500 .69rem var(--ubuntu-mono);letter-spacing:.035em}
+.ubuntu-head-separator{color:var(--subtle)}
+.ubuntu-detail-head h1{max-width:24ch;margin:.75rem 0 .72rem;color:var(--text);font-size:clamp(2rem,4.2vw,3.15rem);line-height:1.13;letter-spacing:-.05em;text-wrap:balance}
+.ubuntu-detail-head>p{max-width:67ch;margin:0;color:var(--muted);font-size:.99rem;line-height:1.7}
+.ubuntu-detail-meta{display:flex;gap:.55rem;align-items:center;flex-wrap:wrap;margin-top:1.3rem}
+.ubuntu-detail-meta>span{display:inline-flex;gap:.35rem;align-items:center;padding:.28rem .58rem;border:1px solid var(--line);border-radius:5px;color:var(--muted);font-size:.72rem;line-height:1.35}
+.ubuntu-detail-meta .ubuntu-risk-label.is-high{color:var(--warm);border-color:color-mix(in srgb,var(--warm) 30%,var(--line))}
+.ubuntu-detail-grid{display:grid;grid-template-columns:minmax(0,1fr) 218px;gap:clamp(1.8rem,4.5vw,3.3rem);align-items:start;padding-top:1.9rem}
+.ubuntu-article{min-width:0}
+.ubuntu-danger{display:flex;align-items:start;gap:.75rem;margin:0 0 1.7rem;padding:.85rem 1rem;border:1px solid color-mix(in srgb,var(--warm) 35%,var(--line));border-radius:6px;background:var(--surface);color:var(--muted)}
+.ubuntu-danger__symbol{display:grid;place-items:center;flex:0 0 18px;width:18px;height:18px;border:1px solid var(--warm);border-radius:50%;color:var(--warm);font:800 .67rem var(--ubuntu-mono)}
+.ubuntu-danger p{margin:0;font-size:.8rem;line-height:1.65}
+.ubuntu-danger strong{display:block;color:var(--warm);font-size:.8rem}
+.ubuntu-section-heading{display:flex;align-items:end;justify-content:space-between;gap:1.3rem;margin:0 0 1.2rem}
+.ubuntu-section-heading h2{margin:.3rem 0 0;color:var(--text);font-size:1.42rem;letter-spacing:-.034em;line-height:1.3}
+.ubuntu-section-heading p{max-width:35ch;margin:0 0 .2rem;color:var(--subtle);font-size:.73rem;text-align:right;line-height:1.5}
+.ubuntu-article-section{scroll-margin-top:1.5rem}
+.ubuntu-steps{display:grid;gap:1.55rem;margin:0;padding:0;list-style:none}
+.ubuntu-step{min-width:0;scroll-margin-top:2rem}
+.ubuntu-step__heading{display:flex;align-items:baseline;gap:.8rem;min-width:0;margin:0 0 .75rem}
+.ubuntu-step__index{color:var(--accent);font:700 .72rem var(--ubuntu-mono)}
+.ubuntu-step h3{margin:0;color:var(--text);font-size:.93rem;line-height:1.5;letter-spacing:-.013em}
+.ubuntu-command{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:7px;background:var(--surface)}
+.ubuntu-command__bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:40px;padding:.45rem .8rem;border-bottom:1px solid var(--line);background:var(--surface-raised)}
+.ubuntu-command__lang{color:var(--muted);font:500 .63rem var(--ubuntu-mono);letter-spacing:.045em}
+.ubuntu-copy{padding:.32rem .58rem;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--muted);font-size:.69rem!important;line-height:1.3;white-space:nowrap;cursor:pointer}
+.ubuntu-copy:hover{border-color:var(--accent);color:var(--text)}
+.ubuntu-copy span{margin-left:.25rem;font-size:.85rem}
+.ubuntu-command pre{max-height:420px;overflow:auto;margin:0;padding:1.1rem 1.05rem;color:var(--text);font:400 .8rem/1.85 var(--ubuntu-mono);tab-size:4;white-space:pre}
+.ubuntu-command code{font:inherit}
+.ubuntu-step__why{margin:.6rem 0 0;color:var(--muted);font-size:.79rem;line-height:1.65}
+.ubuntu-note{display:flex;gap:.75rem;margin:2.2rem 0 1.6rem;padding:1rem 1.15rem;border-radius:6px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 20%,var(--line));scroll-margin-top:1.5rem}
+.ubuntu-note__icon{display:grid;place-items:center;flex:0 0 20px;width:20px;height:20px;border:1px solid var(--accent);border-radius:50%;color:var(--accent);font:700 .7rem var(--ubuntu-mono)}
+.ubuntu-note h2{margin:0 0 .25rem;color:var(--text);font-size:.85rem}
+.ubuntu-note p{margin:0;color:var(--muted);font-size:.81rem;line-height:1.7}
+.ubuntu-verify{margin:2rem 0 2.5rem;padding:1.1rem 0 0;border-top:1px solid var(--line);scroll-margin-top:1.5rem}
+.ubuntu-verify__heading{display:flex;align-items:center;gap:.6rem;margin-bottom:.4rem}
+.ubuntu-verify__heading>span{color:var(--accent);font-weight:700}
+.ubuntu-verify h2{margin:0;color:var(--text);font-size:.96rem}
+.ubuntu-verify p{max-width:67ch;margin:0;color:var(--muted);font-size:.79rem;line-height:1.75}
+.ubuntu-toc{position:sticky;top:1.5rem;min-width:0;padding:1.1rem 1.05rem;border:1px solid var(--line);border-radius:7px;background:var(--surface)}
+.ubuntu-toc>.ubuntu-overline{display:block;margin:0 0 .9rem}
+.ubuntu-toc__root{display:block;margin:.75rem 0;color:var(--text);font-size:.77rem;font-weight:650}
+.ubuntu-toc ol{display:grid;gap:.55rem;margin:.6rem 0 1.1rem;padding:0;list-style:none}
+.ubuntu-toc li a{display:flex;gap:.55rem;align-items:start;color:var(--muted);font-size:.72rem;line-height:1.5}
+.ubuntu-toc li span{flex:0 0 20px;color:var(--subtle);font:500 .67rem/1.7 var(--ubuntu-mono)}
+.ubuntu-toc a:hover{color:var(--accent)}
+.ubuntu-toc__end{margin-top:1.1rem;padding-top:.85rem;border-top:1px solid var(--line)}
+.ubuntu-toc__end a{color:var(--accent);font-size:.73rem}
+.ubuntu-pagination{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;padding-top:1.3rem;border-top:1px solid var(--line)}
+.ubuntu-pagination a{display:grid;gap:.25rem;align-content:start;min-width:0;padding:.8rem .9rem;border:1px solid var(--line);border-radius:6px;color:var(--text)}
+.ubuntu-pagination a:hover{border-color:var(--accent);background:var(--accent-soft)}
+.ubuntu-pagination .ubuntu-pagination__next{text-align:right}
+.ubuntu-pagination small{color:var(--subtle);font-size:.68rem}
+.ubuntu-pagination strong{font-size:.8rem;line-height:1.45;overflow-wrap:anywhere}
+@media(max-width:960px){.ubuntu-workspace{grid-template-columns:1fr;gap:1.5rem}.ubuntu-sidebar{position:static}.ubuntu-sidebar__nav{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}.ubuntu-sidebar__link{display:flex;align-items:center;gap:.4rem;padding:.5rem .7rem;border:1px solid var(--line);border-radius:5px}.ubuntu-sidebar__link small,.ubuntu-sidebar__tip{display:none}.ubuntu-detail-grid{grid-template-columns:minmax(0,1fr) 210px;gap:1.7rem}}
+@media(max-width:740px){.ubuntu-masthead{align-items:start;flex-direction:column;gap:1.4rem;padding-bottom:1.9rem}.ubuntu-masthead h1{font-size:clamp(2.25rem,7.5vw,3.3rem)}.ubuntu-masthead__stats{display:flex;flex-wrap:wrap;gap:.65rem 1.2rem;padding:0;border:0}.ubuntu-masthead__stats strong{font-size:.9rem}.ubuntu-shortcuts{padding:1.5rem 0 1.9rem}.ubuntu-shortcuts__grid{grid-template-columns:1fr}.ubuntu-shortcut{min-height:0;padding:.85rem 1rem}.ubuntu-shortcut__body{gap:.1rem}.ubuntu-toolbar{gap:.7rem}.ubuntu-filters{margin-bottom:1.9rem}.ubuntu-detail-grid{display:flex;flex-direction:column}.ubuntu-toc{position:static;order:-1;width:100%;padding:.75rem .9rem}.ubuntu-toc>ol{display:none}.ubuntu-toc>.ubuntu-overline{margin-bottom:.4rem}.ubuntu-toc__root{display:inline-flex;margin:.25rem .7rem .25rem 0;font-size:.72rem}.ubuntu-toc__end{display:none}.ubuntu-section-heading{align-items:start;flex-direction:column;gap:.4rem}.ubuntu-section-heading p{text-align:left}}
+@media(max-width:560px){.ubuntu-page{padding-top:1.35rem}.ubuntu-breadcrumb{margin-bottom:1.3rem}.ubuntu-masthead h1{letter-spacing:-.05em}.ubuntu-sidebar__link{font-size:.69rem}.ubuntu-sidebar__number{font-size:.61rem}.ubuntu-search{min-height:48px}.ubuntu-search input{font-size:.8rem}.ubuntu-search kbd{display:none}.ubuntu-result-count{display:none}.ubuntu-filter{padding:.37rem .55rem;font-size:.69rem!important}.ubuntu-group__heading{align-items:start}.ubuntu-group__counter{padding-top:.25rem;font-size:.65rem}.ubuntu-lesson{grid-template-columns:23px minmax(0,1fr) 14px;gap:.55rem;padding:.9rem .85rem}.ubuntu-lesson__main strong{font-size:.85rem}.ubuntu-lesson__main>span{font-size:.71rem}.ubuntu-lesson__meta{display:none}.ubuntu-detail-head h1{font-size:clamp(1.9rem,7.6vw,2.55rem)}.ubuntu-detail-head>p{font-size:.88rem}.ubuntu-section-heading h2{font-size:1.25rem}.ubuntu-step h3{font-size:.85rem}.ubuntu-command pre{font-size:.73rem;padding:.85rem}.ubuntu-copy{font-size:.67rem!important}.ubuntu-pagination{grid-template-columns:1fr}.ubuntu-pagination .ubuntu-pagination__next{text-align:left}}
+@media(prefers-reduced-motion:reduce){.ubuntu-shortcut,.ubuntu-lesson,.ubuntu-search{transition:none}}
