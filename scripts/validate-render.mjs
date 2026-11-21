@@ -43,8 +43,10 @@ async function resolveInternal(pathname) {
 
 const portfolio = await readPortfolioData();
 const ubuntuServer = JSON.parse(await readFile(join(root, 'src/data/ubuntuServerGuides.json'), 'utf8'));
+const ubuntuAliases = JSON.parse(await readFile(join(root, 'src/data/ubuntuServerAliases.json'), 'utf8'));
 const ubuntuGuideSlugs = ubuntuServer.guides.map((guide) => guide.slug);
 const safeUbuntuGuideSlugs = ubuntuGuideSlugs.filter((slug) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug));
+const ubuntuAliasPages = new Set(ubuntuAliases.map((alias) => 'ubuntu-server/' + alias.slug + '/index.html'));
 if (safeUbuntuGuideSlugs.length !== ubuntuGuideSlugs.length) {
   errors.push('Ubuntu Server guide slugs must be lowercase URL-safe identifiers');
 }
@@ -82,9 +84,16 @@ for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   const relativePage = relative(dist, file).split(sep).join('/');
   const is404 = relativePage === '404.html';
-  if (is404) {
-    if (!/name="robots" content="noindex, nofollow"/.test(html)) errors.push('404 must be noindex');
-    if (/rel="canonical"/.test(html)) errors.push('404 must not advertise itself as a canonical page');
+  const isUbuntuAlias = ubuntuAliasPages.has(relativePage);
+  if (is404 || isUbuntuAlias) {
+    if (!/name="robots" content="noindex, nofollow"/.test(html)) errors.push(relativePage + ' must be noindex');
+    if (/rel="canonical"/.test(html)) errors.push(relativePage + ' must not advertise itself as a canonical page');
+    if (isUbuntuAlias) {
+      const refresh = html.match(/http-equiv="refresh" content="0; url=([^"]+)"/i)?.[1];
+      if (!refresh?.startsWith('/portfolio/ubuntu-server/?legacy=')) {
+        errors.push(relativePage + ' must redirect to the base-aware Ubuntu Server runbook');
+      }
+    }
   } else {
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
     const expectedSuffix = relativePage === 'index.html'
@@ -111,8 +120,12 @@ for (const file of htmlFiles) {
   if (/hung-quynh|our-story-private|github\.com\/[^" ]*(story|birthday)/i.test(html)) {
     errors.push(relativePage + ' contains restricted source details');
   }
-  if (/tự xác nhận|tự thuật|MISSING_SOURCE|unverified|chưa được cung cấp|mức attribution/i.test(html)) {
+  const isUbuntuRunbook = relativePage === 'ubuntu-server/index.html';
+  if (!isUbuntuRunbook && /tự xác nhận|tự thuật|MISSING_SOURCE|unverified|chưa được cung cấp|mức attribution/i.test(html)) {
     errors.push(relativePage + ' contains internal attribution or missing-source language');
+  }
+  if (isUbuntuRunbook && /\bFPT\b|nanobio|192\.168\.(?:86|2)\.|\b(?:3003|18080)\b/i.test(html)) {
+    errors.push(relativePage + ' contains historical infrastructure details that must be generalized');
   }
 }
 
@@ -124,6 +137,11 @@ const [indexHtml, childSitemap, robots, ogImage] = await Promise.all([
 ]);
 if (!indexHtml.includes(origin + base + 'sitemap-0.xml')) errors.push('Sitemap index is missing the project base');
 if (!childSitemap || !childSitemap.includes(origin + base)) errors.push('Sitemap URLs are missing the project base');
+for (const alias of ubuntuAliases) {
+  if (childSitemap.includes(origin + base + 'ubuntu-server/' + alias.slug + '/')) {
+    errors.push('Redirect-only Ubuntu Server alias must stay out of the sitemap: ' + alias.slug);
+  }
+}
 if (!robots.includes('Sitemap: ' + origin + base + 'sitemap-index.xml')) errors.push('robots.txt sitemap URL is incorrect');
 if (ogImage.length < 24 || String.fromCharCode(...ogImage.subarray(1, 4)) !== 'PNG') {
   errors.push('Open Graph PNG is missing or invalid');

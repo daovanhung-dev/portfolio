@@ -13,8 +13,23 @@ for (const item of portfolio.collections.experiences.filter((entry) => entry.dat
 for (const project of portfolio.collections.projects) routePaths.push('/projects/' + project.slug + '/');
 for (const item of portfolio.collections.cases) routePaths.push('/case-studies/' + item.slug + '/');
 const ubuntuServer = JSON.parse(await readFile(new URL('../src/data/ubuntuServerGuides.json', import.meta.url), 'utf8'));
+const ubuntuAliases = JSON.parse(await readFile(new URL('../src/data/ubuntuServerAliases.json', import.meta.url), 'utf8'));
+const ubuntuRunbookSource = await readFile(new URL('../docs/source/ubuntu-server-from-zero-to-production-v3.md', import.meta.url), 'utf8');
 routePaths.push('/ubuntu-server/');
-for (const guide of ubuntuServer.guides) routePaths.push('/ubuntu-server/' + guide.slug + '/');
+const ubuntuGuideSlugs = new Set(ubuntuServer.guides.map((guide) => guide.slug));
+const ubuntuAliasSlugs = new Set(ubuntuAliases.map((alias) => alias.slug));
+if (ubuntuAliases.length !== ubuntuGuideSlugs.size || ubuntuAliasSlugs.size !== ubuntuAliases.length) {
+  errors.push('Ubuntu Server legacy aliases must uniquely cover every previous guide route');
+}
+for (const slug of ubuntuGuideSlugs) {
+  if (!ubuntuAliasSlugs.has(slug)) errors.push('Ubuntu Server guide has no legacy route: ' + slug);
+}
+for (const alias of ubuntuAliases) {
+  if (!ubuntuGuideSlugs.has(alias.slug)) errors.push('Ubuntu Server alias has no previous guide: ' + alias.slug);
+  const headingExists = ubuntuRunbookSource.split(/\r?\n/).some((line) => line.replace(/^#{1,6}\s+/, '').trim() === alias.targetHeading);
+  if (!headingExists) errors.push('Ubuntu Server alias target heading is missing: ' + alias.slug + ' → ' + alias.targetHeading);
+  routePaths.push('/ubuntu-server/' + alias.slug + '/');
+}
 
 for (const entry of portfolio.collections.projects) {
   for (const slug of entry.data.caseSlugs ?? []) {

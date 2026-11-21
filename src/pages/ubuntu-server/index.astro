@@ -1,146 +1,295 @@
 ---
+import { getCollection, render } from 'astro:content';
 import SiteLayout from '../../components/SiteLayout.astro';
 import { sitePath } from '../../utils/paths';
-import { ubuntuGroups, ubuntuGuides } from '../../data/ubuntuServer';
+import aliases from '../../data/ubuntuServerAliases.json';
+import runbookSource from '../../../docs/source/ubuntu-server-from-zero-to-production-v3.md?raw';
 import '../../styles/ubuntu-server.css';
 
-const totalCommands = ubuntuGuides.reduce((sum, guide) => sum + guide.commands.length, 0);
-const recommended = [
-  { id: '01', eyebrow: 'Bắt đầu từ đây', title: 'Truy cập server từ xa', summary: 'SSH, Tailscale và quản trị router', slug: 'setup-tailscale' },
-  { id: '02', eyebrow: 'Triển khai', title: 'Đưa API lên Internet', summary: 'Backend, systemd và Nginx', slug: 'deploy-nginx' },
-  { id: '03', eyebrow: 'Xử lý sự cố', title: 'Debug HTTPS :443', summary: 'Xác định lỗi mạng và firewall', slug: 'operate-port-443-playbook' },
-];
+const entries = await getCollection('ubuntuRunbooks');
+if (entries.length !== 1) throw new Error('Expected exactly one Ubuntu Server v3 runbook source.');
+const runbook = entries[0];
+const { Content, headings } = await render(runbook);
+const pageTitle = headings.find((heading) => heading.depth === 1)?.text ?? runbook.data.title;
+const chapters = headings.filter((heading) => heading.depth === 2 && /^\d{2}\./.test(heading.text));
+const subsections = headings.filter((heading) => heading.depth === 3 && /^\d{1,2}\./.test(heading.text));
+const sourceLines = runbookSource.split(/\r?\n/);
+const gateHeaderIndex = sourceLines.findIndex((line) => /^\|\s*Gate\s*\|/.test(line));
+const gateRows = gateHeaderIndex < 0 ? [] : sourceLines
+  .slice(gateHeaderIndex + 2)
+  .filter((line) => /^\|\s*G[1-8]\s*[—-]/.test(line))
+  .map((line) => line.split('|').slice(1, -1).map((cell) => cell.trim()));
+const gateChapterNumbers: Record<string, string> = {
+  G1: '03', G2: '04', G3: '05', G4: '06', G5: '08', G6: '10', G7: '11', G8: '14',
+};
+const gates = gateRows.map((cells) => {
+  const gateCode = cells[0]?.match(/^(G[1-8])/)?.[1] ?? '';
+  const chapter = chapters.find((heading) => heading.text.startsWith(`${gateChapterNumbers[gateCode] ?? ''}.`));
+  return { label: cells[0] ?? '', pass: cells[1] ?? '', fail: cells[2] ?? '', href: chapter ? `#${chapter.slug}` : '#ubuntu-runbook-content' };
+});
+const legacyNotices = Object.fromEntries(aliases.filter((alias) => alias.notice).map((alias) => [alias.slug, { notice: alias.notice, targetHeading: alias.targetHeading }]));
+const overview = runbook.data.description;
+const lastReviewed = runbook.data.verified_on;
 ---
-<SiteLayout title="Quản trị Ubuntu Server — Đào Văn Hùng" description="Sổ tay Ubuntu Server dễ tra cứu: SSH, Tailscale, Nginx, triển khai backend và xử lý sự cố thực tế." route="/ubuntu-server">
-  <div class="ubuntu-page ubuntu-page--index">
+<SiteLayout title={`${pageTitle} — Lab | Đào Văn Hùng`} description={overview} route="/ubuntu-server">
+  <div class="ubuntu-page ubuntu-page--runbook" data-legacy-notices={JSON.stringify(legacyNotices)}>
     <nav class="ubuntu-breadcrumb" aria-label="Đường dẫn">
       <a href={sitePath('/labs')}>Labs</a><span aria-hidden="true">/</span><span aria-current="page">Ubuntu Server</span>
     </nav>
-    <header class="ubuntu-masthead">
-      <div class="ubuntu-masthead__intro">
-        <span class="eyebrow">Linux / Operations handbook</span>
-        <h1>Quản trị <span>Ubuntu Server</span><span class="ubuntu-title-period">.</span></h1>
-        <p>Hướng dẫn ngắn, có lệnh thực tế. Từ kết nối từ xa, triển khai backend đến tìm và sửa lỗi server.</p>
+
+    <header class="ubuntu-runbook-hero">
+      <div class="ubuntu-runbook-hero__copy">
+        <span class="eyebrow">Infrastructure / DevOps · Lab hướng dẫn</span>
+        <h1 class="ubuntu-runbook-title">{pageTitle}</h1>
+        <p>{overview}</p>
       </div>
-      <div class="ubuntu-masthead__stats" aria-label="Thống kê tài liệu">
-        <span><strong>{ubuntuGuides.length}</strong> bài học</span>
-        <span><strong>{totalCommands}</strong> khối lệnh</span>
-        <span><strong>03</strong> học phần</span>
-      </div>
+      <dl class="ubuntu-runbook-meta">
+        <div><dt>Phiên bản</dt><dd>{runbook.data.version}</dd></div>
+        <div><dt>Rà soát nội dung</dt><dd>{lastReviewed}</dd></div>
+        <div><dt>Luồng học</dt><dd>{chapters.length} chương · {gates.length} cổng</dd></div>
+      </dl>
     </header>
 
-    <section class="ubuntu-shortcuts" aria-labelledby="ubuntu-shortcuts-heading">
-      <div class="ubuntu-overline" id="ubuntu-shortcuts-heading">LỐI TẮT / BẮT ĐẦU NHANH</div>
-      <div class="ubuntu-shortcuts__grid">
-        {recommended.map(item => <a class="ubuntu-shortcut" href={sitePath('/ubuntu-server/' + item.slug)}>
-          <span class="ubuntu-shortcut__number">{item.id}</span>
-          <span class="ubuntu-shortcut__body"><small>{item.eyebrow}</small><strong>{item.title}</strong><span>{item.summary}</span></span>
-          <span class="ubuntu-shortcut__arrow" aria-hidden="true">↗</span>
-        </a>)}
+    <div class="ubuntu-legacy-topic-note" id="ubuntu-legacy-topic-note" role="note" aria-live="polite" hidden>
+      <div><strong>Nội dung của URL cũ</strong><p></p></div>
+      <a href="#ubuntu-runbook-content">Xem mục liên quan</a>
+      <button type="button" aria-label="Ẩn thông báo">Ẩn</button>
+    </div>
+
+    <section class="ubuntu-runbook-orientation" aria-labelledby="ubuntu-runbook-orientation-title">
+      <div class="ubuntu-runbook-orientation__heading">
+        <span class="ubuntu-overline">BẮT ĐẦU TỪ SỐ 0</span>
+        <h2 id="ubuntu-runbook-orientation-title">Hai luồng của lab</h2>
+        <p>Đi theo thứ tự, kiểm chứng từng lớp và dừng khi điều kiện PASS chưa đạt.</p>
+      </div>
+      <div class="ubuntu-runbook-flows">
+        <div class="ubuntu-runbook-flow">
+          <h3>Đưa dịch vụ ra Internet</h3>
+          <p><span>Client</span><b aria-hidden="true">→</b><span>DNS</span><b aria-hidden="true">→</b><span>WAN / Router NAT</span><b aria-hidden="true">→</b><span>Ubuntu / Nginx HTTPS</span><b aria-hidden="true">→</b><span>FastAPI / systemd</span></p>
+          <small>DNS chỉ phân giải hostname; request đi tiếp qua TCP đến IP đã phân giải.</small>
+        </div>
+        <div class="ubuntu-runbook-flow">
+          <h3>Quản trị từ xa</h3>
+          <p><span>Laptop / Chrome</span><b aria-hidden="true">→</b><span>Tailscale + OpenSSH</span><b aria-hidden="true">→</b><span>Router trong LAN</span></p>
+          <small>Không cần bật WAN Remote Management chỉ để mở trang quản trị router.</small>
+        </div>
       </div>
     </section>
 
-    <div class="ubuntu-workspace">
-      <aside class="ubuntu-sidebar" aria-label="Mục lục học phần">
-        <div class="ubuntu-overline">HỌC PHẦN</div>
-        <nav class="ubuntu-sidebar__nav">
-          {ubuntuGroups.map((group, index) => <a class="ubuntu-sidebar__link" href={'#' + group.id}>
-            <span class="ubuntu-sidebar__number">0{index+1}</span>
-            <span>{group.title}</span>
-            <small>{ubuntuGuides.filter(guide => guide.group === group.id).length}</small>
-          </a>)}
-        </nav>
-        <div class="ubuntu-sidebar__tip"><span class="ubuntu-tip-symbol" aria-hidden="true">!</span><p>Trước khi sửa <strong>SSH, Netplan hoặc firewall</strong>, luôn có đường truy cập dự phòng.</p></div>
+    <section class="ubuntu-runbook-gates" aria-labelledby="ubuntu-gates-title">
+      <div class="ubuntu-runbook-section-title">
+        <div><span class="ubuntu-overline">CHECKPOINTS / G1 → G8</span><h2 id="ubuntu-gates-title">Tiến trình nghiệm thu</h2></div>
+        <p>Mỗi cổng phải được kiểm tra trên môi trường của bạn. Website không tự đánh dấu PASS.</p>
+      </div>
+      <ol class="ubuntu-gate-list">
+        {gates.map((gate, index) => <li class="ubuntu-gate">
+          <a class="ubuntu-gate__link" href={gate.href} aria-label={`Mở nội dung ${gate.label}`}>
+            <span class="ubuntu-gate__number">{String(index + 1).padStart(2, '0')}</span>
+            <strong>{gate.label}</strong>
+          </a>
+          <p><b>PASS</b> {gate.pass}</p>
+          <p class="ubuntu-gate__fail"><b>Nếu FAIL</b> {gate.fail}</p>
+        </li>)}
+      </ol>
+    </section>
+
+    <div class="ubuntu-runbook-workspace">
+      <aside class="ubuntu-runbook-sidebar" aria-label="Mục lục tài liệu">
+        <details class="ubuntu-runbook-toc" open>
+          <summary><span class="ubuntu-overline">MỤC LỤC</span><span>{chapters.length} chương</span></summary>
+          <nav aria-label="Các chương trong lab">
+            <ol>
+              {chapters.map((chapter) => {
+                const chapterNumber = chapter.text.match(/^(\d{2})\./)?.[1] ?? '';
+                const children = subsections.filter((item) => item.text.startsWith(`${Number(chapterNumber)}.`));
+                return <li>
+                  <a class="ubuntu-runbook-toc__chapter" href={`#${chapter.slug}`}>{chapter.text}</a>
+                  {children.length > 0 && <details class="ubuntu-runbook-toc__subsections">
+                    <summary aria-label={`Mở các mục trong ${chapter.text}`}>Mục con <span aria-hidden="true">+</span></summary>
+                    <ol>{children.map((item) => <li><a href={`#${item.slug}`}>{item.text}</a></li>)}</ol>
+                  </details>}
+                </li>;
+              })}
+            </ol>
+          </nav>
+        </details>
+        <div class="ubuntu-runbook-safety" role="note">
+          <strong>Trước khi thay đổi</strong>
+          <p>Chuẩn bị console hoặc đường truy cập dự phòng trước khi sửa SSH, Netplan hay firewall.</p>
+        </div>
       </aside>
 
-      <div class="ubuntu-content">
-        <div class="ubuntu-toolbar">
-          <label class="ubuntu-search">
-            <svg viewBox="0 0 24 24" aria-hidden="true" width="19" height="19"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8"/></svg>
-            <input type="search" id="ubuntu-search" autocomplete="off" placeholder="Tìm lệnh, Nginx, Tailscale, lỗi 443…" aria-label="Tìm trong tài liệu Ubuntu Server" aria-controls="ubuntu-chapters" />
+      <div class="ubuntu-runbook-main">
+        <div class="ubuntu-runbook-searchbox">
+          <label class="ubuntu-runbook-search">
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="19" height="19"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+            <input type="search" id="ubuntu-runbook-search" autocomplete="off" placeholder="Tìm lệnh, Netplan, DNS, systemd…" aria-label="Tìm trong lab Ubuntu Server" aria-controls="ubuntu-runbook-search-results" />
             <kbd>/</kbd>
           </label>
-          <span id="ubuntu-result-count" class="ubuntu-result-count" aria-live="polite">{ubuntuGuides.length} bài</span>
+          <span class="ubuntu-runbook-search-status" id="ubuntu-runbook-search-status" aria-live="polite"></span>
+          <div class="ubuntu-runbook-search-results" id="ubuntu-runbook-search-results" hidden>
+            <p class="ubuntu-overline">KẾT QUẢ TRONG TÀI LIỆU</p>
+            <ol></ol>
+          </div>
         </div>
-        <div class="ubuntu-filters" aria-label="Lọc nội dung">
-          <button class="ubuntu-filter is-active" type="button" data-filter="all" aria-pressed="true">Tất cả</button>
-          {ubuntuGroups.map((group, i) => <button type="button" class="ubuntu-filter" data-filter={group.id} aria-pressed="false">0{i+1} · {group.title}</button>)}
-        </div>
-        <div id="ubuntu-chapters" class="ubuntu-chapters">
-          {ubuntuGroups.map((group, groupIndex) => <section class="ubuntu-group" id={group.id} data-group={group.id} aria-labelledby={'ubuntu-heading-' + group.id}>
-            <div class="ubuntu-group__heading">
-              <div><span class="ubuntu-group__index">0{groupIndex+1} / {group.label.split('/').at(-1)?.trim().toUpperCase()}</span><h2 id={'ubuntu-heading-' + group.id}>{group.title}</h2><p>{group.summary}</p></div>
-              <span class="ubuntu-group__counter">{ubuntuGuides.filter(guide => guide.group === group.id).length} bài</span>
-            </div>
-            <div class="ubuntu-lesson-list">
-              {ubuntuGuides.filter(guide => guide.group === group.id).map(guide => <a class="ubuntu-lesson" href={sitePath('/ubuntu-server/' + guide.slug)} data-search={`${guide.title} ${guide.summary} ${guide.tags.join(' ')} ${guide.commands.map(command => command.title + ' ' + command.code).join(' ')}`}>
-                <span class="ubuntu-lesson__number">{String(guide.order).padStart(2, '0')}</span>
-                <span class="ubuntu-lesson__main"><strong>{guide.title}</strong><span>{guide.summary}</span></span>
-                <span class="ubuntu-lesson__meta"><small>{guide.minutes} phút</small>{guide.risk === 'high' ? <span class="ubuntu-lesson__warning">Thận trọng</span> : <small>{guide.commands.length} lệnh</small>}</span>
-                <span class="ubuntu-lesson__arrow" aria-hidden="true">↗</span>
-              </a>)}
-            </div>
-          </section>)}
-        </div>
-        <div class="ubuntu-empty" id="ubuntu-empty" hidden><strong>Không tìm thấy bài phù hợp</strong><p>Thử “SSH”, “Nginx”, “Tailscale” hoặc “443”.</p><button id="ubuntu-search-reset" type="button">Xóa bộ lọc</button></div>
-        <p class="ubuntu-footnote">Lệnh và địa chỉ trong bài là ví dụ. Kiểm tra môi trường thật trước khi chạy trên production.</p>
+        <p class="ubuntu-runbook-source-note">Nguồn: <strong>{runbook.data.title}</strong> · {runbook.data.status}. Tài liệu đã được rà soát, nhưng không khẳng định đã nghiệm thu trên máy thật.</p>
+        <article class="ubuntu-runbook-body" id="ubuntu-runbook-content">
+          <Content />
+        </article>
       </div>
     </div>
   </div>
 </SiteLayout>
 <script>
-  function initUbuntuIndex() {
-    const root = document.querySelector<HTMLElement>('.ubuntu-page--index');
+  function initUbuntuRunbook() {
+    const root = document.querySelector<HTMLElement>('.ubuntu-page--runbook');
     if (!root || root.dataset.initialized === 'true') return;
     root.dataset.initialized = 'true';
-    const search = root.querySelector<HTMLInputElement>('#ubuntu-search');
-    const rows = [...root.querySelectorAll<HTMLElement>('.ubuntu-lesson')];
-    const groups = [...root.querySelectorAll<HTMLElement>('.ubuntu-group')];
-    const filters = [...root.querySelectorAll<HTMLButtonElement>('.ubuntu-filter')];
-    const count = root.querySelector<HTMLElement>('#ubuntu-result-count');
-    const empty = root.querySelector<HTMLElement>('#ubuntu-empty');
-    const reset = root.querySelector<HTMLButtonElement>('#ubuntu-search-reset');
-    if (!search) return;
-    const normalize = (v: string) => v.toLocaleLowerCase('vi').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').trim();
-    const searchable = rows.map(row => normalize(row.dataset.search || ''));
-    let active = 'all';
-    function render() {
-      const term = normalize(search!.value);
-      let visible = 0;
-      rows.forEach((row, index) => {
-        const groupId = row.closest<HTMLElement>('.ubuntu-group')?.dataset.group;
-        const matched = (active === 'all' || active === groupId) && (!term || searchable[index].includes(term));
-        row.hidden = !matched;
-        if (matched) visible += 1;
-      });
-      groups.forEach(group => { group.hidden = !group.querySelector('.ubuntu-lesson:not([hidden])'); });
-      if (count) count.textContent = `${visible} / ${rows.length} bài`;
-      if (empty) empty.hidden = visible !== 0;
+    const article = root.querySelector<HTMLElement>('#ubuntu-runbook-content');
+    const search = root.querySelector<HTMLInputElement>('#ubuntu-runbook-search');
+    const resultBox = root.querySelector<HTMLElement>('#ubuntu-runbook-search-results');
+    const resultList = resultBox?.querySelector<HTMLOListElement>('ol');
+    const status = root.querySelector<HTMLElement>('#ubuntu-runbook-search-status');
+    if (!article) return;
+
+    const legacyNote = root.querySelector<HTMLElement>('#ubuntu-legacy-topic-note');
+    const legacyKey = new URLSearchParams(window.location.search).get('legacy');
+    const legacyNotices = JSON.parse(root.dataset.legacyNotices || '{}') as Record<string, { notice: string; targetHeading: string }>;
+    const legacyContent = legacyKey ? legacyNotices[legacyKey] : undefined;
+    if (legacyNote && legacyContent) {
+      const message = legacyNote.querySelector('p');
+      const link = legacyNote.querySelector<HTMLAnchorElement>('a');
+      const dismiss = legacyNote.querySelector<HTMLButtonElement>('button');
+      if (message) message.textContent = legacyContent.notice;
+      if (link) link.href = window.location.hash || '#ubuntu-runbook-content';
+      legacyNote.hidden = false;
+      dismiss?.addEventListener('click', () => { legacyNote.hidden = true; });
     }
-    search.addEventListener('input', render);
-    filters.forEach(button => button.addEventListener('click', () => {
-      active = button.dataset.filter || 'all';
-      filters.forEach(item => { const selected = item === button; item.classList.toggle('is-active', selected); item.setAttribute('aria-pressed', String(selected)); });
-      render();
-    }));
-    reset?.addEventListener('click', () => {
-      active = 'all'; search!.value = '';
-      filters.forEach(item => { const selected = item.dataset.filter === 'all'; item.classList.toggle('is-active', selected); item.setAttribute('aria-pressed', String(selected)); });
-      render(); search!.focus();
+
+    const normalize = (value: string) => value.toLocaleLowerCase('vi').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+    const headings = [...article.querySelectorAll<HTMLHeadingElement>('h2, h3, h4')];
+    const searchIndex = headings.map((heading) => {
+      const level = Number(heading.tagName.slice(1));
+      const parts = [heading.textContent || ''];
+      let sibling = heading.nextElementSibling;
+      while (sibling) {
+        const siblingLevel = /^H([1-6])$/.exec(sibling.tagName);
+        if (siblingLevel && Number(siblingLevel[1]) <= level) break;
+        parts.push(sibling.textContent || '');
+        sibling = sibling.nextElementSibling;
+      }
+      return { heading, text: parts.join(' '), normalized: normalize(parts.join(' ')) };
     });
-    // The root can be swapped by Astro ClientRouter; the listener exits for disconnected pages.
-    document.addEventListener('keydown', event => {
+
+    const renderSearch = () => {
+      if (!search || !resultBox || !resultList || !status) return;
+      const term = normalize(search.value.trim());
+      resultList.replaceChildren();
+      if (!term) {
+        resultBox.hidden = true;
+        status.textContent = '';
+        return;
+      }
+      const matches = searchIndex.filter((item) => item.normalized.includes(term));
+      const visibleMatches = matches.slice(0, 25);
+      for (const match of visibleMatches) {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `#${match.heading.id}`;
+        link.textContent = match.heading.textContent || 'Mục trong tài liệu';
+        li.append(link);
+        resultList.append(li);
+      }
+      resultBox.hidden = false;
+      status.textContent = matches.length ? `${matches.length} mục phù hợp` : 'Không tìm thấy nội dung phù hợp';
+      if (!matches.length) {
+        const li = document.createElement('li');
+        li.textContent = 'Thử từ khóa như SSH, Nginx, HTTPS hoặc 443.';
+        resultList.append(li);
+      }
+    };
+
+    search?.addEventListener('input', renderSearch);
+    resultList?.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) {
+        if (search) search.value = '';
+        renderSearch();
+      }
+    });
+    document.addEventListener('keydown', (event) => {
       if (!root.isConnected || event.altKey) return;
       const target = event.target as HTMLElement | null;
       const editing = !!target?.closest('input,textarea,[contenteditable]');
-      if (((event.key === '/' && !editing) || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k'))) {
-        event.preventDefault(); search!.focus();
+      if (((event.key === '/' && !editing) || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k')) && search) {
+        event.preventDefault();
+        search.focus();
       }
-      if (event.key === 'Escape' && document.activeElement === search) search!.blur();
+      if (event.key === 'Escape' && search && document.activeElement === search) {
+        search.blur();
+        search.value = '';
+        renderSearch();
+      }
     });
-    render();
+
+    article.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((checkbox) => {
+      checkbox.disabled = false;
+      const listItem = checkbox.closest('li');
+      if (listItem && !checkbox.hasAttribute('aria-label')) {
+        checkbox.setAttribute('aria-label', `Đánh dấu: ${(listItem.textContent || '').trim().slice(0, 180)}`);
+      }
+    });
+
+    article.querySelectorAll<HTMLElement>('blockquote').forEach((quote) => {
+      if (/\[CHANGE\]|DỪNG|RỦI RO|KHÔNG ĐƯỢC|NGUY HIỂM/i.test(quote.textContent || '')) quote.classList.add('ubuntu-runbook-warning');
+    });
+
+    article.querySelectorAll<HTMLElement>('pre').forEach((pre) => {
+      if (pre.dataset.enhanced === 'true' || pre.closest('.ubuntu-runbook-diagram')) return;
+      pre.dataset.enhanced = 'true';
+      const code = pre.querySelector('code');
+      if (!code) return;
+      const language = pre.dataset.language || code.className.match(/language-([\w-]+)/)?.[1] || 'text';
+      const contextText = `${pre.textContent || ''} ${pre.previousElementSibling?.textContent || ''}`;
+      const context = contextText.match(/\[(SERVER|LAPTOP|ROUTER|DNS)(?:,|\])/i)?.[1]?.toUpperCase();
+      const wrapper = document.createElement('div');
+      wrapper.className = 'ubuntu-runbook-code';
+      const toolbar = document.createElement('div');
+      toolbar.className = 'ubuntu-runbook-code__bar';
+      const label = document.createElement('span');
+      label.textContent = `${context ? `${context} · ` : ''}${language.toUpperCase()}`;
+      const copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'ubuntu-runbook-copy';
+      copy.textContent = 'Sao chép';
+      copy.setAttribute('aria-label', `Sao chép khối mã ${context ? `${context} ` : ''}${language}`);
+      copy.addEventListener('click', async () => {
+        const originalText = copy.textContent;
+        const codeText = code.innerText;
+        try {
+          if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+          await navigator.clipboard.writeText(codeText);
+          copy.textContent = 'Đã sao chép ✓';
+        } catch {
+          copy.textContent = 'Không thể sao chép';
+        }
+        window.setTimeout(() => { if (copy.isConnected) copy.textContent = originalText; }, 1600);
+      });
+      toolbar.append(label, copy);
+      pre.before(wrapper);
+      wrapper.append(toolbar, pre);
+    });
+
+    const mermaid = article.querySelector<HTMLElement>('pre[data-language="mermaid"], pre.language-mermaid, pre code.language-mermaid')?.closest('pre');
+    if (mermaid && !mermaid.dataset.hasDescription) {
+      mermaid.dataset.hasDescription = 'true';
+      mermaid.classList.add('ubuntu-runbook-diagram');
+      const description = document.createElement('p');
+      description.className = 'ubuntu-runbook-diagram-description';
+      description.textContent = 'Sơ đồ văn bản: Client tra cứu DNS rồi kết nối qua WAN và NAT của router tới Nginx HTTPS trên Ubuntu; Nginx chuyển request nội bộ tới FastAPI/systemd. Riêng quản trị viên kết nối từ laptop qua Tailscale và OpenSSH tunnel tới router trong LAN. Mã Mermaid gốc được giữ ngay bên dưới để có thể sao chép hoặc xem lại.';
+      mermaid.after(description);
+    }
   }
-  document.addEventListener('astro:page-load', initUbuntuIndex);
-  if (document.readyState !== 'loading') initUbuntuIndex();
-  else document.addEventListener('DOMContentLoaded', initUbuntuIndex, { once: true });
+  document.addEventListener('astro:page-load', initUbuntuRunbook);
+  if (document.readyState !== 'loading') initUbuntuRunbook();
+  else document.addEventListener('DOMContentLoaded', initUbuntuRunbook, { once: true });
 </script>

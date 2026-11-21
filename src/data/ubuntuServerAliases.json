@@ -1,0 +1,191 @@
+[
+  {
+    "slug": "setup-lo-trinh",
+    "title": "Bản đồ dựng server từ số 0",
+    "targetHeading": "01. Kết quả đầu ra và sơ đồ hệ thống"
+  },
+  {
+    "slug": "setup-cai-ubuntu",
+    "title": "Cài Ubuntu Server & cấu hình ban đầu",
+    "targetHeading": "3.1. Cài hệ điều hành trên máy mới"
+  },
+  {
+    "slug": "setup-lenh-co-ban",
+    "title": "Lệnh CLI, phân quyền và ổ đĩa",
+    "targetHeading": "19.1. Trước tiên: đọc cú pháp shell, đừng nhầm placeholder"
+  },
+  {
+    "slug": "setup-ssh-key",
+    "title": "SSH và SSH key an toàn",
+    "targetHeading": "4.4. Dùng SSH key thay password"
+  },
+  {
+    "slug": "setup-tailscale",
+    "title": "Tailscale: truy cập server ở mọi nơi",
+    "targetHeading": "4.2. Cài Tailscale trên server"
+  },
+  {
+    "slug": "setup-router-chrome",
+    "title": "Mở trang admin Router từ xa bằng Chrome",
+    "targetHeading": "5.4. Cách B — SSH Dynamic SOCKS5 + Google Chrome (linh hoạt nhất)"
+  },
+  {
+    "slug": "setup-netplan",
+    "title": "DHCP, IP tĩnh và Netplan",
+    "targetHeading": "3.3. Cấu hình DHCP bằng Netplan (chỉ khi cần)"
+  },
+  {
+    "slug": "setup-dns-public",
+    "title": "Public IP, DNS và CGNAT",
+    "targetHeading": "6.3. Phân biệt IP private, public, WAN và CGNAT"
+  },
+  {
+    "slug": "setup-nat-port-forward",
+    "title": "Router NAT, port forwarding và luồng request",
+    "targetHeading": "6.4. Cấu hình port forwarding khi WAN có public IPv4"
+  },
+  {
+    "slug": "setup-firewall-an-toan",
+    "title": "Baseline firewall: đọc trước, thay đổi sau",
+    "targetHeading": "13.2. UFW: kiểm tra trước, mở đúng đường rồi mới bật"
+  },
+  {
+    "slug": "setup-checklist-truoc-deploy",
+    "title": "Checklist server sẵn sàng deploy",
+    "targetHeading": "2.3. Cổng kiểm soát theo thứ tự"
+  },
+  {
+    "slug": "deploy-kien-truc-production",
+    "title": "Kiến trúc backend production",
+    "targetHeading": "1.2. Sơ đồ kiến trúc"
+  },
+  {
+    "slug": "deploy-moi-truong-python",
+    "title": "Cài môi trường Python / FastAPI",
+    "targetHeading": "8.2. Tạo một demo API có thể chạy được hoàn toàn từ đầu"
+  },
+  {
+    "slug": "deploy-git-pull",
+    "title": "Git clone, SSH key và cập nhật source",
+    "targetHeading": "8.4. Nếu source lấy từ Git thay vì demo"
+  },
+  {
+    "slug": "deploy-env-secret",
+    "title": "Environment, secrets và quyền file",
+    "targetHeading": "8.3. Tạo file env ở ngoài repo"
+  },
+  {
+    "slug": "deploy-postgresql",
+    "title": "Cài PostgreSQL và health database",
+    "targetHeading": "12.4. Cài PostgreSQL cho backend cần database (nhánh tùy chọn)"
+  },
+  {
+    "slug": "deploy-systemd",
+    "title": "Chạy FastAPI bằng systemd",
+    "targetHeading": "9.2. Tạo unit cho demo"
+  },
+  {
+    "slug": "deploy-nginx",
+    "title": "Nginx reverse proxy",
+    "targetHeading": "10.2. Tạo HTTP vhost đơn giản để Certbot có thể xác thực"
+  },
+  {
+    "slug": "deploy-https-certbot",
+    "title": "HTTPS, TLS và Certbot",
+    "targetHeading": "11.3. Cài Certbot theo hướng dẫn chính thức cho Nginx"
+  },
+  {
+    "slug": "deploy-nhieu-domain",
+    "title": "Một Nginx cung cấp nhiều dịch vụ",
+    "targetHeading": "12.3. Nhiều domain trên cùng 1 IP public"
+  },
+  {
+    "slug": "deploy-docker-compose",
+    "title": "Docker Compose (lựa chọn bổ sung)",
+    "targetHeading": "12.1. Giữ nguyên kiến trúc, thay ứng dụng ở phía sau",
+    "notice": "Tài liệu v3 không có hướng dẫn riêng cho Docker Compose. Anchor này dẫn tới chương triển khai source và ứng dụng; không có quy trình Compose bổ sung ngoài nguồn."
+  },
+  {
+    "slug": "deploy-ollama",
+    "title": "Ollama và AI gateway riêng tư",
+    "targetHeading": "12.4. Cài PostgreSQL cho backend cần database (nhánh tùy chọn)",
+    "notice": "Tài liệu v3 chỉ nhắc Ollama như dependency tùy chọn, không có bài cài đặt hoặc vận hành Ollama riêng."
+  },
+  {
+    "slug": "deploy-publish-checklist",
+    "title": "Quy trình pull → deploy → test → rollback",
+    "targetHeading": "14.1. Quy trình deploy có thể lặp lại cho FastAPI"
+  },
+  {
+    "slug": "operate-dashboard",
+    "title": "5 phút đọc sức khỏe server",
+    "targetHeading": "15.1. Debug theo chuỗi, không đổi cấu hình ngẫu nhiên"
+  },
+  {
+    "slug": "operate-systemd-journal",
+    "title": "systemctl và journalctl",
+    "targetHeading": "19.16. `systemctl` và `journalctl`: mọi tùy chọn quan trọng"
+  },
+  {
+    "slug": "operate-curl-ss",
+    "title": "curl, ss, dig: xác định lỗi ở lớp nào",
+    "targetHeading": "15.1. Debug theo chuỗi, không đổi cấu hình ngẫu nhiên"
+  },
+  {
+    "slug": "operate-nginx-errors",
+    "title": "Nginx lỗi 404, 502, 504",
+    "targetHeading": "15.2. Bảng triệu chứng và cách xử lý"
+  },
+  {
+    "slug": "operate-tls-dns",
+    "title": "Lỗi DNS, HTTPS và chứng chỉ",
+    "targetHeading": "15.2. Bảng triệu chứng và cách xử lý"
+  },
+  {
+    "slug": "operate-netfilter-iptables",
+    "title": "Đọc UFW / iptables / nftables bài bản",
+    "targetHeading": "13.3. Lỗi quan trọng: TCP 443 bị chặn dù Nginx chạy"
+  },
+  {
+    "slug": "operate-ts-input-case",
+    "title": "Case study: ts-input DROP và HTTPS 443",
+    "targetHeading": "15.3. Case đặc biệt: local `200`, external `443` timeout"
+  },
+  {
+    "slug": "operate-port-443-playbook",
+    "title": "Playbook: port 443 không truy cập được",
+    "targetHeading": "15.3. Case đặc biệt: local `200`, external `443` timeout"
+  },
+  {
+    "slug": "operate-route-ssh",
+    "title": "Mất SSH, Tailscale hoặc default route",
+    "targetHeading": "4.3. Kiểm tra SSH qua tailnet"
+  },
+  {
+    "slug": "operate-hardware",
+    "title": "CPU, RAM, SSD, GPU và disk full",
+    "targetHeading": "2.1. Điều kiện tiên quyết",
+    "notice": "Tài liệu v3 không có module theo dõi phần cứng hoặc tối ưu tài nguyên riêng; mục này dẫn tới phần điều kiện đầu vào của lab."
+  },
+  {
+    "slug": "operate-ai-performance",
+    "title": "Ollama quá tải, RAM/VRAM và concurrency",
+    "targetHeading": "12.4. Cài PostgreSQL cho backend cần database (nhánh tùy chọn)",
+    "notice": "Tài liệu v3 không có module benchmark hoặc tối ưu hiệu năng AI; mục này dẫn tới phần dependency tùy chọn."
+  },
+  {
+    "slug": "operate-backup-postgres",
+    "title": "Backup PostgreSQL và khôi phục có kiểm chứng",
+    "targetHeading": "14.3. Backup và phục hồi database (nếu sử dụng PostgreSQL)"
+  },
+  {
+    "slug": "operate-hardening",
+    "title": "Checklist bảo mật Ubuntu Server",
+    "targetHeading": "13.4. Những nguyên tắc tối thiểu"
+  },
+  {
+    "slug": "operate-runbook",
+    "title": "Runbook sự cố production & quy trình bàn giao",
+    "targetHeading": "15.1. Debug theo chuỗi, không đổi cấu hình ngẫu nhiên"
+  }
+]

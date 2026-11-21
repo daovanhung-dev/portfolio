@@ -190,6 +190,25 @@ const contact = defineCollection({
   }),
 });
 
+const ubuntuRunbooks = defineCollection({
+  loader: glob({
+    pattern: 'ubuntu-server-from-zero-to-production-v3.md',
+    base: './docs/source',
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.string(),
+    tags: z.array(z.string()),
+    category: z.string(),
+    status: z.string(),
+    version: z.string(),
+    verified_on: z.string(),
+    content_type: z.string(),
+    source_policy: z.string(),
+  }),
+});
+
 export const collections = {
   projects,
   experiences,
@@ -199,4 +218,5 @@ export const collections = {
   profile,
   education,
   contact,
+  ubuntuRunbooks,
 };

@@ -1,5 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+
+const ubuntuAliases = JSON.parse(readFileSync(new URL('../src/data/ubuntuServerAliases.json', import.meta.url), 'utf8')) as Array<{ slug: string; notice?: string }>;
 
 const APP = '/portfolio/';
 const ROUTES = [
@@ -12,9 +15,7 @@ const ROUTES = [
   { path: 'experience/maiatech/', heading: 'Backend Developer Intern' },
   { path: 'skills/', heading: 'Năng lực' },
   { path: 'labs/', heading: 'Labs' },
-  { path: 'ubuntu-server/', heading: 'Quản trị Ubuntu Server' },
-  { path: 'ubuntu-server/setup-netplan/', heading: 'DHCP, IP tĩnh và Netplan' },
-  { path: 'ubuntu-server/operate-port-443-playbook/', heading: 'Playbook: port 443 không truy cập được' },
+  { path: 'ubuntu-server/', heading: 'Ubuntu Server — Từ máy vật lý đến Production' },
   { path: 'about/', heading: 'Đào Văn Hùng' },
   { path: 'contact/', heading: 'Trao đổi về kỹ thuật và công việc' },
   { path: 'case-studies/', heading: 'Case study' },
@@ -72,45 +73,73 @@ test('Labs links to the Ubuntu Server handbook', async ({ page }) => {
   await expect(page.getByRole('link', { name: /Quản trị Ubuntu Server/ })).toHaveAttribute('href', APP + 'ubuntu-server/');
 });
 
-test('Ubuntu Server handbook search, filters, shortcuts, and empty-state reset work', async ({ page }) => {
+test('all previous Ubuntu Server URLs land on their matching v3 section', async ({ page }) => {
   await page.goto(APP + 'ubuntu-server/');
-  const search = page.getByRole('searchbox', { name: 'Tìm trong tài liệu Ubuntu Server' });
-  await expect(page.locator('.ubuntu-lesson')).not.toHaveCount(0);
+  const rootIds = new Set(await page.locator('[id]').evaluateAll((elements) => elements.map((element) => element.id)));
+  for (const alias of ubuntuAliases) {
+    const response = await page.request.get(APP + 'ubuntu-server/' + alias.slug + '/');
+    expect(response?.status(), alias.slug).toBe(200);
+    const html = await response.text();
+    const refresh = html.match(/http-equiv="refresh" content="0; url=([^"]+)"/i)?.[1];
+    expect(refresh, alias.slug).toContain(`?legacy=${alias.slug}#`);
+    const targetId = decodeURIComponent(refresh?.split('#')[1] ?? '');
+    expect(rootIds.has(targetId), alias.slug).toBe(true);
+  }
+
+  await page.goto(APP + 'ubuntu-server/setup-netplan/');
+  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=setup-netplan#/);
+  await expect(page.locator('main h1').first()).toContainText('Ubuntu Server');
+  await page.reload();
+  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=setup-netplan#/);
+
+  const dockerAlias = ubuntuAliases.find((alias) => alias.slug === 'deploy-docker-compose');
+  await page.goto(APP + 'ubuntu-server/deploy-docker-compose/');
+  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=deploy-docker-compose#/);
+  await expect(page.locator('#ubuntu-legacy-topic-note')).toContainText(dockerAlias?.notice ?? '');
+  await expect(page.locator('#ubuntu-legacy-topic-note')).toBeVisible();
+  if (dockerAlias?.notice) await expect(page.locator('#ubuntu-legacy-topic-note')).toContainText(dockerAlias.notice);
+});
+
+test('Ubuntu Server v3 lab search and chapter navigation work', async ({ page }) => {
+  await page.goto(APP + 'ubuntu-server/');
+  const search = page.getByRole('searchbox', { name: 'Tìm trong lab Ubuntu Server' });
+  await expect(page.locator('.ubuntu-runbook-toc nav > ol > li')).toHaveCount(21);
+  await expect(page.locator('.ubuntu-gate')).toHaveCount(8);
+  await expect(page.getByRole('heading', { name: 'Cách đọc tài liệu và độ tin cậy', exact: true })).toBeVisible();
 
   await page.keyboard.press('/');
   await expect(search).toBeFocused();
-  await search.fill('chung chi');
-  await expect(page.locator('.ubuntu-lesson').filter({ hasText: 'Lỗi DNS, HTTPS và chứng chỉ' })).toBeVisible();
-  await expect(page.locator('.ubuntu-lesson').filter({ hasText: 'Nginx reverse proxy' })).toBeHidden();
+  await search.fill('netplan try');
+  await expect(page.locator('#ubuntu-runbook-search-results')).toBeVisible();
+  await expect(page.locator('#ubuntu-runbook-search-results a').filter({ hasText: /Netplan/i }).first()).toBeVisible();
 
   await page.keyboard.press('Control+k');
   await expect(search).toBeFocused();
-  await search.fill('');
-  await page.locator('.ubuntu-filter[data-filter="deploy"]').click();
-  await expect(page.locator('.ubuntu-filter[data-filter="deploy"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('.ubuntu-group:visible')).toHaveCount(1);
-  await expect(page.locator('.ubuntu-group:visible')).toHaveAttribute('data-group', 'deploy');
-
-  await search.fill('no-guide-matches-this-query');
-  await expect(page.locator('#ubuntu-empty')).toBeVisible();
-  await page.getByRole('button', { name: 'Xóa bộ lọc' }).click();
-  await expect(page.locator('#ubuntu-empty')).toBeHidden();
-  await expect(page.locator('.ubuntu-filter[data-filter="all"]')).toHaveAttribute('aria-pressed', 'true');
+  await search.fill('no-runbook-matches-this-query');
+  await expect(page.locator('#ubuntu-runbook-search-status')).toContainText('Không tìm thấy');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#ubuntu-runbook-search-results')).toBeHidden();
 });
 
-test('Ubuntu Server guide shows risk guidance, copies commands, and navigates between lessons', async ({ page, context }) => {
+test('Ubuntu Server lab copies exact code and checklist state resets on reload', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: 'http://127.0.0.1:4173' });
-  await page.goto(APP + 'ubuntu-server/setup-netplan/');
-  await expect(page.getByRole('complementary', { name: 'Lưu ý an toàn' })).toContainText('Thao tác có thể làm gián đoạn kết nối hoặc dịch vụ');
+  await page.goto(APP + 'ubuntu-server/');
+  await expect(page.locator('.ubuntu-runbook-warning').first()).toBeVisible();
+  await expect(page.locator('.ubuntu-runbook-code')).not.toHaveCount(0);
 
-  const firstCommand = await page.locator('.ubuntu-step').first().locator('code').textContent();
-  const copy = page.getByRole('button', { name: 'Sao chép lệnh bước 1' });
+  const firstBlock = page.locator('.ubuntu-runbook-code').first();
+  const firstCommand = await firstBlock.locator('code').innerText();
+  const copy = firstBlock.getByRole('button', { name: /Sao chép khối mã/ });
   await copy.click();
   await expect(copy).toContainText('Đã sao chép');
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(firstCommand);
 
-  await page.locator('.ubuntu-pagination__next').click();
-  await expect(page.locator('main h1')).toContainText('Public IP, DNS và CGNAT');
+  const checklist = page.locator('.ubuntu-runbook-body input[type="checkbox"]').first();
+  await expect(checklist).toBeEnabled();
+  await checklist.check();
+  await expect(checklist).toBeChecked();
+  await page.reload();
+  await expect(page.locator('.ubuntu-runbook-body input[type="checkbox"]').first()).not.toBeChecked();
 });
 
 test('EduAI project uses current branding and links to its pinned source', async ({ page }) => {
@@ -938,6 +967,7 @@ test('unknown direct route returns a readable 404 with working base links', asyn
 });
 
 test('responsive routes have no horizontal overflow at required widths', async ({ page }) => {
+  test.setTimeout(90_000);
   const paths = [
     '', 'projects/', 'projects/nanobio-local-cloud/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'skills/',
     'labs/', 'ubuntu-server/', 'ubuntu-server/setup-netplan/', 'ubuntu-server/operate-port-443-playbook/',
@@ -985,9 +1015,9 @@ test('responsive routes have no horizontal overflow at required widths', async (
 });
 
 test('representative routes pass automated accessibility checks', async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(120_000);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const path of ['', 'projects/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'about/', 'ubuntu-server/', 'ubuntu-server/setup-netplan/', 'case-studies/nanobio-local-cloud-ai/', 'case-studies/study2work-contracts-runtime/', 'contact/']) {
+  for (const path of ['', 'projects/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'about/', 'ubuntu-server/', 'case-studies/nanobio-local-cloud-ai/', 'case-studies/study2work-contracts-runtime/', 'contact/']) {
     await page.goto(APP + path);
     for (const theme of ['dark', 'light']) {
       await page.evaluate((value) => { document.documentElement.dataset.theme = value; }, theme);
