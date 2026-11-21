@@ -1,5 +1,5 @@
 ---
-title: "Ubuntu Server — Từ máy vật lý đến Production"
+title: "Ubuntu Server: Từ máy vật lý đến Production"
 description: "Runbook thực hành: Tailscale, quản trị router từ xa, DHCP Reservation, Port Forwarding, Git, systemd, Nginx, HTTPS và vận hành an toàn."
 date: "2026-11-21"
 tags: [ubuntu-server, linux, tailscale, ssh, networking, nginx, certbot, deployment, devops]
@@ -13,8 +13,8 @@ source_policy: "official-first"
 
 # Ubuntu Server — Từ máy vật lý đến Production
 
-> **Infrastructure Engineering · Hướng dẫn thực hành · Phiên bản 3.0 — 21/11/2026**\
-> **Mục tiêu:** Dựng một Ubuntu Server có thể quản trị từ xa bằng Tailscale, điều khiển router qua Chrome trên laptop, đưa FastAPI lên Internet qua Nginx/HTTPS, sau đó cập nhật và vận hành an toàn.\
+> **Infrastructure Engineering · Hướng dẫn thực hành · Phiên bản 3.0 — 21/11/2026**  
+> **Mục tiêu:** Dựng một Ubuntu Server có thể quản trị từ xa bằng Tailscale, điều khiển router qua Chrome trên laptop, đưa FastAPI lên Internet qua Nginx/HTTPS, sau đó cập nhật và vận hành an toàn.  
 > **Nguồn bối cảnh:** Hướng dẫn tổng hợp cho lab Ubuntu Server, Nginx/FastAPI và Linux. **Căn cứ kỹ thuật:** Tài liệu gốc Ubuntu, Tailscale, OpenSSH, Nginx, systemd, Python, Git, Certbot, Let’s Encrypt, PostgreSQL và IETF/RFC. IP, tên miền và thông số phần cứng trong phần hướng dẫn là **ví dụ**, không phải cấu hình hiện tại của máy thật. Mỗi bước quan trọng đều có bằng chứng PASS/FAIL. Tài liệu được rà soát logic và đối chiếu nguồn, **không khẳng định đã chạy nghiệm thu trên một máy thực tế trong lần biên tập này**.
 
 ## Nội dung
@@ -146,7 +146,7 @@ TAILSCALE_IP:  lấy từ tailscale ip -4
 
 | Gate | Điều kiện PASS | Nếu FAIL |
 |---|---|---|
-| G1 — Linux | Có LAN IP, default route, DNS, outbound HTTPS | Dừng: sửa NIC/DHCP/Netplan |
+| G1 — Linux | Có LAN IP, default route, DNS, outbound HTTPS |  |
 | G2 — Remote | SSH được từ laptop qua Tailscale | Dừng: sửa SSH/tailnet; **chưa bật UFW** |
 | G3 — Router | Truy cập được admin web qua Chrome từ xa | Dừng: sửa tunnel/gateway |
 | G4 — WAN | WAN public trực tiếp, NAT 80/443 đúng, kiểm thử ngoài LAN | Nếu CGNAT, chuyển phương án public |
@@ -1612,7 +1612,7 @@ curl -I --max-time 10 https://github.com
 | `route show default` | `route`: bảng định tuyến; `show`: in; `default`: route dùng khi không có route cụ thể hơn |
 | `resolvectl status` | Hiển thị thông tin DNS qua `systemd-resolved`; không phải mọi máy đều dùng nó |
 | `ping -c 3 1.1.1.1` | `ping`: ICMP echo; `-c 3`: gửi tối đa 3 lần; `1.1.1.1`: địa chỉ IP đích |
-| `getent ahostsv4 github.com` | `getent`: truy vấn NSS; `ahostsv4`: kết quả host IPv4; domain là input |
+| `getent ahostsv4 github.com` | `getent`: truy vấn NSS; `ahostsv4`: kết quả host IPv4; domain là input | 
 | `curl -I` | Gửi request lấy HTTP headers (thường dùng HEAD); **có server không hỗ trợ HEAD** mặc dù GET được |
 | `curl --max-time 10` | Giới hạn tổng thời gian transfer là 10 giây; khác `--connect-timeout` (chỉ phần kết nối) |
 | `curl --connect-timeout 5` | Chỉ giới hạn thời gian thiết lập kết nối trước khi nhận nội dung |
@@ -1624,7 +1624,7 @@ curl -I --max-time 10 https://github.com
 | `curl -k` | **Bỏ kiểm tra chứng chỉ TLS**; chỉ phép thử có kiểm soát, **không dùng làm phép nghiệm thu HTTPS** |
 | `curl -H 'Host: api.example.com'` | `-H`: thêm header HTTP; `Host`: giúp Nginx chọn virtual host trên HTTP; chưa xác minh TLS/SNI |
 | `curl --proxy socks5h://...` | Dùng SOCKS5 proxy; hậu tố `h` bảo đảm proxy thực hiện phân giải hostname cho `curl` |
-| `nc -vz -w 5 HOST PORT` | `nc`: netcat; `-v`: verbose; `-z`: kiểm tra mở TCP không gửi payload; `-w 5`: timeout 5 giây; `HOST`: IP; `PORT`: 80/443 |
+| `nc -vz -w 5 HOST PORT` | `nc`: netcat; `-v`: verbose; `-z`: kiểm tra mở TCP không gửi payload; `-w 5`: timeout 5 giây; `HOST`: IP; `PORT`: 80/443 | 
 | `ss -lntp` | `ss`: socket statistics; `-l`: listening; `-n`: không resolve tên; `-t`: TCP; `-p`: process (có thể cần `sudo`) |
 | `grep -E 'REGEX'` | `grep`: lọc dòng; `-E`: extended regex (dùng `\|` bên trong regex, `\b`); không tự chứng minh rằng request từ Internet đến được |
 
@@ -2175,10 +2175,10 @@ sudo -u postgres pg_dump -Fc "$DB_NAME" \
 
 ### 20.1. Phạm vi và vai trò
 
-**Tên bài:** `Ubuntu Server — Từ máy vật lý đến Production`\
-**Chuyên mục:** `Infrastructure / DevOps`\
-**Đầu vào cho portfolio:** chính file Markdown này\
-**Đầu ra cần có:** một trang tài liệu kỹ thuật có mục lục, khối code, bảng, link gốc, sơ đồ Mermaid và checklist nghiệm thu.\
+**Tên bài:** `Ubuntu Server — Từ máy vật lý đến Production`  
+**Chuyên mục:** `Infrastructure / DevOps`  
+**Đầu vào cho portfolio:** chính file Markdown này  
+**Đầu ra cần có:** một trang tài liệu kỹ thuật có mục lục, khối code, bảng, link gốc, sơ đồ Mermaid và checklist nghiệm thu.  
 **Định nghĩa thành công:** người đọc hiểu có thể thao tác theo tuyến G1→G8, phân biệt SERVER/LAPTOP/ROUTER/DNS, biết khi nào phải dừng và biết kiểm chứng kết quả.
 
 ### 20.2. Phân cấp nội dung và route đề xuất
