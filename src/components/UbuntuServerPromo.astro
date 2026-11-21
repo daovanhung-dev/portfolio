@@ -1,0 +1,17 @@
+---
+import { sitePath } from '../utils/paths';
+---
+<a href={sitePath('/ubuntu-server')} class="ubuntu-promo">
+  <span class="ubuntu-promo__eyebrow">LINUX · RUNBOOK · ENGINEERING NOTES</span>
+  <span class="ubuntu-promo__body"><strong>Quản trị Ubuntu Server</strong><span>Sổ tay thiết lập, deploy và xử lý lỗi thực tế. 37 bài ngắn, tra cứu nhanh.</span></span>
+  <span class="ubuntu-promo__arrow" aria-hidden="true">↗</span>
+</a>
+<style>
+  .ubuntu-promo{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;padding:1.2rem 1.4rem;margin:1.25rem 0 2rem;border:1px solid var(--line);border-radius:9px;background:var(--surface);transition:border-color .15s}
+  .ubuntu-promo:hover{border-color:var(--accent)}
+  .ubuntu-promo__eyebrow{width:100%;color:var(--accent);font:.67rem ui-monospace,Consolas,monospace;letter-spacing:.07em}
+  .ubuntu-promo__body{display:grid;gap:.25rem;flex:1}
+  .ubuntu-promo__body strong{font-size:1.1rem;letter-spacing:-.03em}
+  .ubuntu-promo__body span{color:var(--muted);font-size:.8rem}
+  .ubuntu-promo__arrow{color:var(--accent);font-size:1.2rem}
+</style>

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import SiteLayout from '../../components/SiteLayout.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
 import EvidenceList from '../../components/EvidenceList.astro';
+import UbuntuServerPromo from '../../components/UbuntuServerPromo.astro';
 
 const labs = (await getCollection('labs')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'vi'));
 ---
@@ -14,6 +15,7 @@ const labs = (await getCollection('labs')).sort((a, b) => a.data.title.localeCom
       <h1 class="page-title">Labs</h1>
       <p class="page-lede">Các ghi chú này cho thấy cách tôi mở rộng nền tảng kỹ thuật và nghiên cứu mã nguồn trong những lĩnh vực đang phát triển.</p>
     </header>
+    <UbuntuServerPromo />
     <div class="grid case-grid">
       {labs.map((lab) => (
         <article class="lab-card">

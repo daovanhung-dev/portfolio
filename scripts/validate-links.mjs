@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import { readPortfolioData } from './content-data.mjs';
 
 const portfolio = await readPortfolioData();
@@ -6,8 +7,14 @@ const warnings = [];
 const routePaths = [
   '/', '/projects/', '/experience/', '/skills/', '/labs/', '/about/', '/contact/', '/case-studies/',
 ];
+for (const item of portfolio.collections.experiences.filter((entry) => entry.data.detailPage)) {
+  routePaths.push('/experience/' + item.slug + '/');
+}
 for (const project of portfolio.collections.projects) routePaths.push('/projects/' + project.slug + '/');
 for (const item of portfolio.collections.cases) routePaths.push('/case-studies/' + item.slug + '/');
+const ubuntuServer = JSON.parse(await readFile(new URL('../src/data/ubuntuServerGuides.json', import.meta.url), 'utf8'));
+routePaths.push('/ubuntu-server/');
+for (const guide of ubuntuServer.guides) routePaths.push('/ubuntu-server/' + guide.slug + '/');
 
 for (const entry of portfolio.collections.projects) {
   for (const slug of entry.data.caseSlugs ?? []) {
@@ -63,6 +70,6 @@ if (errors.length) {
   for (const error of errors) console.error('- ' + error);
   process.exitCode = 1;
 } else {
-  console.log('Links valid: ' + routePaths.length + ' static routes and ' + urls.size + ' public URLs checked.');
+  console.log('Links valid: ' + routePaths.length + ' public routes and ' + urls.size + ' public URLs checked.');
   for (const warning of warnings) console.warn('External link warning: ' + warning);
 }

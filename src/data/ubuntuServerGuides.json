@@ -1,0 +1,1216 @@
+{
+  "sections": [
+    {
+      "id": "setup",
+      "label": "01 / Setup",
+      "title": "Thiết lập ban đầu",
+      "summary": "Từ máy trắng đến SSH, Tailscale, LAN, router và DNS."
+    },
+    {
+      "id": "deploy",
+      "label": "02 / Deploy",
+      "title": "Đưa dịch vụ lên server",
+      "summary": "Môi trường, mã nguồn, systemd, Nginx và HTTPS."
+    },
+    {
+      "id": "operate",
+      "label": "03 / Operate",
+      "title": "Vận hành & xử lý lỗi",
+      "summary": "Quan sát, khoanh vùng lỗi, khôi phục và bảo mật."
+    }
+  ],
+  "guides": [
+    {
+      "id": "01-lo-trinh",
+      "slug": "setup-lo-trinh",
+      "group": "setup",
+      "order": 1,
+      "title": "Bản đồ dựng server từ số 0",
+      "summary": "Thứ tự các bước, phương án truy cập dự phòng và kiến trúc mục tiêu.",
+      "level": "Cơ bản",
+      "risk": "low",
+      "minutes": 12,
+      "tags": [
+        "roadmap",
+        "network",
+        "SSH"
+      ],
+      "commands": [
+        {
+          "title": "Mốc kiểm chứng",
+          "code": "hostnamectl\nip -br addr\nip route\nsystemctl is-active ssh",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        }
+      ],
+      "note": "Nguyên tắc lab của bạn: bài học thao tác firewall/Netplan/SSH trên máy đang chạy chỉ dùng lệnh đọc trạng thái cho đến khi đã có console dự phòng và kiểm tra đường truy cập."
+    },
+    {
+      "id": "02-cai-ubuntu",
+      "slug": "setup-cai-ubuntu",
+      "group": "setup",
+      "order": 2,
+      "title": "Cài Ubuntu Server & cấu hình ban đầu",
+      "summary": "Cài OS, đặt hostname, cập nhật và khảo sát cấu hình máy.",
+      "level": "Cơ bản",
+      "risk": "medium",
+      "minutes": 18,
+      "tags": [
+        "OS",
+        "install",
+        "apt"
+      ],
+      "commands": [
+        {
+          "title": "Nhận diện máy sau lần đăng nhập đầu tiên",
+          "code": "cat /etc/os-release\nuname -r\nhostnamectl\nwhoami && id\nlsblk -o NAME,SIZE,FSTYPE,MOUNTPOINTS",
+          "lang": "bash",
+          "why": "Xác nhận máy, distro và kernel trước khi cài đặt/copy lệnh."
+        },
+        {
+          "title": "Cập nhật packages",
+          "code": "sudo apt update\napt list --upgradable\nsudo apt upgrade\nsudo reboot",
+          "lang": "bash",
+          "why": "Cài đặt/cập nhật gói hệ thống; kiểm tra kết nối mạng, quyền sudo và phiên bản trước khi triển khai."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "03-lenh-co-ban",
+      "slug": "setup-lenh-co-ban",
+      "group": "setup",
+      "order": 3,
+      "title": "Lệnh CLI, phân quyền và ổ đĩa",
+      "summary": "Những lệnh bắt buộc thuộc để không thao tác nhầm trên server.",
+      "level": "Cơ bản",
+      "risk": "low",
+      "minutes": 22,
+      "tags": [
+        "CLI",
+        "filesystem",
+        "permissions"
+      ],
+      "commands": [
+        {
+          "title": "Định vị và đọc file",
+          "code": "pwd\nls -lah /etc/nginx\nfind /etc -maxdepth 2 -name '*.conf' 2>/dev/null | head\ncat /etc/os-release\nless /var/log/syslog",
+          "lang": "bash",
+          "why": "Xác nhận máy, distro và kernel trước khi cài đặt/copy lệnh."
+        },
+        {
+          "title": "Process, CPU, RAM, đĩa",
+          "code": "uptime\nfree -h\ndf -hT\ndu -sh /var/log/* 2>/dev/null | sort -h | tail\nps aux --sort=-%mem | head",
+          "lang": "bash",
+          "why": "Đọc nhanh tải CPU, RAM và dung lượng đĩa trước khi đi sâu vào ứng dụng."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "04-ssh-key",
+      "slug": "setup-ssh-key",
+      "group": "setup",
+      "order": 4,
+      "title": "SSH và SSH key an toàn",
+      "summary": "Tạo khóa, cấp quyền, kết nối và bảo vệ đường vào từ xa.",
+      "level": "Cơ bản",
+      "risk": "high",
+      "minutes": 22,
+      "tags": [
+        "SSH",
+        "key",
+        "security"
+      ],
+      "commands": [
+        {
+          "title": "Khởi tạo trên Ubuntu Server (console / LAN)",
+          "code": "sudo apt install openssh-server\nsudo systemctl enable --now ssh\nsudo systemctl status ssh --no-pager\nss -lntp | grep ':22'",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        },
+        {
+          "title": "Trên laptop (máy khách)",
+          "code": "ssh-keygen -t ed25519 -a 64 -C 'ubuntu-admin-laptop'\nssh-copy-id <TEN_USER>@<LAN_IP>\nssh -o ServerAliveInterval=30 <TEN_USER>@<LAN_IP>",
+          "lang": "bash",
+          "why": "Sinh cặp SSH key trên laptop; private key giữ lại trên laptop, chỉ public key được chép lên server."
+        },
+        {
+          "title": "Kiểm tra cấu hình SSH trên server — chỉ đọc",
+          "code": "sudo sshd -t\nsudo sshd -T | grep -E '^(port|passwordauthentication|permitrootlogin|pubkeyauthentication) '\nsudo journalctl -u ssh -n 60 --no-pager",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp cấu hình SSH trước khi reload dịch vụ để tránh tự khóa quyền truy cập."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "05-tailscale",
+      "slug": "setup-tailscale",
+      "group": "setup",
+      "order": 5,
+      "title": "Tailscale: truy cập server ở mọi nơi",
+      "summary": "Cài VPN mesh, đăng nhập tailnet, quản trị SSH không mở cổng 22 public.",
+      "level": "Cơ bản",
+      "risk": "medium",
+      "minutes": 25,
+      "tags": [
+        "Tailscale",
+        "VPN",
+        "SSH"
+      ],
+      "commands": [
+        {
+          "title": "Cấu hình trên server",
+          "code": "curl -fsSL https://tailscale.com/install.sh | sh\nsudo tailscale up\ntailscale status\ntailscale ip -4\nsystemctl status tailscaled --no-pager",
+          "lang": "bash",
+          "why": "Kiểm tra node đã tham gia tailnet và lấy IP riêng để SSH từ xa."
+        },
+        {
+          "title": "Trên laptop đã gia nhập cùng tailnet",
+          "code": "tailscale status\ntailscale ping <TAILSCALE_IP>\nssh <TEN_USER>@<TAILSCALE_IP>",
+          "lang": "bash",
+          "why": "Kiểm tra node đã tham gia tailnet và lấy IP riêng để SSH từ xa."
+        },
+        {
+          "title": "Mất kết nối — ưu tiên chỉ đọc",
+          "code": "ip -br addr show tailscale0\nip route get <TAILSCALE_IP>\nsudo journalctl -u tailscaled -n 100 --no-pager\ntailscale netcheck",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        }
+      ],
+      "note": "Giữ một phiên SSH hiện tại khi thử Tailscale; đừng khóa cổng SSH trước khi kiểm tra đường dự phòng."
+    },
+    {
+      "id": "06-router-chrome",
+      "slug": "setup-router-chrome",
+      "group": "setup",
+      "order": 6,
+      "title": "Mở trang admin Router từ xa bằng Chrome",
+      "summary": "Dùng Ubuntu Server làm cầu nối SSH tunnel tới giao diện router nội bộ.",
+      "level": "Trung cấp",
+      "risk": "medium",
+      "minutes": 30,
+      "tags": [
+        "router",
+        "Chrome",
+        "SSH",
+        "tunnel"
+      ],
+      "commands": [
+        {
+          "title": "Bước 1 — xác nhận IP gateway trên server (chỉ đọc)",
+          "code": "ip -4 route show default\nip route get 1.1.1.1\ncurl -I --connect-timeout 5 http://<ROUTER_LAN_IP>/",
+          "lang": "bash",
+          "why": "Xác định default gateway. Đây thường là IP quản trị router nhưng cần kiểm tra lại trước khi dùng."
+        },
+        {
+          "title": "Bước 2 — mở tunnel trên laptop",
+          "code": "ssh -N -o ExitOnForwardFailure=yes -L 127.0.0.1:8080:<ROUTER_LAN_IP>:80 <TEN_USER>@<TAILSCALE_IP>",
+          "lang": "bash",
+          "why": "Mở cổng 8080 trên laptop và chuyển request qua SSH tới cổng 80 của router LAN. Chrome dùng http://127.0.0.1:8080."
+        },
+        {
+          "title": "Nếu router buộc dùng hostname/IP gốc hoặc redirect",
+          "code": "ssh -N -D 127.0.0.1:1080 <TEN_USER>@<TAILSCALE_IP>",
+          "lang": "bash",
+          "why": "Tạo SOCKS5 trên laptop để trình duyệt truy cập router bằng chính địa chỉ LAN, kể cả khi router chuyển hướng URL."
+        },
+        {
+          "title": "Nếu router buộc dùng hostname/IP gốc hoặc redirect",
+          "code": "google-chrome --user-data-dir=/tmp/router-admin-profile --proxy-server='socks5://127.0.0.1:1080'",
+          "lang": "bash",
+          "why": "Mở profile Chrome riêng qua SOCKS5. Truy cập địa chỉ LAN của router trong cửa sổ Chrome này."
+        }
+      ],
+      "note": "Chạy tunnel trên laptop, không phải server. Chỉ dùng với router được phép quản trị; đừng mở admin router ra Internet."
+    },
+    {
+      "id": "07-netplan",
+      "slug": "setup-netplan",
+      "group": "setup",
+      "order": 7,
+      "title": "DHCP, IP tĩnh và Netplan",
+      "summary": "Xác định interface, routes, resolver và thay IP có phương án rollback.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 28,
+      "tags": [
+        "Netplan",
+        "IP",
+        "DHCP",
+        "routing"
+      ],
+      "commands": [
+        {
+          "title": "Khảo sát chỉ đọc — bắt buộc trước mọi sửa đổi",
+          "code": "ip -br link\nip -br -4 addr\nip -4 route\nresolvectl status\nsudo netplan get\nls -lah /etc/netplan/",
+          "lang": "bash",
+          "why": "Kiểm tra interface, địa chỉ IPv4 và bảng định tuyến; xác nhận còn đường ra Internet/SSH."
+        },
+        {
+          "title": "Ví dụ Netplan IP tĩnh — chỉ là mẫu, không chạy nguyên xi",
+          "code": "network:\n  version: 2\n  renderer: networkd\n  ethernets:\n    enp3s0:\n      dhcp4: false\n      addresses: [192.168.50.10/24]\n      routes:\n        - to: default\n          via: 192.168.50.1\n      nameservers:\n        addresses: [1.1.1.1, 8.8.8.8]",
+          "lang": "yaml",
+          "why": "Mẫu cấu hình IP tĩnh; thay tên card mạng, IP, gateway và DNS đúng hệ thống trước khi áp dụng."
+        },
+        {
+          "title": "Kiểm tra cú pháp / áp dụng có cơ chế tự quay về",
+          "code": "sudo netplan generate\nsudo netplan try",
+          "lang": "bash",
+          "why": "Kiểm tra cấu hình và áp dụng có khả năng tự hoàn nguyên nếu mất kết nối mạng."
+        }
+      ],
+      "note": "Thay đổi IP từ xa có thể cắt SSH. Ưu tiên netplan try và giữ console hoặc phiên dự phòng."
+    },
+    {
+      "id": "08-dns-public",
+      "slug": "setup-dns-public",
+      "group": "setup",
+      "order": 8,
+      "title": "Public IP, DNS và CGNAT",
+      "summary": "Hiểu DNS trỏ về đâu, IP public có thật không và vì sao mở port vẫn lỗi.",
+      "level": "Trung cấp",
+      "risk": "low",
+      "minutes": 25,
+      "tags": [
+        "DNS",
+        "Public IP",
+        "CGNAT",
+        "NAT"
+      ],
+      "commands": [
+        {
+          "title": "Bộ lệnh đọc trạng thái",
+          "code": "ip -4 addr\nip -4 route show default\ncurl -4 --max-time 7 https://api.ipify.org; echo\ndig +short A <DOMAIN>\ndig +short AAAA <DOMAIN>\nresolvectl query <DOMAIN>",
+          "lang": "bash",
+          "why": "Xác định default gateway. Đây thường là IP quản trị router nhưng cần kiểm tra lại trước khi dùng."
+        }
+      ],
+      "note": "Case NanoBio: public IP được thay đổi trong lịch sử và DNS có lúc trỏ một địa chỉ khác. Không lấy IP cũ làm dữ liệu hiện tại."
+    },
+    {
+      "id": "09-nat-port-forward",
+      "slug": "setup-nat-port-forward",
+      "group": "setup",
+      "order": 9,
+      "title": "Router NAT, port forwarding và luồng request",
+      "summary": "Ánh xạ cổng WAN vào LAN IP đúng dịch vụ, không nhầm với reverse proxy.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 25,
+      "tags": [
+        "NAT",
+        "port forward",
+        "reverse proxy"
+      ],
+      "commands": [
+        {
+          "title": "Kiểm tra trước khi vào giao diện router",
+          "code": "ip -br addr\nip -4 route show default\nsudo ss -lntp | grep -E ':(80|443|8000) '\ncurl -I http://127.0.0.1/",
+          "lang": "bash",
+          "why": "Xác định default gateway. Đây thường là IP quản trị router nhưng cần kiểm tra lại trước khi dùng."
+        },
+        {
+          "title": "Test từ mạng khác (4G/hotspot)",
+          "code": "curl -4Iv --connect-timeout 8 https://<DOMAIN>/",
+          "lang": "bash",
+          "why": "Gửi request test trực tiếp để biết lỗi nằm ở API, reverse proxy, DNS hay đường WAN."
+        }
+      ],
+      "note": "So sánh WAN IP trên router với public IP. Nếu CGNAT, cấu hình port forwarding riêng chưa đủ."
+    },
+    {
+      "id": "10-firewall-an-toan",
+      "slug": "setup-firewall-an-toan",
+      "group": "setup",
+      "order": 10,
+      "title": "Baseline firewall: đọc trước, thay đổi sau",
+      "summary": "Xác định thực tế UFW, iptables, nftables và tránh lockout SSH.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 30,
+      "tags": [
+        "UFW",
+        "iptables",
+        "nftables",
+        "Netfilter"
+      ],
+      "commands": [
+        {
+          "title": "Bộ lệnh chỉ đọc — dùng an toàn trong lab hiện tại",
+          "code": "sudo ufw status verbose\nsudo iptables -S\nsudo iptables -L INPUT -n -v --line-numbers\nsudo iptables -t nat -S\nsudo nft list ruleset\nsudo ss -lntup",
+          "lang": "bash",
+          "why": "Đọc trạng thái UFW, chains/rules và counters hiện có. Các lớp firewall có thể cùng tác động dù UFW đang tắt."
+        },
+        {
+          "title": "Chỉ trên lab có console dự phòng",
+          "code": "sudo ufw allow OpenSSH\nsudo ufw allow 80/tcp\nsudo ufw allow 443/tcp\nsudo ufw enable",
+          "lang": "bash",
+          "why": "Ví dụ mở rule trên máy thực hành có console dự phòng; không chạy trực tiếp trên production khi chưa rà soát chính sách hiện tại."
+        }
+      ],
+      "note": "Tailscale có thể tạo rule iptables dù UFW inactive. Luôn đọc cấu hình hiện có trước khi thay đổi."
+    },
+    {
+      "id": "11-checklist-truoc-deploy",
+      "slug": "setup-checklist-truoc-deploy",
+      "group": "setup",
+      "order": 11,
+      "title": "Checklist server sẵn sàng deploy",
+      "summary": "12 kiểm tra nền tảng trước khi tải môi trường và pull source.",
+      "level": "Cơ bản",
+      "risk": "low",
+      "minutes": 15,
+      "tags": [
+        "checklist",
+        "preflight",
+        "deploy"
+      ],
+      "commands": [
+        {
+          "title": "Điều kiện xuất phát",
+          "code": "hostnamectl\nip -4 route show default\ntailscale status\nsystemctl is-active ssh\nsudo ss -lntp\nsudo ufw status verbose\nsudo nginx -t\ncurl -4sS --max-time 7 https://api.ipify.org; echo\ndig +short A <DOMAIN>",
+          "lang": "bash",
+          "why": "Xác định default gateway. Đây thường là IP quản trị router nhưng cần kiểm tra lại trước khi dùng."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "01-kien-truc-production",
+      "slug": "deploy-kien-truc-production",
+      "group": "deploy",
+      "order": 1,
+      "title": "Kiến trúc backend production",
+      "summary": "Tách web public, reverse proxy, backend local, database và AI service.",
+      "level": "Cơ bản",
+      "risk": "low",
+      "minutes": 18,
+      "tags": [
+        "architecture",
+        "Nginx",
+        "FastAPI"
+      ],
+      "commands": [
+        {
+          "title": "Đọc cấu hình listener hiện tại",
+          "code": "sudo ss -lntp\nsudo nginx -T 2>/dev/null | head -100\nsystemctl list-units --type=service --state=running",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp Nginx trước khi reload; xác nhận server_name, location và upstream."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "02-moi-truong-python",
+      "slug": "deploy-moi-truong-python",
+      "group": "deploy",
+      "order": 2,
+      "title": "Cài môi trường Python / FastAPI",
+      "summary": "Chuẩn bị runtime, virtualenv, package manager và health endpoint.",
+      "level": "Cơ bản",
+      "risk": "medium",
+      "minutes": 25,
+      "tags": [
+        "Python",
+        "venv",
+        "FastAPI"
+      ],
+      "commands": [
+        {
+          "title": "Cài dependency hệ thống",
+          "code": "sudo apt update\nsudo apt install -y python3 python3-venv python3-pip git curl ca-certificates build-essential\npython3 --version\npython3 -m pip --version",
+          "lang": "bash",
+          "why": "Gửi request test trực tiếp để biết lỗi nằm ở API, reverse proxy, DNS hay đường WAN."
+        },
+        {
+          "title": "Tạo venv theo dự án",
+          "code": "mkdir -p ~/apps/sample-api\ncd ~/apps/sample-api\npython3 -m venv .venv\nsource .venv/bin/activate\npython -m pip install --upgrade pip\npython -m pip install fastapi uvicorn",
+          "lang": "bash",
+          "why": "Tạo môi trường Python biệt lập để cài dependencies của backend mà không ảnh hưởng Python hệ thống."
+        },
+        {
+          "title": "Smoke test trên máy local",
+          "code": "python -m uvicorn app.main:app --host 127.0.0.1 --port 8000",
+          "lang": "bash",
+          "why": "Khởi chạy API trên loopback để smoke-test trước khi đặt Nginx ra phía trước."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "03-git-pull",
+      "slug": "deploy-git-pull",
+      "group": "deploy",
+      "order": 3,
+      "title": "Git clone, SSH key và cập nhật source",
+      "summary": "Đưa source lên server mà không đưa token vào CLI hoặc repo.",
+      "level": "Cơ bản",
+      "risk": "medium",
+      "minutes": 22,
+      "tags": [
+        "Git",
+        "source",
+        "deploy"
+      ],
+      "commands": [
+        {
+          "title": "Chuẩn bị folder triển khai",
+          "code": "sudo mkdir -p /srv/my-api\nsudo chown \"$USER\":\"$USER\" /srv/my-api\ncd /srv",
+          "lang": "bash",
+          "why": "Chuẩn bị folder triển khai. Đọc đầu ra lệnh và xác nhận đúng máy, đúng địa chỉ trước khi làm bước tiếp theo."
+        },
+        {
+          "title": "Clone repository",
+          "code": "git clone <GIT_REMOTE_URL> /srv/my-api\ncd /srv/my-api\ngit remote -v\ngit status --short\ngit log -1 --oneline",
+          "lang": "bash",
+          "why": "Lấy source về server. Dùng SSH key deploy/remote có quyền tối thiểu và pin phiên bản khi release."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "04-env-secret",
+      "slug": "deploy-env-secret",
+      "group": "deploy",
+      "order": 4,
+      "title": "Environment, secrets và quyền file",
+      "summary": "Tách cấu hình nhạy cảm khỏi source; đọc đúng thứ tự ưu tiên env.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 20,
+      "tags": [
+        "environment",
+        "secrets",
+        "permissions"
+      ],
+      "commands": [
+        {
+          "title": "Tạo thư mục cấu hình (ví dụ)",
+          "code": "sudo install -d -m 750 -o root -g root /etc/my-api\nsudoedit /etc/my-api/app.env",
+          "lang": "bash",
+          "why": "Lưu biến cấu hình ngoài source, đặt quyền file chặt và không commit secret."
+        },
+        {
+          "title": "Tạo thư mục cấu hình (ví dụ)",
+          "code": "APP_ENV=production\nDATABASE_URL=postgresql://appuser:REPLACE_WITH_SECRET@127.0.0.1:5432/appdb\nOLLAMA_BASE_URL=http://127.0.0.1:11434",
+          "lang": "ini",
+          "why": "Cài PostgreSQL, xác nhận service hoạt động trước khi tạo user/database."
+        }
+      ],
+      "note": "Không commit .env, token, mật khẩu hoặc SSH private key lên GitHub."
+    },
+    {
+      "id": "05-postgresql",
+      "slug": "deploy-postgresql",
+      "group": "deploy",
+      "order": 5,
+      "title": "Cài PostgreSQL và health database",
+      "summary": "Database chỉ nghe local, tách role, kiểm tra service và backup cơ bản.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 27,
+      "tags": [
+        "PostgreSQL",
+        "database",
+        "health"
+      ],
+      "commands": [
+        {
+          "title": "Cài đặt",
+          "code": "sudo apt install -y postgresql postgresql-contrib\nsudo systemctl enable --now postgresql\nsystemctl status postgresql --no-pager\nsudo -u postgres psql -c 'SELECT version();'",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        },
+        {
+          "title": "Tạo user/database — dùng mật khẩu thật ngoài mã nguồn",
+          "code": "CREATE ROLE appuser LOGIN PASSWORD 'REPLACE_WITH_LONG_RANDOM_SECRET';\nCREATE DATABASE appdb OWNER appuser;",
+          "lang": "sql",
+          "why": "Tạo role/database ứng dụng riêng, tránh dùng tài khoản postgres làm tài khoản runtime."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "06-systemd",
+      "slug": "deploy-systemd",
+      "group": "deploy",
+      "order": 6,
+      "title": "Chạy FastAPI bằng systemd",
+      "summary": "Tự khởi động khi reboot, restart khi lỗi, log tập trung, quyền tối thiểu.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 30,
+      "tags": [
+        "systemd",
+        "FastAPI",
+        "service"
+      ],
+      "commands": [
+        {
+          "title": "Tạo user chỉ chạy ứng dụng",
+          "code": "sudo useradd --system --home-dir /srv/my-api --shell /usr/sbin/nologin appsvc\nid appsvc",
+          "lang": "bash",
+          "why": "Tạo user chỉ chạy ứng dụng. Đọc đầu ra lệnh và xác nhận đúng máy, đúng địa chỉ trước khi làm bước tiếp theo."
+        },
+        {
+          "title": "Unit file minh họa (`sudoedit /etc/systemd/system/my-api.service`)",
+          "code": "[Unit]\nDescription=My API (FastAPI)\nAfter=network-online.target postgresql.service\nWants=network-online.target\n\n[Service]\nType=simple\nUser=appsvc\nGroup=appsvc\nWorkingDirectory=/srv/my-api\nEnvironmentFile=/etc/my-api/app.env\nExecStart=/srv/my-api/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 2\nRestart=on-failure\nRestartSec=5\nNoNewPrivileges=true\nPrivateTmp=true\n\n[Install]\nWantedBy=multi-user.target",
+          "lang": "ini",
+          "why": "Unit file quản lý tiến trình backend bằng systemd, tách khỏi terminal SSH và hỗ trợ restart."
+        },
+        {
+          "title": "Đưa service vào hoạt động",
+          "code": "sudo systemctl daemon-reload\nsudo systemctl enable --now my-api\nsudo systemctl status my-api --no-pager\nsudo journalctl -u my-api -n 100 --no-pager",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        }
+      ],
+      "note": "Chạy dịch vụ bằng user riêng, lắng nghe 127.0.0.1 và kiểm tra journalctl trước khi mở public."
+    },
+    {
+      "id": "07-nginx",
+      "slug": "deploy-nginx",
+      "group": "deploy",
+      "order": 7,
+      "title": "Nginx reverse proxy",
+      "summary": "Phân biệt server/location/proxy_pass, headers, config test và 404.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 35,
+      "tags": [
+        "Nginx",
+        "reverse proxy",
+        "HTTP"
+      ],
+      "commands": [
+        {
+          "title": "Cài và kiểm tra",
+          "code": "sudo apt install -y nginx\nsudo systemctl enable --now nginx\nsudo nginx -t\nsudo ss -lntp | grep -E ':(80|443) '",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp Nginx trước khi reload; xác nhận server_name, location và upstream."
+        },
+        {
+          "title": "Virtual host mẫu (`/etc/nginx/sites-available/my-api`)",
+          "code": "server {\n    listen 80;\n    server_name api.example.com;\n\n    location / {\n        proxy_pass http://127.0.0.1:8000;\n        proxy_http_version 1.1;\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n        proxy_connect_timeout 5s;\n        proxy_read_timeout 60s;\n    }\n}",
+          "lang": "nginx",
+          "why": "Mỗi server block nhận Host phù hợp và reverse proxy request sang FastAPI nội bộ; không public trực tiếp cổng backend."
+        },
+        {
+          "title": "Bật config và kiểm chứng",
+          "code": "sudo ln -s /etc/nginx/sites-available/my-api /etc/nginx/sites-enabled/my-api\nsudo nginx -t\nsudo systemctl reload nginx\ncurl -i -H 'Host: api.example.com' http://127.0.0.1/health/live",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp Nginx trước khi reload; xác nhận server_name, location và upstream."
+        }
+      ],
+      "note": "Backend trả 200 chưa đủ: Nginx có thể trả 404 nếu Host không khớp server_name."
+    },
+    {
+      "id": "08-https-certbot",
+      "slug": "deploy-https-certbot",
+      "group": "deploy",
+      "order": 8,
+      "title": "HTTPS, TLS và Certbot",
+      "summary": "Cấp chứng chỉ, bật HTTPS, kiểm tra gia hạn và redirect.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 25,
+      "tags": [
+        "HTTPS",
+        "Certbot",
+        "TLS"
+      ],
+      "commands": [
+        {
+          "title": "Cài Certbot (phương thức snap được Certbot khuyến nghị)",
+          "code": "sudo snap install core\nsudo snap refresh core\nsudo snap install --classic certbot\nsudo ln -s /snap/bin/certbot /usr/bin/certbot",
+          "lang": "bash",
+          "why": "Xin chứng chỉ TLS sau khi DNS và ingress 80/443 đã trỏ đúng máy chủ."
+        },
+        {
+          "title": "Xin certificate (thay domain/email)",
+          "code": "sudo certbot --nginx -d api.example.com\nsudo certbot certificates\nsudo certbot renew --dry-run",
+          "lang": "bash",
+          "why": "Xin chứng chỉ TLS sau khi DNS và ingress 80/443 đã trỏ đúng máy chủ."
+        },
+        {
+          "title": "Test TLS (đọc trạng thái)",
+          "code": "curl -4Iv https://api.example.com/health/live\nopenssl s_client -connect api.example.com:443 -servername api.example.com </dev/null",
+          "lang": "bash",
+          "why": "Kiểm tra chứng chỉ, SNI và quá trình bắt tay TLS mà không phụ thuộc giao diện trình duyệt."
+        }
+      ],
+      "note": "DNS và port 80/443 phải được xác minh trước khi xin chứng chỉ."
+    },
+    {
+      "id": "09-nhieu-domain",
+      "slug": "deploy-nhieu-domain",
+      "group": "deploy",
+      "order": 9,
+      "title": "Một Nginx cung cấp nhiều dịch vụ",
+      "summary": "Tách subdomain, port nội bộ và virtual host phù hợp.",
+      "level": "Trung cấp",
+      "risk": "medium",
+      "minutes": 22,
+      "tags": [
+        "Nginx",
+        "domain",
+        "virtualhost"
+      ],
+      "commands": [
+        {
+          "title": "Tìm mọi config liên quan",
+          "code": "sudo nginx -T 2>/dev/null | grep -nE 'server_name|listen |proxy_pass|root '\nls -lah /etc/nginx/sites-enabled\nsudo ss -lntp",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp Nginx trước khi reload; xác nhận server_name, location và upstream."
+        },
+        {
+          "title": "Tự kiểm thử routing theo Host",
+          "code": "curl -i -H 'Host: api.example.com' http://127.0.0.1/health/live\ncurl -i -H 'Host: ai.example.com' http://127.0.0.1/health",
+          "lang": "bash",
+          "why": "Gửi request test trực tiếp để biết lỗi nằm ở API, reverse proxy, DNS hay đường WAN."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "10-docker-compose",
+      "slug": "deploy-docker-compose",
+      "group": "deploy",
+      "order": 10,
+      "title": "Docker Compose (lựa chọn bổ sung)",
+      "summary": "Deploy container và kiểm tra ranh giới networking khi đã dùng UFW/Tailscale.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 28,
+      "tags": [
+        "Docker",
+        "Compose",
+        "container",
+        "firewall"
+      ],
+      "commands": [
+        {
+          "title": "Khảo sát host (chỉ đọc)",
+          "code": "docker --version\ndocker compose version\ndocker ps --format 'table {{.Names}}\\t{{.Ports}}\\t{{.Status}}'\nsudo iptables -t nat -S | head -70",
+          "lang": "bash",
+          "why": "Kiểm tra cấu hình Compose trước khi tạo container hoặc cập nhật dịch vụ."
+        },
+        {
+          "title": "Compose ví dụ (không để secret trong image)",
+          "code": "services:\n  api:\n    build: .\n    restart: unless-stopped\n    ports:\n      - '127.0.0.1:8000:8000'\n    env_file:\n      - .env",
+          "lang": "yaml",
+          "why": "Compose ví dụ (không để secret trong image). Đọc đầu ra lệnh và xác nhận đúng máy, đúng địa chỉ trước khi làm bước tiếp theo."
+        },
+        {
+          "title": "Vận hành",
+          "code": "docker compose config\ndocker compose ps\ndocker compose logs --tail=100 api\ndocker compose up -d --build",
+          "lang": "bash",
+          "why": "Kiểm tra cấu hình Compose trước khi tạo container hoặc cập nhật dịch vụ."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "11-ollama",
+      "slug": "deploy-ollama",
+      "group": "deploy",
+      "order": 11,
+      "title": "Ollama và AI gateway riêng tư",
+      "summary": "Cài đặt, model, GPU, binding địa chỉ và kết nối backend.",
+      "level": "Nâng cao",
+      "risk": "high",
+      "minutes": 28,
+      "tags": [
+        "Ollama",
+        "AI",
+        "GPU"
+      ],
+      "commands": [
+        {
+          "title": "Lệnh đọc trạng thái",
+          "code": "systemctl status ollama --no-pager\nollama --version\nollama list\nollama ps\nsudo ss -lntp | grep ':11434'\nnvidia-smi",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        },
+        {
+          "title": "Smoke test API local",
+          "code": "curl -sS http://127.0.0.1:11434/api/tags",
+          "lang": "bash",
+          "why": "Gửi request test trực tiếp để biết lỗi nằm ở API, reverse proxy, DNS hay đường WAN."
+        }
+      ],
+      "note": "Lưu ý: `OLLAMA_NUM_PARALLEL=32` từng bị quá tải trong quá trình thử nghiệm; đây là quan sát lịch sử, không dùng làm ngưỡng chung. Đừng chỉnh concurrency ở production khi chưa benchmark và có rollback."
+    },
+    {
+      "id": "12-publish-checklist",
+      "slug": "deploy-publish-checklist",
+      "group": "deploy",
+      "order": 12,
+      "title": "Quy trình pull → deploy → test → rollback",
+      "summary": "Từ server đã có DNS/port forward đến backend có HTTPS.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 32,
+      "tags": [
+        "deploy",
+        "checklist",
+        "rollback"
+      ],
+      "commands": [
+        {
+          "title": "Lệnh kiểm tra trước deploy",
+          "code": "cd /srv/my-api\ngit status --short\ngit rev-parse HEAD\nsystemctl status my-api --no-pager\nsudo nginx -t\ncurl -fsS http://127.0.0.1:8000/health/live",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp Nginx trước khi reload; xác nhận server_name, location và upstream."
+        },
+        {
+          "title": "Sau khi cập nhật source/dependencies",
+          "code": "sudo systemctl restart my-api\nsudo journalctl -u my-api -n 80 --no-pager\ncurl -i http://127.0.0.1:8000/health/live\ncurl -i -H 'Host: api.example.com' http://127.0.0.1/health/live\ncurl -4Iv https://api.example.com/health/live",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        }
+      ],
+      "note": "Mỗi lần deploy cần health check và phương án rollback; không restart hàng loạt nếu chưa test."
+    },
+    {
+      "id": "01-dashboard",
+      "slug": "operate-dashboard",
+      "group": "operate",
+      "order": 1,
+      "title": "5 phút đọc sức khỏe server",
+      "summary": "Bảng lệnh read-only kiểm tra server mỗi lần SSH vào.",
+      "level": "Cơ bản",
+      "risk": "low",
+      "minutes": 12,
+      "tags": [
+        "monitoring",
+        "health",
+        "CLI"
+      ],
+      "commands": [
+        {
+          "title": "Bảng điều khiển nhanh",
+          "code": "uptime\nhostnamectl\nip -br addr\nip -4 route\nfree -h\ndf -hT\nsystemctl --failed\nsudo ss -lntup",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        },
+        {
+          "title": "Xem log lỗi system gần đây",
+          "code": "sudo journalctl -p err -b --no-pager | tail -80\nsudo dmesg -T | tail -60",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "02-systemd-journal",
+      "slug": "operate-systemd-journal",
+      "group": "operate",
+      "order": 2,
+      "title": "systemctl và journalctl",
+      "summary": "Tìm nguyên nhân service tự tắt, crash, restart loop hoặc thiếu env.",
+      "level": "Cơ bản",
+      "risk": "low",
+      "minutes": 24,
+      "tags": [
+        "systemd",
+        "journalctl",
+        "logs"
+      ],
+      "commands": [
+        {
+          "title": "Trạng thái service",
+          "code": "systemctl list-units --type=service --state=running\nsystemctl status my-api --no-pager\nsystemctl show my-api -p ActiveState -p SubState -p ExecMainStatus -p Restart\nsystemctl cat my-api",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        },
+        {
+          "title": "Journal theo service và thời gian",
+          "code": "sudo journalctl -u my-api -n 100 --no-pager\nsudo journalctl -u my-api --since '1 hour ago' --no-pager\nsudo journalctl -u my-api -f\nsudo journalctl -b -p warning --no-pager",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "03-curl-ss",
+      "slug": "operate-curl-ss",
+      "group": "operate",
+      "order": 3,
+      "title": "curl, ss, dig: xác định lỗi ở lớp nào",
+      "summary": "Đọc kết quả HTTP/TCP/DNS theo từng điểm của đường request.",
+      "level": "Cơ bản",
+      "risk": "low",
+      "minutes": 25,
+      "tags": [
+        "curl",
+        "ss",
+        "dig",
+        "HTTP"
+      ],
+      "commands": [
+        {
+          "title": "Test tuần tự từ trong ra ngoài",
+          "code": "curl -i --connect-timeout 3 http://127.0.0.1:8000/health/live\ncurl -i -H 'Host: api.example.com' http://127.0.0.1/health/live\ncurl -4Iv --connect-timeout 8 https://api.example.com/health/live\nsudo ss -lntp | grep -E ':(80|443|8000) '\ndig +short A api.example.com",
+          "lang": "bash",
+          "why": "Đọc DNS record domain rồi so với địa chỉ WAN/public đã cấu hình."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "04-nginx-errors",
+      "slug": "operate-nginx-errors",
+      "group": "operate",
+      "order": 4,
+      "title": "Nginx lỗi 404, 502, 504",
+      "summary": "Playbook theo từng HTTP code và cấu hình virtual host.",
+      "level": "Trung cấp",
+      "risk": "medium",
+      "minutes": 30,
+      "tags": [
+        "Nginx",
+        "404",
+        "502",
+        "504"
+      ],
+      "commands": [
+        {
+          "title": "Đọc cấu hình và log",
+          "code": "sudo nginx -t\nsudo nginx -T 2>/dev/null | grep -nE 'server_name|proxy_pass|listen '\nsudo tail -n 100 /var/log/nginx/error.log\nsudo tail -n 100 /var/log/nginx/access.log\nsudo ss -lntp",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp Nginx trước khi reload; xác nhận server_name, location và upstream."
+        },
+        {
+          "title": "Điều tra 404 — tình huống NanoBio",
+          "code": "curl -i http://127.0.0.1:8000/health/live\ncurl -i -H 'Host: api.example.com' http://127.0.0.1/health/live",
+          "lang": "bash",
+          "why": "Gửi request test trực tiếp để biết lỗi nằm ở API, reverse proxy, DNS hay đường WAN."
+        },
+        {
+          "title": "Điều tra 502/504",
+          "code": "systemctl status my-api --no-pager\nsudo journalctl -u my-api -n 100 --no-pager\ncurl -v --max-time 15 http://127.0.0.1:8000/health/live",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "05-tls-dns",
+      "slug": "operate-tls-dns",
+      "group": "operate",
+      "order": 5,
+      "title": "Lỗi DNS, HTTPS và chứng chỉ",
+      "summary": "SNI, cert hết hạn, A/AAAA sai, TLS listener và port 80 challenge.",
+      "level": "Trung cấp",
+      "risk": "low",
+      "minutes": 24,
+      "tags": [
+        "TLS",
+        "DNS",
+        "certbot",
+        "HTTPS"
+      ],
+      "commands": [
+        {
+          "title": "Kiểm tra độc lập từng lớp",
+          "code": "dig +short A api.example.com\ndig +short AAAA api.example.com\ncurl -4Iv https://api.example.com/\ncurl -6Iv --connect-timeout 5 https://api.example.com/\nsudo certbot certificates\nsudo nginx -t",
+          "lang": "bash",
+          "why": "Đọc DNS record domain rồi so với địa chỉ WAN/public đã cấu hình."
+        },
+        {
+          "title": "Đọc handshake bằng openssl",
+          "code": "openssl s_client -connect api.example.com:443 -servername api.example.com -showcerts </dev/null",
+          "lang": "bash",
+          "why": "Kiểm tra chứng chỉ, SNI và quá trình bắt tay TLS mà không phụ thuộc giao diện trình duyệt."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "06-netfilter-iptables",
+      "slug": "operate-netfilter-iptables",
+      "group": "operate",
+      "order": 6,
+      "title": "Đọc UFW / iptables / nftables bài bản",
+      "summary": "Phân biệt INPUT/FORWARD/OUTPUT, stateful, chain, DROP và ACCEPT.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 35,
+      "tags": [
+        "firewall",
+        "UFW",
+        "iptables",
+        "nftables"
+      ],
+      "commands": [
+        {
+          "title": "Chỉ đọc: xem policy, counters, NAT",
+          "code": "sudo ufw status verbose\nsudo iptables -L INPUT -n -v --line-numbers\nsudo iptables -S INPUT\nsudo iptables -S FORWARD\nsudo iptables -t nat -L -n -v\nsudo nft -a list ruleset",
+          "lang": "bash",
+          "why": "Đọc trạng thái UFW, chains/rules và counters hiện có. Các lớp firewall có thể cùng tác động dù UFW đang tắt."
+        }
+      ],
+      "note": "Lệnh xóa hoặc flush firewall không nên chạy từ SSH đang sử dụng nếu chưa có truy cập dự phòng."
+    },
+    {
+      "id": "07-ts-input-case",
+      "slug": "operate-ts-input-case",
+      "group": "operate",
+      "order": 7,
+      "title": "Case study: ts-input DROP và HTTPS 443",
+      "summary": "Phân tích sự cố thật NanoBio 08–09/11/2026, không suy rộng nguyên nhân.",
+      "level": "Nâng cao",
+      "risk": "high",
+      "minutes": 35,
+      "tags": [
+        "Tailscale",
+        "Netfilter",
+        "incident",
+        "443"
+      ],
+      "commands": [
+        {
+          "title": "Điều tra theo tầng — toàn bộ chỉ đọc",
+          "code": "sudo ss -lntp | grep ':443'\nsudo nginx -t\nsudo iptables -L INPUT -n -v --line-numbers\nsudo iptables -L ts-input -n -v --line-numbers\nsudo iptables -S\nsudo nft list ruleset\ntailscale status\ntailscale debug prefs",
+          "lang": "bash",
+          "why": "Kiểm tra node đã tham gia tailnet và lấy IP riêng để SSH từ xa."
+        },
+        {
+          "title": "Quan sát packet bằng tcpdump (chỉ capture, có quyền root)",
+          "code": "sudo tcpdump -ni any 'tcp port 443' -c 30",
+          "lang": "bash",
+          "why": "Quan sát gói TCP 443: SYN có tới host không và host có gửi SYN-ACK trở lại không."
+        }
+      ],
+      "note": "Vụ NanoBio từng ghi nhận SYN tới cổng 443 nhưng không có SYN-ACK; rule ts-input là một giả thuyết đã kiểm tra, không được xem là nguyên nhân mặc định."
+    },
+    {
+      "id": "08-port-443-playbook",
+      "slug": "operate-port-443-playbook",
+      "group": "operate",
+      "order": 8,
+      "title": "Playbook: port 443 không truy cập được",
+      "summary": "Phân biệt Nginx, NAT, WAN, DNS, CGNAT, netfilter và đường trả lời.",
+      "level": "Nâng cao",
+      "risk": "high",
+      "minutes": 38,
+      "tags": [
+        "443",
+        "tcpdump",
+        "NAT",
+        "debug"
+      ],
+      "commands": [
+        {
+          "title": "Bước A — service local",
+          "code": "sudo ss -lntp | grep ':443'\nsudo nginx -t\ncurl -i http://127.0.0.1:8000/health/live\ncurl -i -H 'Host: api.example.com' http://127.0.0.1/health/live",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp Nginx trước khi reload; xác nhận server_name, location và upstream."
+        },
+        {
+          "title": "Bước B — DNS và WAN",
+          "code": "dig +short A api.example.com\ncurl -4sS https://api.ipify.org; echo\nip route",
+          "lang": "bash",
+          "why": "Đọc public egress IP của host; cần đối chiếu với WAN IP router để phát hiện CGNAT/double NAT."
+        },
+        {
+          "title": "Bước C — capture gói (quan sát từ ngoài mạng)",
+          "code": "sudo tcpdump -ni any 'tcp port 443' -c 40\nsudo iptables -L INPUT -n -v --line-numbers\nsudo nft list ruleset",
+          "lang": "bash",
+          "why": "Đọc trạng thái UFW, chains/rules và counters hiện có. Các lớp firewall có thể cùng tác động dù UFW đang tắt."
+        }
+      ],
+      "note": "Ưu tiên tcpdump và kiểm tra listener/routing. Chưa kết luận lỗi firewall chỉ từ triệu chứng SYN một chiều."
+    },
+    {
+      "id": "09-route-ssh",
+      "slug": "operate-route-ssh",
+      "group": "operate",
+      "order": 9,
+      "title": "Mất SSH, Tailscale hoặc default route",
+      "summary": "Chẩn đoán NIC, gateway, ARP, DNS và các đường truy cập từ xa.",
+      "level": "Nâng cao",
+      "risk": "high",
+      "minutes": 26,
+      "tags": [
+        "routing",
+        "SSH",
+        "Tailscale",
+        "network"
+      ],
+      "commands": [
+        {
+          "title": "Khi đang giữ được ít nhất một console",
+          "code": "ip -br addr\nip -4 route\nip route get 1.1.1.1\nip neigh\nresolvectl status\nsystemctl status systemd-networkd --no-pager\nsystemctl status tailscaled --no-pager",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        },
+        {
+          "title": "Lệnh so sánh mạng",
+          "code": "ping -c 3 <ROUTER_LAN_IP>\nping -c 3 1.1.1.1\nresolvectl query example.com\ntailscale ping <TAILSCALE_IP_KHAC>",
+          "lang": "bash",
+          "why": "Lệnh so sánh mạng. Đọc đầu ra lệnh và xác nhận đúng máy, đúng địa chỉ trước khi làm bước tiếp theo."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "10-hardware",
+      "slug": "operate-hardware",
+      "group": "operate",
+      "order": 10,
+      "title": "CPU, RAM, SSD, GPU và disk full",
+      "summary": "Quan sát tải máy, SMART, NVMe, I/O, NVIDIA và lỗi OOM.",
+      "level": "Trung cấp",
+      "risk": "low",
+      "minutes": 26,
+      "tags": [
+        "CPU",
+        "RAM",
+        "SSD",
+        "GPU"
+      ],
+      "commands": [
+        {
+          "title": "CPU, memory, load",
+          "code": "uptime\nfree -h\ntop -b -n 1 | head -25\nvmstat 1 5\nps aux --sort=-%cpu | head",
+          "lang": "bash",
+          "why": "Đọc nhanh tải CPU, RAM và dung lượng đĩa trước khi đi sâu vào ứng dụng."
+        },
+        {
+          "title": "Disk và filesystem",
+          "code": "df -hT\nlsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS\nsudo du -xhd1 /var 2>/dev/null | sort -h\nsudo journalctl --disk-usage",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "11-ai-performance",
+      "slug": "operate-ai-performance",
+      "group": "operate",
+      "order": 11,
+      "title": "Ollama quá tải, RAM/VRAM và concurrency",
+      "summary": "Phân tích latency, queue và giới hạn worker trước khi tối ưu AI.",
+      "level": "Nâng cao",
+      "risk": "medium",
+      "minutes": 28,
+      "tags": [
+        "Ollama",
+        "benchmark",
+        "GPU",
+        "latency"
+      ],
+      "commands": [
+        {
+          "title": "Bộ lệnh read-only",
+          "code": "ollama ps\nollama list\nnvidia-smi\nfree -h\nsystemctl status ollama --no-pager\nsudo journalctl -u ollama -n 100 --no-pager\nsudo ss -lntp | grep ':11434'",
+          "lang": "bash",
+          "why": "Quan sát hoặc quản lý service; kiểm tra trạng thái và log thay vì suy đoán từ thông báo trình duyệt."
+        },
+        {
+          "title": "Endpoint test tối thiểu",
+          "code": "curl -sS http://127.0.0.1:11434/api/tags",
+          "lang": "bash",
+          "why": "Gửi request test trực tiếp để biết lỗi nằm ở API, reverse proxy, DNS hay đường WAN."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "12-backup-postgres",
+      "slug": "operate-backup-postgres",
+      "group": "operate",
+      "order": 12,
+      "title": "Backup PostgreSQL và khôi phục có kiểm chứng",
+      "summary": "Backup nhất quán, lưu offline, thử restore vào DB thử nghiệm.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 30,
+      "tags": [
+        "PostgreSQL",
+        "backup",
+        "restore"
+      ],
+      "commands": [
+        {
+          "title": "Ví dụ dump custom format — cần quyền phù hợp",
+          "code": "sudo -u postgres pg_dump -Fc appdb -f /var/lib/postgresql/appdb-$(date +%F).dump\nsudo -u postgres pg_restore --list /var/lib/postgresql/appdb-$(date +%F).dump | head",
+          "lang": "bash",
+          "why": "Xuất database theo dạng custom format để có thể phục hồi và kiểm chứng định kỳ."
+        },
+        {
+          "title": "Khôi phục thử nghiệm — không chạy vào appdb production",
+          "code": "sudo -u postgres createdb appdb_restore_test\nsudo -u postgres pg_restore -d appdb_restore_test /var/lib/postgresql/appdb-YYYY-MM-DD.dump\nsudo -u postgres psql -d appdb_restore_test -c 'SELECT current_database();'",
+          "lang": "bash",
+          "why": "Khôi phục vào database thử nghiệm để chứng minh backup dùng được, tránh ghi đè môi trường production."
+        }
+      ],
+      "note": "Luôn kiểm tra khả năng restore trong database thử nghiệm. Backup chưa restore được thì chưa được xem là hoàn chỉnh."
+    },
+    {
+      "id": "13-hardening",
+      "slug": "operate-hardening",
+      "group": "operate",
+      "order": 13,
+      "title": "Checklist bảo mật Ubuntu Server",
+      "summary": "SSH, patching, least privilege, service exposure, audit và secret.",
+      "level": "Trung cấp",
+      "risk": "high",
+      "minutes": 24,
+      "tags": [
+        "security",
+        "hardening",
+        "SSH",
+        "firewall"
+      ],
+      "commands": [
+        {
+          "title": "Audit read-only",
+          "code": "sudo ss -lntup\nsudo ufw status verbose\nsudo iptables -S\nsudo nft list ruleset\nsudo sshd -T | grep -E '^(permitrootlogin|passwordauthentication|pubkeyauthentication) '\nsudo systemctl --failed\nsudo last -n 10",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp cấu hình SSH trước khi reload dịch vụ để tránh tự khóa quyền truy cập."
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "14-runbook",
+      "slug": "operate-runbook",
+      "group": "operate",
+      "order": 14,
+      "title": "Runbook sự cố production & quy trình bàn giao",
+      "summary": "Mẫu ghi sự cố, backup, log, thay đổi và bài học sau khắc phục.",
+      "level": "Cơ bản",
+      "risk": "low",
+      "minutes": 20,
+      "tags": [
+        "runbook",
+        "incident",
+        "checklist"
+      ],
+      "commands": [
+        {
+          "title": "Thu thập read-only (ẩn secret trước khi chia sẻ)",
+          "code": "date -Is\nhostnamectl\nip -br addr\nip -4 route\nsudo ss -lntp\nsystemctl --failed\nsudo journalctl -p err -b -n 80 --no-pager\nsudo nginx -t",
+          "lang": "bash",
+          "why": "Kiểm tra cú pháp Nginx trước khi reload; xác nhận server_name, location và upstream."
+        },
+        {
+          "title": "Mẫu báo cáo incident",
+          "code": "Sự cố:                    [Tên]\nBắt đầu / kết thúc:      [ISO date/time]\nẢnh hưởng:               [HTTP/API/user]\nTriệu chứng:             [curl status / packet capture]\nTầng đã xác nhận tốt:     [backend, nginx, dns...]\nTầng nghi ngờ:            [NAT, firewall, TLS...]\nThay đổi đã thực hiện:    [command / diff / ticket]\nKiểm chứng phục hồi:      [LAN + WAN + logs]\nRollback & phòng ngừa:    [nếu có]",
+          "lang": "text",
+          "why": "Gửi request test trực tiếp để biết lỗi nằm ở API, reverse proxy, DNS hay đường WAN."
+        }
+      ],
+      "note": ""
+    }
+  ]
+}

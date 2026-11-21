@@ -42,6 +42,15 @@ async function resolveInternal(pathname) {
 }
 
 const portfolio = await readPortfolioData();
+const ubuntuServer = JSON.parse(await readFile(join(root, 'src/data/ubuntuServerGuides.json'), 'utf8'));
+const ubuntuGuideSlugs = ubuntuServer.guides.map((guide) => guide.slug);
+const safeUbuntuGuideSlugs = ubuntuGuideSlugs.filter((slug) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug));
+if (safeUbuntuGuideSlugs.length !== ubuntuGuideSlugs.length) {
+  errors.push('Ubuntu Server guide slugs must be lowercase URL-safe identifiers');
+}
+if (new Set(ubuntuGuideSlugs).size !== ubuntuGuideSlugs.length) {
+  errors.push('Ubuntu Server guide slugs must be unique');
+}
 const expectedRoutes = [
   'index.html',
   'projects/index.html',
@@ -51,12 +60,14 @@ const expectedRoutes = [
   'about/index.html',
   'contact/index.html',
   'case-studies/index.html',
+  'ubuntu-server/index.html',
   '404.html',
   ...portfolio.collections.experiences
     .filter((entry) => entry.data.detailPage)
     .map((entry) => 'experience/' + entry.slug + '/index.html'),
   ...portfolio.collections.projects.map((entry) => 'projects/' + entry.slug + '/index.html'),
   ...portfolio.collections.cases.map((entry) => 'case-studies/' + entry.slug + '/index.html'),
+  ...safeUbuntuGuideSlugs.map((slug) => 'ubuntu-server/' + slug + '/index.html'),
 ];
 for (const path of expectedRoutes) {
   if (!await exists(join(dist, path))) errors.push('Expected route was not built: ' + path);
