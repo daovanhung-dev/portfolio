@@ -490,6 +490,7 @@ body:has(.experience-detail-hero) > .ambient-player {
 .feature-row h3 { min-width: 0; overflow-wrap: anywhere; }
 .feature-row p,
 .principle-card p { margin: .4rem 0 0; color: var(--muted); font-size: .8rem; }
+.feature-row p { overflow-wrap: anywhere; }
 .evidence-list { display: grid; gap: .7rem; margin: 1rem 0 0; padding: 0; list-style: none; }
 .evidence-item { padding: .8rem; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); }
 .evidence-item__top { display: flex; justify-content: space-between; gap: .75rem; color: var(--subtle); font-size: .66rem; }
