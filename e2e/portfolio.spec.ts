@@ -899,11 +899,37 @@ test('responsive routes have no horizontal overflow at required widths', async (
     await expect(page.locator('main h1').first()).toBeVisible();
     for (const width of widths) {
       await page.setViewportSize({ width, height: 900 });
-      const dimensions = await page.evaluate(() => ({
-        viewport: document.documentElement.clientWidth,
-        page: document.documentElement.scrollWidth,
+      await page.evaluate(async () => {
+        await document.fonts.ready;
+      });
+      await page.evaluate(() => new Promise<void>((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
       }));
-      expect(dimensions.page, width + 'px on ' + path).toBeLessThanOrEqual(dimensions.viewport);
+      const dimensions = await page.evaluate(() => {
+        const viewport = document.documentElement.clientWidth;
+        const overflowingElements = Array.from(document.querySelectorAll('body *'))
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            const className = (element.getAttribute('class') ?? '').trim().split(/\s+/).filter(Boolean).join('.');
+            const selector = element.id
+              ? `${element.tagName.toLowerCase()}#${element.id}`
+              : `${element.tagName.toLowerCase()}${className ? `.${className}` : ''}`;
+            return { selector, left: Math.round(rect.left), right: Math.round(rect.right) };
+          })
+          .filter((element) => element.left < 0 || element.right > viewport)
+          .slice(0, 8)
+          .map((element) => `${element.selector} [${element.left}, ${element.right}]`);
+
+        return {
+          viewport,
+          page: document.documentElement.scrollWidth,
+          overflowingElements,
+        };
+      });
+      expect(
+        dimensions.page,
+        `${width}px on ${path} (scrollWidth ${dimensions.page}, viewport ${dimensions.viewport}; overflowing elements: ${dimensions.overflowingElements.join(', ') || 'none'})`,
+      ).toBeLessThanOrEqual(dimensions.viewport);
     }
   }
 });
