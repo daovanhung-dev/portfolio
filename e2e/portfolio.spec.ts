@@ -893,7 +893,7 @@ test('responsive routes have no horizontal overflow at required widths', async (
     '', 'projects/', 'projects/nanobio-local-cloud/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'skills/',
     'labs/', 'about/', 'contact/', 'case-studies/nanobio-local-cloud-ai/', 'case-studies/study2work-contracts-runtime/',
   ];
-  const widths = [360, 390, 768, 1024, 1280, 1440];
+  const widths = [320, 360, 390, 768, 1024, 1280, 1440];
   for (const path of paths) {
     await page.goto(APP + path);
     await expect(page.locator('main h1').first()).toBeVisible();
