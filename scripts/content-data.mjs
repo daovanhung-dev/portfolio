@@ -16,7 +16,10 @@ export const contentDirectories = {
 
 export async function readCollection(name) {
   const directory = new URL(contentDirectories[name] + '/', root);
-  const files = (await readdir(directory)).filter((file) => file.endsWith('.mdx')).sort();
+  const files = (await readdir(directory).catch((error) => {
+    if (name === 'labs' && error.code === 'ENOENT') return [];
+    throw error;
+  })).filter((file) => file.endsWith('.mdx')).sort();
   const entries = await Promise.all(files.map(async (file) => {
     const source = await readFile(new URL(file, directory), 'utf8');
     const parsed = matter(source);
