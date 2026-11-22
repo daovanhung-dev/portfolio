@@ -25,7 +25,7 @@ export async function getStaticPaths() {
   }
 
   const entries = await getCollection('ubuntuRunbooks');
-  if (entries.length !== 1) throw new Error('Expected exactly one Ubuntu Server v3 runbook source.');
+  if (entries.length !== 1) throw new Error('Expected exactly one Ubuntu Server runbook source.');
   const { headings } = await render(entries[0]);
   const headingByKey = new Map(headings.map((heading) => [normalizeHeading(heading.text), heading.slug]));
 
@@ -40,8 +40,8 @@ const { alias, targetSlug } = Astro.props as { alias: LegacyAlias; targetSlug: s
 const targetUrl = `${sitePath('/ubuntu-server')}?legacy=${encodeURIComponent(alias.slug)}#${targetSlug}`;
 ---
 <SiteLayout
-  title={`${alias.title} — Chuyển tới lab Ubuntu Server v3`}
-  description={`Liên kết cũ được giữ để mở đúng mục trong runbook Ubuntu Server v3: ${alias.targetHeading}.`}
+  title={`${alias.title} — Chuyển tới runbook Ubuntu Server`}
+  description={`Liên kết cũ được giữ để mở đúng mục trong runbook Ubuntu Server: ${alias.targetHeading}.`}
   route="/ubuntu-server"
   noindex={true}
   redirectTo={targetUrl}
@@ -49,7 +49,7 @@ const targetUrl = `${sitePath('/ubuntu-server')}?legacy=${encodeURIComponent(ali
   <section class="ubuntu-legacy-redirect" aria-labelledby="ubuntu-legacy-title">
     <p class="eyebrow">Liên kết bài học đã được cập nhật</p>
     <h1 id="ubuntu-legacy-title">{alias.title}</h1>
-    <p>Đang mở mục <strong>{alias.targetHeading}</strong> trong lab Ubuntu Server v3.</p>
+    <p>Đang mở mục <strong>{alias.targetHeading}</strong> trong runbook Ubuntu Server.</p>
     {alias.notice && <p class="ubuntu-legacy-redirect__notice">{alias.notice}</p>}
     <p><a class="ubuntu-legacy-redirect__link" href={targetUrl}>Mở mục trong runbook</a></p>
   </section>

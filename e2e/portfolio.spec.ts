@@ -15,7 +15,7 @@ const ROUTES = [
   { path: 'experience/maiatech/', heading: 'Backend Developer Intern' },
   { path: 'skills/', heading: 'Năng lực' },
   { path: 'labs/', heading: 'Labs' },
-  { path: 'ubuntu-server/', heading: 'Ubuntu Server — Bảo mật và vận hành hạ tầng' },
+  { path: 'ubuntu-server/', heading: 'Ubuntu Server — Cài đặt và triển khai backend' },
   { path: 'about/', heading: 'Đào Văn Hùng' },
   { path: 'contact/', heading: 'Trao đổi về kỹ thuật và công việc' },
   { path: 'case-studies/', heading: 'Case study' },
@@ -68,12 +68,12 @@ test('static pages and deep routes open directly and survive refresh under the P
   }
 });
 
-test('Labs links to the Ubuntu Server infrastructure security lab', async ({ page }) => {
+test('Labs links to the Ubuntu Server command runbook', async ({ page }) => {
   await page.goto(APP + 'labs/');
-  await expect(page.getByRole('link', { name: /Infrastructure Security Lab: Ubuntu Server/ })).toHaveAttribute('href', APP + 'ubuntu-server/');
+  await expect(page.getByRole('link', { name: /Ubuntu Server: cài đặt và triển khai backend/i })).toHaveAttribute('href', APP + 'ubuntu-server/');
 });
 
-test('all previous Ubuntu Server URLs land on their matching v3 section', async ({ page }) => {
+test('all previous Ubuntu Server URLs land on a current runbook section', async ({ page }) => {
   await page.goto(APP + 'ubuntu-server/');
   const rootIds = new Set(await page.locator('[id]').evaluateAll((elements) => elements.map((element) => element.id)));
   for (const alias of ubuntuAliases) {
@@ -89,10 +89,9 @@ test('all previous Ubuntu Server URLs land on their matching v3 section', async 
   await page.goto(APP + 'ubuntu-server/setup-netplan/');
   await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=setup-netplan#/);
   await expect(page.locator('main h1').first()).toContainText('Ubuntu Server');
-  await expect(page.locator('#full-runbook')).toHaveAttribute('open', '');
+  await expect(page.locator('#ubuntu-runbook-content')).toBeVisible();
   await page.reload();
   await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=setup-netplan#/);
-  await expect(page.locator('#full-runbook')).toHaveAttribute('open', '');
 
   const dockerAlias = ubuntuAliases.find((alias) => alias.slug === 'deploy-docker-compose');
   await page.goto(APP + 'ubuntu-server/deploy-docker-compose/');
@@ -102,32 +101,26 @@ test('all previous Ubuntu Server URLs land on their matching v3 section', async 
   if (dockerAlias?.notice) await expect(page.locator('#ubuntu-legacy-topic-note')).toContainText(dockerAlias.notice);
 });
 
-test('Ubuntu Server v3 lab search and chapter navigation work', async ({ page }) => {
+test('Ubuntu Server runbook search and section navigation work', async ({ page }) => {
   await page.goto(APP + 'ubuntu-server/');
-  const search = page.getByRole('searchbox', { name: 'Tìm trong lab Ubuntu Server' });
-  await expect(page.locator('.ubuntu-runbook-toc nav > ol > li')).toHaveCount(21);
-  await expect(page.locator('.ubuntu-report-phases > li')).toHaveCount(8);
-  await expect(page.locator('#full-runbook')).not.toHaveAttribute('open', '');
-  await expect(page.getByRole('heading', { name: 'Bài lab này thể hiện điều gì?' })).toBeVisible();
-  await expect(page.getByText('INFRASTRUCTURE SECURITY · UBUNTU SERVER LEARNING LAB')).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Các quyết định bảo mật trong lab' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Backend chạy nhưng website không truy cập được' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Xem dự án NanoBioAI' })).toHaveAttribute('href', APP + 'projects/nanobio-local-cloud/');
-  await expect(page.locator('#lab-checkpoints')).not.toHaveAttribute('open', '');
+  const search = page.getByRole('searchbox', { name: 'Tìm trong runbook Ubuntu Server' });
+  await expect(page.locator('.ubuntu-runbook-toc > ol > li')).toHaveCount(10);
+  await expect(page.locator('#full-runbook')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Cài Ubuntu Server' })).toBeVisible();
+  await expect(page.locator('.ubuntu-runbook-hero')).toContainText('10 bước thao tác');
   await expect(page.locator('[data-ambient-player]')).toHaveCSS('position', 'static');
-  await expect(page.getByRole('heading', { name: 'Cách đọc tài liệu và độ tin cậy', exact: true })).toBeHidden();
-  await expect(page.locator('.ubuntu-report-summary')).not.toContainText('Dừng: sửa NIC/DHCP/Netplan');
+  await expect(page.locator('main')).toContainText('chưa nghiệm thu trên một server thật');
+  await expect(page.locator('main')).not.toContainText('Từ điển lệnh');
+  await expect(page.locator('main')).not.toContainText('Case study lịch sử');
 
   await page.keyboard.press('/');
   await expect(search).toBeFocused();
-  await expect(page.locator('#full-runbook')).toHaveAttribute('open', '');
-  await expect(page.getByRole('heading', { name: 'Cách đọc tài liệu và độ tin cậy', exact: true })).toBeVisible();
-  await search.fill('netplan try');
+  await search.fill('pg_isready');
   await expect(page.locator('#ubuntu-runbook-search-results')).toBeVisible();
-  const result = page.locator('#ubuntu-runbook-search-results a').filter({ hasText: /Netplan/i }).first();
+  const result = page.locator('#ubuntu-runbook-search-results a').filter({ hasText: /PostgreSQL/i }).first();
   await expect(result).toBeVisible();
   await result.click();
-  await expect(page).toHaveURL(/#.*netplan/i);
+  await expect(page).toHaveURL(/#.*postgresql/i);
 
   await page.keyboard.press('Control+k');
   await expect(search).toBeFocused();
@@ -137,11 +130,9 @@ test('Ubuntu Server v3 lab search and chapter navigation work', async ({ page })
   await expect(page.locator('#ubuntu-runbook-search-results')).toBeHidden();
 });
 
-test('Ubuntu Server lab copies exact code and checklist state resets on reload', async ({ page, context }) => {
+test('Ubuntu Server runbook copies exact commands', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: 'http://127.0.0.1:4173' });
   await page.goto(APP + 'ubuntu-server/');
-  await page.locator('#full-runbook > summary').click();
-  await expect(page.locator('.ubuntu-runbook-warning').first()).toBeVisible();
   await expect(page.locator('.ubuntu-runbook-code')).not.toHaveCount(0);
 
   const firstBlock = page.locator('.ubuntu-runbook-code').first();
@@ -151,14 +142,8 @@ test('Ubuntu Server lab copies exact code and checklist state resets on reload',
   await expect(copy).toContainText('Đã sao chép');
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(firstCommand);
 
-  const checklist = page.locator('.ubuntu-runbook-body input[type="checkbox"]').first();
-  await expect(checklist).toBeEnabled();
-  await checklist.check();
-  await expect(checklist).toBeChecked();
-  await page.reload();
-  await expect(page.locator('#full-runbook')).not.toHaveAttribute('open', '');
-  await page.locator('#full-runbook > summary').click();
-  await expect(page.locator('.ubuntu-runbook-body input[type="checkbox"]').first()).not.toBeChecked();
+  const systemd = page.locator('.ubuntu-runbook-body').getByText('Tạo unit systemd chạy dưới service account');
+  await expect(systemd).toBeVisible();
 });
 
 test('EduAI project uses current branding and links to its pinned source', async ({ page }) => {

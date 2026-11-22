@@ -179,7 +179,7 @@ body:has(.about-page) > .ambient-player {
   width: min(100% - 2rem, 1120px);
   margin: 1rem auto;
 }
-body:has(.ubuntu-page--report) > .ambient-player {
+body:has(.ubuntu-page--runbook) > .ambient-player {
   position: static;
   width: min(100% - 2rem, 1120px);
   justify-items: start;

@@ -3,278 +3,113 @@ import { getCollection, render } from 'astro:content';
 import SiteLayout from '../../components/SiteLayout.astro';
 import { sitePath } from '../../utils/paths';
 import aliases from '../../data/ubuntuServerAliases.json';
-import runbookSource from '../../../docs/source/ubuntu-server-from-zero-to-production-v3.md?raw';
 import '../../styles/ubuntu-server.css';
 
 const entries = await getCollection('ubuntuRunbooks');
-if (entries.length !== 1) throw new Error('Expected exactly one Ubuntu Server v3 runbook source.');
+if (entries.length !== 1) throw new Error('Expected exactly one Ubuntu Server runbook source.');
 const runbook = entries[0];
 const { Content, headings } = await render(runbook);
 const pageTitle = headings.find((heading) => heading.depth === 1)?.text ?? runbook.data.title;
 const chapters = headings.filter((heading) => heading.depth === 2 && /^\d{2}\./.test(heading.text));
-const subsections = headings.filter((heading) => heading.depth === 3 && /^\d{1,2}\./.test(heading.text));
-const sourceLines = runbookSource.split(/\r?\n/);
-const gateHeaderIndex = sourceLines.findIndex((line) => /^\|\s*Gate\s*\|/.test(line));
-const gateRows = gateHeaderIndex < 0 ? [] : sourceLines
-  .slice(gateHeaderIndex + 2)
-  .filter((line) => /^\|\s*G[1-8]\s*[—-]/.test(line))
-  .map((line) => line.split('|').slice(1, -1).map((cell) => cell.trim()));
-const gateChapterNumbers: Record<string, string> = {
-  G1: '03', G2: '04', G3: '05', G4: '06', G5: '08', G6: '10', G7: '11', G8: '14',
-};
-const gates = gateRows.map((cells) => {
-  const gateCode = cells[0]?.match(/^(G[1-8])/)?.[1] ?? '';
-  const chapter = chapters.find((heading) => heading.text.startsWith(`${gateChapterNumbers[gateCode] ?? ''}.`));
-  return {
-    label: cells[0] ?? '',
-    pass: cells[1] ?? '',
-    fail: cells[2] ?? '',
-    href: chapter ? `#${chapter.slug}` : '#ubuntu-runbook-content',
-  };
-});
-const chapterHref = (number: string) => {
-  const chapter = chapters.find((heading) => heading.text.startsWith(`${number}.`));
-  return chapter ? `#${chapter.slug}` : '#ubuntu-runbook-content';
-};
-const securityDecisions = [
-  {
-    title: 'Tách đường quản trị khỏi dịch vụ public',
-    detail: 'SSH đi qua Tailscale/OpenSSH; không mở cổng SSH hoặc giao diện quản trị router ra Internet trong mô hình mẫu.',
-    chapter: '04',
-  },
-  {
-    title: 'Giới hạn bề mặt được phép truy cập',
-    detail: 'Chỉ Nginx nhận HTTP/HTTPS; FastAPI bind loopback, còn database và AI service không được NAT trực tiếp.',
-    chapter: '06',
-  },
-  {
-    title: 'Giữ cấu hình và secrets ngoài source',
-    detail: 'Tách cấu hình khỏi Git, giới hạn quyền file và lưu ý rằng environment variable không thay thế secret manager.',
-    chapter: '08',
-  },
-  {
-    title: 'Kiểm tra trước khi thay đổi, có đường lui',
-    detail: 'Đọc ruleset, giữ console hoặc phiên SSH dự phòng, backup cấu hình và xác minh từ mạng ngoài trước khi kết luận.',
-    chapter: '13',
-  },
-].map((decision) => ({ ...decision, href: chapterHref(decision.chapter) }));
-const legacyNotices = Object.fromEntries(aliases.filter((alias) => alias.notice).map((alias) => [alias.slug, { notice: alias.notice, targetHeading: alias.targetHeading }]));
+const legacyNotices = Object.fromEntries(
+  aliases
+    .filter((alias) => alias.notice)
+    .map((alias) => [alias.slug, { notice: alias.notice, targetHeading: alias.targetHeading }]),
+);
 const overview = runbook.data.description;
-const lastReviewed = runbook.data.verified_on;
-const nanoBioProjectUrl = sitePath('/projects/nanobio-local-cloud');
 ---
-<SiteLayout title={`${pageTitle} — Lab | Đào Văn Hùng`} description={overview} route="/ubuntu-server">
-  <div class="ubuntu-page ubuntu-page--report" data-legacy-notices={JSON.stringify(legacyNotices)}>
+<SiteLayout title={pageTitle + ' — Lab | Đào Văn Hùng'} description={overview} route="/ubuntu-server">
+  <div class="ubuntu-page ubuntu-page--runbook" data-legacy-notices={JSON.stringify(legacyNotices)}>
     <nav class="ubuntu-breadcrumb" aria-label="Đường dẫn">
       <a href={sitePath('/labs')}>Labs</a><span aria-hidden="true">/</span><span aria-current="page">Ubuntu Server</span>
     </nav>
 
-    <header class="ubuntu-report-hero">
-      <div class="ubuntu-report-hero__copy">
-        <p class="ubuntu-report-kicker">INFRASTRUCTURE SECURITY · UBUNTU SERVER LEARNING LAB</p>
-        <h1>{pageTitle}</h1>
-        <p class="ubuntu-report-lede">{overview}</p>
-        <div class="ubuntu-report-actions">
-          <a class="ubuntu-report-primary" href="#security-decisions">Xem cách tiếp cận bảo mật</a>
-          <a class="ubuntu-report-secondary" href="#full-runbook">Mở runbook kỹ thuật</a>
-        </div>
+    <header class="ubuntu-runbook-hero">
+      <p class="ubuntu-runbook-kicker">UBUNTU SERVER <span aria-hidden="true">/</span> RUNBOOK</p>
+      <h1>{pageTitle}</h1>
+      <p class="ubuntu-runbook-lede">{overview}</p>
+      <div class="ubuntu-runbook-badges">
+        <span>{chapters.length} bước thao tác</span>
+        <span>{runbook.data.status}</span>
+        <span>v{runbook.data.version} · rà soát {runbook.data.verified_on}</span>
       </div>
-      <dl class="ubuntu-report-meta">
-        <div><dt>Trọng tâm</dt><dd>Infrastructure Security</dd></div>
-        <div><dt>Trạng thái</dt><dd>Learning lab · chưa nghiệm thu server thật</dd></div>
-        <div><dt>Rà soát tài liệu</dt><dd>{lastReviewed} · v{runbook.data.version}</dd></div>
-      </dl>
+      <a class="ubuntu-runbook-start" href={chapters[0] ? '#' + chapters[0].slug : '#ubuntu-runbook-content'}>
+        Bắt đầu từ bước 1 <span aria-hidden="true">↓</span>
+      </a>
     </header>
 
     <div class="ubuntu-legacy-topic-note" id="ubuntu-legacy-topic-note" role="note" aria-live="polite" hidden>
-      <div><strong>Nội dung của URL cũ</strong><p></p></div>
-      <a href="#full-runbook">Mở mục liên quan</a>
+      <div><strong>URL hướng dẫn cũ</strong><p></p></div>
+      <a href="#ubuntu-runbook-content">Mở phần liên quan</a>
       <button type="button" aria-label="Ẩn thông báo">Ẩn</button>
     </div>
 
-    <div class="ubuntu-report">
-      <section class="ubuntu-report-section ubuntu-report-summary" aria-labelledby="report-summary-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">01 / TÓM TẮT CHO HR</p>
-          <h2 id="report-summary-title">Bài lab này thể hiện điều gì?</h2>
-        </div>
-        <div class="ubuntu-report-summary__body">
-          <p class="ubuntu-report-summary__lead">Tôi biên soạn một runbook có thể kiểm tra lại để luyện cách bảo vệ đường quản trị, giới hạn dịch vụ được public và vận hành backend an toàn trên Ubuntu Server.</p>
-          <dl class="ubuntu-report-facts">
-            <div><dt>Sản phẩm</dt><dd>Runbook v3 gồm 21 chương, 8 checkpoint, nguồn kỹ thuật và quy trình kiểm chứng.</dd></div>
-            <div><dt>Chủ đề trong lab</dt><dd>Linux, SSH/Tailscale, firewall, ranh giới dịch vụ, secrets, Nginx/TLS và rollback.</dd></div>
-            <div><dt>Phương pháp</dt><dd>Checkpoint, kiểm chứng độc lập từng lớp và chuẩn bị phương án khôi phục.</dd></div>
-          </dl>
-        </div>
-      </section>
+    <div class="ubuntu-runbook-workspace">
+      <aside class="ubuntu-runbook-sidebar" aria-label="Điều hướng runbook">
+        <nav class="ubuntu-runbook-toc" aria-label="Các bước trong runbook">
+          <p class="ubuntu-runbook-overline">MỤC LỤC</p>
+          <ol>
+            {chapters.map((chapter) => {
+              const number = chapter.text.match(/^(\d{2})\./)?.[1] ?? '';
+              const label = chapter.text.replace(/^\d{2}\.\s*/, '');
+              return <li>
+                <a href={'#' + chapter.slug}>
+                  <span aria-hidden="true">{number}</span>
+                  <span>{label}</span>
+                </a>
+              </li>;
+            })}
+          </ol>
+        </nav>
+        <p class="ubuntu-runbook-safety"><strong>Trước khi chạy lệnh:</strong> kiểm tra đúng máy, user, IP và giữ một đường truy cập dự phòng.</p>
+      </aside>
 
-      <section class="ubuntu-report-section" id="security-decisions" aria-labelledby="report-architecture-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">02 / CÁCH TIẾP CẬN BẢO MẬT</p>
-          <h2 id="report-architecture-title">Các quyết định bảo mật trong lab</h2>
-        </div>
-        <div class="ubuntu-security-decisions">
-          {securityDecisions.map((decision) => <article class="ubuntu-security-decision">
-            <span class="ubuntu-report-status ubuntu-report-status--reviewed">MÔ HÌNH TRONG LAB</span>
-            <h3>{decision.title}</h3>
-            <p>{decision.detail}</p>
-            <a href={decision.href}>Đọc chương {decision.chapter}</a>
-          </article>)}
-        </div>
-        <figure class="ubuntu-report-architecture">
-          <div class="ubuntu-report-flow">
-            <h3>Đường phục vụ ứng dụng</h3>
-            <ol aria-label="Luồng phục vụ ứng dụng public">
-              <li>Client</li><li>DNS</li><li>WAN / NAT</li><li>Nginx / TLS</li><li>FastAPI nội bộ</li>
-            </ol>
-          </div>
-          <div class="ubuntu-report-flow ubuntu-report-flow--private">
-            <h3>Đường quản trị riêng</h3>
-            <ol aria-label="Luồng quản trị riêng">
-              <li>Laptop</li><li>Tailscale / OpenSSH</li><li>Router trong LAN</li>
-            </ol>
-          </div>
-          <figcaption>Mô hình mục tiêu trong runbook; không phải sơ đồ xác nhận một hệ thống đang hoạt động.</figcaption>
-        </figure>
-      </section>
-
-      <section class="ubuntu-report-section ubuntu-report-case" aria-labelledby="report-case-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">03 / CASE STUDY LỊCH SỬ</p>
-          <h2 id="report-case-title">Backend chạy nhưng website không truy cập được</h2>
-        </div>
-        <div class="ubuntu-report-case__body">
-          <p><strong>Tình huống lịch sử:</strong> Nginx và health check nội bộ có thể hoạt động trong khi kết nối HTTPS từ bên ngoài vẫn bị chặn ở lớp firewall.</p>
-          <p><strong>Cách tiếp cận:</strong> kiểm tra listener, cấu hình Nginx, UFW và ruleset Netfilter theo từng lớp; không xóa hàng loạt firewall rules để thử vận may.</p>
-          <p><strong>Bài học:</strong> trạng thái `active` hoặc HTTP 200 local chưa chứng minh đường truy cập public thành công.</p>
-          <p class="ubuntu-report-case__note">Đây là bài học lịch sử đã ẩn thông tin hạ tầng, không phải xác nhận trạng thái hiện tại của server.</p>
-          <a href={chapterHref('15')}>Xem playbook chẩn đoán</a>
-        </div>
-      </section>
-
-      <section class="ubuntu-report-section" id="project-context" aria-labelledby="report-project-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">04 / LIÊN HỆ DỰ ÁN</p>
-          <h2 id="report-project-title">Kinh nghiệm cấu hình server và phát hành</h2>
-        </div>
-        <div class="ubuntu-report-project">
-          <div>
-            <span class="ubuntu-report-status ubuntu-report-status--attested">PHẠM VI TỰ XÁC NHẬN</span>
-            <p>Hồ sơ dự án ghi nhận phần cấu hình server và phát hành do tôi đảm nhiệm. Source công khai hỗ trợ mô tả kiến trúc và module; runtime backend chưa được portfolio xác minh độc lập.</p>
-          </div>
-          <a class="ubuntu-report-project__link" href={nanoBioProjectUrl}>Xem dự án NanoBioAI <span aria-hidden="true">→</span></a>
-        </div>
-      </section>
-
-      <section class="ubuntu-report-section" id="evidence-status" aria-labelledby="report-evidence-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">05 / MỨC ĐỘ XÁC MINH</p>
-          <h2 id="report-evidence-title">Đọc đúng phạm vi bằng chứng</h2>
-        </div>
-        <div class="ubuntu-report-evidence">
-          <article><span class="ubuntu-report-status ubuntu-report-status--reviewed">ĐÃ RÀ SOÁT</span><h3>Tài liệu kỹ thuật</h3><p>Runbook v3 có nguồn đối chiếu, checkpoint, cảnh báo và hướng dẫn kiểm chứng.</p></article>
-          <article><span class="ubuntu-report-status ubuntu-report-status--unverified">LEARNING LAB</span><h3>Thực thi trên server</h3><p>Chưa nghiệm thu toàn bộ quy trình trên một server Ubuntu thật.</p></article>
-          <article><span class="ubuntu-report-status ubuntu-report-status--unverified">PHẠM VI</span><h3>Cloud và kiểm thử bảo mật</h3><p>Lab tập trung Ubuntu/Linux và mạng; chưa bao gồm triển khai AWS/Azure/GCP, pentest hay đánh giá AppSec chuyên nghiệp.</p></article>
-        </div>
-      </section>
-
-      <section class="ubuntu-report-section ubuntu-report-disclosures" id="lab-method" aria-labelledby="report-method-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">06 / TRA CỨU BỔ SUNG</p>
-          <h2 id="report-method-title">Checkpoint và phương pháp biên soạn</h2>
-        </div>
-        <div class="ubuntu-report-disclosures__body">
-          <details class="ubuntu-report-disclosure" id="lab-checkpoints">
-            <summary><strong>Quy trình nghiệm thu theo 8 checkpoint</strong><span>Điều kiện mục tiêu, chưa phải kết quả PASS</span></summary>
-            <ol class="ubuntu-report-phases">
-              {gates.map((gate, index) => <li>
-                <span class="ubuntu-report-phase-number">{String(index + 1).padStart(2, '0')}</span>
-                <div><a href={gate.href}>{gate.label}</a><p><strong>Điều kiện đạt:</strong> {gate.pass}</p>{gate.fail && <p class="ubuntu-report-phase-fail"><strong>Nếu chưa đạt:</strong> {gate.fail}</p>}</div>
-              </li>)}
-            </ol>
-          </details>
-          <details class="ubuntu-report-disclosure" id="report-methodology">
-            <summary><strong>Tham khảo cách tổ chức lab và báo cáo</strong><span>Phương pháp biên soạn tài liệu</span></summary>
-            <p>Cấu trúc runbook dùng mục tiêu, phương pháp, kết quả, thảo luận và checkpoint; các nguồn dưới đây là tham khảo về báo cáo lab và cách tổ chức bài thực hành.</p>
-            <ul class="ubuntu-report-methodology-links">
-              <li><a href="https://ocw.mit.edu/courses/16-01-unified-engineering-i-ii-iii-iv-fall-2005-spring-2006/7b1fb14b0bb9c2ad7721f0107993ed88_guidelines.pdf" target="_blank" rel="noopener noreferrer">MIT OpenCourseWare — Guidelines for writing lab reports</a></li>
-              <li><a href="https://www.usna.edu/MechEngDept/Resources/PDF_MechE_Department_Lab_Report_Style_and_Formatting_Guide1" target="_blank" rel="noopener noreferrer">U.S. Naval Academy — Format and Style Guide for Laboratory Reports</a></li>
-              <li><a href="https://decal.ocf.berkeley.edu/archives/2022-spring/labs/a4/" target="_blank" rel="noopener noreferrer">UC Berkeley Sysadmin DeCal — Linux post-install lab</a></li>
-              <li><a href="https://www.d3s.mff.cuni.cz/teaching/nswi106/" target="_blank" rel="noopener noreferrer">Charles University — Linux Administration course and checkpoints</a></li>
-            </ul>
-          </details>
-        </div>
-      </section>
-
-      <details class="ubuntu-runbook-panel" id="full-runbook">
-        <summary>
-          <span><small>PHỤ LỤC KỸ THUẬT</small><strong>Mở toàn bộ quy trình lab và CLI reference</strong></span>
-          <span class="ubuntu-runbook-panel__meta">{chapters.length} chương · {gates.length} checkpoint</span>
-        </summary>
-
-        <div class="ubuntu-runbook-workspace">
-          <aside class="ubuntu-runbook-sidebar" aria-label="Mục lục tài liệu">
-            <details class="ubuntu-runbook-toc" open>
-              <summary><span class="ubuntu-overline">MỤC LỤC</span><span>{chapters.length} chương</span></summary>
-              <nav aria-label="Các chương trong lab">
-                <ol>
-                  {chapters.map((chapter) => {
-                    const chapterNumber = chapter.text.match(/^(\d{2})\./)?.[1] ?? '';
-                    const children = subsections.filter((item) => item.text.startsWith(`${Number(chapterNumber)}.`));
-                    return <li>
-                      <a class="ubuntu-runbook-toc__chapter" href={`#${chapter.slug}`}>{chapter.text}</a>
-                      {children.length > 0 && <details class="ubuntu-runbook-toc__subsections">
-                        <summary aria-label={`Mở các mục trong ${chapter.text}`}>Mục con <span aria-hidden="true">+</span></summary>
-                        <ol>{children.map((item) => <li><a href={`#${item.slug}`}>{item.text}</a></li>)}</ol>
-                      </details>}
-                    </li>;
-                  })}
-                </ol>
-              </nav>
-            </details>
-            <div class="ubuntu-runbook-safety" role="note">
-              <strong>Trước khi thay đổi</strong>
-              <p>Chuẩn bị console hoặc đường truy cập dự phòng trước khi sửa SSH, Netplan hay firewall.</p>
-            </div>
-          </aside>
-
-          <div class="ubuntu-runbook-main">
-            <div class="ubuntu-runbook-searchbox">
-              <label class="ubuntu-runbook-search">
-                <svg viewBox="0 0 24 24" aria-hidden="true" width="19" height="19"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
-                <input type="search" id="ubuntu-runbook-search" autocomplete="off" placeholder="Tìm lệnh, Netplan, DNS, systemd…" aria-label="Tìm trong lab Ubuntu Server" aria-controls="ubuntu-runbook-search-results" />
-                <kbd>/</kbd>
-              </label>
-              <span class="ubuntu-runbook-search-status" id="ubuntu-runbook-search-status" aria-live="polite"></span>
-              <div class="ubuntu-runbook-search-results" id="ubuntu-runbook-search-results" hidden>
-                <p class="ubuntu-overline">KẾT QUẢ TRONG TÀI LIỆU</p>
-                <ol></ol>
-              </div>
-            </div>
-            <p class="ubuntu-runbook-source-note">Nguồn kỹ thuật: <strong>{runbook.data.title}</strong> · {runbook.data.status}. Nội dung đầy đủ gồm quy trình, mã lệnh, checklist và CLI reference.</p>
-            <article class="ubuntu-runbook-body" id="ubuntu-runbook-content">
-              <Content />
-            </article>
+      <div class="ubuntu-runbook-main">
+        <div class="ubuntu-runbook-searchbox">
+          <label class="ubuntu-runbook-search">
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="19" height="19">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none" />
+              <path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" fill="none" />
+            </svg>
+            <input
+              type="search"
+              id="ubuntu-runbook-search"
+              autocomplete="off"
+              placeholder="Tìm SSH, DNS, PostgreSQL, systemd…"
+              aria-label="Tìm trong runbook Ubuntu Server"
+              aria-controls="ubuntu-runbook-search-results"
+            />
+            <kbd>/</kbd>
+          </label>
+          <span class="ubuntu-runbook-search-status" id="ubuntu-runbook-search-status" aria-live="polite"></span>
+          <div class="ubuntu-runbook-search-results" id="ubuntu-runbook-search-results" hidden>
+            <p class="ubuntu-runbook-overline">KẾT QUẢ</p>
+            <ol></ol>
           </div>
         </div>
-      </details>
+
+        <article class="ubuntu-runbook-body" id="ubuntu-runbook-content">
+          <Content />
+        </article>
+      </div>
     </div>
   </div>
 </SiteLayout>
+
 <script>
   function initUbuntuRunbook() {
-    const root = document.querySelector<HTMLElement>('.ubuntu-page--report');
+    const root = document.querySelector<HTMLElement>('.ubuntu-page--runbook');
     if (!root || root.dataset.initialized === 'true') return;
     root.dataset.initialized = 'true';
+
     const article = root.querySelector<HTMLElement>('#ubuntu-runbook-content');
-    const articlePanel = root.querySelector<HTMLDetailsElement>('#full-runbook');
     const search = root.querySelector<HTMLInputElement>('#ubuntu-runbook-search');
     const resultBox = root.querySelector<HTMLElement>('#ubuntu-runbook-search-results');
     const resultList = resultBox?.querySelector<HTMLOListElement>('ol');
     const status = root.querySelector<HTMLElement>('#ubuntu-runbook-search-status');
+    const legacyNote = root.querySelector<HTMLElement>('#ubuntu-legacy-topic-note');
     if (!article) return;
 
-    const legacyNote = root.querySelector<HTMLElement>('#ubuntu-legacy-topic-note');
     const legacyKey = new URLSearchParams(window.location.search).get('legacy');
     const legacyNotices = JSON.parse(root.dataset.legacyNotices || '{}') as Record<string, { notice: string; targetHeading: string }>;
     const legacyContent = legacyKey ? legacyNotices[legacyKey] : undefined;
@@ -288,24 +123,6 @@ const nanoBioProjectUrl = sitePath('/projects/nanobio-local-cloud');
       dismiss?.addEventListener('click', () => { legacyNote.hidden = true; });
     }
 
-    const revealRunbookHash = () => {
-      if (!root.isConnected) return;
-      const hash = window.location.hash.slice(1);
-      if (!hash || !articlePanel || !article) return;
-      let target: HTMLElement | null = null;
-      try { target = document.getElementById(decodeURIComponent(hash)); } catch { target = null; }
-      if (target === articlePanel) {
-        articlePanel.open = true;
-        window.requestAnimationFrame(() => articlePanel.querySelector('summary')?.scrollIntoView({ block: 'start' }));
-        return;
-      }
-      if (!target || !article.contains(target)) return;
-      articlePanel.open = true;
-      window.requestAnimationFrame(() => target?.scrollIntoView({ block: 'start' }));
-    };
-    revealRunbookHash();
-    window.addEventListener('hashchange', revealRunbookHash);
-
     const normalize = (value: string) => value.toLocaleLowerCase('vi').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
     const headings = [...article.querySelectorAll<HTMLHeadingElement>('h2, h3, h4')];
     const searchIndex = headings.map((heading) => {
@@ -318,7 +135,8 @@ const nanoBioProjectUrl = sitePath('/projects/nanobio-local-cloud');
         parts.push(sibling.textContent || '');
         sibling = sibling.nextElementSibling;
       }
-      return { heading, text: parts.join(' '), normalized: normalize(parts.join(' ')) };
+      const text = parts.join(' ');
+      return { heading, text: text, normalized: normalize(text) };
     });
 
     const renderSearch = () => {
@@ -330,21 +148,21 @@ const nanoBioProjectUrl = sitePath('/projects/nanobio-local-cloud');
         status.textContent = '';
         return;
       }
+
       const matches = searchIndex.filter((item) => item.normalized.includes(term));
-      const visibleMatches = matches.slice(0, 25);
-      for (const match of visibleMatches) {
+      for (const match of matches.slice(0, 20)) {
         const li = document.createElement('li');
         const link = document.createElement('a');
-        link.href = `#${match.heading.id}`;
-        link.textContent = match.heading.textContent || 'Mục trong tài liệu';
+        link.href = '#' + match.heading.id;
+        link.textContent = match.heading.textContent || 'Mục trong runbook';
         li.append(link);
         resultList.append(li);
       }
       resultBox.hidden = false;
-      status.textContent = matches.length ? `${matches.length} mục phù hợp` : 'Không tìm thấy nội dung phù hợp';
+      status.textContent = matches.length ? matches.length + ' mục phù hợp' : 'Không tìm thấy nội dung phù hợp';
       if (!matches.length) {
         const li = document.createElement('li');
-        li.textContent = 'Thử từ khóa như SSH, Nginx, HTTPS hoặc 443.';
+        li.textContent = 'Thử từ khóa như SSH, PostgreSQL, systemd hoặc Nginx.';
         resultList.append(li);
       }
     };
@@ -352,7 +170,6 @@ const nanoBioProjectUrl = sitePath('/projects/nanobio-local-cloud');
     search?.addEventListener('input', renderSearch);
     resultList?.addEventListener('click', (event) => {
       if ((event.target as HTMLElement).closest('a')) {
-        if (articlePanel) articlePanel.open = true;
         if (search) search.value = '';
         renderSearch();
       }
@@ -363,7 +180,6 @@ const nanoBioProjectUrl = sitePath('/projects/nanobio-local-cloud');
       const editing = !!target?.closest('input,textarea,[contenteditable]');
       if (((event.key === '/' && !editing) || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k')) && search) {
         event.preventDefault();
-        if (articlePanel) articlePanel.open = true;
         search.focus();
       }
       if (event.key === 'Escape' && search && document.activeElement === search) {
@@ -373,43 +189,32 @@ const nanoBioProjectUrl = sitePath('/projects/nanobio-local-cloud');
       }
     });
 
-    article.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((checkbox) => {
-      checkbox.disabled = false;
-      const listItem = checkbox.closest('li');
-      if (listItem && !checkbox.hasAttribute('aria-label')) {
-        checkbox.setAttribute('aria-label', `Đánh dấu: ${(listItem.textContent || '').trim().slice(0, 180)}`);
-      }
-    });
-
     article.querySelectorAll<HTMLElement>('blockquote').forEach((quote) => {
-      if (/\[CHANGE\]|DỪNG|RỦI RO|KHÔNG ĐƯỢC|NGUY HIỂM/i.test(quote.textContent || '')) quote.classList.add('ubuntu-runbook-warning');
+      if (/DỪNG|RỦI RO|KHÔNG ĐƯỢC|NGUY HIỂM|PHẠM VI/i.test(quote.textContent || '')) quote.classList.add('ubuntu-runbook-warning');
     });
 
     article.querySelectorAll<HTMLElement>('pre').forEach((pre) => {
-      if (pre.dataset.enhanced === 'true' || pre.closest('.ubuntu-runbook-diagram')) return;
+      if (pre.dataset.enhanced === 'true') return;
       pre.dataset.enhanced = 'true';
       const code = pre.querySelector('code');
       if (!code) return;
-      const language = pre.dataset.language || code.className.match(/language-([\w-]+)/)?.[1] || 'text';
-      const contextText = `${pre.textContent || ''} ${pre.previousElementSibling?.textContent || ''}`;
-      const context = contextText.match(/\[(SERVER|LAPTOP|ROUTER|DNS)(?:,|\])/i)?.[1]?.toUpperCase();
+      const language = code.className.match(/language-([\w-]+)/)?.[1] || 'text';
       const wrapper = document.createElement('div');
       wrapper.className = 'ubuntu-runbook-code';
       const toolbar = document.createElement('div');
       toolbar.className = 'ubuntu-runbook-code__bar';
       const label = document.createElement('span');
-      label.textContent = `${context ? `${context} · ` : ''}${language.toUpperCase()}`;
+      label.textContent = language.toUpperCase();
       const copy = document.createElement('button');
       copy.type = 'button';
       copy.className = 'ubuntu-runbook-copy';
       copy.textContent = 'Sao chép';
-      copy.setAttribute('aria-label', `Sao chép khối mã ${context ? `${context} ` : ''}${language}`);
+      copy.setAttribute('aria-label', 'Sao chép khối mã ' + language);
       copy.addEventListener('click', async () => {
         const originalText = copy.textContent;
-        const codeText = code.innerText;
         try {
           if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
-          await navigator.clipboard.writeText(codeText);
+          await navigator.clipboard.writeText(code.innerText);
           copy.textContent = 'Đã sao chép ✓';
         } catch {
           copy.textContent = 'Không thể sao chép';
@@ -420,17 +225,8 @@ const nanoBioProjectUrl = sitePath('/projects/nanobio-local-cloud');
       pre.before(wrapper);
       wrapper.append(toolbar, pre);
     });
-
-    const mermaid = article.querySelector<HTMLElement>('pre[data-language="mermaid"], pre.language-mermaid, pre code.language-mermaid')?.closest('pre');
-    if (mermaid && !mermaid.dataset.hasDescription) {
-      mermaid.dataset.hasDescription = 'true';
-      mermaid.classList.add('ubuntu-runbook-diagram');
-      const description = document.createElement('p');
-      description.className = 'ubuntu-runbook-diagram-description';
-      description.textContent = 'Sơ đồ văn bản: Client tra cứu DNS rồi kết nối qua WAN và NAT của router tới Nginx HTTPS trên Ubuntu; Nginx chuyển request nội bộ tới FastAPI/systemd. Riêng quản trị viên kết nối từ laptop qua Tailscale và OpenSSH tunnel tới router trong LAN. Mã Mermaid gốc được giữ ngay bên dưới để có thể sao chép hoặc xem lại.';
-      mermaid.after(description);
-    }
   }
+
   document.addEventListener('astro:page-load', initUbuntuRunbook);
   if (document.readyState !== 'loading') initUbuntuRunbook();
   else document.addEventListener('DOMContentLoaded', initUbuntuRunbook, { once: true });
