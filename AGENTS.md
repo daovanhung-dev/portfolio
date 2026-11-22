@@ -56,4 +56,6 @@ Run the checks relevant to each change, then the full set before delivery. Exter
 ## Git and delivery
 
 - Preserve user changes and untracked task instructions. Stage only intended source, reports, and approved public-safe artifacts.
-- Use a feature branch and PR for portfolio changes. Do not merge or deploy without explicit authorization. A local preview or existing live baseline does not prove a new branch SHA is deployed.
+- Always make portfolio changes directly on `main`; do not create a feature branch or PR for normal implementation work.
+- After implementation and relevant checks, commit the intended changes and push to `origin/main` in the same task. This is the standing workflow; do not ask for separate confirmation each time.
+- A push to `main` may trigger the GitHub Pages workflow. Verify and report the CI/deployment result separately; a successful push alone does not prove deployment completed.
