@@ -1,0 +1,647 @@
+---
+title: "Ubuntu Server — Từ máy vật lý đến Production"
+description: "Runbook triển khai production qua Ubuntu Server, Tailscale, router, FastAPI, systemd, Nginx, HTTPS và vận hành."
+date: "2026-11-21"
+tags: [ubuntu-server, linux, tailscale, ssh, networking, nginx, certbot, deployment, devops]
+category: "Infrastructure / DevOps"
+status: "Reviewed technical runbook"
+version: "3.0"
+verified_on: "2026-11-21"
+content_type: "Production deployment runbook"
+source_policy: "official-first"
+---
+
+## 01. Cài đặt hệ điều hành
+
+### 1.1. Điều kiện trước khi cài
+
+Chuẩn bị máy Ubuntu, laptop có SSH client và Chrome, quyền quản trị router, domain có quyền cấu hình DNS, cùng console hoặc đường truy cập dự phòng. Nếu máy đã phục vụ production, **bỏ qua cài mới** và chỉ đọc trạng thái trước.
+
+Luồng phục vụ public:
+
+~~~text
+Client → DNS phân giải domain → WAN public → Router NAT 80/443
+       → Nginx HTTPS → FastAPI trên 127.0.0.1 → dependency nội bộ
+
+Laptop quản trị → Tailscale → SSH vào Ubuntu → tunnel tới admin router
+~~~
+
+| Gate | Điều kiện để đi tiếp |
+|---|---|
+| G1 — Linux | Có IPv4 LAN, default route, DNS và Internet outbound |
+| G2 — Quản trị | Laptop SSH được tới server qua tailnet |
+| G3 — Router | Mở đúng giao diện router qua tunnel |
+| G4 — Public path | Xác định được public IP, CGNAT/NAT và DNS |
+| G5 — Backend | Health check local trả HTTP 200 |
+| G6 — Web | Nginx chuyển request domain tới đúng backend |
+| G7 — TLS | HTTPS ngoài mạng hoạt động và gia hạn được |
+| G8 — Vận hành | Có backup, kiểm thử sau reboot và phương án rollback |
+
+### 1.2. Cài Ubuntu và xác nhận đúng ổ
+
+1. Tạo USB cài từ ISO Ubuntu Server chính thức và khởi động theo UEFI.
+2. Kiểm tra đúng SSD/NVMe trước khi chọn cài mới hoặc xóa đĩa.
+3. Chọn Ethernet/DHCP, tạo user thường có quyền sudo, đặt hostname và bật OpenSSH Server.
+4. Đăng nhập tại console sau lần khởi động đầu.
+
+**[SERVER]** Xác nhận máy và filesystem:
+
+~~~bash
+hostnamectl
+uname -r
+lsblk -f
+df -hT /
+~~~
+
+Không chạy mkfs, fdisk, parted, lvextend hoặc cài lại OS trên máy có dữ liệu nếu chưa xác định thiết bị và kế hoạch sao lưu.
+
+### 1.3. Kiểm tra mạng và Netplan
+
+**[SERVER]** Kiểm tra link, địa chỉ, route và DNS:
+
+~~~bash
+ip -br link
+ip -4 -br addr
+ip -4 route
+resolvectl status
+getent ahostsv4 github.com
+curl -I --max-time 10 https://github.com
+~~~
+
+- Không có IPv4: kiểm tra cáp, NIC và DHCP.
+- Có IPv4 nhưng thiếu default via: kiểm tra gateway.
+- Có kết nối bằng IP nhưng DNS lỗi: kiểm tra resolver.
+- Ping thất bại nhưng HTTPS hoạt động: ICMP có thể bị chặn.
+
+Chỉ sửa Netplan khi DHCP không đáp ứng. Trước khi đổi, đọc cấu hình đang có và giữ console vì thay đổi mạng có thể ngắt SSH.
+
+**[SERVER] READ-ONLY**:
+
+~~~bash
+ls -la /etc/netplan/
+sudo netplan get
+ip -br link
+~~~
+
+Ví dụ DHCP; thay enp5s0 bằng tên NIC thật và chỉ tạo file nếu không xung đột cấu hình khác:
+
+**[SERVER]** Ví dụ cấu hình:
+
+~~~yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp5s0:
+      dhcp4: true
+~~~
+
+**[SERVER] CHANGE, có console dự phòng**:
+
+~~~bash
+sudo netplan generate
+sudo netplan try
+ip -4 -br addr
+ip -4 route
+~~~
+
+Không dùng netplan apply vô điều kiện qua SSH; lưu bản sao cấu hình và có console trước khi thay đổi.
+
+### 1.4. Cài gói nền tảng
+
+**[SERVER]**:
+
+~~~bash
+sudo apt update
+sudo apt install -y ca-certificates curl git openssh-server \
+  python3 python3-venv python3-pip nginx ufw dnsutils
+sudo systemctl enable --now ssh
+sudo systemctl enable --now nginx
+sudo systemctl status ssh nginx --no-pager
+~~~
+
+Trên máy đã có site, đọc cấu hình Nginx hiện tại trước khi thay đổi; không xóa vhost hoặc listener đang phục vụ ứng dụng khác.
+
+## 02. Cấu hình Tailscale làm việc từ xa
+
+### 2.1. Kết nối Tailscale
+
+**[SERVER]** Xem hướng dẫn nhà cung cấp trước khi chạy script trong môi trường kiểm soát chặt:
+
+~~~bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo systemctl enable --now tailscaled
+sudo tailscale up
+tailscale status
+tailscale ip -4
+~~~
+
+Đăng nhập server và laptop vào cùng tailnet; giới hạn quyền bằng ACL/grants. Ghi lại Tailscale IP vừa đọc trên server. Không đưa auth key, URL xác thực riêng hoặc thông tin tailnet vào Git.
+
+### 2.2. Xác nhận SSH bằng key
+
+Trên laptop, thay giá trị ví dụ bằng user Linux và Tailscale IP thực:
+
+**[LAPTOP]**:
+
+~~~bash
+LINUX_USER='ubuntu'
+TS_IP='100.101.102.103'
+tailscale ping "$TS_IP"
+ssh "$LINUX_USER@$TS_IP"
+~~~
+
+Khi SSH hoạt động, tạo key nếu laptop chưa có key phù hợp và thử từ một terminal mới:
+
+**[LAPTOP]**:
+
+~~~bash
+ssh-keygen -t ed25519 -C "my-laptop-admin"
+ssh-copy-id "$LINUX_USER@$TS_IP"
+ssh "$LINUX_USER@$TS_IP"
+~~~
+
+Không ghi đè private key đang dùng. Chỉ cân nhắc tắt password login sau khi xác nhận key và có đường phục hồi. Không mở SSH ra WAN; đường quản trị trong runbook này đi qua Tailscale.
+
+### 2.3. Tạo cấu hình SSH laptop
+
+**[LAPTOP]** Cập nhật ~/.ssh/config:
+
+~~~sshconfig
+Host my-ubuntu
+    HostName 100.101.102.103
+    User ubuntu
+    Port 22
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
+~~~
+
+Thay HostName và User trước khi dùng; có thể dùng MagicDNS nếu tailnet đã cấu hình.
+
+## 03. Cấu hình admin router
+
+### 3.1. Mở admin router qua tunnel SSH
+
+Lấy gateway và kiểm tra giao thức từ server; không đoán địa chỉ router:
+
+**[SERVER]** Thay địa chỉ mẫu bằng gateway vừa xác minh:
+
+~~~bash
+ip -4 route show default
+curl -I --connect-timeout 5 http://192.168.1.1/
+curl -kI --connect-timeout 5 https://192.168.1.1/
+~~~
+
+Local forwarding cho router HTTP. Chạy trên laptop, thay gateway bằng địa chỉ đã xác minh:
+
+**[LAPTOP, terminal 1]**:
+
+~~~bash
+ssh -N -o ExitOnForwardFailure=yes \
+  -L 127.0.0.1:19090:192.168.1.1:80 \
+  "$LINUX_USER@$TS_IP"
+~~~
+
+Giữ terminal mở, rồi mở http://127.0.0.1:19090 trên Chrome ở laptop. Dừng tunnel bằng Ctrl+C. Nếu router dùng HTTPS, forward cổng 443 tương ứng và xác minh chứng chỉ của router; không bỏ qua cảnh báo TLS một cách máy móc.
+
+Nếu trang admin redirect khỏi IP router hoặc không giữ được phiên, dùng SOCKS5 với profile Chrome riêng:
+
+**[LAPTOP, terminal 1]**:
+
+~~~bash
+ssh -N -o ExitOnForwardFailure=yes \
+  -D 127.0.0.1:1080 \
+  "$LINUX_USER@$TS_IP"
+~~~
+
+**[LAPTOP, terminal 2]** Mở Chrome bằng profile router riêng:
+
+~~~bash
+google-chrome \
+  --user-data-dir=/tmp/chrome-router-admin \
+  --proxy-server='socks5://127.0.0.1:1080' \
+  --new-window 'http://192.168.1.1'
+~~~
+
+SSH mã hóa đoạn laptop → Ubuntu; nếu router chỉ có HTTP, đoạn Ubuntu → router vẫn là HTTP trên LAN. Không bật WAN Remote Management để thay thế tunnel.
+
+### 3.2. Giữ IP LAN bằng DHCP Reservation
+
+**[SERVER]** Lấy MAC NIC và xác nhận lại IP:
+
+~~~bash
+ip -br link
+ip -4 route show default
+ip -4 -br addr
+NIC=enp5s0
+cat "/sys/class/net/$NIC/address"
+~~~
+
+Trong router, tạo DHCP Reservation theo MAC của NIC đang dùng và một IPv4 còn trống đúng subnet. Sau khi lưu, kiểm tra IP và route trên server. Giữ Netplan DHCP; không cấu hình đồng thời IP tĩnh trùng với reservation.
+
+Nếu cần renew DHCP, làm khi có console; không down NIC đang dùng trong phiên SSH.
+
+### 3.3. Đối chiếu WAN, CGNAT và public IP
+
+**[SERVER]** Đối chiếu IP egress với WAN trong router:
+
+~~~bash
+curl -4 -sS https://api.ipify.org
+ip -4 route show default
+~~~
+
+So sánh IP egress với WAN IPv4 hiển thị trong router:
+
+- WAN trùng public IP egress: có thể thử NAT nếu ISP cho inbound.
+- WAN thuộc 100.64.0.0/10: thường là CGNAT; cần public IPv4 hoặc một phương án tunnel public.
+- WAN thuộc dải private hoặc khác IP egress: kiểm tra double NAT/topology trước khi cấu hình.
+- Chỉ có IPv6 public: cần cấu hình IPv6, DNS AAAA và firewall tương ứng.
+
+IP egress không chứng minh router nhận kết nối inbound. DNS A record cũng không vượt qua CGNAT.
+
+### 3.4. NAT cho HTTP/HTTPS
+
+Chỉ làm bước này khi đã xác nhận public IPv4 trực tiếp và ISP cho inbound. Trong router, forward TCP 80 và 443 tới LAN IP đã reservation. Không forward trực tiếp SSH, FastAPI 8010, PostgreSQL 5432, Redis 6379, Ollama 11434 hoặc Cockpit 9090.
+
+**[SERVER]** Kiểm tra listener và firewall:
+
+~~~bash
+sudo ss -lntp | grep -E ':(80|443|8010)\b'
+sudo ufw status verbose
+~~~
+
+Kiểm tra HTTP từ laptop ở mạng ngoài, chẳng hạn 4G. Kiểm tra cổng 443 sau khi cài HTTPS ở phần 5.3:
+
+**[LAPTOP, dùng mạng ngoài LAN]** Thay IP ví dụ bằng public IP đã xác minh:
+
+~~~bash
+PUBLIC_IPV4='203.0.113.10'
+curl -I --connect-timeout 8 "http://$PUBLIC_IPV4"
+nc -vz -w 5 "$PUBLIC_IPV4" 80
+~~~
+
+Thay IP ví dụ bằng WAN public IP đã xác minh. Không kết luận public path hoạt động chỉ từ localhost; phép thử trong cùng LAN có thể bị ảnh hưởng bởi NAT loopback.
+
+Nếu bị CGNAT, dừng nhánh port forwarding. Xem xét xin public IP, VPS/tunnel, dịch vụ public tunnel hoặc IPv6 theo khả năng và yêu cầu bảo mật của hệ thống.
+
+### 3.5. Trỏ DNS tới đúng IP
+
+Tại DNS provider authoritative, tạo A record theo bảng dưới. **[DNS]**:
+
+| Type | Host | Value |
+|---|---|---|
+| A | api | PUBLIC_IPV4 đã xác minh |
+
+**[LAPTOP]** Kiểm tra delegation và kết quả phân giải:
+
+~~~bash
+dig NS example.com +short
+dig @1.1.1.1 api.example.com A +short
+dig @8.8.8.8 api.example.com A +short
+~~~
+
+Chỉ tạo AAAA khi server và đường public IPv6 đã hoạt động. DNS ánh xạ tên tới IP; Nginx mới chọn backend theo domain/path.
+
+## 04. Cấu hình môi trường server
+
+### 4.1. Chuẩn bị runtime và thư mục app
+
+Dùng các biến dưới đây làm ví dụ thống nhất; kiểm tra thư mục, cổng và dịch vụ đang có trước khi tạo ứng dụng. **[SERVER]**:
+
+~~~bash
+APP_DIR='/opt/apps/portfolio-api'
+APP_PORT='8010'
+test ! -e "$APP_DIR"
+sudo ss -lntp | grep ":$APP_PORT" || true
+~~~
+
+Nếu thư mục đã tồn tại hoặc cổng đã có listener, dừng và xác định ứng dụng hiện tại. Không ghi đè source hoặc dùng chung port tùy tiện.
+
+Không tạo thư mục nếu đường dẫn đã tồn tại; không cài dependency ngẫu nhiên trên production.
+
+### 4.2. Triển khai source
+
+Chọn một nhánh: tạo demo trong thư mục mới hoặc clone source thật. Không chạy cả hai nhánh và không ghi đè thư mục hiện có. Tài khoản SSH hiện tại sở hữu source để cập nhật release; service account `portfolio` chỉ có quyền đọc qua group.
+
+**Demo mới:** chạy block sau trong thư mục mới, sau khi đã kiểm tra IP, port và không có ứng dụng đang dùng đường dẫn đó. Block tự dừng nếu thư mục hoặc cổng đã được dùng. **[SERVER]**:
+
+~~~bash
+if [ -e "$APP_DIR" ]; then
+  echo "Thư mục đã tồn tại; dừng để tránh ghi đè." >&2
+  exit 1
+fi
+if sudo ss -lntp | grep -qE ":${APP_PORT}([[:space:]]|$)"; then
+  echo "Cổng $APP_PORT đang được dùng; chọn port khác." >&2
+  exit 1
+fi
+if ! sudo test -d /opt/apps; then
+  sudo install -d -o root -g root -m 755 /opt/apps
+fi
+sudo install -d -o "$USER" -g "$(id -gn)" -m 750 "$APP_DIR"
+cd "$APP_DIR"
+cat > requirements.txt <<'EOF'
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+EOF
+cat > main.py <<'PY'
+from fastapi import FastAPI
+
+app = FastAPI(title="Portfolio API")
+
+@app.get("/health/live")
+def live():
+    return {"status": "ok"}
+
+@app.get("/health/ready")
+def ready():
+    return {"status": "ready"}
+PY
+~~~
+
+**Source thật:** dùng nhánh này thay cho tạo demo. Thay URL/đường dẫn, rồi xác nhận test báo đường dẫn chưa tồn tại trước khi clone:
+
+**[SERVER]**:
+
+~~~bash
+REPO_URL='git@github.com:YOUR_ORG/YOUR_REPO.git'
+if [ -e "$APP_DIR" ]; then
+  echo "Thư mục đã tồn tại; dừng và kiểm tra trước khi triển khai." >&2
+  exit 1
+fi
+if sudo ss -lntp | grep -qE ":${APP_PORT}([[:space:]]|$)"; then
+  echo "Cổng $APP_PORT đang được dùng; chọn port khác." >&2
+  exit 1
+fi
+if ! sudo test -d /opt/apps; then
+  sudo install -d -o root -g root -m 755 /opt/apps
+fi
+sudo install -d -o "$USER" -g "$(id -gn)" -m 750 "$APP_DIR"
+~~~
+
+**[SERVER]** Clone vào thư mục trống và kiểm tra repo:
+
+~~~bash
+git clone "$REPO_URL" "$APP_DIR"
+cd "$APP_DIR"
+git status -sb
+git remote -v
+~~~
+
+Với private repo, cấu hình deploy key/token ngoài URL và không commit credential. Sau khi đã có source theo một trong hai nhánh, tạo venv theo lockfile của dự án. **[SERVER]**:
+
+~~~bash
+cd "$APP_DIR"
+python3 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -c 'import fastapi, uvicorn; print("dependencies: OK")'
+~~~
+
+Nếu dự án dùng pyproject.toml hoặc công cụ khác, thay lệnh cài dependency theo tài liệu của chính dự án.
+
+Tạo service group/account riêng nếu chưa có, rồi cấp quyền đọc source cho service. **[SERVER]**:
+
+~~~bash
+if ! getent group portfolio >/dev/null; then
+  sudo groupadd --system portfolio
+fi
+if ! id -u portfolio >/dev/null 2>&1; then
+  sudo useradd --system --gid portfolio --home-dir "$APP_DIR" \
+    --shell /usr/sbin/nologin portfolio
+fi
+sudo chown -R "$(id -un)":portfolio "$APP_DIR"
+sudo chmod -R g+rX "$APP_DIR"
+~~~
+
+### 4.3. Biến môi trường và secrets
+
+Đặt file env ngoài repository, giữ quyền đọc giới hạn và không in secret khi kiểm tra. Thay group mẫu bằng group service thực. **[SERVER]**:
+
+~~~bash
+APP_GROUP='portfolio'
+getent group "$APP_GROUP"
+if ! sudo test -d /etc/portfolio-api; then
+  sudo install -d -o root -g "$APP_GROUP" -m 750 /etc/portfolio-api
+fi
+if ! sudo test -e /etc/portfolio-api/backend.env; then
+  sudo install -o root -g "$APP_GROUP" -m 640 \
+    /dev/null /etc/portfolio-api/backend.env
+fi
+sudoedit /etc/portfolio-api/backend.env
+sudo chown root:"$APP_GROUP" /etc/portfolio-api/backend.env
+sudo chmod 640 /etc/portfolio-api/backend.env
+sudo stat -c '%a %U:%G %n' /etc/portfolio-api/backend.env
+sudo stat -c '%a %U:%G %n' /etc/portfolio-api
+~~~
+
+EnvironmentFile của systemd chuyển giá trị vào môi trường process; với secret nhạy cảm production, cân nhắc systemd credentials hoặc secrets manager. Không đặt token trong lệnh, shell history, Git hoặc ảnh chụp.
+
+### 4.4. Kiểm tra FastAPI local
+
+Ứng dụng thật phải có health endpoint và bind theo cấu hình service. Ví dụ trong runbook dùng FastAPI tại 127.0.0.1:8010:
+
+**[SERVER]** Gọi health endpoint trực tiếp trên loopback:
+
+~~~bash
+curl -i http://127.0.0.1:8010/health/live
+curl -i http://127.0.0.1:8010/health/ready
+~~~
+
+Health ready chỉ chứng minh dependency nếu code thực sự kiểm tra database/cache/AI. HTTP 200 ở localhost chưa chứng minh Nginx, NAT, DNS hay client ngoài mạng hoạt động.
+
+### 4.5. PostgreSQL và dependency tùy chọn
+
+Chỉ cài PostgreSQL khi ứng dụng cần database và đã xác định backup/restore. Giữ database, Redis và Ollama trong mạng nội bộ; không NAT cổng của chúng lên Internet. Thực hiện migration theo hướng dẫn của source thật và backup trước migration.
+
+## 05. Cài đặt các dịch vụ và vận hành
+
+### 5.1. Chạy backend bằng systemd
+
+Unit mẫu cần được sửa theo user, thư mục, module và venv thật của ứng dụng. Tạo service account riêng và cấp quyền tối thiểu trước khi dùng unit. **[SERVER]** Tạo file `/etc/systemd/system/portfolio-api.service` bằng `sudoedit`, rồi dán:
+
+~~~ini
+[Unit]
+Description=Portfolio API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=portfolio
+Group=portfolio
+WorkingDirectory=/opt/apps/portfolio-api
+EnvironmentFile=/etc/portfolio-api/backend.env
+ExecStart=/opt/apps/portfolio-api/.venv/bin/uvicorn main:app --host 127.0.0.1 --port 8010
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
+~~~
+
+**[SERVER]** Nạp unit, khởi động và kiểm tra service:
+
+~~~bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now portfolio-api
+sudo systemctl status portfolio-api --no-pager
+sudo ss -lntp | grep ':8010'
+curl -i http://127.0.0.1:8010/health/live
+sudo journalctl -u portfolio-api -n 50 --no-pager
+~~~
+
+Kỳ vọng: service active, tự khởi động và app chỉ nghe trên loopback. Với source thật, thay unit bằng đúng module và dependency của ứng dụng.
+
+### 5.2. Reverse proxy Nginx
+
+Ví dụ HTTP vhost. Trước khi tạo, kiểm tra domain và đường dẫn chưa được site khác dùng. Trên server, mở file `/etc/nginx/sites-available/portfolio-api.conf` bằng `sudoedit`, rồi dán cấu hình sau. **[SERVER]**:
+
+~~~nginx
+server {
+    listen 80;
+    server_name api.example.com;
+
+    access_log /var/log/nginx/portfolio-api.access.log;
+    error_log /var/log/nginx/portfolio-api.error.log warn;
+
+    location / {
+        proxy_pass http://127.0.0.1:8010;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_connect_timeout 10s;
+        proxy_read_timeout 60s;
+    }
+}
+~~~
+
+**[SERVER]** Bật vhost mới, kiểm tra cấu hình rồi reload Nginx:
+
+~~~bash
+if ! sudo test -f /etc/nginx/sites-available/portfolio-api.conf; then
+  echo 'Chưa tạo file vhost trong sites-available.' >&2
+  exit 1
+fi
+if sudo test -e /etc/nginx/sites-enabled/portfolio-api.conf; then
+  echo 'Vhost đã tồn tại; kiểm tra symlink trước khi tiếp tục.' >&2
+  exit 1
+fi
+sudo ln -s ../sites-available/portfolio-api.conf /etc/nginx/sites-enabled/portfolio-api.conf
+sudo nginx -t
+sudo systemctl reload nginx
+curl -i -H 'Host: api.example.com' http://127.0.0.1/health/live
+~~~
+
+proxy_pass có hoặc không có dấu / sẽ thay đổi URI upstream. Đối chiếu route FastAPI trước khi thêm prefix. Nhiều domain có thể cùng dùng IP public; mỗi domain cần vhost/server_name phù hợp.
+
+### 5.3. HTTPS với Certbot
+
+Chỉ xin chứng chỉ sau khi A record đúng, Nginx HTTP hoạt động và inbound TCP 80 tới server đã được kiểm tra từ mạng ngoài. **[SERVER]**:
+
+~~~bash
+sudo snap install --classic certbot
+sudo /snap/bin/certbot --nginx -d api.example.com --redirect
+sudo /snap/bin/certbot certificates
+sudo /snap/bin/certbot renew --dry-run
+~~~
+
+Thay domain mẫu. **[LAPTOP, dùng mạng ngoài]** Kiểm tra HTTPS sau khi cấp chứng chỉ:
+
+~~~bash
+curl -i --connect-timeout 10 https://api.example.com/health/live
+~~~
+
+Nếu không thể mở cổng 80 do CGNAT/ISP, không giả định HTTP-01 sẽ hoạt động; dùng phương án xác thực/hosting phù hợp.
+
+### 5.4. Firewall: mở đúng cổng và giữ đường SSH
+
+Trên máy mới, chỉ bật UFW sau khi SSH qua Tailscale đã được thử từ terminal mới và có console dự phòng. Trên máy đang phục vụ ứng dụng, ghi nhận rule hiện có và chỉ thêm rule đã đánh giá; không đặt lại policy một cách máy móc. **[SERVER]**:
+
+~~~bash
+sudo ufw status verbose
+# Chỉ áp default policy trên máy mới; máy hiện hữu giữ policy đã được rà soát.
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow in on tailscale0 to any port 22 proto tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw status numbered
+sudo ufw enable
+sudo ufw status verbose
+~~~
+
+Thử SSH từ phiên mới ngay sau khi bật. Không xóa toàn bộ firewall rules để xử lý lỗi. Khi 443 timeout, kiểm tra listener, UFW, nftables/iptables, NAT và thử từ mạng ngoài theo thứ tự.
+
+### 5.5. Cập nhật và rollback
+
+Với source thật, cập nhật dưới tài khoản sở hữu repository, không dùng service account. Đặt `RELEASE_REF` thành commit đã duyệt; chỉ tiếp tục khi working tree sạch và đã xử lý backup/migration:
+
+**[SERVER]**:
+
+~~~bash
+APP_DIR='/opt/apps/portfolio-api'
+RELEASE_REF='COMMIT_SHA_DA_DUYET'
+cd "$APP_DIR"
+git status -sb
+git rev-parse HEAD
+git fetch --prune origin
+git switch --detach "$RELEASE_REF"
+.venv/bin/python -m pip install -r requirements.txt
+sudo systemctl restart portfolio-api
+sudo systemctl status portfolio-api --no-pager
+curl -i http://127.0.0.1:8010/health/live
+sudo journalctl -u portfolio-api -n 80 --no-pager
+~~~
+
+Ghi lại commit trước deploy. Sau restart, kiểm tra health local rồi domain HTTPS. Nếu release lỗi, dừng thay đổi và chuyển về commit đã ghi nhận theo quy trình kiểm soát; rollback code không tự hoàn tác database migration. Với source thật, thay lệnh cài dependency và health endpoint theo tài liệu của dự án.
+
+### 5.6. Backup, bảo trì và chẩn đoán
+
+Nếu dùng PostgreSQL, backup ra file hạn chế quyền, chuyển bản sao ra kho riêng tư và thử restore vào database test. Không restore chồng production để thử. **[SERVER]**:
+
+~~~bash
+DB_NAME='portfolio_db'
+if ! sudo test -e /var/backups/portfolio-api; then
+  sudo install -d -o postgres -g postgres -m 700 /var/backups/portfolio-api
+fi
+sudo -u postgres pg_dump -Fc "$DB_NAME" \
+  -f "/var/backups/portfolio-api/db_$(date +%F_%H%M).dump"
+~~~
+
+Kiểm tra nhanh sau deploy/reboot. **[SERVER]**:
+
+~~~bash
+systemctl --failed
+systemctl is-active ssh tailscaled nginx portfolio-api
+sudo ss -lntp
+sudo ufw status verbose
+sudo nginx -t
+sudo journalctl -u portfolio-api -n 80 --no-pager
+sudo /snap/bin/certbot renew --dry-run
+~~~
+
+Chẩn đoán theo tầng: link/NIC → IP/gateway/DNS → Tailscale/SSH → backend/port → Nginx/vhost → firewall/NAT/WAN → TLS/client. Với 502, kiểm tra backend và log; với 443 timeout ngoài mạng, kiểm tra WAN, NAT, UFW/Netfilter và thử từ 4G trước khi sửa ứng dụng.
+
+### 5.7. Checklist nghiệm thu production
+
+- Ubuntu boot ổn định; đúng ổ; mạng LAN, gateway, DNS và console dự phòng hoạt động.
+- SSH key từ laptop ngoài LAN qua Tailscale hoạt động; không public SSH hoặc admin router.
+- DHCP Reservation đúng MAC; đã phân biệt WAN public, CGNAT và double NAT.
+- DNS trỏ đúng; NAT chỉ mở 80/443 khi hạ tầng cho phép; backend không public trực tiếp.
+- systemd active/enabled; health local thành công; Nginx -t hợp lệ và đúng vhost.
+- HTTPS từ client ngoài mạng hợp lệ; Certbot renewal dry-run thành công.
+- Firewall giữ được đường SSH; backup đã được restore thử; có kế hoạch rollback.
+- Luồng E2E từ client ngoài → DNS → WAN/router → Nginx HTTPS → backend → dependency trả kết quả mong đợi.
+
+**Chỉ gọi hệ thống đã nghiệm thu production sau khi phép thử E2E thực tế và phương án vận hành/khôi phục đều đạt.**
+
+### Nguồn kỹ thuật chính thức
+
+- [Ubuntu Server](https://ubuntu.com/server/docs/), [Netplan](https://ubuntu.com/server/docs/about-netplan/), [OpenSSH](https://ubuntu.com/server/docs/how-to/security/openssh-server/).
+- [Tailscale Linux](https://tailscale.com/docs/install/linux), [systemd service](https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html), [Python venv](https://docs.python.org/3/library/venv.html).
+- [Nginx proxy_pass](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass), [Certbot Nginx](https://certbot.eff.org/instructions?ws=nginx&os=snap), [Let's Encrypt HTTP-01](https://letsencrypt.org/docs/challenge-types/), [RFC 6598](https://www.rfc-editor.org/rfc/rfc6598.html).

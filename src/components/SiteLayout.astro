@@ -12,9 +12,17 @@ interface Props {
   route?: string;
   noindex?: boolean;
   redirectTo?: string;
+  showAudioPlayer?: boolean;
 }
 
-const { title, description, route = Astro.url.pathname, noindex = false, redirectTo } = Astro.props;
+const {
+  title,
+  description,
+  route = Astro.url.pathname,
+  noindex = false,
+  redirectTo,
+  showAudioPlayer = true,
+} = Astro.props;
 const origin = 'https://daovanhung-dev.github.io';
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const routeWithoutBase = route.startsWith(basePath + '/') || route === basePath
@@ -59,6 +67,6 @@ const socialImage = new URL(siteAsset('og-portfolio.png'), origin).toString();
       <slot />
     </main>
     <SiteFooter />
-    <AudioPlayer />
+    {showAudioPlayer && <AudioPlayer />}
   </body>
 </html>

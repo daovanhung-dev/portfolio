@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 
 const ubuntuAliases = JSON.parse(readFileSync(new URL('./src/data/ubuntuServerAliases.json', import.meta.url), 'utf8'));
 const ubuntuAliasPaths = new Set(ubuntuAliases.map(({ slug }) => `/ubuntu-server/${slug}/`));
+ubuntuAliasPaths.add('/ubuntu-server/runbook/');
 
 export default defineConfig({
   site: 'https://daovanhung-dev.github.io',

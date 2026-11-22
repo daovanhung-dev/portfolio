@@ -1,197 +1,263 @@
 ---
 import { getCollection, render } from 'astro:content';
 import SiteLayout from '../../components/SiteLayout.astro';
+import aliases from '../../data/ubuntuServerAliases.json';
 import { sitePath } from '../../utils/paths';
 import '../../styles/ubuntu-server.css';
 
+interface LegacyAlias {
+  slug: string;
+  targetHeading: string;
+  notice?: string;
+}
+
 const entries = await getCollection('ubuntuRunbooks');
-if (entries.length !== 1) throw new Error('Expected exactly one Ubuntu Server v3 runbook source.');
+if (entries.length !== 1) throw new Error('Expected exactly one Ubuntu Server web runbook source.');
 const runbook = entries[0];
-const { headings } = await render(runbook);
-const pageTitle = headings.find((heading) => heading.depth === 1)?.text ?? runbook.data.title;
-const runbookPath = sitePath('/ubuntu-server/runbook');
-const target = (prefix: string) => {
-  const heading = headings.find((item) => item.text.startsWith(prefix));
-  if (!heading) throw new Error(`Ubuntu Server report target heading was not found: ${prefix}`);
-  return `${runbookPath}#${heading.slug}`;
-};
-const reviewedOn = runbook.data.verified_on;
-const runbookDescription = runbook.data.description;
+const { Content, headings } = await render(runbook);
+const chapters = headings.filter((heading) => heading.depth === 2 && /^\d{2}\./.test(heading.text));
+const subsections = headings.filter((heading) => heading.depth === 3 && /^\d{1,2}\./.test(heading.text));
+const legacyNotices = Object.fromEntries(
+  (aliases as LegacyAlias[]).filter((alias) => alias.notice).map((alias) => [alias.slug, { notice: alias.notice }]),
+);
 ---
-<SiteLayout title={`${pageTitle} — Lab | Đào Văn Hùng`} description={runbookDescription} route="/ubuntu-server">
-  <div class="ubuntu-page ubuntu-page--report">
+
+<SiteLayout
+  title={runbook.data.title + ' — Runbook production | Đào Văn Hùng'}
+  description={runbook.data.description}
+  route="/ubuntu-server"
+  showAudioPlayer={false}
+>
+  <div class="ubuntu-page ubuntu-page--runbook ubuntu-page--single-runbook" data-legacy-notices={JSON.stringify(legacyNotices)}>
     <nav class="ubuntu-breadcrumb" aria-label="Đường dẫn">
-      <a href={sitePath('/labs')}>Labs</a><span aria-hidden="true">/</span><span aria-current="page">Ubuntu Server</span>
+      <a href={sitePath('/labs')}>Labs</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Ubuntu Server</span>
     </nav>
 
-    <header class="ubuntu-report-hero">
-      <div class="ubuntu-report-hero__copy">
-        <p class="ubuntu-report-kicker">INFRASTRUCTURE / DEVOPS · BÁO CÁO LAB</p>
-        <h1>{pageTitle}</h1>
-        <p class="ubuntu-report-lede">Lộ trình trọng tâm để cài Ubuntu Server, quản trị từ xa, cấu hình router và đưa một API mẫu lên mạng an toàn.</p>
-        <div class="ubuntu-report-actions">
-          <a class="ubuntu-report-primary" href="#part-1">Bắt đầu từ cài đặt</a>
-          <a class="ubuntu-report-secondary" href={runbookPath}>Mở runbook đầy đủ</a>
-        </div>
+    <header class="ubuntu-runbook-hero">
+      <div class="ubuntu-runbook-hero__copy">
+        <p class="eyebrow">INFRASTRUCTURE / DEVOPS · RUNBOOK PRODUCTION V{runbook.data.version}</p>
+        <h1 class="ubuntu-runbook-title">{runbook.data.title}</h1>
+        <p>{runbook.data.description}</p>
+        <p>Biên tập từ tài liệu v3 · Rà soát nội dung: {runbook.data.verified_on}</p>
       </div>
-      <dl class="ubuntu-report-meta">
-        <div><dt>Loại hồ sơ</dt><dd>Learning lab</dd></div>
-        <div><dt>Phiên bản nguồn</dt><dd>v{runbook.data.version} · {reviewedOn}</dd></div>
-        <div><dt>Trạng thái</dt><dd>Chưa nghiệm thu trên máy thật</dd></div>
+      <dl class="ubuntu-runbook-meta">
+        <div><dt>Phạm vi</dt><dd>5 phần · Luồng vận hành</dd></div>
+        <div><dt>Trạng thái</dt><dd>Chưa nghiệm thu máy cụ thể</dd></div>
       </dl>
     </header>
 
-    <aside class="ubuntu-report-warning" role="note" aria-label="Cảnh báo trước khi thực hành">
-      <strong>Trước khi bắt đầu</strong>
-      <p>IP, domain, user và đường dẫn trong ví dụ phải thay bằng giá trị đã kiểm tra. Giữ console hoặc đường truy cập dự phòng trước khi đổi mạng hay firewall. Không cài lại OS hoặc ghi đè thư mục đang có dữ liệu.</p>
+    <aside class="ubuntu-runbook-safety" role="note">
+      <strong>Trước khi thay đổi</strong>
+      <p>Thay IP, domain, user và đường dẫn ví dụ bằng giá trị đã kiểm tra. Giữ console/đường truy cập dự phòng trước khi đổi Netplan, SSH hoặc firewall. Không ghi đè ứng dụng hay dữ liệu đang có.</p>
     </aside>
 
-    <nav class="ubuntu-report-toc" aria-label="Năm phần của báo cáo">
-      <a href="#part-1"><span>01</span>Cài hệ điều hành</a>
-      <a href="#part-2"><span>02</span>Tailscale từ xa</a>
-      <a href="#part-3"><span>03</span>Admin router</a>
-      <a href="#part-4"><span>04</span>Môi trường server</a>
-      <a href="#part-5"><span>05</span>Dịch vụ</a>
-    </nav>
+    <div class="ubuntu-legacy-topic-note" id="ubuntu-legacy-topic-note" role="note" aria-live="polite" hidden>
+      <div><strong>Nội dung của URL cũ</strong><p></p></div>
+      <a href="#ubuntu-runbook-content">Mở mục liên quan</a>
+      <button type="button" aria-label="Ẩn thông báo">Ẩn</button>
+    </div>
 
-    <div class="ubuntu-report-content">
-      <section class="ubuntu-report-section" id="part-1" aria-labelledby="part-1-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">01 / NỀN TẢNG</p>
-          <h2 id="part-1-title">Cài đặt hệ điều hành</h2>
-        </div>
-        <div class="ubuntu-report-section__body">
-          <p class="ubuntu-report-section__intro">Cài Ubuntu Server lên đúng ổ hệ thống, tạo tài khoản quản trị thường và xác nhận máy có mạng trước khi chuyển sang cấu hình từ xa.</p>
-          <ol class="ubuntu-report-steps">
-            <li>Khởi động từ USB cài Ubuntu Server; kiểm tra đúng SSD/NVMe trước khi chọn cài mới hoặc xóa đĩa.</li>
-            <li>Ưu tiên Ethernet/DHCP, tạo user thường có quyền <code>sudo</code>, hostname rõ ràng và bật OpenSSH Server.</li>
-            <li>Sau lần khởi động đầu, xác nhận thiết bị, địa chỉ LAN, default route và DNS.</li>
-          </ol>
-          <div class="ubuntu-report-command">
-            <p><span>SERVER</span> Kiểm tra hệ thống và mạng</p>
-            <pre><code>hostnamectl
-lsblk -f
-ip -4 -br addr
-ip -4 route
-getent ahostsv4 github.com</code></pre>
-          </div>
-          <p class="ubuntu-report-check"><strong>Đạt khi:</strong> chọn đúng ổ, có IPv4 LAN, default route và phân giải DNS. Nếu thiếu mạng, dừng và xử lý DHCP/Netplan trước.</p>
-          <a class="ubuntu-report-detail-link" href={target('03. Khởi tạo Ubuntu Server')}>Chi tiết cài đặt và kiểm tra mạng <span aria-hidden="true">→</span></a>
-        </div>
-      </section>
+    <div class="ubuntu-runbook-workspace">
+      <aside class="ubuntu-runbook-sidebar" aria-label="Điều hướng runbook">
+        <details class="ubuntu-runbook-toc" open>
+          <summary><span class="ubuntu-overline">NĂM PHẦN</span><span>{chapters.length} phần</span></summary>
+          <nav aria-label="Các phần trong runbook">
+            <ol>
+              {chapters.map((chapter) => {
+                const chapterNumber = chapter.text.match(/^(\d{2})\./)?.[1] ?? '';
+                const subsectionPrefix = String(Number(chapterNumber)) + '.';
+                const children = subsections.filter((item) => item.text.startsWith(subsectionPrefix));
+                return <li>
+                  <a class="ubuntu-runbook-toc__chapter" href={'#' + chapter.slug}>{chapter.text}</a>
+                  {children.length > 0 && <details class="ubuntu-runbook-toc__subsections">
+                    <summary aria-label={'Mở các mục trong ' + chapter.text}>Các thao tác <span aria-hidden="true">+</span></summary>
+                    <ol>{children.map((item) => <li><a href={'#' + item.slug}>{item.text}</a></li>)}</ol>
+                  </details>}
+                </li>;
+              })}
+            </ol>
+          </nav>
+        </details>
+      </aside>
 
-      <section class="ubuntu-report-section" id="part-2" aria-labelledby="part-2-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">02 / TRUY CẬP RIÊNG</p>
-          <h2 id="part-2-title">Cấu hình Tailscale làm việc từ xa</h2>
-        </div>
-        <div class="ubuntu-report-section__body">
-          <p class="ubuntu-report-section__intro">Tailscale tạo đường quản trị riêng giữa laptop và server. Luồng này không cần mở cổng SSH ra Internet.</p>
-          <ol class="ubuntu-report-steps">
-            <li>Cài Tailscale trên server, đăng nhập vào tailnet của bạn và cài ứng dụng trên laptop.</li>
-            <li>Lấy Tailscale IP của server, rồi thử kết nối từ laptop bằng SSH qua tailnet.</li>
-            <li>Dùng SSH key và ACL/grants tối thiểu; không đưa auth key hoặc thông tin tailnet vào repo.</li>
-          </ol>
-          <div class="ubuntu-report-command">
-            <p><span>SERVER</span> Cài và xác nhận kết nối Tailscale</p>
-            <pre><code>curl -fsSL https://tailscale.com/install.sh | sh
-sudo systemctl enable --now tailscaled
-sudo tailscale up
-tailscale status
-tailscale ip -4</code></pre>
-          </div>
-          <p class="ubuntu-report-check"><strong>Đạt khi:</strong> laptop thấy server trong cùng tailnet và SSH kết nối được từ mạng khác. Không bật WAN port forwarding cho SSH.</p>
-          <a class="ubuntu-report-detail-link" href={target('04. Cấu hình OpenSSH và Tailscale')}>Chi tiết SSH key và kiểm tra tailnet <span aria-hidden="true">→</span></a>
-        </div>
-      </section>
-
-      <section class="ubuntu-report-section" id="part-3" aria-labelledby="part-3-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">03 / ROUTER</p>
-          <h2 id="part-3-title">Cấu hình admin router</h2>
-        </div>
-        <div class="ubuntu-report-section__body">
-          <p class="ubuntu-report-section__intro">Truy cập trang quản trị router từ laptop qua đường hầm SSH, sau đó cấu hình địa chỉ LAN và đường public nếu hạ tầng cho phép.</p>
-          <ol class="ubuntu-report-steps">
-            <li>Lấy gateway thật từ server; không đoán IP router. Dùng SSH local forwarding để mở trang admin trong Chrome trên laptop.</li>
-            <li>Trong router, đặt DHCP Reservation theo MAC của NIC đang dùng và một IPv4 LAN còn trống.</li>
-            <li>So sánh WAN IPv4 trên router với IP egress. Chỉ cấu hình NAT TCP 80/443 khi có public IPv4 trực tiếp; nếu CGNAT, dừng nhánh port forwarding và chọn phương án public khác.</li>
-            <li>Đặt DNS A record tại nhà cung cấp authoritative DNS. DNS chỉ ánh xạ tên miền tới IP, không thay thế reverse proxy.</li>
-          </ol>
-          <div class="ubuntu-report-command">
-            <p><span>LAPTOP</span> Ví dụ tunnel tới trang admin HTTP <small>Thay gateway bằng IP đã xác định từ server.</small></p>
-            <pre><code>ssh -N -o ExitOnForwardFailure=yes \
-  -L 127.0.0.1:19090:192.168.1.1:80 \
-  "$LINUX_USER@$TS_IP"</code></pre>
-            <p class="ubuntu-report-command-hint">Giữ terminal mở; trên Chrome laptop truy cập <code>http://127.0.0.1:19090</code>.</p>
-          </div>
-          <p class="ubuntu-report-check"><strong>Đạt khi:</strong> mở được đúng router qua tunnel; IP LAN server được giữ ổn định; WAN/NAT/DNS đã được kiểm tra từ mạng ngoài. Không bật WAN Remote Management.</p>
-          <div class="ubuntu-report-detail-links">
-            <a class="ubuntu-report-detail-link" href={target('05. Mở trang quản trị router')}>Trang admin từ xa <span aria-hidden="true">→</span></a>
-            <a class="ubuntu-report-detail-link" href={target('06. DHCP Reservation')}>WAN, CGNAT, NAT và DNS <span aria-hidden="true">→</span></a>
+      <div class="ubuntu-runbook-main">
+        <div class="ubuntu-runbook-searchbox">
+          <label class="ubuntu-runbook-search">
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="19" height="19"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+            <input type="search" id="ubuntu-runbook-search" autocomplete="off" placeholder="Tìm lệnh, Netplan, CGNAT, Nginx…" aria-label="Tìm trong runbook Ubuntu Server" aria-controls="ubuntu-runbook-search-results" />
+            <kbd>/</kbd>
+          </label>
+          <span class="ubuntu-runbook-search-status" id="ubuntu-runbook-search-status" aria-live="polite"></span>
+          <div class="ubuntu-runbook-search-results" id="ubuntu-runbook-search-results" hidden>
+            <p class="ubuntu-overline">KẾT QUẢ TRONG RUNBOOK</p>
+            <ol></ol>
           </div>
         </div>
-      </section>
-
-      <section class="ubuntu-report-section" id="part-4" aria-labelledby="part-4-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">04 / ỨNG DỤNG</p>
-          <h2 id="part-4-title">Cấu hình môi trường server</h2>
-        </div>
-        <div class="ubuntu-report-section__body">
-          <p class="ubuntu-report-section__intro">Chuẩn bị runtime và source cho API. Mọi đường dẫn bên dưới là ví dụ của lab; kiểm tra tồn tại trước khi tạo để tránh ghi đè ứng dụng khác.</p>
-          <ol class="ubuntu-report-steps">
-            <li>Cài Python, venv và Git; kiểm tra cổng và thư mục trước khi tạo demo hoặc clone source.</li>
-            <li>Tạo virtual environment theo dependency/lockfile của ứng dụng thực tế.</li>
-            <li>Lưu cấu hình riêng ở <code>/etc/portfolio-api/backend.env</code>, giới hạn quyền đọc và không commit secret.</li>
-          </ol>
-          <div class="ubuntu-report-command">
-            <p><span>SERVER</span> Vị trí cấu hình mẫu</p>
-            <pre><code>/opt/apps/portfolio-api/       # Source và virtualenv
-/etc/portfolio-api/backend.env # Cấu hình riêng, ngoài Git
-/etc/systemd/system/            # Unit của systemd
-/etc/nginx/sites-available/     # Virtual host Nginx</code></pre>
-          </div>
-          <p class="ubuntu-report-check"><strong>Đạt khi:</strong> ứng dụng dùng đúng dependency; file env nằm ngoài repo, quyền hạn chế và không chứa thông tin thật trong tài liệu công khai.</p>
-          <a class="ubuntu-report-detail-link" href={target('08. Chuẩn bị môi trường')}>Chi tiết source, venv và biến môi trường <span aria-hidden="true">→</span></a>
-        </div>
-      </section>
-
-      <section class="ubuntu-report-section" id="part-5" aria-labelledby="part-5-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">05 / VẬN HÀNH</p>
-          <h2 id="part-5-title">Cài đặt các dịch vụ</h2>
-        </div>
-        <div class="ubuntu-report-section__body">
-          <p class="ubuntu-report-section__intro">Đưa API lên bằng systemd, đặt Nginx làm reverse proxy và bật HTTPS sau khi HTTP, DNS và NAT đã hoạt động.</p>
-          <ol class="ubuntu-report-steps">
-            <li>Tạo unit systemd; để FastAPI chỉ lắng nghe trên <code>127.0.0.1:8010</code>, bật tự khởi động và xem log qua journalctl.</li>
-            <li>Cấu hình Nginx chuyển request domain tới backend nội bộ; kiểm tra cấu hình trước khi reload.</li>
-            <li>Cài Certbot và xin chứng chỉ cho domain thật sau khi DNS cùng cổng WAN 80 sẵn sàng; thử gia hạn.</li>
-            <li>Chỉ cài PostgreSQL nếu ứng dụng cần; không public cổng backend, database hoặc Ollama.</li>
-          </ol>
-          <div class="ubuntu-report-command">
-            <p><span>SERVER</span> Kiểm tra backend và Nginx</p>
-            <pre><code>sudo systemctl status portfolio-api --no-pager
-curl -i http://127.0.0.1:8010/health/live
-sudo nginx -t
-sudo /snap/bin/certbot renew --dry-run</code></pre>
-          </div>
-          <p class="ubuntu-report-check"><strong>Đạt khi:</strong> health check local thành công, Nginx config hợp lệ, HTTPS và renewal được kiểm tra, sau đó xác nhận request từ một mạng ngoài.</p>
-          <div class="ubuntu-report-detail-links">
-            <a class="ubuntu-report-detail-link" href={target('09. Chạy backend như một dịch vụ systemd')}>systemd và backend <span aria-hidden="true">→</span></a>
-            <a class="ubuntu-report-detail-link" href={target('10. Cấu hình Nginx')}>Nginx, TLS và dịch vụ tùy chọn <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </section>
-
-      <section class="ubuntu-report-final" aria-labelledby="report-final-title">
-        <p class="ubuntu-report-index">KẾT QUẢ MONG ĐỢI</p>
-        <h2 id="report-final-title">Kiểm chứng từ client bên ngoài</h2>
-        <p>Hoàn tất lab khi request đi được từ client qua DNS, router, Nginx HTTPS, backend và các dependency cần thiết. Kiểm tra từ mạng ngoài; kết quả localhost không chứng minh dịch vụ public đã hoạt động.</p>
-        <p class="ubuntu-report-limitation">Đây là learning lab đã rà soát tài liệu. Trang không xác nhận server cụ thể đang chạy, có người dùng hay sẵn sàng production.</p>
-        <a class="ubuntu-report-primary" href={runbookPath}>Đọc runbook v3 đầy đủ <span aria-hidden="true">→</span></a>
-      </section>
+        <article class="ubuntu-runbook-body" id="ubuntu-runbook-content">
+          <Content />
+        </article>
+      </div>
     </div>
   </div>
 </SiteLayout>
+
+<script>
+  function initUbuntuRunbook() {
+    const root = document.querySelector<HTMLElement>('.ubuntu-page--single-runbook');
+    if (!root || root.dataset.initialized === 'true') return;
+    root.dataset.initialized = 'true';
+
+    const article = root.querySelector<HTMLElement>('#ubuntu-runbook-content');
+    const search = root.querySelector<HTMLInputElement>('#ubuntu-runbook-search');
+    const resultBox = root.querySelector<HTMLElement>('#ubuntu-runbook-search-results');
+    const resultList = resultBox?.querySelector<HTMLOListElement>('ol');
+    const status = root.querySelector<HTMLElement>('#ubuntu-runbook-search-status');
+    if (!article) return;
+
+    const legacyNote = root.querySelector<HTMLElement>('#ubuntu-legacy-topic-note');
+    const legacyKey = new URLSearchParams(window.location.search).get('legacy');
+    const legacyNotices = JSON.parse(root.dataset.legacyNotices || '{}') as Record<string, { notice: string }>;
+    const legacyContent = legacyKey ? legacyNotices[legacyKey] : undefined;
+    if (legacyNote && legacyKey) {
+      const message = legacyNote.querySelector('p');
+      const link = legacyNote.querySelector<HTMLAnchorElement>('a');
+      const dismiss = legacyNote.querySelector<HTMLButtonElement>('button');
+      if (legacyContent && message) message.textContent = legacyContent.notice;
+      else if (message) message.textContent = 'Liên kết này đã được chuyển tới phần gần nhất trong runbook v3.';
+      if (link) link.href = window.location.hash || '#ubuntu-runbook-content';
+      legacyNote.hidden = false;
+      dismiss?.addEventListener('click', () => { legacyNote.hidden = true; });
+    }
+
+    const revealHash = () => {
+      if (!root.isConnected) return;
+      const hash = window.location.hash.slice(1);
+      if (!hash) return;
+      let target: HTMLElement | null = null;
+      try { target = document.getElementById(decodeURIComponent(hash)); } catch { target = null; }
+      if (target && article.contains(target)) window.requestAnimationFrame(() => target?.scrollIntoView({ block: 'start' }));
+    };
+    revealHash();
+
+    const normalize = (value: string) => value.toLocaleLowerCase('vi').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+    const articleHeadings = [...article.querySelectorAll<HTMLHeadingElement>('h2, h3, h4')];
+    const searchIndex = articleHeadings.map((heading) => {
+      const level = Number(heading.tagName.slice(1));
+      const parts = [heading.textContent || ''];
+      let sibling = heading.nextElementSibling;
+      while (sibling) {
+        const siblingLevel = /^H([1-6])$/.exec(sibling.tagName);
+        if (siblingLevel && Number(siblingLevel[1]) <= level) break;
+        parts.push(sibling.textContent || '');
+        sibling = sibling.nextElementSibling;
+      }
+      return { heading, normalized: normalize(parts.join(' ')) };
+    });
+
+    const renderSearch = () => {
+      if (!search || !resultBox || !resultList || !status) return;
+      const term = normalize(search.value.trim());
+      resultList.replaceChildren();
+      if (!term) {
+        resultBox.hidden = true;
+        status.textContent = '';
+        return;
+      }
+      const matches = searchIndex.filter((item) => item.normalized.includes(term));
+      for (const match of matches.slice(0, 25)) {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = '#' + match.heading.id;
+        link.textContent = match.heading.textContent || 'Mục trong runbook';
+        li.append(link);
+        resultList.append(li);
+      }
+      resultBox.hidden = false;
+      status.textContent = matches.length ? matches.length + ' mục phù hợp' : 'Không tìm thấy nội dung phù hợp';
+      if (!matches.length) {
+        const li = document.createElement('li');
+        li.textContent = 'Thử từ khóa như SSH, CGNAT, systemd hoặc HTTPS.';
+        resultList.append(li);
+      }
+    };
+
+    search?.addEventListener('input', renderSearch);
+    resultList?.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a') && search) {
+        search.value = '';
+        renderSearch();
+      }
+    });
+
+    if (document.documentElement.dataset.ubuntuRunbookShortcuts !== 'true') {
+      document.documentElement.dataset.ubuntuRunbookShortcuts = 'true';
+      document.addEventListener('keydown', (event) => {
+        const activeRoot = document.querySelector<HTMLElement>('.ubuntu-page--single-runbook');
+        const activeSearch = activeRoot?.querySelector<HTMLInputElement>('#ubuntu-runbook-search');
+        if (!activeRoot || !activeSearch || event.altKey) return;
+        const target = event.target as HTMLElement | null;
+        const editing = !!target?.closest('input,textarea,[contenteditable]');
+        if (((event.key === '/' && !editing) || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k'))) {
+          event.preventDefault();
+          activeSearch.focus();
+        }
+        if (event.key === 'Escape' && document.activeElement === activeSearch) {
+          activeSearch.blur();
+          activeSearch.value = '';
+          activeRoot.querySelector<HTMLElement>('#ubuntu-runbook-search-results')?.setAttribute('hidden', '');
+          activeRoot.querySelector<HTMLElement>('#ubuntu-runbook-search-status')?.replaceChildren();
+        }
+      });
+    }
+
+    article.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((checkbox) => {
+      checkbox.disabled = false;
+      const listItem = checkbox.closest('li');
+      if (listItem && !checkbox.hasAttribute('aria-label')) checkbox.setAttribute('aria-label', 'Đánh dấu: ' + (listItem.textContent || '').trim().slice(0, 180));
+    });
+
+    article.querySelectorAll<HTMLElement>('blockquote').forEach((quote) => {
+      if (/\[CHANGE\]|DỪNG|RỦI RO|KHÔNG ĐƯỢC|NGUY HIỂM/i.test(quote.textContent || '')) quote.classList.add('ubuntu-runbook-warning');
+    });
+
+    article.querySelectorAll<HTMLElement>('pre').forEach((pre) => {
+      if (pre.dataset.enhanced === 'true' || pre.closest('.ubuntu-runbook-diagram')) return;
+      pre.dataset.enhanced = 'true';
+      const code = pre.querySelector('code');
+      if (!code) return;
+      const language = pre.dataset.language || code.className.match(/language-([\w-]+)/)?.[1] || 'text';
+      const contextText = (pre.textContent || '') + ' ' + (pre.previousElementSibling?.textContent || '');
+      const context = contextText.match(/\[(SERVER|LAPTOP|ROUTER|DNS)(?:,|\])/i)?.[1]?.toUpperCase();
+      const wrapper = document.createElement('div');
+      wrapper.className = 'ubuntu-runbook-code';
+      const toolbar = document.createElement('div');
+      toolbar.className = 'ubuntu-runbook-code__bar';
+      const label = document.createElement('span');
+      label.textContent = (context ? context + ' · ' : '') + language.toUpperCase();
+      const copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'ubuntu-runbook-copy';
+      copy.textContent = 'Sao chép';
+      copy.setAttribute('aria-label', 'Sao chép khối mã ' + (context ? context + ' ' : '') + language);
+      copy.addEventListener('click', async () => {
+        const originalText = copy.textContent;
+        try {
+          if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+          await navigator.clipboard.writeText(code.textContent || '');
+          copy.textContent = 'Đã sao chép';
+        } catch {
+          copy.textContent = 'Không sao chép được';
+        }
+        window.setTimeout(() => { copy.textContent = originalText || 'Sao chép'; }, 1800);
+      });
+      toolbar.append(label, copy);
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.append(toolbar, pre);
+    });
+  }
+
+  initUbuntuRunbook();
+  document.addEventListener('astro:page-load', initUbuntuRunbook);
+</script>

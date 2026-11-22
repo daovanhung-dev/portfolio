@@ -16,7 +16,6 @@ const ROUTES = [
   { path: 'skills/', heading: 'Năng lực' },
   { path: 'labs/', heading: 'Labs' },
   { path: 'ubuntu-server/', heading: 'Ubuntu Server — Từ máy vật lý đến Production' },
-  { path: 'ubuntu-server/runbook/', heading: 'Hướng dẫn kỹ thuật đầy đủ' },
   { path: 'about/', heading: 'Đào Văn Hùng' },
   { path: 'contact/', heading: 'Trao đổi về kỹ thuật và công việc' },
   { path: 'case-studies/', heading: 'Case study' },
@@ -74,64 +73,70 @@ test('Labs links to the Ubuntu Server handbook', async ({ page }) => {
   await expect(page.getByRole('link', { name: /Quản trị Ubuntu Server/ })).toHaveAttribute('href', APP + 'ubuntu-server/');
 });
 
-test('all previous Ubuntu Server URLs land on their matching v3 section', async ({ page }) => {
-  await page.goto(APP + 'ubuntu-server/runbook/');
+
+test('legacy Ubuntu Server paths land on their matching section of the one-page runbook', async ({ page }) => {
+  await page.goto(APP + 'ubuntu-server/');
   const runbookIds = new Set(await page.locator('[id]').evaluateAll((elements) => elements.map((element) => element.id)));
   for (const alias of ubuntuAliases) {
     const response = await page.request.get(APP + 'ubuntu-server/' + alias.slug + '/');
     expect(response?.status(), alias.slug).toBe(200);
     const html = await response.text();
     const refresh = html.match(/http-equiv="refresh" content="0; url=([^"]+)"/i)?.[1];
-    expect(refresh, alias.slug).toContain(`/portfolio/ubuntu-server/runbook/?legacy=${alias.slug}#`);
+    expect(refresh, alias.slug).toContain('/portfolio/ubuntu-server/?legacy=' + alias.slug + '#');
     const targetId = decodeURIComponent(refresh?.split('#')[1] ?? '');
     expect(runbookIds.has(targetId), alias.slug).toBe(true);
   }
 
   await page.goto(APP + 'ubuntu-server/setup-netplan/');
-  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/runbook\/\?legacy=setup-netplan#/);
-  await expect(page.locator('main h1').first()).toContainText('Hướng dẫn kỹ thuật đầy đủ');
-  await expect(page.locator('#ubuntu-runbook-content')).toContainText('3.3. Cấu hình DHCP bằng Netplan');
+  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=setup-netplan#/);
+  await expect(page.locator('#ubuntu-runbook-content')).toContainText('1.3. Kiểm tra mạng và Netplan');
   await page.reload();
-  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/runbook\/\?legacy=setup-netplan#/);
-  await expect(page.locator('#ubuntu-runbook-content')).toContainText('3.3. Cấu hình DHCP bằng Netplan');
+  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=setup-netplan#/);
+  await expect(page.locator('#ubuntu-runbook-content')).toContainText('1.3. Kiểm tra mạng và Netplan');
 
   const dockerAlias = ubuntuAliases.find((alias) => alias.slug === 'deploy-docker-compose');
   await page.goto(APP + 'ubuntu-server/deploy-docker-compose/');
-  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/runbook\/\?legacy=deploy-docker-compose#/);
+  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/\?legacy=deploy-docker-compose#/);
   await expect(page.locator('#ubuntu-legacy-topic-note')).toContainText(dockerAlias?.notice ?? '');
   await expect(page.locator('#ubuntu-legacy-topic-note')).toBeVisible();
-  if (dockerAlias?.notice) await expect(page.locator('#ubuntu-legacy-topic-note')).toContainText(dockerAlias.notice);
 });
 
-test('Ubuntu Server report presents the five main sections and points to the full runbook', async ({ page }) => {
+test('the previous runbook URL redirects to the canonical one-page guide', async ({ page }) => {
+  await page.goto(APP + 'ubuntu-server/runbook/');
+  await expect(page).toHaveURL(/\/portfolio\/ubuntu-server\/$/);
+  await expect(page.locator('main h1').first()).toContainText('Ubuntu Server — Từ máy vật lý đến Production');
+});
+
+test('Ubuntu Server page presents the five operational sections in one document', async ({ page }) => {
   await page.goto(APP + 'ubuntu-server/');
-  const sections = page.locator('.ubuntu-report-content > .ubuntu-report-section');
+  const sections = page.locator('#ubuntu-runbook-content > h2');
   await expect(sections).toHaveCount(5);
   await expect(sections.nth(0)).toContainText('Cài đặt hệ điều hành');
   await expect(sections.nth(1)).toContainText('Cấu hình Tailscale làm việc từ xa');
   await expect(sections.nth(2)).toContainText('Cấu hình admin router');
   await expect(sections.nth(3)).toContainText('Cấu hình môi trường server');
-  await expect(sections.nth(4)).toContainText('Cài đặt các dịch vụ');
-  await expect(page.getByRole('link', { name: 'Mở runbook đầy đủ' })).toHaveAttribute('href', APP + 'ubuntu-server/runbook/');
-  const detailTargets = await page.locator('.ubuntu-report-detail-link').evaluateAll((links) => links.map((link) => new URL((link as HTMLAnchorElement).href).hash.slice(1)));
-  const runbookHtml = await (await page.request.get(APP + 'ubuntu-server/runbook/')).text();
-  for (const target of detailTargets) expect(runbookHtml, decodeURIComponent(target)).toContain(`id="${decodeURIComponent(target)}"`);
+  await expect(sections.nth(4)).toContainText('Cài đặt các dịch vụ và vận hành');
+  await expect(page.getByRole('heading', { name: 'Checklist nghiệm thu production' })).toBeAttached();
+
+  const chapterLinks = await page.locator('.ubuntu-runbook-toc__chapter').evaluateAll((links) => links.map((link) => decodeURIComponent(new URL((link as HTMLAnchorElement).href).hash.slice(1))));
+  const pageIds = new Set(await page.locator('[id]').evaluateAll((elements) => elements.map((element) => element.id)));
+  for (const target of chapterLinks) expect(pageIds.has(target), target).toBe(true);
 });
 
-test('Ubuntu Server v3 runbook search and chapter navigation work', async ({ page }) => {
-  await page.goto(APP + 'ubuntu-server/runbook/');
-  const search = page.getByRole('searchbox', { name: 'Tìm trong lab Ubuntu Server' });
-  await expect(page.locator('.ubuntu-runbook-toc nav > ol > li')).toHaveCount(21);
-  await expect(page.getByRole('heading', { name: 'Cách đọc tài liệu và độ tin cậy', exact: true })).toBeVisible();
+test('Ubuntu Server search and five-part navigation work', async ({ page }) => {
+  await page.goto(APP + 'ubuntu-server/');
+  await expect(page.locator('.ubuntu-runbook-toc nav > ol > li')).toHaveCount(5);
+  await expect(page.getByRole('heading', { name: '3.3. Đối chiếu WAN, CGNAT và public IP' })).toBeAttached();
 
+  const search = page.getByRole('searchbox', { name: 'Tìm trong runbook Ubuntu Server' });
   await page.keyboard.press('/');
   await expect(search).toBeFocused();
-  await search.fill('netplan try');
+  await search.fill('CGNAT');
   await expect(page.locator('#ubuntu-runbook-search-results')).toBeVisible();
-  const result = page.locator('#ubuntu-runbook-search-results a').filter({ hasText: /Netplan/i }).first();
+  const result = page.locator('#ubuntu-runbook-search-results a').filter({ hasText: /CGNAT/i }).first();
   await expect(result).toBeVisible();
   await result.click();
-  await expect(page).toHaveURL(/#.*netplan/i);
+  await expect(page).toHaveURL(/#.*33-/);
 
   await page.keyboard.press('Control+k');
   await expect(search).toBeFocused();
@@ -141,11 +146,12 @@ test('Ubuntu Server v3 runbook search and chapter navigation work', async ({ pag
   await expect(page.locator('#ubuntu-runbook-search-results')).toBeHidden();
 });
 
-test('Ubuntu Server lab copies exact code and checklist state resets on reload', async ({ page, context }) => {
+test('Ubuntu Server page copies commands exactly and does not show the floating audio player', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: 'http://127.0.0.1:4173' });
-  await page.goto(APP + 'ubuntu-server/runbook/');
-  await expect(page.locator('.ubuntu-runbook-warning').first()).toBeVisible();
+  await page.goto(APP + 'ubuntu-server/');
+  await expect(page.locator('.ubuntu-runbook-safety')).toBeVisible();
   await expect(page.locator('.ubuntu-runbook-code')).not.toHaveCount(0);
+  await expect(page.locator('[data-ambient-player]')).toHaveCount(0);
 
   const firstBlock = page.locator('.ubuntu-runbook-code').first();
   const firstCommand = await firstBlock.locator('code').innerText();
@@ -153,13 +159,6 @@ test('Ubuntu Server lab copies exact code and checklist state resets on reload',
   await copy.click();
   await expect(copy).toContainText('Đã sao chép');
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(firstCommand);
-
-  const checklist = page.locator('.ubuntu-runbook-body input[type="checkbox"]').first();
-  await expect(checklist).toBeEnabled();
-  await checklist.check();
-  await expect(checklist).toBeChecked();
-  await page.reload();
-  await expect(page.locator('.ubuntu-runbook-body input[type="checkbox"]').first()).not.toBeChecked();
 });
 
 test('EduAI project uses current branding and links to its pinned source', async ({ page }) => {
@@ -990,7 +989,7 @@ test('responsive routes have no horizontal overflow at required widths', async (
   test.setTimeout(90_000);
   const paths = [
     '', 'projects/', 'projects/nanobio-local-cloud/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'skills/',
-    'labs/', 'ubuntu-server/', 'ubuntu-server/runbook/', 'ubuntu-server/setup-netplan/', 'ubuntu-server/operate-port-443-playbook/',
+    'labs/', 'ubuntu-server/', 'ubuntu-server/setup-netplan/', 'ubuntu-server/operate-port-443-playbook/',
     'about/', 'contact/', 'case-studies/nanobio-local-cloud-ai/', 'case-studies/study2work-contracts-runtime/',
   ];
   const widths = [320, 360, 390, 768, 1024, 1280, 1440];
@@ -1037,7 +1036,7 @@ test('responsive routes have no horizontal overflow at required widths', async (
 test('representative routes pass automated accessibility checks', async ({ page }) => {
   test.setTimeout(120_000);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const path of ['', 'projects/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'about/', 'ubuntu-server/', 'ubuntu-server/runbook/', 'case-studies/nanobio-local-cloud-ai/', 'case-studies/study2work-contracts-runtime/', 'contact/']) {
+  for (const path of ['', 'projects/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'about/', 'ubuntu-server/', 'case-studies/nanobio-local-cloud-ai/', 'case-studies/study2work-contracts-runtime/', 'contact/']) {
     await page.goto(APP + path);
     for (const theme of ['dark', 'light']) {
       await page.evaluate((value) => { document.documentElement.dataset.theme = value; }, theme);

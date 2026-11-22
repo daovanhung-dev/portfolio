@@ -192,7 +192,7 @@ const contact = defineCollection({
 
 const ubuntuRunbooks = defineCollection({
   loader: glob({
-    pattern: 'ubuntu-server-from-zero-to-production-v3.md',
+    pattern: 'ubuntu-server-production-web-v3.mdx',
     base: './docs/source',
   }),
   schema: z.object({

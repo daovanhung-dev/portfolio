@@ -86,13 +86,20 @@ for (const file of htmlFiles) {
   const relativePage = relative(dist, file).split(sep).join('/');
   const is404 = relativePage === '404.html';
   const isUbuntuAlias = ubuntuAliasPages.has(relativePage);
-  if (is404 || isUbuntuAlias) {
+  const isUbuntuRunbookRedirect = relativePage === 'ubuntu-server/runbook/index.html';
+  if (is404 || isUbuntuAlias || isUbuntuRunbookRedirect) {
     if (!/name="robots" content="noindex, nofollow"/.test(html)) errors.push(relativePage + ' must be noindex');
     if (/rel="canonical"/.test(html)) errors.push(relativePage + ' must not advertise itself as a canonical page');
     if (isUbuntuAlias) {
       const refresh = html.match(/http-equiv="refresh" content="0; url=([^"]+)"/i)?.[1];
-      if (!refresh?.startsWith('/portfolio/ubuntu-server/runbook/?legacy=')) {
-        errors.push(relativePage + ' must redirect to the base-aware Ubuntu Server runbook');
+      if (!refresh?.startsWith('/portfolio/ubuntu-server/?legacy=')) {
+        errors.push(relativePage + ' must redirect to the base-aware one-page Ubuntu Server runbook');
+      }
+    }
+    if (isUbuntuRunbookRedirect) {
+      const refresh = html.match(/http-equiv="refresh" content="0; url=([^"]+)"/i)?.[1];
+      if (refresh !== '/portfolio/ubuntu-server/') {
+        errors.push(relativePage + ' must redirect to the canonical Ubuntu Server runbook');
       }
     }
   } else {
@@ -121,7 +128,7 @@ for (const file of htmlFiles) {
   if (/hung-quynh|our-story-private|github\.com\/[^" ]*(story|birthday)/i.test(html)) {
     errors.push(relativePage + ' contains restricted source details');
   }
-  const isUbuntuContentPage = relativePage === 'ubuntu-server/index.html' || relativePage === 'ubuntu-server/runbook/index.html';
+  const isUbuntuContentPage = relativePage === 'ubuntu-server/index.html';
   if (!isUbuntuContentPage && /tự xác nhận|tự thuật|MISSING_SOURCE|unverified|chưa được cung cấp|mức attribution/i.test(html)) {
     errors.push(relativePage + ' contains internal attribution or missing-source language');
   }
@@ -143,7 +150,7 @@ for (const alias of ubuntuAliases) {
     errors.push('Redirect-only Ubuntu Server alias must stay out of the sitemap: ' + alias.slug);
   }
 }
-if (!childSitemap.includes(origin + base + 'ubuntu-server/runbook/')) errors.push('Full Ubuntu Server runbook is missing from the sitemap');
+if (childSitemap.includes(origin + base + 'ubuntu-server/runbook/')) errors.push('Redirect-only Ubuntu Server runbook route must stay out of the sitemap');
 if (!robots.includes('Sitemap: ' + origin + base + 'sitemap-index.xml')) errors.push('robots.txt sitemap URL is incorrect');
 if (ogImage.length < 24 || String.fromCharCode(...ogImage.subarray(1, 4)) !== 'PNG') {
   errors.push('Open Graph PNG is missing or invalid');
