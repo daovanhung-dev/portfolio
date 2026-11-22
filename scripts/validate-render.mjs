@@ -125,7 +125,11 @@ for (const file of htmlFiles) {
     errors.push(relativePage + ' contains internal attribution or missing-source language');
   }
   if (isUbuntuRunbook && /\bFPT\b|nanobio|192\.168\.(?:86|2)\.|\b(?:3003|18080)\b/i.test(html)) {
-    errors.push(relativePage + ' contains historical infrastructure details that must be generalized');
+    const safeProjectLink = '<a class="ubuntu-report-project__link" href="/portfolio/projects/nanobio-local-cloud/">Xem dự án NanoBioAI <span aria-hidden="true">→</span></a>';
+    const sanitizedHtml = html.replace(safeProjectLink, '');
+    if (sanitizedHtml === html || /\bFPT\b|nanobio|192\.168\.(?:86|2)\.|\b(?:3003|18080)\b/i.test(sanitizedHtml)) {
+      errors.push(relativePage + ' contains historical infrastructure details that must be generalized');
+    }
   }
 }
 

@@ -15,7 +15,7 @@ const ROUTES = [
   { path: 'experience/maiatech/', heading: 'Backend Developer Intern' },
   { path: 'skills/', heading: 'Năng lực' },
   { path: 'labs/', heading: 'Labs' },
-  { path: 'ubuntu-server/', heading: 'Ubuntu Server — Từ máy vật lý đến Production' },
+  { path: 'ubuntu-server/', heading: 'Ubuntu Server — Bảo mật và vận hành hạ tầng' },
   { path: 'about/', heading: 'Đào Văn Hùng' },
   { path: 'contact/', heading: 'Trao đổi về kỹ thuật và công việc' },
   { path: 'case-studies/', heading: 'Case study' },
@@ -68,9 +68,9 @@ test('static pages and deep routes open directly and survive refresh under the P
   }
 });
 
-test('Labs links to the Ubuntu Server handbook', async ({ page }) => {
+test('Labs links to the Ubuntu Server infrastructure security lab', async ({ page }) => {
   await page.goto(APP + 'labs/');
-  await expect(page.getByRole('link', { name: /Quản trị Ubuntu Server/ })).toHaveAttribute('href', APP + 'ubuntu-server/');
+  await expect(page.getByRole('link', { name: /Infrastructure Security Lab: Ubuntu Server/ })).toHaveAttribute('href', APP + 'ubuntu-server/');
 });
 
 test('all previous Ubuntu Server URLs land on their matching v3 section', async ({ page }) => {
@@ -108,9 +108,15 @@ test('Ubuntu Server v3 lab search and chapter navigation work', async ({ page })
   await expect(page.locator('.ubuntu-runbook-toc nav > ol > li')).toHaveCount(21);
   await expect(page.locator('.ubuntu-report-phases > li')).toHaveCount(8);
   await expect(page.locator('#full-runbook')).not.toHaveAttribute('open', '');
-  await expect(page.getByRole('heading', { name: 'Bài lab giải quyết bài toán gì?' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Bài lab này thể hiện điều gì?' })).toBeVisible();
+  await expect(page.getByText('INFRASTRUCTURE SECURITY · UBUNTU SERVER LEARNING LAB')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Các quyết định bảo mật trong lab' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Backend chạy nhưng website không truy cập được' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Xem dự án NanoBioAI' })).toHaveAttribute('href', APP + 'projects/nanobio-local-cloud/');
+  await expect(page.locator('#lab-checkpoints')).not.toHaveAttribute('open', '');
+  await expect(page.locator('[data-ambient-player]')).toHaveCSS('position', 'static');
   await expect(page.getByRole('heading', { name: 'Cách đọc tài liệu và độ tin cậy', exact: true })).toBeHidden();
-  await expect(page.locator('.ubuntu-report')).not.toContainText('Dừng: sửa NIC/DHCP/Netplan');
+  await expect(page.locator('.ubuntu-report-summary')).not.toContainText('Dừng: sửa NIC/DHCP/Netplan');
 
   await page.keyboard.press('/');
   await expect(search).toBeFocused();

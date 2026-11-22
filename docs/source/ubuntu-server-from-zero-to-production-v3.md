@@ -1,9 +1,9 @@
 ---
-title: "Ubuntu Server: Từ máy vật lý đến Production"
-description: "Runbook thực hành: Tailscale, quản trị router từ xa, DHCP Reservation, Port Forwarding, Git, systemd, Nginx, HTTPS và vận hành an toàn."
+title: "Ubuntu Server — Bảo mật và vận hành hạ tầng"
+description: "Learning lab về bảo mật và vận hành Ubuntu Server: SSH/Tailscale, ranh giới mạng, secrets, firewall, Nginx/TLS, kiểm chứng thay đổi và rollback."
 date: "2026-11-21"
-tags: [ubuntu-server, linux, tailscale, ssh, networking, nginx, certbot, deployment, devops]
-category: "Infrastructure / DevOps"
+tags: [ubuntu-server, linux, infrastructure-security, security, tailscale, ssh, networking, firewall, nginx, tls, operations]
+category: "Infrastructure Security / Linux Operations"
 status: "Reviewed technical runbook"
 version: "3.0"
 verified_on: "2026-11-21"
@@ -11,11 +11,11 @@ content_type: "step-by-step runbook + CLI reference + Codex content contract"
 source_policy: "official-first"
 ---
 
-# Ubuntu Server — Từ máy vật lý đến Production
+# Ubuntu Server — Bảo mật và vận hành hạ tầng
 
-> **Infrastructure Engineering · Hướng dẫn thực hành · Phiên bản 3.0 — 21/11/2026**  
-> **Mục tiêu:** Dựng một Ubuntu Server có thể quản trị từ xa bằng Tailscale, điều khiển router qua Chrome trên laptop, đưa FastAPI lên Internet qua Nginx/HTTPS, sau đó cập nhật và vận hành an toàn.  
-> **Nguồn bối cảnh:** Hướng dẫn tổng hợp cho lab Ubuntu Server, Nginx/FastAPI và Linux. **Căn cứ kỹ thuật:** Tài liệu gốc Ubuntu, Tailscale, OpenSSH, Nginx, systemd, Python, Git, Certbot, Let’s Encrypt, PostgreSQL và IETF/RFC. IP, tên miền và thông số phần cứng trong phần hướng dẫn là **ví dụ**, không phải cấu hình hiện tại của máy thật. Mỗi bước quan trọng đều có bằng chứng PASS/FAIL. Tài liệu được rà soát logic và đối chiếu nguồn, **không khẳng định đã chạy nghiệm thu trên một máy thực tế trong lần biên tập này**.
+> **Infrastructure Security · Learning lab · Phiên bản 3.0 — 21/11/2026**\
+> **Mục tiêu:** Rèn cách giới hạn bề mặt truy cập và vận hành backend an toàn trên Ubuntu Server: quản trị riêng qua Tailscale/OpenSSH, giữ ứng dụng và dữ liệu ở mạng nội bộ, bảo vệ cấu hình, rồi kiểm chứng thay đổi và khả năng khôi phục.\
+> **Trạng thái bằng chứng:** Runbook đã được rà soát logic và đối chiếu nguồn kỹ thuật chính thức. Đây là tài liệu học tập, **chưa phải nghiệm thu trên server thật**. IP, domain và thông số trong hướng dẫn là ví dụ; các checkpoint là điều kiện để người học tự kiểm chứng, không phải kết quả PASS của tác giả.
 
 ## Nội dung
 
@@ -146,7 +146,7 @@ TAILSCALE_IP:  lấy từ tailscale ip -4
 
 | Gate | Điều kiện PASS | Nếu FAIL |
 |---|---|---|
-| G1 — Linux | Có LAN IP, default route, DNS, outbound HTTPS |  |
+| G1 — Linux | Có LAN IP, default route, DNS, outbound HTTPS | Dừng: sửa NIC/DHCP/Netplan |
 | G2 — Remote | SSH được từ laptop qua Tailscale | Dừng: sửa SSH/tailnet; **chưa bật UFW** |
 | G3 — Router | Truy cập được admin web qua Chrome từ xa | Dừng: sửa tunnel/gateway |
 | G4 — WAN | WAN public trực tiếp, NAT 80/443 đúng, kiểm thử ngoài LAN | Nếu CGNAT, chuyển phương án public |
@@ -2175,10 +2175,10 @@ sudo -u postgres pg_dump -Fc "$DB_NAME" \
 
 ### 20.1. Phạm vi và vai trò
 
-**Tên bài:** `Ubuntu Server — Từ máy vật lý đến Production`  
-**Chuyên mục:** `Infrastructure / DevOps`  
-**Đầu vào cho portfolio:** chính file Markdown này  
-**Đầu ra cần có:** một trang tài liệu kỹ thuật có mục lục, khối code, bảng, link gốc, sơ đồ Mermaid và checklist nghiệm thu.  
+**Tên bài:** `Ubuntu Server — Bảo mật và vận hành hạ tầng`\
+**Chuyên mục:** `Infrastructure Security / Linux Operations`\
+**Đầu vào cho portfolio:** chính file Markdown này\
+**Đầu ra cần có:** một trang giới thiệu learning lab cho người tuyển dụng, kèm runbook kỹ thuật có mục lục, khối code, bảng, link gốc, sơ đồ Mermaid và checklist nghiệm thu.\
 **Định nghĩa thành công:** người đọc hiểu có thể thao tác theo tuyến G1→G8, phân biệt SERVER/LAPTOP/ROUTER/DNS, biết khi nào phải dừng và biết kiểm chứng kết quả.
 
 ### 20.2. Phân cấp nội dung và route đề xuất
@@ -2273,10 +2273,10 @@ type TechnicalStep = {
 
 ```yaml
 content_version: 3.0
-title: "Ubuntu Server — Từ máy vật lý đến Production"
-category: "Infrastructure / DevOps"
+title: "Ubuntu Server — Bảo mật và vận hành hạ tầng"
+category: "Infrastructure Security / Linux Operations"
 level: "Intermediate — cần hiểu Linux CLI căn bản"
-author_role: "Full-stack / Infrastructure case study"
+author_role: "Full-stack Developer / Infrastructure Security learning lab"
 last_verified: "2026-11-21"
 language: "vi-VN"
 public_security_review: "required"
@@ -2290,7 +2290,7 @@ Metadata trên là thông tin mô tả bài viết, **không phải dữ liệu 
 Sao chép prompt này khi tích hợp bài viết vào portfolio có repository hiện hữu:
 
 ```text
-MỤC TIÊU: Tích hợp bài viết "Ubuntu Server — Từ máy vật lý đến Production"
+MỤC TIÊU: Tích hợp bài viết "Ubuntu Server — Bảo mật và vận hành hạ tầng"
 vào hệ thống portfolio hiện tại.
 
 NGUỒN DỮ LIỆU DUY NHẤT:

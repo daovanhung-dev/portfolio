@@ -25,11 +25,43 @@ const gateChapterNumbers: Record<string, string> = {
 const gates = gateRows.map((cells) => {
   const gateCode = cells[0]?.match(/^(G[1-8])/)?.[1] ?? '';
   const chapter = chapters.find((heading) => heading.text.startsWith(`${gateChapterNumbers[gateCode] ?? ''}.`));
-  return { label: cells[0] ?? '', pass: cells[1] ?? '', href: chapter ? `#${chapter.slug}` : '#ubuntu-runbook-content' };
+  return {
+    label: cells[0] ?? '',
+    pass: cells[1] ?? '',
+    fail: cells[2] ?? '',
+    href: chapter ? `#${chapter.slug}` : '#ubuntu-runbook-content',
+  };
 });
+const chapterHref = (number: string) => {
+  const chapter = chapters.find((heading) => heading.text.startsWith(`${number}.`));
+  return chapter ? `#${chapter.slug}` : '#ubuntu-runbook-content';
+};
+const securityDecisions = [
+  {
+    title: 'Tách đường quản trị khỏi dịch vụ public',
+    detail: 'SSH đi qua Tailscale/OpenSSH; không mở cổng SSH hoặc giao diện quản trị router ra Internet trong mô hình mẫu.',
+    chapter: '04',
+  },
+  {
+    title: 'Giới hạn bề mặt được phép truy cập',
+    detail: 'Chỉ Nginx nhận HTTP/HTTPS; FastAPI bind loopback, còn database và AI service không được NAT trực tiếp.',
+    chapter: '06',
+  },
+  {
+    title: 'Giữ cấu hình và secrets ngoài source',
+    detail: 'Tách cấu hình khỏi Git, giới hạn quyền file và lưu ý rằng environment variable không thay thế secret manager.',
+    chapter: '08',
+  },
+  {
+    title: 'Kiểm tra trước khi thay đổi, có đường lui',
+    detail: 'Đọc ruleset, giữ console hoặc phiên SSH dự phòng, backup cấu hình và xác minh từ mạng ngoài trước khi kết luận.',
+    chapter: '13',
+  },
+].map((decision) => ({ ...decision, href: chapterHref(decision.chapter) }));
 const legacyNotices = Object.fromEntries(aliases.filter((alias) => alias.notice).map((alias) => [alias.slug, { notice: alias.notice, targetHeading: alias.targetHeading }]));
 const overview = runbook.data.description;
 const lastReviewed = runbook.data.verified_on;
+const nanoBioProjectUrl = sitePath('/projects/nanobio-local-cloud');
 ---
 <SiteLayout title={`${pageTitle} — Lab | Đào Văn Hùng`} description={overview} route="/ubuntu-server">
   <div class="ubuntu-page ubuntu-page--report" data-legacy-notices={JSON.stringify(legacyNotices)}>
@@ -39,18 +71,18 @@ const lastReviewed = runbook.data.verified_on;
 
     <header class="ubuntu-report-hero">
       <div class="ubuntu-report-hero__copy">
-        <p class="ubuntu-report-kicker">INFRASTRUCTURE / DEVOPS · HỒ SƠ LAB KỸ THUẬT</p>
+        <p class="ubuntu-report-kicker">INFRASTRUCTURE SECURITY · UBUNTU SERVER LEARNING LAB</p>
         <h1>{pageTitle}</h1>
         <p class="ubuntu-report-lede">{overview}</p>
         <div class="ubuntu-report-actions">
-          <a class="ubuntu-report-primary" href="#lab-method">Xem mục tiêu và phương pháp</a>
-          <a class="ubuntu-report-secondary" href="#full-runbook">Mở hướng dẫn kỹ thuật</a>
+          <a class="ubuntu-report-primary" href="#security-decisions">Xem cách tiếp cận bảo mật</a>
+          <a class="ubuntu-report-secondary" href="#full-runbook">Mở runbook kỹ thuật</a>
         </div>
       </div>
       <dl class="ubuntu-report-meta">
-        <div><dt>Loại hồ sơ</dt><dd>Learning lab</dd></div>
-        <div><dt>Rà soát nguồn</dt><dd>{lastReviewed} · v{runbook.data.version}</dd></div>
-        <div><dt>Trạng thái</dt><dd>Chưa nghiệm thu trên máy thật</dd></div>
+        <div><dt>Trọng tâm</dt><dd>Infrastructure Security</dd></div>
+        <div><dt>Trạng thái</dt><dd>Learning lab · chưa nghiệm thu server thật</dd></div>
+        <div><dt>Rà soát tài liệu</dt><dd>{lastReviewed} · v{runbook.data.version}</dd></div>
       </dl>
     </header>
 
@@ -63,94 +95,115 @@ const lastReviewed = runbook.data.verified_on;
     <div class="ubuntu-report">
       <section class="ubuntu-report-section ubuntu-report-summary" aria-labelledby="report-summary-title">
         <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">01 / TÓM TẮT</p>
-          <h2 id="report-summary-title">Bài lab giải quyết bài toán gì?</h2>
+          <p class="ubuntu-report-index">01 / TÓM TẮT CHO HR</p>
+          <h2 id="report-summary-title">Bài lab này thể hiện điều gì?</h2>
         </div>
         <div class="ubuntu-report-summary__body">
-          <p class="ubuntu-report-summary__lead">Xây dựng lộ trình có thể lặp lại để đưa Ubuntu Server từ khởi tạo ban đầu đến một dịch vụ web có quản trị từ xa, reverse proxy, HTTPS và quy trình vận hành an toàn.</p>
+          <p class="ubuntu-report-summary__lead">Tôi biên soạn một runbook có thể kiểm tra lại để luyện cách bảo vệ đường quản trị, giới hạn dịch vụ được public và vận hành backend an toàn trên Ubuntu Server.</p>
           <dl class="ubuntu-report-facts">
-            <div><dt>Mục tiêu</dt><dd>Triển khai FastAPI phía sau Nginx/systemd và quản trị qua Tailscale + OpenSSH.</dd></div>
-            <div><dt>Phạm vi kỹ thuật</dt><dd>Linux, mạng, DHCP Reservation, DNS/NAT, firewall, TLS, backup và rollback.</dd></div>
-            <div><dt>Cách đọc</dt><dd>Đọc báo cáo tóm tắt trước; mở quy trình và CLI reference khi cần thực hành hoặc thẩm định.</dd></div>
+            <div><dt>Sản phẩm</dt><dd>Runbook v3 gồm 21 chương, 8 checkpoint, nguồn kỹ thuật và quy trình kiểm chứng.</dd></div>
+            <div><dt>Chủ đề trong lab</dt><dd>Linux, SSH/Tailscale, firewall, ranh giới dịch vụ, secrets, Nginx/TLS và rollback.</dd></div>
+            <div><dt>Phương pháp</dt><dd>Checkpoint, kiểm chứng độc lập từng lớp và chuẩn bị phương án khôi phục.</dd></div>
           </dl>
         </div>
       </section>
 
-      <section class="ubuntu-report-section" aria-labelledby="report-architecture-title">
+      <section class="ubuntu-report-section" id="security-decisions" aria-labelledby="report-architecture-title">
         <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">02 / KIẾN TRÚC</p>
-          <h2 id="report-architecture-title">Hai luồng hoạt động độc lập</h2>
+          <p class="ubuntu-report-index">02 / CÁCH TIẾP CẬN BẢO MẬT</p>
+          <h2 id="report-architecture-title">Các quyết định bảo mật trong lab</h2>
+        </div>
+        <div class="ubuntu-security-decisions">
+          {securityDecisions.map((decision) => <article class="ubuntu-security-decision">
+            <span class="ubuntu-report-status ubuntu-report-status--reviewed">MÔ HÌNH TRONG LAB</span>
+            <h3>{decision.title}</h3>
+            <p>{decision.detail}</p>
+            <a href={decision.href}>Đọc chương {decision.chapter}</a>
+          </article>)}
         </div>
         <figure class="ubuntu-report-architecture">
           <div class="ubuntu-report-flow">
-            <h3>Phục vụ ứng dụng</h3>
-            <ol aria-label="Luồng request public">
-              <li>Client</li><li>DNS</li><li>WAN / NAT</li><li>Nginx / HTTPS</li><li>FastAPI / systemd</li>
+            <h3>Đường phục vụ ứng dụng</h3>
+            <ol aria-label="Luồng phục vụ ứng dụng public">
+              <li>Client</li><li>DNS</li><li>WAN / NAT</li><li>Nginx / TLS</li><li>FastAPI nội bộ</li>
             </ol>
-            <p>DNS phân giải tên miền; kết nối tiếp tục qua TCP đến IP đã phân giải.</p>
           </div>
           <div class="ubuntu-report-flow ubuntu-report-flow--private">
-            <h3>Quản trị riêng</h3>
+            <h3>Đường quản trị riêng</h3>
             <ol aria-label="Luồng quản trị riêng">
-              <li>Laptop / Chrome</li><li>Tailscale / OpenSSH</li><li>Router trong LAN</li>
+              <li>Laptop</li><li>Tailscale / OpenSSH</li><li>Router trong LAN</li>
             </ol>
-            <p>Luồng quản trị qua tailnet tách biệt với truy cập website công khai.</p>
           </div>
-          <figcaption>Hình 1. Mô hình mục tiêu của lab theo sơ đồ và mô tả trong tài liệu nguồn.</figcaption>
+          <figcaption>Mô hình mục tiêu trong runbook; không phải sơ đồ xác nhận một hệ thống đang hoạt động.</figcaption>
         </figure>
       </section>
 
-      <section class="ubuntu-report-section" id="lab-method" aria-labelledby="report-method-title">
+      <section class="ubuntu-report-section ubuntu-report-case" aria-labelledby="report-case-title">
         <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">03 / PHƯƠNG PHÁP</p>
-          <h2 id="report-method-title">Tám checkpoint từ máy mới đến vận hành</h2>
+          <p class="ubuntu-report-index">03 / CASE STUDY LỊCH SỬ</p>
+          <h2 id="report-case-title">Backend chạy nhưng website không truy cập được</h2>
         </div>
-        <p class="ubuntu-report-section__intro">Mỗi checkpoint có điều kiện đạt và liên kết đến chương hướng dẫn tương ứng. Website không tự xác nhận máy chủ của người đọc đã PASS.</p>
-        <ol class="ubuntu-report-phases">
-          {gates.map((gate, index) => <li>
-            <span class="ubuntu-report-phase-number">{String(index + 1).padStart(2, '0')}</span>
-            <div><a href={gate.href}>{gate.label}</a><p>{gate.pass}</p></div>
-          </li>)}
-        </ol>
+        <div class="ubuntu-report-case__body">
+          <p><strong>Tình huống lịch sử:</strong> Nginx và health check nội bộ có thể hoạt động trong khi kết nối HTTPS từ bên ngoài vẫn bị chặn ở lớp firewall.</p>
+          <p><strong>Cách tiếp cận:</strong> kiểm tra listener, cấu hình Nginx, UFW và ruleset Netfilter theo từng lớp; không xóa hàng loạt firewall rules để thử vận may.</p>
+          <p><strong>Bài học:</strong> trạng thái `active` hoặc HTTP 200 local chưa chứng minh đường truy cập public thành công.</p>
+          <p class="ubuntu-report-case__note">Đây là bài học lịch sử đã ẩn thông tin hạ tầng, không phải xác nhận trạng thái hiện tại của server.</p>
+          <a href={chapterHref('15')}>Xem playbook chẩn đoán</a>
+        </div>
       </section>
 
-      <section class="ubuntu-report-section" aria-labelledby="report-evidence-title">
+      <section class="ubuntu-report-section" id="project-context" aria-labelledby="report-project-title">
         <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">04 / BẰNG CHỨNG & GIỚI HẠN</p>
-          <h2 id="report-evidence-title">Phân biệt nội dung đã rà soát và kết quả chạy thật</h2>
+          <p class="ubuntu-report-index">04 / LIÊN HỆ DỰ ÁN</p>
+          <h2 id="report-project-title">Kinh nghiệm cấu hình server và phát hành</h2>
+        </div>
+        <div class="ubuntu-report-project">
+          <div>
+            <span class="ubuntu-report-status ubuntu-report-status--attested">PHẠM VI TỰ XÁC NHẬN</span>
+            <p>Hồ sơ dự án ghi nhận phần cấu hình server và phát hành do tôi đảm nhiệm. Source công khai hỗ trợ mô tả kiến trúc và module; runtime backend chưa được portfolio xác minh độc lập.</p>
+          </div>
+          <a class="ubuntu-report-project__link" href={nanoBioProjectUrl}>Xem dự án NanoBioAI <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <section class="ubuntu-report-section" id="evidence-status" aria-labelledby="report-evidence-title">
+        <div class="ubuntu-report-section__heading">
+          <p class="ubuntu-report-index">05 / MỨC ĐỘ XÁC MINH</p>
+          <h2 id="report-evidence-title">Đọc đúng phạm vi bằng chứng</h2>
         </div>
         <div class="ubuntu-report-evidence">
-          <div><span class="ubuntu-report-status ubuntu-report-status--reviewed">ĐÃ RÀ SOÁT</span><h3>Tài liệu và quy trình</h3><p>{runbook.data.status}; có nguồn kỹ thuật và tiêu chí kiểm tra cho từng lớp.</p></div>
-          <div><span class="ubuntu-report-status ubuntu-report-status--unverified">CHƯA XÁC MINH</span><h3>Nghiệm thu trên server</h3><p>Chưa chạy toàn bộ quy trình trên một máy Ubuntu thật trong lần biên tập tài liệu này.</p></div>
-          <div><span class="ubuntu-report-status ubuntu-report-status--unverified">KHÔNG TUYÊN BỐ</span><h3>Production / người dùng</h3><p>Không dùng trang tĩnh này để khẳng định dịch vụ đang public, có người dùng hoặc sẵn sàng production.</p></div>
+          <article><span class="ubuntu-report-status ubuntu-report-status--reviewed">ĐÃ RÀ SOÁT</span><h3>Tài liệu kỹ thuật</h3><p>Runbook v3 có nguồn đối chiếu, checkpoint, cảnh báo và hướng dẫn kiểm chứng.</p></article>
+          <article><span class="ubuntu-report-status ubuntu-report-status--unverified">LEARNING LAB</span><h3>Thực thi trên server</h3><p>Chưa nghiệm thu toàn bộ quy trình trên một server Ubuntu thật.</p></article>
+          <article><span class="ubuntu-report-status ubuntu-report-status--unverified">PHẠM VI</span><h3>Cloud và kiểm thử bảo mật</h3><p>Lab tập trung Ubuntu/Linux và mạng; chưa bao gồm triển khai AWS/Azure/GCP, pentest hay đánh giá AppSec chuyên nghiệp.</p></article>
         </div>
       </section>
 
-      <section class="ubuntu-report-section ubuntu-report-discussion" aria-labelledby="report-discussion-title">
+      <section class="ubuntu-report-section ubuntu-report-disclosures" id="lab-method" aria-labelledby="report-method-title">
         <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">05 / THẢO LUẬN</p>
-          <h2 id="report-discussion-title">Nguyên tắc kỹ thuật nổi bật</h2>
+          <p class="ubuntu-report-index">06 / TRA CỨU BỔ SUNG</p>
+          <h2 id="report-method-title">Checkpoint và phương pháp biên soạn</h2>
         </div>
-        <ul>
-          <li>Tách đường quản trị riêng qua tailnet khỏi đường phục vụ public qua DNS, router, Nginx và TLS.</li>
-          <li>Kiểm tra theo từng lớp; health check local không thay thế phép thử từ mạng ngoài.</li>
-          <li>Thay đổi mạng và firewall phải có đường truy cập dự phòng, backup cấu hình và phương án rollback.</li>
-        </ul>
-        <p class="ubuntu-report-conclusion">Kết luận: đây là learning lab có thể lặp lại; trạng thái hoàn tất chỉ được ghi nhận sau khi người học lưu bằng chứng cho các checkpoint trên môi trường của mình.</p>
-      </section>
-
-      <section class="ubuntu-report-section ubuntu-report-references" aria-labelledby="report-references-title">
-        <div class="ubuntu-report-section__heading">
-          <p class="ubuntu-report-index">06 / HÌNH THỨC THAM KHẢO</p>
-          <h2 id="report-references-title">Quy ước báo cáo và lab thực hành</h2>
+        <div class="ubuntu-report-disclosures__body">
+          <details class="ubuntu-report-disclosure" id="lab-checkpoints">
+            <summary><strong>Quy trình nghiệm thu theo 8 checkpoint</strong><span>Điều kiện mục tiêu, chưa phải kết quả PASS</span></summary>
+            <ol class="ubuntu-report-phases">
+              {gates.map((gate, index) => <li>
+                <span class="ubuntu-report-phase-number">{String(index + 1).padStart(2, '0')}</span>
+                <div><a href={gate.href}>{gate.label}</a><p><strong>Điều kiện đạt:</strong> {gate.pass}</p>{gate.fail && <p class="ubuntu-report-phase-fail"><strong>Nếu chưa đạt:</strong> {gate.fail}</p>}</div>
+              </li>)}
+            </ol>
+          </details>
+          <details class="ubuntu-report-disclosure" id="report-methodology">
+            <summary><strong>Tham khảo cách tổ chức lab và báo cáo</strong><span>Phương pháp biên soạn tài liệu</span></summary>
+            <p>Cấu trúc runbook dùng mục tiêu, phương pháp, kết quả, thảo luận và checkpoint; các nguồn dưới đây là tham khảo về báo cáo lab và cách tổ chức bài thực hành.</p>
+            <ul class="ubuntu-report-methodology-links">
+              <li><a href="https://ocw.mit.edu/courses/16-01-unified-engineering-i-ii-iii-iv-fall-2005-spring-2006/7b1fb14b0bb9c2ad7721f0107993ed88_guidelines.pdf" target="_blank" rel="noopener noreferrer">MIT OpenCourseWare — Guidelines for writing lab reports</a></li>
+              <li><a href="https://www.usna.edu/MechEngDept/Resources/PDF_MechE_Department_Lab_Report_Style_and_Formatting_Guide1" target="_blank" rel="noopener noreferrer">U.S. Naval Academy — Format and Style Guide for Laboratory Reports</a></li>
+              <li><a href="https://decal.ocf.berkeley.edu/archives/2022-spring/labs/a4/" target="_blank" rel="noopener noreferrer">UC Berkeley Sysadmin DeCal — Linux post-install lab</a></li>
+              <li><a href="https://www.d3s.mff.cuni.cz/teaching/nswi106/" target="_blank" rel="noopener noreferrer">Charles University — Linux Administration course and checkpoints</a></li>
+            </ul>
+          </details>
         </div>
-        <p>Cấu trúc báo cáo dùng các mục tiêu, phương pháp, kết quả, thảo luận, kết luận và phụ lục; phần nội dung thực hành giữ dạng nhiệm vụ có checkpoint để người đọc làm theo.</p>
-        <ul>
-          <li><a href="https://ocw.mit.edu/courses/16-01-unified-engineering-i-ii-iii-iv-fall-2005-spring-2006/7b1fb14b0bb9c2ad7721f0107993ed88_guidelines.pdf" target="_blank" rel="noopener noreferrer">MIT OpenCourseWare — Guidelines for writing lab reports</a></li>
-          <li><a href="https://www.usna.edu/MechEngDept/Resources/PDF_MechE_Department_Lab_Report_Style_and_Formatting_Guide1" target="_blank" rel="noopener noreferrer">U.S. Naval Academy — Format and Style Guide for Laboratory Reports</a></li>
-          <li><a href="https://decal.ocf.berkeley.edu/archives/2022-spring/labs/a4/" target="_blank" rel="noopener noreferrer">UC Berkeley Sysadmin DeCal — Linux post-install lab</a></li>
-          <li><a href="https://www.d3s.mff.cuni.cz/teaching/nswi106/" target="_blank" rel="noopener noreferrer">Charles University — Linux Administration course and checkpoints</a></li>
-        </ul>
       </section>
 
       <details class="ubuntu-runbook-panel" id="full-runbook">
