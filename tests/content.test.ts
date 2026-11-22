@@ -18,6 +18,23 @@ describe('portfolio content model', () => {
     expect(collections.education).toHaveLength(1);
     expect(collections.contact).toHaveLength(1);
   });
+
+  it('loads the sanitized server diagnostics report as a lab route', async () => {
+    const { collections } = await readPortfolioData();
+    const labSlugs = collections.labs.map((lab: { slug: string }) => lab.slug);
+    expect(labSlugs).toContain('server-connectivity-diagnostics');
+    for (const oldSlug of [
+      'linux-ssh',
+      'networking-fundamentals',
+      'web-security-fundamentals',
+      'xiaozhi-esp32-source-study',
+    ]) {
+      expect(labSlugs).not.toContain(oldSlug);
+    }
+    const lab = collections.labs.find((entry: { slug: string }) => entry.slug === 'server-connectivity-diagnostics') as
+      { data: { evidenceIds: string[] } } | undefined;
+    expect(lab?.data.evidenceIds).toContain('ev-lab-server-diagnostics');
+  });
 });
 
 describe('GitHub Pages paths', () => {

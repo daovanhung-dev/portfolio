@@ -17,11 +17,18 @@ export const contentDirectories = {
 export async function readCollection(name) {
   const directory = new URL(contentDirectories[name] + '/', root);
   const files = (await readdir(directory)).filter((file) => file.endsWith('.mdx')).sort();
-  return Promise.all(files.map(async (file) => {
+  const entries = await Promise.all(files.map(async (file) => {
     const source = await readFile(new URL(file, directory), 'utf8');
     const parsed = matter(source);
     return { file, slug: file.slice(0, -4), data: parsed.data, body: parsed.content, source };
   }));
+  if (name === 'labs') {
+    const file = 'docs/source/LAB_01_BAO_CAO_CHAN_DOAN_SERVER_MAT_KET_NOI.md';
+    const source = await readFile(new URL(file, root), 'utf8');
+    const parsed = matter(source);
+    entries.push({ file, slug: String(parsed.data.slug ?? ''), data: parsed.data, body: parsed.content, source });
+  }
+  return entries;
 }
 
 export async function readPortfolioData() {

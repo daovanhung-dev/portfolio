@@ -1,0 +1,42 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../../components/SiteLayout.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import { sitePath } from '../../utils/paths';
+
+export async function getStaticPaths() {
+  const labs = await getCollection('labs');
+  return labs.map((lab) => ({ params: { slug: lab.id }, props: { lab } }));
+}
+
+const { lab } = Astro.props;
+const { Content, headings } = await render(lab);
+const sections = headings.filter((heading) => heading.depth === 2);
+---
+
+<SiteLayout title={lab.data.title + ' — Lab | Đào Văn Hùng'} description={lab.data.description} route={'/labs/' + lab.id}>
+  <div class="page-shell">
+    <header class="detail-header">
+      <a class="eyebrow-link" href={sitePath('/labs')}>← Tất cả labs</a>
+      <span class="eyebrow">Lab thực hành · Linux &amp; Network</span>
+      <h1>{lab.data.title}</h1>
+      <p class="page-lede">{lab.data.description}</p>
+      <div class="detail-header__meta">
+        <StatusBadge status={lab.data.state} />
+        {lab.data.topics.map((topic) => <span>{topic}</span>)}
+      </div>
+    </header>
+
+    <div class="case-layout section lab-detail-layout">
+      {sections.length > 0 && (
+        <nav class="case-toc" aria-label="Trong lab">
+          <h2>Nội dung</h2>
+          <ul>{sections.map((section) => <li><a href={'#' + section.slug}>{section.text}</a></li>)}</ul>
+        </nav>
+      )}
+      <article class="case-content prose lab-report">
+        <Content />
+      </article>
+    </div>
+  </div>
+</SiteLayout>

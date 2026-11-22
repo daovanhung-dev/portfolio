@@ -15,6 +15,7 @@ const ROUTES = [
   { path: 'experience/maiatech/', heading: 'Backend Developer Intern' },
   { path: 'skills/', heading: 'Năng lực' },
   { path: 'labs/', heading: 'Labs' },
+  { path: 'labs/server-connectivity-diagnostics/', heading: 'Chẩn đoán sự cố kết nối Ubuntu Server' },
   { path: 'ubuntu-server/', heading: 'Ubuntu Server — Cài đặt và triển khai backend' },
   { path: 'about/', heading: 'Đào Văn Hùng' },
   { path: 'contact/', heading: 'Trao đổi về kỹ thuật và công việc' },
@@ -71,6 +72,18 @@ test('static pages and deep routes open directly and survive refresh under the P
 test('Labs links to the Ubuntu Server command runbook', async ({ page }) => {
   await page.goto(APP + 'labs/');
   await expect(page.getByRole('link', { name: /Ubuntu Server: cài đặt và triển khai backend/i })).toHaveAttribute('href', APP + 'ubuntu-server/');
+  for (const title of ['Linux và SSH fundamentals', 'Networking fundamentals', 'Web security fundamentals', 'XiaoZhi / ESP32 source study']) {
+    await expect(page.locator('main')).not.toContainText(title);
+  }
+  const labLink = page.getByRole('link', { name: 'Chẩn đoán sự cố kết nối Ubuntu Server' });
+  await expect(labLink).toHaveAttribute('href', APP + 'labs/server-connectivity-diagnostics/');
+  await labLink.click();
+  await expect(page.locator('main h1').first()).toHaveText('Chẩn đoán sự cố kết nối Ubuntu Server');
+  await expect(page.locator('main')).toContainText('chủ sở hữu tự xác nhận');
+  expect(await page.locator('main .lab-report table').count()).toBeGreaterThanOrEqual(9);
+  await expect(page.locator('main')).not.toContainText(/NanoBioAI|Study2Work|enp5s0|\/dev\/sdb|errors_count|emergency_ro/);
+  await page.reload();
+  await expect(page.locator('main h1').first()).toHaveText('Chẩn đoán sự cố kết nối Ubuntu Server');
 });
 
 test('all previous Ubuntu Server URLs land on a current runbook section', async ({ page }) => {
@@ -974,7 +987,7 @@ test('responsive routes have no horizontal overflow at required widths', async (
   test.setTimeout(90_000);
   const paths = [
     '', 'projects/', 'projects/nanobio-local-cloud/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'skills/',
-    'labs/', 'ubuntu-server/', 'ubuntu-server/setup-netplan/', 'ubuntu-server/operate-port-443-playbook/',
+    'labs/', 'labs/server-connectivity-diagnostics/', 'ubuntu-server/', 'ubuntu-server/setup-netplan/', 'ubuntu-server/operate-port-443-playbook/',
     'about/', 'contact/', 'case-studies/nanobio-local-cloud-ai/', 'case-studies/study2work-contracts-runtime/',
   ];
   const widths = [320, 360, 390, 768, 1024, 1280, 1440];
@@ -1021,7 +1034,7 @@ test('responsive routes have no horizontal overflow at required widths', async (
 test('representative routes pass automated accessibility checks', async ({ page }) => {
   test.setTimeout(120_000);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const path of ['', 'projects/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'about/', 'ubuntu-server/', 'case-studies/nanobio-local-cloud-ai/', 'case-studies/study2work-contracts-runtime/', 'contact/']) {
+  for (const path of ['', 'projects/', 'projects/study2work-contracts/', 'experience/', 'experience/maiatech/', 'about/', 'labs/', 'labs/server-connectivity-diagnostics/', 'ubuntu-server/', 'case-studies/nanobio-local-cloud-ai/', 'case-studies/study2work-contracts-runtime/', 'contact/']) {
     await page.goto(APP + path);
     for (const theme of ['dark', 'light']) {
       await page.evaluate((value) => { document.documentElement.dataset.theme = value; }, theme);

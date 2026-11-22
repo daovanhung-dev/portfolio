@@ -4,16 +4,17 @@ import SiteLayout from '../../components/SiteLayout.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
 import EvidenceList from '../../components/EvidenceList.astro';
 import UbuntuServerPromo from '../../components/UbuntuServerPromo.astro';
+import { sitePath } from '../../utils/paths';
 
 const labs = (await getCollection('labs')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'vi'));
 ---
 
-<SiteLayout title="Labs — Đào Văn Hùng" description="Các chủ đề kỹ thuật Đào Văn Hùng đang nghiên cứu về Linux, mạng, bảo mật web và hệ thống nhúng.">
+<SiteLayout title="Labs — Đào Văn Hùng" description="Lab thực hành về chẩn đoán mạng, truy cập từ xa và sự cố hệ thống Linux.">
   <div class="page-shell">
     <header class="page-intro">
-      <span class="eyebrow">Học tập và thử nghiệm</span>
+      <span class="eyebrow">Điều tra kỹ thuật</span>
       <h1 class="page-title">Labs</h1>
-      <p class="page-lede">Các ghi chú này cho thấy cách tôi mở rộng nền tảng kỹ thuật và nghiên cứu mã nguồn trong những lĩnh vực đang phát triển.</p>
+      <p class="page-lede">Tôi khoanh vùng sự cố Linux theo từng lớp, dùng log và lệnh kiểm tra có kiểm soát.</p>
     </header>
     <UbuntuServerPromo />
     <div class="grid case-grid">
@@ -23,7 +24,7 @@ const labs = (await getCollection('labs')).sort((a, b) => a.data.title.localeCom
             <span class="eyebrow">Lab note</span>
             <StatusBadge status={lab.data.state} />
           </div>
-          <h2>{lab.data.title}</h2>
+          <h2><a href={sitePath('/labs/' + lab.id)}>{lab.data.title}</a></h2>
           <p>{lab.data.description}</p>
           <div class="tag-list">{lab.data.topics.map((topic) => <span class="tag">{topic}</span>)}</div>
           <EvidenceList ids={lab.data.evidenceIds} compact />

@@ -121,7 +121,13 @@ const cases = defineCollection({
 });
 
 const labs = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/labs' }),
+  loader: glob({
+    pattern: [
+      'src/content/labs/**/*.mdx',
+      'docs/source/LAB_01_BAO_CAO_CHAN_DOAN_SERVER_MAT_KET_NOI.md',
+    ],
+    base: './',
+  }),
   schema: z.object({
     id: z.string(),
     title: z.string(),

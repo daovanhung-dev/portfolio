@@ -289,18 +289,6 @@
     "publicSafe": true
   },
   {
-    "id": "ev-xiaozhi-fork",
-    "kind": "verified-source",
-    "repoId": "xiaozhi-fork",
-    "path": "main/boards/",
-    "commitSha": "9cd4401d30fe3b54f0e6b656de44199cb0595f3c",
-    "branch": "main",
-    "url": "https://github.com/daovanhung-dev/xiaozhi-esp32/tree/9cd4401d30fe3b54f0e6b656de44199cb0595f3c/main/boards",
-    "observedAt": "2026-10-24",
-    "note": "Fork contribution compared with upstream; no firmware build or device acceptance in this audit.",
-    "publicSafe": true
-  },
-  {
     "id": "ev-privacy-source",
     "kind": "verified-source",
     "repoId": "nano-privacy",
@@ -475,24 +463,10 @@
     "publicSafe": true
   },
   {
-    "id": "ev-learning-linux",
-    "kind": "learning-lab",
-    "observedAt": "2026-10-24",
-    "note": "Learning direction and notes only; no completed challenge or certification is claimed.",
-    "publicSafe": true
-  },
-  {
-    "id": "ev-learning-network",
-    "kind": "learning-lab",
-    "observedAt": "2026-10-24",
-    "note": "Fundamentals study scope only; no infrastructure operations credential is claimed.",
-    "publicSafe": true
-  },
-  {
-    "id": "ev-learning-websec",
-    "kind": "learning-lab",
-    "observedAt": "2026-10-24",
-    "note": "Application security learning direction only; no professional pentest is claimed.",
+    "id": "ev-lab-server-diagnostics",
+    "kind": "user-attested",
+    "observedAt": "2026-11-22",
+    "note": "Tóm tắt sự cố vận hành do chủ sở hữu tự xác nhận; tên dự án và định danh máy được lược bỏ. Các lệnh trong lab là quy trình tham khảo, không xác nhận nghiệm thu server hiện tại.",
     "publicSafe": true
   },
   {

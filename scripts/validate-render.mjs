@@ -69,6 +69,7 @@ const expectedRoutes = [
     .map((entry) => 'experience/' + entry.slug + '/index.html'),
   ...portfolio.collections.projects.map((entry) => 'projects/' + entry.slug + '/index.html'),
   ...portfolio.collections.cases.map((entry) => 'case-studies/' + entry.slug + '/index.html'),
+  ...portfolio.collections.labs.map((entry) => 'labs/' + entry.slug + '/index.html'),
   ...safeUbuntuGuideSlugs.map((slug) => 'ubuntu-server/' + slug + '/index.html'),
 ];
 for (const path of expectedRoutes) {
@@ -85,6 +86,7 @@ for (const file of htmlFiles) {
   const relativePage = relative(dist, file).split(sep).join('/');
   const is404 = relativePage === '404.html';
   const isUbuntuAlias = ubuntuAliasPages.has(relativePage);
+  const isAttestedLab = relativePage === 'labs/server-connectivity-diagnostics/index.html';
   if (is404 || isUbuntuAlias) {
     if (!/name="robots" content="noindex, nofollow"/.test(html)) errors.push(relativePage + ' must be noindex');
     if (/rel="canonical"/.test(html)) errors.push(relativePage + ' must not advertise itself as a canonical page');
@@ -121,8 +123,11 @@ for (const file of htmlFiles) {
     errors.push(relativePage + ' contains restricted source details');
   }
   const isUbuntuRunbook = relativePage === 'ubuntu-server/index.html';
-  if (!isUbuntuRunbook && /tự xác nhận|tự thuật|MISSING_SOURCE|unverified|chưa được cung cấp|mức attribution/i.test(html)) {
+  if (!isUbuntuRunbook && !isAttestedLab && /tự xác nhận|tự thuật|MISSING_SOURCE|unverified|chưa được cung cấp|mức attribution/i.test(html)) {
     errors.push(relativePage + ' contains internal attribution or missing-source language');
+  }
+  if (isAttestedLab && /NanoBioAI|Study2Work|enp5s0|\/dev\/sdb|errors_count|emergency_ro/i.test(html)) {
+    errors.push(relativePage + ' contains unsanitized server incident identifiers');
   }
   if (isUbuntuRunbook && /\bFPT\b|nanobio|192\.168\.(?:86|2)\.|\b(?:3003|18080)\b/i.test(html)) {
     errors.push(relativePage + ' contains restricted historical infrastructure details');

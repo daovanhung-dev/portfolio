@@ -12,6 +12,7 @@ for (const item of portfolio.collections.experiences.filter((entry) => entry.dat
 }
 for (const project of portfolio.collections.projects) routePaths.push('/projects/' + project.slug + '/');
 for (const item of portfolio.collections.cases) routePaths.push('/case-studies/' + item.slug + '/');
+for (const item of portfolio.collections.labs) routePaths.push('/labs/' + item.slug + '/');
 const ubuntuServer = JSON.parse(await readFile(new URL('../src/data/ubuntuServerGuides.json', import.meta.url), 'utf8'));
 const ubuntuAliases = JSON.parse(await readFile(new URL('../src/data/ubuntuServerAliases.json', import.meta.url), 'utf8'));
 const ubuntuRunbookSource = await readFile(new URL('../docs/source/ubuntu-server-from-zero-to-production-v3.md', import.meta.url), 'utf8');
