@@ -37,7 +37,7 @@ export async function getStaticPaths() {
 }
 
 const { alias, targetSlug } = Astro.props as { alias: LegacyAlias; targetSlug: string };
-const targetUrl = `${sitePath('/ubuntu-server')}?legacy=${encodeURIComponent(alias.slug)}#${targetSlug}`;
+const targetUrl = `${sitePath('/ubuntu-server/runbook')}?legacy=${encodeURIComponent(alias.slug)}#${targetSlug}`;
 ---
 <SiteLayout
   title={`${alias.title} — Chuyển tới lab Ubuntu Server v3`}

@@ -63,6 +63,7 @@ const expectedRoutes = [
   'contact/index.html',
   'case-studies/index.html',
   'ubuntu-server/index.html',
+  'ubuntu-server/runbook/index.html',
   '404.html',
   ...portfolio.collections.experiences
     .filter((entry) => entry.data.detailPage)
@@ -90,7 +91,7 @@ for (const file of htmlFiles) {
     if (/rel="canonical"/.test(html)) errors.push(relativePage + ' must not advertise itself as a canonical page');
     if (isUbuntuAlias) {
       const refresh = html.match(/http-equiv="refresh" content="0; url=([^"]+)"/i)?.[1];
-      if (!refresh?.startsWith('/portfolio/ubuntu-server/?legacy=')) {
+      if (!refresh?.startsWith('/portfolio/ubuntu-server/runbook/?legacy=')) {
         errors.push(relativePage + ' must redirect to the base-aware Ubuntu Server runbook');
       }
     }
@@ -120,11 +121,11 @@ for (const file of htmlFiles) {
   if (/hung-quynh|our-story-private|github\.com\/[^" ]*(story|birthday)/i.test(html)) {
     errors.push(relativePage + ' contains restricted source details');
   }
-  const isUbuntuRunbook = relativePage === 'ubuntu-server/index.html';
-  if (!isUbuntuRunbook && /tự xác nhận|tự thuật|MISSING_SOURCE|unverified|chưa được cung cấp|mức attribution/i.test(html)) {
+  const isUbuntuContentPage = relativePage === 'ubuntu-server/index.html' || relativePage === 'ubuntu-server/runbook/index.html';
+  if (!isUbuntuContentPage && /tự xác nhận|tự thuật|MISSING_SOURCE|unverified|chưa được cung cấp|mức attribution/i.test(html)) {
     errors.push(relativePage + ' contains internal attribution or missing-source language');
   }
-  if (isUbuntuRunbook && /\bFPT\b|nanobio|192\.168\.(?:86|2)\.|\b(?:3003|18080)\b/i.test(html)) {
+  if (isUbuntuContentPage && /\bFPT\b|nanobio|192\.168\.(?:86|2)\.|\b(?:3003|18080)\b/i.test(html)) {
     errors.push(relativePage + ' contains historical infrastructure details that must be generalized');
   }
 }
@@ -142,6 +143,7 @@ for (const alias of ubuntuAliases) {
     errors.push('Redirect-only Ubuntu Server alias must stay out of the sitemap: ' + alias.slug);
   }
 }
+if (!childSitemap.includes(origin + base + 'ubuntu-server/runbook/')) errors.push('Full Ubuntu Server runbook is missing from the sitemap');
 if (!robots.includes('Sitemap: ' + origin + base + 'sitemap-index.xml')) errors.push('robots.txt sitemap URL is incorrect');
 if (ogImage.length < 24 || String.fromCharCode(...ogImage.subarray(1, 4)) !== 'PNG') {
   errors.push('Open Graph PNG is missing or invalid');

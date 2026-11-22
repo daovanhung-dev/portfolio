@@ -2,6 +2,10 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import sshConfigLanguage from '@shikijs/langs/ssh-config';
+import { readFileSync } from 'node:fs';
+
+const ubuntuAliases = JSON.parse(readFileSync(new URL('./src/data/ubuntuServerAliases.json', import.meta.url), 'utf8'));
+const ubuntuAliasPaths = new Set(ubuntuAliases.map(({ slug }) => `/ubuntu-server/${slug}/`));
 
 export default defineConfig({
   site: 'https://daovanhung-dev.github.io',
@@ -11,7 +15,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      filter: (page) => !/\/ubuntu-server\/[^/]+\/$/.test(new URL(page).pathname),
+      filter: (page) => !ubuntuAliasPaths.has(new URL(page).pathname.replace(/^\/portfolio(?=\/)/, '')),
     }),
   ],
   markdown: {
